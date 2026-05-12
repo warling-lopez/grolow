@@ -1,96 +1,73 @@
+'use client';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { Canvas } from '@react-three/fiber';
+import { Float, MeshDistortMaterial, Sphere } from '@react-three/drei';
+
 export default function HeroSection() {
+  const container = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+    tl.from(".hero-line", { y: 120, opacity: 0, stagger: 0.15, duration: 1.2, ease: "power4.out", delay: 0.2 });
+    tl.from(".hero-fade", { opacity: 0, y: 30, stagger: 0.1, duration: 1 }, "-=0.6");
+  }, { scope: container });
+
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col justify-center items-center px-6 py-20 text-center overflow-hidden bg-grolow-dark light:bg-grolow-light">
+    <section ref={container} className="relative w-full min-h-screen flex flex-col justify-center px-6 overflow-hidden bg-grolow-dark">
+      
+      {/* Fondo 3D - Ahora usa tu verde medio #004643 */}
+      <div className="absolute inset-0 z-0 opacity-40">
+        <Canvas>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
+            <Sphere args={[1, 128, 128]} scale={2.8} position={[1, 0, -2]}>
+              <MeshDistortMaterial
+                color="#004643" 
+                attach="material"
+                distort={0.3}
+                speed={1.5}
+                roughness={0.2}
+                metalness={0.8}
+                wireframe={true}
+                transparent
+                opacity={0.4}
+              />
+            </Sphere>
+          </Float>
+        </Canvas>
+      </div>
 
-      {/* Grid de fondo */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,155,155,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,155,155,0.06) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-        }}
-      />
-
-      {/* Glow central */}
-      <div
-        className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(0,155,155,0.12) 0%, transparent 65%)",
-        }}
-      />
-
-      <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-
-        {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.14em] uppercase text-grolow-cyan border border-grolow-cyan/25 bg-grolow-cyan/[0.07] px-4 py-1.5 rounded-full mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-grolow-cyan animate-pulse" />
-          Infraestructura digital
-        </div>
-
-        {/* Marca */}
-        <p className="text-xs font-bold tracking-[0.28em] uppercase text-grolow-cyan mb-5">
-          Grolow
-        </p>
-
-        {/* Headline */}
-        <h1 className="text-5xl md:text-[70px] font-extrabold leading-[1.04] tracking-tight text-grolow-light light:text-grolow-dark mb-7">
-          Escala sin tu{" "}
-          <span className="relative text-grolow-cyan after:absolute after:bottom-1 after:left-0 after:right-0 after:h-[2px] after:bg-grolow-cyan/25 after:rounded">
-            presencia manual.
+      <div className="relative z-10 max-w-7xl mx-auto w-full pt-20">
+        <div className="overflow-hidden mb-2">
+          <span className="hero-line block text-[11px] font-bold tracking-[.3em] uppercase text-grolow-cream mb-8">
+            Grolow • Web Development Studio
           </span>
+        </div>
+        
+        <h1 className="text-6xl md:text-[110px] font-extrabold leading-[0.9] tracking-tighter text-grolow-light uppercase mb-12" style={{ fontFamily: "'Syne', sans-serif" }}>
+          <div className="overflow-hidden pb-2"><span className="hero-line block">Construimos</span></div>
+          <div className="overflow-hidden pb-2"><span className="hero-line block text-transparent bg-clip-text bg-gradient-to-r from-grolow-cream to-grolow-accent italic">Sistemas Web</span></div>
+          <div className="overflow-hidden pb-2"><span className="hero-line block">Para El Futuro</span></div>
         </h1>
+        
+        <div className="flex flex-col md:flex-row gap-10 md:items-end justify-between border-t border-grolow-light/10 pt-10">
+          <p className="hero-fade text-[16px] text-grolow-light/70 max-w-md font-light leading-relaxed">
+            Diseñamos y desarrollamos sitios web estratégicos que combinan diseño visual, tecnología moderna y una estructura pensada para 
+            <span className="text-grolow-light font-medium"> generar resultados y automatizar ventas.</span>
+          </p>
 
-        {/* Descripción */}
-        <p className="text-[17px] font-light leading-[1.75] text-slate-400 light:text-slate-500 max-w-[520px] mb-12">
-          No vendemos diseño. Construimos{" "}
-          <strong className="font-medium text-slate-300 light:text-slate-700">
-            infraestructura digital de alto rendimiento
-          </strong>{" "}
-          para dueños de negocio que quieren sistemas, no dolores de cabeza.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          
-           <a href="#contacto"
-            className="group inline-flex items-center gap-2 px-7 py-3.5 bg-grolow-cyan text-grolow-dark font-semibold rounded-lg border-[1.5px] border-grolow-cyan hover:bg-[#00b3b3] hover:border-[#00b3b3] transition-all hover:-translate-y-px text-[15px]"
-          >
-            Sistematizar mi negocio
-            <span className="transition-transform group-hover:translate-x-1">→</span>
-          </a> <a
-          
-            href="#servicios"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-transparent text-grolow-light light:text-grolow-dark font-medium rounded-lg border-[1.5px] border-white/15 light:border-grolow-dark/20 hover:border-white/40 light:hover:border-grolow-dark/50 hover:bg-white/[0.04] transition-all text-[15px]"
-          >
-            Ver infraestructura
-          </a>
+          <div className="hero-fade flex gap-6 items-center">
+            {/* Botón ahora en color Crema con texto del verde más oscuro */}
+            <a href="#contacto" className="group flex items-center gap-4 px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
+              Cotizar Proyecto
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </div>
         </div>
-
-        {/* Stats */}
-        <div className="flex flex-wrap justify-center mt-16 pt-10 border-t border-white/[0.06] light:border-grolow-dark/10">
-          {[
-            { value: "3×", label: "más eficiencia" },
-            { value: "48h", label: "entrega" },
-            { value: "0", label: "dolores de cabeza" },
-          ].map((stat, i, arr) => (
-            <div
-              key={stat.label}
-              className={`flex flex-col items-center gap-1 px-9 ${i < arr.length - 1 ? "border-r border-white/[0.06] light:border-grolow-dark/10" : ""}`}
-            >
-              <span className="font-extrabold text-[30px] leading-none text-grolow-cyan" style={{ fontFamily: "'Syne', sans-serif" }}>
-                {stat.value}
-              </span>
-              <span className="text-[11px] uppercase tracking-wider text-slate-600 light:text-slate-400">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
-  )
+  );
 }
