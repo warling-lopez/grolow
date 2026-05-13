@@ -25,12 +25,12 @@ export default function ServicesSection() {
       gsap.to(card, {
         scrollTrigger: {
           trigger: card,
-          start: "top 80%",
+          start: "top 50%",
           end: "top 20%",
           scrub: true,
         },
-        y: -50 * i, // Efecto cascada
-        rotate: i % 2 === 0 ? 2 : -2,
+        y: -70 * i, // Efecto cascada
+        rotate: i % 2 === 0 ? 2 : -4,
       });
 
       // Efecto interactivo individual al mover el mouse sobre la tarjeta
@@ -40,9 +40,9 @@ export default function ServicesSection() {
         const y = e.clientY - rect.top;
         gsap.to(card.querySelector('.glow'), {
           opacity: 1,
-          x: x - 150,
-          y: y - 150,
-          duration: 0.4
+          x: x - 550,
+          y: y - 550,
+          duration: 0.2
         });
       });
     });
