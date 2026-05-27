@@ -49,7 +49,7 @@ export default function ServicesSection() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="w-full min-h-screen bg-transparent py-20 flex items-center">
+    <section ref={containerRef} className="w-full h-screen bg-transparent py-20 flex items-center">
       <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-10">
         {[1, 2, 3].map((num) => (
           <div key={num} className="service-card group relative overflow-hidden bg-white/5 border border-white/10 p-16 backdrop-blur-xl h-[400px]">
