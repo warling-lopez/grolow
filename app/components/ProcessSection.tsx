@@ -28,24 +28,28 @@ export default function ProcessSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
 
+
   useGSAP(
     () => {
       const wrapper = scrollWrapperRef.current;
-      if (!wrapper) return;
-
       const panels = gsap.utils.toArray<HTMLElement>(".process-panel");
+      if (!wrapper || panels.length === 0) return;
 
-      // Usamos clientWidth para ignorar la barra de scroll del sistema
-      const getTotalScrollDistance = () =>
-        wrapper.scrollWidth - document.documentElement.clientWidth;
+      const numPanels = panels.length;
+      const pauseDistance = 500; // Los 500px que me pediste de pausa por método
+      
+      // Calculamos cuánto mide un panel (100vw en píxeles)
+      const panelWidth = window.innerWidth; 
+      
+      // El scroll total será el movimiento horizontal de los paneles restantes + las pausas de cada uno
+      const totalScroll = ((numPanels - 1) * panelWidth) + (numPanels * pauseDistance);
 
-      const tween = gsap.to(wrapper, {
-        x: () => -getTotalScrollDistance(),
-        ease: "none",
+      // Creamos una Timeline maestra vinculada al ScrollTrigger
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => `+=${getTotalScrollDistance()}`,
+          end: `+=${totalScroll}`,
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -53,31 +57,37 @@ export default function ProcessSection() {
         },
       });
 
-      // ... (tu código de animación interna stagger-text se queda igual)
-
-      // Animación interna de los textos al aparecer
-      panels.forEach((panel) => {
-        gsap.from(panel.querySelectorAll(".stagger-text"), {
+      // Construimos el comportamiento paso a paso en la Timeline
+      panels.forEach((panel, index) => {
+        // 1. Animación de entrada de los textos de este panel específico
+        tl.from(panel.querySelectorAll(".stagger-text"), {
           y: 50,
           opacity: 0,
-          duration: 1,
-          stagger: 0.2,
+          duration: 0.5,
+          stagger: 0.1,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: panel,
-            containerAnimation: tween,
-            start: "left center",
-          },
         });
+
+        // 2. PAUSA: Añadimos un espacio vacío en la timeline para congelar la pantalla 500px
+        tl.to({}, { duration: pauseDistance / 1000 }); 
+
+        // 3. MOVIMIENTO: Si NO es el último panel, hacemos el scroll horizontal hacia el siguiente
+        if (index < numPanels - 1) {
+          tl.to(wrapper, {
+            x: `-${panelWidth * (index + 1)}`,
+            duration: 1, // Duración del viaje entre paneles
+            ease: "power2.inOut", // Suaviza la transición de movimiento
+          });
+        }
       });
     },
-    { scope: sectionRef },
+    { scope: sectionRef }
   );
 
   return (
     <section
       ref={sectionRef}
-      className="h-screen w-full overflow-hidden bg-transparent relative flex items-center">
+      className="h-screen w-full overflow-hidden  bg-transparent relative flex items-center">
       <div className="absolute top-12 left-6 md:left-12 z-20">
         <h2
           className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter uppercase"

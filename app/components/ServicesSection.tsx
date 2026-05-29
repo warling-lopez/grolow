@@ -13,13 +13,7 @@ export default function ServicesSection() {
     const cards = gsap.utils.toArray('.service-card');
     
     // Pinning de la sección completa para dar espacio
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "+=2000", // ESTO alarga la sección. A más número, más lento el scroll.
-      pin: true,
-      scrub: 1,
-    });
+    
 
     cards.forEach((card: any, i) => {
       gsap.to(card, {
@@ -29,27 +23,17 @@ export default function ServicesSection() {
           end: "top 20%",
           scrub: true,
         },
-        y: -70 * i, // Efecto cascada
+        y: -80 * i, // Efecto cascada
         rotate: i % 2 === 0 ? 2 : -4,
       });
 
       // Efecto interactivo individual al mover el mouse sobre la tarjeta
-      card.addEventListener("mousemove", (e: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        gsap.to(card.querySelector('.glow'), {
-          opacity: 1,
-          x: x - 550,
-          y: y - 550,
-          duration: 0.2
-        });
-      });
+      
     });
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="w-full h-screen bg-transparent py-20 flex items-center">
+    <section ref={containerRef} className="w-full h-screen bg-transparent my-50 py-20 flex items-center">
       <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-10">
         {[1, 2, 3].map((num) => (
           <div key={num} className="service-card group relative overflow-hidden bg-white/5 border border-white/10 p-16 backdrop-blur-xl h-[400px]">

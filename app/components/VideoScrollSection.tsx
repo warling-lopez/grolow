@@ -19,7 +19,11 @@ export default function VideoScrollSection() {
 
       video.onloadedmetadata = () => {
         const RUNWAY = 3200;
+        const t1 = textFirstRef.current;
+        const t2 = textSecondRef.current;
+        if (!t1 || !t2) return;
 
+        // ── Video scrub ───────────────────────────────────────────────
         gsap.to(video, {
           currentTime: video.duration,
           ease: "none",
@@ -29,12 +33,65 @@ export default function VideoScrollSection() {
             end: `+=${RUNWAY}`,
             scrub: 1,
             pin: true,
-            pinSpacing: false, // GSAP no inserta su propio spacer, lo maneja el wrapper
+            pinSpacing: false,
           },
         });
 
-        // Salida del primer texto (a mitad del runway)
-        gsap.to(textFirstRef.current, {
+        // ── Texto 1: entrada ─────────────────────────────────────────
+
+        gsap.fromTo(
+          t1.querySelector("span"),
+          { opacity: 0, y: 16, letterSpacing: "0.5em" },
+          {
+            opacity: 1,
+            y: 0,
+            letterSpacing: "0.25em",
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top+=800 bottom", // Empieza cuando el top de la sección llega al 85% de la pantalla (apenas asoma)
+              end: "top +=1200 top",   // Termina cuando va por la mitad
+              scrub: 1,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          t1.querySelector(".word-control"),
+          { opacity: 0, x: -80, skewX: -10 },
+          {
+            opacity: 1,
+            x: 0,
+            skewX: 0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top+=800 bottom", // Empieza cuando el top de la sección llega al 85% de la pantalla (apenas asoma)
+              end: "top +=1200 top",   // Termina cuando va por la mitad
+              scrub: 1,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          t1.querySelector(".word-absoluto"),
+          { opacity: 0, x: 80, skewX: 10 },
+          {
+            opacity: 1,
+            x: 0,
+            skewX: 0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top+=800 bottom", // Empieza cuando el top de la sección llega al 85% de la pantalla (apenas asoma)
+              end: "top +=1200 top",   // Termina cuando va por la mitad
+              scrub: 1,
+            },
+          }
+        );
+
+        // ── Texto 1: salida ───────────────────────────────────────────
+        gsap.to(t1, {
           y: -60,
           opacity: 0,
           ease: "power2.in",
@@ -46,9 +103,9 @@ export default function VideoScrollSection() {
           },
         });
 
-        // Entrada del segundo texto
+        // ── Texto 2: entrada ──────────────────────────────────────────
         gsap.fromTo(
-          textSecondRef.current,
+          t2,
           { y: 60, opacity: 0 },
           {
             y: 0,
@@ -60,12 +117,64 @@ export default function VideoScrollSection() {
               end: `top+=${RUNWAY * 0.65} top`,
               scrub: 1,
             },
-          },
+          }
         );
+
+        gsap.fromTo(
+          t2.querySelector("span"),
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: `top+=${RUNWAY * 0.51} top`,
+              end: `top+=${RUNWAY * 0.62} top`,
+              scrub: 1,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          t2.querySelector(".word-solocon"),
+          { opacity: 0, x: -50, skewX: -8 },
+          {
+            opacity: 1,
+            x: 0,
+            skewX: 0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: `top+=${RUNWAY * 0.53} top`,
+              end: `top+=${RUNWAY * 0.66} top`,
+              scrub: 1,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          t2.querySelector(".word-grolow"),
+          { opacity: 0, x: 50, skewX: 8, scale: 0.9 },
+          {
+            opacity: 1,
+            x: 0,
+            skewX: 0,
+            scale: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: `top+=${RUNWAY * 0.55} top`,
+              end: `top+=${RUNWAY * 0.68} top`,
+              scrub: 1,
+            },
+          }
+        );
+
         ScrollTrigger.refresh();
       };
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
@@ -91,8 +200,9 @@ export default function VideoScrollSection() {
         <h2
           className="text-6xl md:text-8xl font-extrabold text-white text-center uppercase leading-[0.9]"
           style={{ fontFamily: "'Syne', sans-serif" }}>
-          Control <br />
-          <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan">
+          <span className="word-control inline-block">Control</span>
+          <br />
+          <span className="word-absoluto italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block">
             Absoluto
           </span>
         </h2>
@@ -108,8 +218,8 @@ export default function VideoScrollSection() {
         <h2
           className="text-6xl md:text-8xl font-extrabold text-white text-center uppercase leading-[0.9]"
           style={{ fontFamily: "'Syne', sans-serif" }}>
-          Solo con{" "}
-          <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan">
+          <span className="word-solocon inline-block">Solo con</span>{" "}
+          <span className="word-grolow italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block">
             Grolow.
           </span>
         </h2>
