@@ -10,49 +10,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 function ScrollReactiveModel() {
   const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<any>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
 
   useFrame((state) => {
-  if (!meshRef.current) return;
-  
-  // Interacción suave con el mouse: el objeto sigue levemente al cursor
-  const targetX = state.mouse.x * 0.5;
-  const targetY = state.mouse.y * 0.5;
-  
-  meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX + (window.innerWidth > 768 ? 2 : 0), 0.05);
-  meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.05);
-});
+    if (!meshRef.current) return;
+    
+    const time = state.clock.getElapsedTime();
+    
+    // 1. Efecto ola matemática (ondulación tranquila de fondo)
+    // Rota sutilmente de forma constante simulando un fluido masivo
+    meshRef.current.rotation.z = time * 0.03;
+    meshRef.current.rotation.x = Math.sin(time * 0.1) * 0.1;
+
+    // 2. Interacción ultra suave con el mouse
+    const targetX = state.mouse.x * 0.3;
+    const targetY = state.mouse.y * 0.3;
+    
+    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.03);
+    meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.03);
+  });
 
   useLayoutEffect(() => {
     if (!meshRef.current || !materialRef.current) return;
 
-    // Aquí está la magia negra. Enlazamos el scroll de toda la página al objeto 3D.
+    // Vinculamos al scroll global de la página
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: document.body, // El scroll de todo el sitio
+        trigger: document.body,
         start: "top top",
         end: "bottom bottom",
-        scrub: 1.5, // Scrub hace que la animación siga el ritmo exacto de la rueda del ratón
+        scrub: 1.5,
       }
     });
 
-    // A medida que bajas, el objeto se mueve, rota y se distorsiona agresivamente
+    // En lugar de deformarse agresivo, el plano rota y cambia de profundidad
+    // simulando que navegas "a través" de la red de la agencia al bajar scroll
     tl.to(meshRef.current.position, {
-      y: -2,      // Baja en el eje Y
-      x: -3,      // Se mueve a la izquierda para dejar espacio al texto
-      z: 1,       // Se acerca a la cámara
-      ease: "power2.inOut"
-    }, 0)
-    .to(meshRef.current.rotation, {
-      x: Math.PI * 2,
-      y: Math.PI * 4,
+      z: -1, // Se aleja ligeramente de forma elegante
+      y: -0.5,
       ease: "none"
     }, 0)
-    // Mutamos el shader del material dinámicamente con el scroll
+    .to(meshRef.current.rotation, {
+      y: Math.PI * 0.5, // Rota suave en su eje para cambiar la perspectiva de la red
+      ease: "none"
+    }, 0)
     .to(materialRef.current, {
-      distort: 0.8, // Se vuelve más caótico abajo
-      speed: 4,     // Se mueve más rápido
-      ease: "power1.inOut"
+      opacity: 0.25, // Se vuelve un poco más invisible en el footer para no molestar
+      ease: "none"
     }, 0);
 
     return () => {
@@ -61,20 +65,24 @@ function ScrollReactiveModel() {
   }, []);
 
   return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-      <Sphere ref={meshRef} args={[1, 128, 128]} scale={2.8} position={[2, 1, -3]}>
-        <MeshDistortMaterial
+    <Float speed={0.8} rotationIntensity={0.2} floatIntensity={0.5}>
+      {/* Usamos un Plane de alta densidad inclinado en el espacio 3D */}
+      <mesh 
+        ref={meshRef} 
+        position={[0, 0, -2]} 
+        rotation={[-Math.PI / 3, 0, 0]}
+      >
+        <planeGeometry args={[12, 12, 45, 45]} />
+        <meshStandardMaterial
           ref={materialRef}
           color="#004643" 
-          distort={0.2}
-          speed={1}
-          roughness={0.1}
-          metalness={1}
           wireframe={true}
-          transparent
-          opacity={0.5}
+          transparent={true}
+          opacity={0.4}
+          roughness={1}
+          metalness={0.2}
         />
-      </Sphere>
+      </mesh>
     </Float>
   );
 }
