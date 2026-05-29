@@ -7,9 +7,9 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
-  { q: "¿Usan WordPress o constructores visuales?", a: "No. Desarrollamos todo desde cero usando tecnologías modernas (React, TypeScript) para garantizar tiempos de carga menores a 1 segundo y máxima seguridad." },
-  { q: "¿Tengo que pagar comisiones por las ventas en mi tienda?", a: "Absolutamente cero. Tu sistema envía los pedidos directo a tu WhatsApp. No dependes de pasarelas de pago que te roban un porcentaje de tu facturación." },
-  { q: "¿En cuánto tiempo me entregan el sistema?", a: "Un promedio de 72 horas para tiendas a WhatsApp y Landing Pages, una vez nos entregues la información y catálogo de tu negocio." },
+  { q: "¿Cuánto cuesta un proyecto?", a: "Depende del tipo de sistema. Una landing page parte desde $200, una tienda online desde $350, y los sistemas más completos desde $800. El diagnóstico es gratis y sin compromiso — te decimos exactamente qué necesitas y cuánto cuesta antes de empezar." },
+  { q: "¿Qué pasa si necesito cambios después de la entrega?", a: "Los primeros 7 días incluyen ajustes sin costo. Después podemos acordar un plan de mantenimiento mensual o trabajar cambios puntuales según tus necesidades." },
+  { q: "¿Usan WordPress o constructores visuales?", a: "No. Desarrollamos todo en código propio (React + TypeScript) para garantizar velocidad, seguridad y un rendimiento que los constructores no pueden igualar. Tu web carga en menos de 1 segundo." },
 ];
 
 export default function FaqSection() {

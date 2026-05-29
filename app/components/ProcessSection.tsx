@@ -8,19 +8,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
-    num: "01",
-    title: "Auditoría Técnica",
-    desc: "Analizamos tu flujo de ventas actual y detectamos cuellos de botella.",
+    num: "Paso 01",
+    title: "Diagnóstico",
+    desc: "Analizamos tu negocio, tus clientes y tu objetivo real. Detectamos qué frena tus ventas y qué tipo de sistema necesitas.",
   },
   {
-    num: "02",
-    title: "Arquitectura & Desarrollo",
-    desc: "Construimos el sistema a medida. Diseño UI/UX premium y código limpio.",
+    num: "Paso 02",
+    title: "Diseño y desarrollo",
+    desc: "Construimos tu sistema desde cero. UI/UX premium, código limpio, sin plantillas genéricas. Tú apruebas antes del lanzamiento.",
   },
   {
-    num: "03",
-    title: "Automatización & Despliegue",
-    desc: "Conectamos tu web con WhatsApp o tu CRM. Listo para recibir tráfico.",
+    num: "Paso 03",
+    title: "Entrega y soporte",
+    desc: "Desplegamos, conectamos WhatsApp o tu CRM, y te entregamos listo para recibir tráfico. Con guía de uso incluida.",
   },
 ];
 
