@@ -6,12 +6,14 @@ import ProcessSection from "@/app/components/ProcessSection";
 import TechSection from "@/app/components/TechSection";
 import FaqSection from "@/app/components/FaqSection";
 import ContactSection from "@/app/components/ContactSection";
+import ProyectsSection from "@/app/components/ProjectsSection";
 
 export default function Home() {
   return (
     <main className="w-full">
       <div>
         <HeroSection />
+        <ProyectsSection />
         <ServicesSection />
       </div>
       <div
@@ -24,7 +26,7 @@ export default function Home() {
         <ProcessSection />
       </div>
 
-      <div style={{ height: "calc(100vh + 1000px)" }}>
+      <div style={{ height: "calc(100vh + 1200px)" }}>
         <TechSection />
       </div>
       <div>
