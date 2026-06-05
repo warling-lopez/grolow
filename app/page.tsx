@@ -24,7 +24,7 @@ export default function Home() {
         <ProcessSection />
       </div>
 
-      <div style={{ height: "calc(100vh + 700px)" }}>
+      <div style={{ height: "calc(100vh + 1000px)" }}>
         <TechSection />
       </div>
       <div>
