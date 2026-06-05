@@ -63,10 +63,10 @@ export default function HeroSection() {
         </div>
 
         <h1
-          className="text-6xl md:text-[110px] font-extrabold leading-[0.9] tracking-tighter text-grolow-light uppercase mb-12"
+          className="text-5xl md:text-[110px] font-extrabold leading-[0.9] tracking-tighter text-grolow-light uppercase mb-12"
           style={{ fontFamily: "'Syne', sans-serif" }}>
-          <div className="overflow-hidden pb-2">
-            <span className="hero-line block">Tu negocio</span>
+          <div className="overflow-hidden pb-2 ">
+            <span className="hero-line block ">Tu negocio</span>
           </div>
           <div className="overflow-hidden pb-2">
             <span className="hero-line block text-transparent bg-clip-text bg-gradient-to-r from-grolow-cream to-grolow-accent italic">
@@ -89,11 +89,11 @@ export default function HeroSection() {
             para atraer clientes y automatizar tus ventas.
           </p>
 
-          <div className="hero-fade flex gap-6 items-center">
+          <div className="hero-fade flex gap-4 justify-center items-center">
             {/* Botón ahora en color Crema con texto del verde más oscuro */}
             <a
               href="#contacto"
-              className="group flex items-center gap-4 px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
+              className="group flex items-center gap-4 px-4 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
               Ver proyectos 
               <span className="group-hover:translate-x-1 transition-transform">
                 →
@@ -101,8 +101,8 @@ export default function HeroSection() {
             </a>
             <a
               href="#contacto"
-              className="group flex items-center gap-4 px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
-              Solicitar diagnóstico gratis
+              className="group flex items-center gap-4 px-4 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
+              Diagnóstico gratis
               <span className="group-hover:translate-x-1 transition-transform">
                 →
               </span>

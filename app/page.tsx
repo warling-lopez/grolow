@@ -10,17 +10,27 @@ import ContactSection from "@/app/components/ContactSection";
 export default function Home() {
   return (
     <main className="w-full">
-      <HeroSection />
-      <ServicesSection />
-      <div style={{ height: "calc(100vh + 3200px)" }}>
+      <div>
+        <HeroSection />
+        <ServicesSection />
+      </div>
+      <div
+        className="hidden md:block"
+        style={{ height: "calc(100vh + 3200px)" }}>
         <VideoScrollSection />
       </div>
-      <div style={{ height: "calc(100vh + 4300px)" }}>
+      <div className="h-[calc(100vh+2000px)] md:h-[calc(100vh+4800px)]">
+        {" "}
         <ProcessSection />
       </div>
-      <TechSection />
-      <FaqSection />
-      <ContactSection />
+
+      <div style={{ height: "calc(100vh + 700px)" }}>
+        <TechSection />
+      </div>
+      <div>
+        <FaqSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }
