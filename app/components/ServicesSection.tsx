@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -216,15 +217,18 @@ export default function ServicesSection() {
   return (
     <section
       ref={containerRef}
-      className="w-full min-h-screen bg-transparent my-20 md:my-20 py-10 md:py-20 flex items-center px-4 md:px-8"
+      className="w-full min-h-screen bg-transparent my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
     >
+      <h1 className="text-3xl md:text-5xl font-black uppercase text-white pr-16 md:pr-0 pb-8 md:pb-12 border-b border-white/10 w-full max-w-5xl mx-auto">
+        Servicios
+      </h1>
       <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-8 md:gap-10">
         {services.map((service) => (
           <div
             key={service.id}
-            className="service-card group relative overflow-hidden bg-white/5 border border-white/10 p-6 md:p-16 backdrop-blur-xl h-auto md:h-[500px] flex flex-col justify-between rounded-2xl"
+            className="service-card group relative overflow-hidden bg-white/5 border border-white/10 p-6 md:p-16 backdrop-blur-xl h-auto md:h-125 flex flex-col justify-between rounded-2xl"
           >
-            <div className="glow pointer-events-none absolute w-[300px] h-[300px] bg-grolow-cyan/20 rounded-full blur-[100px] opacity-0 transition-opacity" />
+            <div className="glow pointer-events-none absolute w-75 h-75 bg-grolow-cyan/20 rounded-full blur-[100px] opacity-0 transition-opacity" />
 
             {/* Badges: Nuevo / Recurrente */}
             <div className="absolute top-6 left-6 flex gap-2 z-20">
@@ -278,16 +282,31 @@ export default function ServicesSection() {
                     key={index}
                     className="text-xs md:text-sm text-slate-400 flex items-center gap-2"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-grolow-cyan inline-block flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-grolow-cyan inline-block shrink-0" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-4 md:mt-0 md:absolute md:bottom-8 md:right-8 flex justify-end">
+              <div className="mt-4 md:mt-0 md:absolute md:bottom-8 md:right-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                 <span className="text-grolow-cyan font-mono text-lg md:text-xl font-bold tracking-widest uppercase">
                   {service.priceLabel}
                 </span>
+                <Link
+                  href={`/#contacto?servicio=${service.id}`}
+                  onClick={() => {
+                    const el = document.getElementById('contacto');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                      const select = el.querySelector<HTMLSelectElement>('#needs');
+                      if (select) {
+                        select.value = service.id;
+                      }
+                    }
+                  }}
+                  className="text-[10px] font-extrabold uppercase tracking-widest px-5 py-3 border border-white/20 text-white hover:bg-grolow-cyan hover:border-grolow-cyan hover:text-black transition-colors whitespace-nowrap">
+                  Quiero este →
+                </Link>
               </div>
             </div>
           </div>
