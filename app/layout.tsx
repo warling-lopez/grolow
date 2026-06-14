@@ -35,7 +35,18 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
-
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Grolow Studio",
+  "url": "https://www.grolow.com",
+  "logo": "https://www.grolow.com/logo.png",
+  "areaServed": "DO",
+  "sameAs": [
+    "https://www.facebook.com/share/1KWFa6vDno/?mibextid=wwXIfr",
+    "https://www.instagram.com/grolow.agency/",
+  ]
+};  
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className="bg-grolow-dark">
