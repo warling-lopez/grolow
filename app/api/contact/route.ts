@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       <p style="color: #94a3b8;">Nuestro equipo está evaluando tu proyecto. En menos de 24 horas te contactamos por WhatsApp o correo con una propuesta clara: alcance, inversión y tiempos.</p>
       <div style="margin: 32px 0; padding: 20px; background: #0f1923; border-left: 3px solid #009b9b; border-radius: 4px;">
         <p style="margin: 0; font-size: 14px; color: #94a3b8;">¿Necesitas algo urgente? Escríbenos directo:</p>
-        <p style="margin: 8px 0 0; font-weight: bold;">WhatsApp: <a href="https://wa.me/18299926354" style="color: #009b9b;">+1 829 992 6354</a></p>
+        <p style="margin: 8px 0 0; font-weight: bold;">WhatsApp: <a href="https://wa.me/18299946354" style="color: #009b9b;">+1 829 994 6354</a></p>
         <p style="margin: 4px 0 0; font-weight: bold;">Instagram: <a href="https://instagram.com/grolow.agency" style="color: #009b9b;">@grolow.agency</a></p>
       </div>
       <hr style="border-color: #1e293b; margin: 24px 0;" />

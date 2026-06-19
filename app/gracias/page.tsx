@@ -31,7 +31,7 @@ export default function GraciasPage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://wa.me/18299926354?text=Hola%2C+acabo+de+llenar+el+formulario+en+grolow.agency"
+            href="https://wa.me/18299946354?text=Hola%2C+acabo+de+llenar+el+formulario+en+grolow.agency"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-[#25D366] text-black font-extrabold uppercase tracking-widest text-xs hover:opacity-90 transition-opacity">

@@ -124,11 +124,11 @@ function ContactForm() {
                 WhatsApp
               </p>
               <a
-                href="https://wa.me/18299926354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
+                href="https://wa.me/18299946354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xl font-medium text-white hover:text-grolow-cyan transition-colors">
-                +1 829 992 6354
+                +1 829 994 6354
               </a>
             </div>
             <div>
