@@ -94,7 +94,7 @@ function ContactForm() {
               Hablemos de tu proyecto
             </span>
             <h2
-              className="font-extrabold text-4xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-white mb-6 uppercase wrap-break-word hyphens-auto"
+              className="font-extrabold text-3xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-white mb-6 uppercase wrap-break-word hyphens-auto"
               style={{ fontFamily: "'Syne', sans-serif" }}
               lang="es">
               Construyamos <br />

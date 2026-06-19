@@ -63,7 +63,7 @@ export default function HeroSection() {
         </div>
 
         <h1
-          className="text-4xl sm:text-6xl md:text-[110px] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-12 wrap-break-word hyphens-auto"
+          className="text-3xl sm:text-5xl md:text-[110px] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-12 wrap-break-word hyphens-auto"
           style={{ fontFamily: "'Syne', sans-serif" }}
           lang="es">
           <div className="overflow-hidden pb-2 ">
