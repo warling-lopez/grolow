@@ -63,8 +63,9 @@ export default function HeroSection() {
         </div>
 
         <h1
-          className="text-5xl md:text-[110px] font-extrabold leading-[0.9] tracking-tighter text-grolow-light uppercase mb-12"
-          style={{ fontFamily: "'Syne', sans-serif" }}>
+          className="text-4xl sm:text-6xl md:text-[110px] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-12 wrap-break-word hyphens-auto"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+          lang="es">
           <div className="overflow-hidden pb-2 ">
             <span className="hero-line block ">Infraestructura</span>
           </div>
@@ -88,11 +89,11 @@ export default function HeroSection() {
             previsibles para tu negocio.
           </p>
 
-          <div className="hero-fade flex gap-4 justify-center items-center">
+          <div className="hero-fade flex flex-col sm:flex-row gap-4 sm:justify-center items-stretch sm:items-center">
             {/* Botón ahora en color Crema con texto del verde más oscuro */}
             <a
               href="#casos"
-              className="group flex items-center gap-4 px-4 md:px-8 py-4 border border-grolow-cream/40 text-grolow-cream font-bold uppercase tracking-wider text-sm hover:border-grolow-cream transition-colors">
+              className="group flex items-center justify-center gap-3 px-6 md:px-8 py-4 border border-grolow-cream/40 text-grolow-cream font-bold uppercase tracking-wider text-sm hover:border-grolow-cream transition-colors whitespace-nowrap">
               Ver casos de éxito
               <span className="group-hover:translate-x-1 transition-transform">
                 →
@@ -100,7 +101,7 @@ export default function HeroSection() {
             </a>
             <a
               href="#contacto"
-              className="group flex items-center gap-4 px-4 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
+              className="group flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors whitespace-nowrap">
               Solicitar propuesta
               <span className="group-hover:translate-x-1 transition-transform">
                 →

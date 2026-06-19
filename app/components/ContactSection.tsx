@@ -94,8 +94,9 @@ function ContactForm() {
               Hablemos de tu proyecto
             </span>
             <h2
-              className="font-extrabold text-5xl md:text-6xl leading-none tracking-tighter text-white mb-6 uppercase"
-              style={{ fontFamily: "'Syne', sans-serif" }}>
+              className="font-extrabold text-4xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-white mb-6 uppercase wrap-break-word hyphens-auto"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+              lang="es">
               Construyamos <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cyan to-white/80 italic">
                 infraestructura que escala.
