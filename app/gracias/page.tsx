@@ -20,9 +20,9 @@ export default function GraciasPage() {
         </h1>
 
         <p className="text-slate-400 text-lg leading-relaxed mb-4">
-          En menos de <strong className="text-white">24 horas</strong> te contactamos por
-          WhatsApp o correo para contarte exactamente qué necesitas, cuánto cuesta y
-          cuándo lo tienes listo.
+          Nuestro equipo está evaluando tu proyecto. En menos de{' '}
+          <strong className="text-white">24 horas</strong> te contactamos por WhatsApp o
+          correo con una propuesta clara: alcance, inversión y tiempos.
         </p>
 
         <p className="text-slate-500 text-sm mb-12">

@@ -4,15 +4,15 @@ import ClientLayout from '@/app/components/ClientLayout';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Grolow Studio — Webs que venden, no solo que se ven bien',
-  description: 'Agencia de desarrollo web en República Dominicana. Landing pages, tiendas online, apps móviles y sistemas a medida. Diagnóstico gratis en 24h.',
-  keywords: ['desarrollo web', 'landing page', 'tienda online', 'República Dominicana', 'agencia web', 'Grolow'],
-  authors: [{ name: 'Grolow Studio' }],
+  title: 'Grolow — Infraestructura digital que automatiza tus ventas',
+  description: 'Agencia de infraestructura digital y sistemas de ventas. Construimos plataformas a medida que automatizan procesos y optimizan operaciones. Propuesta en 24h.',
+  keywords: ['infraestructura digital', 'automatización de ventas', 'sistemas a medida', 'plataformas', 'República Dominicana', 'agencia digital', 'Grolow'],
+  authors: [{ name: 'Grolow' }],
   openGraph: {
-    title: 'Grolow Studio — Webs que venden',
-    description: 'Tu negocio merece una web que venda. Desarrollo web profesional desde $250. Diagnóstico gratis.',
+    title: 'Grolow — Infraestructura digital que automatiza tus ventas',
+    description: 'Construimos la infraestructura digital que automatiza tus ventas y optimiza tus operaciones. Sistemas a medida para negocios que escalan.',
     url: 'https://grolow.agency',
-    siteName: 'Grolow Studio',
+    siteName: 'Grolow',
     locale: 'es_DO',
     type: 'website',
     images: [
@@ -20,14 +20,14 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Grolow Studio',
+        alt: 'Grolow — Agencia de Infraestructura Digital',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Grolow Studio — Webs que venden',
-    description: 'Tu negocio merece una web que venda. Desarrollo web profesional desde $250.',
+    title: 'Grolow — Infraestructura digital que automatiza tus ventas',
+    description: 'Construimos la infraestructura digital que automatiza tus ventas y optimiza tus operaciones.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -37,8 +37,10 @@ export const metadata: Metadata = {
 };
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Grolow Studio",
+  "@type": "ProfessionalService",
+  "name": "Grolow",
+  "description": "Agencia de infraestructura digital y sistemas de ventas. Construimos plataformas a medida que automatizan procesos y optimizan operaciones.",
+  "slogan": "Infraestructura digital que automatiza tus ventas.",
   "url": "https://www.grolow.com",
   "logo": "https://www.grolow.com/logo.png",
   "areaServed": "DO",

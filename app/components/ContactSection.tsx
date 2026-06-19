@@ -14,6 +14,20 @@ const SERVICE_OPTIONS = [
   { value: "other", label: "Asesoría / Otro" },
 ];
 
+const BILLING_OPTIONS = [
+  "Menos de $5,000 / mes",
+  "$5,000 – $20,000 / mes",
+  "$20,000 – $50,000 / mes",
+  "Más de $50,000 / mes",
+];
+
+const BUDGET_OPTIONS = [
+  "$1,500 – $3,000",
+  "$3,000 – $7,000",
+  "$7,000 – $15,000",
+  "Más de $15,000",
+];
+
 function ContactForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -25,6 +39,9 @@ function ContactForm() {
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const needsRef = useRef<HTMLSelectElement>(null);
+  const billingRef = useRef<HTMLSelectElement>(null);
+  const processRef = useRef<HTMLTextAreaElement>(null);
+  const budgetRef = useRef<HTMLSelectElement>(null);
 
   const preselectedService = searchParams.get("servicio") ?? "";
 
@@ -44,6 +61,9 @@ function ContactForm() {
       phone: phoneRef.current?.value ?? "",
       email: emailRef.current?.value ?? "",
       needs: needsRef.current?.value ?? "",
+      billing: billingRef.current?.value ?? "",
+      process: processRef.current?.value ?? "",
+      budget: budgetRef.current?.value ?? "",
     };
 
     try {
@@ -71,20 +91,20 @@ function ContactForm() {
         <div className="flex flex-col justify-between">
           <div>
             <span className="block text-[11px] font-bold tracking-[.3em] uppercase text-grolow-cyan mb-8">
-              ¿Listo para
+              Hablemos de tu proyecto
             </span>
             <h2
               className="font-extrabold text-5xl md:text-6xl leading-none tracking-tighter text-white mb-6 uppercase"
               style={{ fontFamily: "'Syne', sans-serif" }}>
-              tener <br />
+              Construyamos <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cyan to-white/80 italic">
-                un sistema que trabaje por ti?.
+                infraestructura que escala.
               </span>
             </h2>
             <p className="text-slate-400 text-lg leading-relaxed max-w-md">
-              Cuéntanos qué vendes o qué quieres lograr. En 24 horas te decimos
-              exactamente qué necesitas, cuánto cuesta y cuándo lo tienes listo.
-              Sin rodeos.
+              Evaluamos cada proyecto para asegurarnos de ser el socio correcto
+              para tu negocio. Cuéntanos dónde estás hoy y qué quieres automatizar;
+              te respondemos con una propuesta clara en menos de 24 horas.
             </p>
           </div>
 
@@ -104,7 +124,7 @@ function ContactForm() {
                 WhatsApp
               </p>
               <a
-                href="https://wa.me/18299926354?text=Hola%2C+vi+tu+web+y+quiero+un+diagn%C3%B3stico+gratis"
+                href="https://wa.me/18299926354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xl font-medium text-white hover:text-grolow-cyan transition-colors">
@@ -204,6 +224,68 @@ function ContactForm() {
             </select>
           </div>
 
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="billing"
+              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              Facturación actual del negocio
+            </label>
+            <select
+              ref={billingRef}
+              id="billing"
+              required
+              defaultValue=""
+              className="w-full bg-transparent border-b border-white/10 pb-3 text-white text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              <option value="" className="bg-[#080808]">
+                Selecciona un rango
+              </option>
+              {BILLING_OPTIONS.map((opt) => (
+                <option key={opt} value={opt} className="bg-[#080808]">
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="process"
+              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              ¿Qué proceso quieres automatizar?
+            </label>
+            <textarea
+              ref={processRef}
+              id="process"
+              required
+              rows={3}
+              placeholder="Ej: tomamos pedidos a mano por WhatsApp y perdemos ventas; queremos un catálogo con inventario en tiempo real."
+              className="w-full bg-transparent border-b border-white/10 pb-3 text-white placeholder:text-slate-700 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
+            />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="budget"
+              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              Presupuesto estimado (mínimo $1,500 USD)
+            </label>
+            <select
+              ref={budgetRef}
+              id="budget"
+              required
+              defaultValue=""
+              className="w-full bg-transparent border-b border-white/10 pb-3 text-white text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              <option value="" className="bg-[#080808]">
+                Selecciona un rango
+              </option>
+              {BUDGET_OPTIONS.map((opt) => (
+                <option key={opt} value={opt} className="bg-[#080808]">
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {error && (
             <p className="text-red-400 text-xs text-center">{error}</p>
           )}
@@ -212,11 +294,11 @@ function ContactForm() {
             type="submit"
             disabled={isSubmitting}
             className="w-full py-6 mt-4 bg-white text-black font-extrabold uppercase tracking-widest text-xs hover:bg-grolow-cyan transition-colors disabled:opacity-50 flex justify-center items-center gap-3">
-            {isSubmitting ? "Enviando..." : "Solicitar Diagnóstico"}
+            {isSubmitting ? "Enviando..." : "Solicitar propuesta"}
             {!isSubmitting && <span>→</span>}
           </button>
           <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest -mt-2.5">
-            Sin compromisos. Diagnóstico gratis. Respuesta en menos de 24 horas.
+            Evaluamos cada proyecto · Presupuesto mínimo $1,500 USD · Respuesta en menos de 24 horas.
           </p>
         </form>
       </div>

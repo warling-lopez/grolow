@@ -59,22 +59,22 @@ export default function TechSection() {
             className="tech-title text-6xl md:text-8xl font-extrabold text-white leading-none uppercase"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
-            {'CÓDIGO'.split('').map((l, i) => (
+            {'SISTEMAS'.split('').map((l, i) => (
               <span key={i} className="inline-block">
                 {l}
               </span>
             ))}{' '}
             <br />
-            <span className="text-grolow-cyan italic">A MEDIDA.</span>
+            <span className="text-grolow-cyan italic">QUE ESCALAN.</span>
           </h2>
         </div>
 
         <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 pt-32">
           {[
-            { name: 'TypeScript', role: 'Arquitectura' },
-            { name: 'Next.js', role: 'Rendimiento' },
-            { name: 'Three.js', role: 'Inmersión' },
-            { name: 'Supabase', role: 'Seguridad' },
+            { name: 'Automatización', role: 'Procesos sin trabajo manual' },
+            { name: 'Tiempo Real', role: 'Datos sincronizados al instante' },
+            { name: 'Seguridad', role: 'Protección de tus datos' },
+            { name: 'Escalabilidad', role: 'Crece sin rehacer todo' },
           ].map((tech, i) => (
             <div
               key={i}

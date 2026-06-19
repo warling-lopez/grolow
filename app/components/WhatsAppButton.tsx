@@ -3,14 +3,14 @@
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/18299926354?text=Hola%2C+vi+tu+web+y+quiero+un+diagn%C3%B3stico+gratis"
+      href="https://wa.me/18299926354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
       {/* Tooltip */}
       <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#111] text-white text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border border-white/10 pointer-events-none">
-        Diagnóstico gratis
+        Contacto
       </span>
 
       {/* Botón circular */}

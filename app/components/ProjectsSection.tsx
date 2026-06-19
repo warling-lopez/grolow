@@ -17,7 +17,15 @@ type ProjectId =
 interface Project {
   id: ProjectId;
   title: string;
-  description: string;
+  /** Situación previa del cliente: el problema de negocio que enfrentaba. */
+  problem: string;
+  /** Infraestructura/sistema que construimos para resolverlo. */
+  solution: string;
+  /**
+   * Resultado medible. PENDIENTE: reemplazar con métricas reales del cliente.
+   * No inventar números — el usuario entregará los datos verificados.
+   */
+  result: string;
   tags: string[];
   serviceType: string;
   url: string;
@@ -35,8 +43,6 @@ interface Project {
   imageAlt: string;
   /** Grados de rotación decorativa de la imagen flotante */
   imageRotation: number;
-  isPersonal?: boolean;
-  isCollab?: boolean;
   isFeatured?: boolean;
 }
 
@@ -47,22 +53,27 @@ export default function ProjectsSection() {
     {
       id: "laperfum",
       title: "La Perfurm RD",
-      description:
-        "Tienda online de perfumes nicho y exclusivos para el mercado dominicano. Catálogo visual, pedidos por WhatsApp y diseño de lujo que refleja la exclusividad de la marca.",
+      problem:
+        "Gestionaba un catálogo de perfumes nicho de forma manual y dispersa, sin una vitrina centralizada que reflejara la exclusividad de la marca ni canalizara los pedidos.",
+      solution:
+        "Construimos una tienda digital centralizada con catálogo visual de lujo y pedidos canalizados directo a WhatsApp, sin comisiones de terceros.",
+      result: "[Resultado — pendiente de dato real del cliente]",
       tags: ["Tienda WhatsApp", "Perfumes", "Lujo", "RD"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://laperfum1.com/",
       image: "/projects/laperfum.webp",
       imageAlt: "Vista previa de La Perfurm RD",
       imageRotation: 4,
-      isPersonal: true,
       isFeatured: true,
     },
     {
       id: "hellenscute",
       title: "Hellen's Cute Kids",
-      description:
-        "Landing page para marca de ropa infantil con sistema de distribuidoras autorizadas por zona y flujo de compra directo por WhatsApp.",
+      problem:
+        "Una red de distribuidoras de ropa infantil sin un sistema que organizara las ventas por zona ni encaminara la compra de forma ordenada.",
+      solution:
+        "Implementamos una landing de conversión con asignación de distribuidoras autorizadas por zona y flujo de compra directo por WhatsApp.",
+      result: "[Resultado — pendiente de dato real del cliente]",
       tags: ["Landing Page", "Ropa Infantil", "Red de ventas"],
       serviceType: "Landing Page de Conversión",
       url: "https://hellenscute.com/",
@@ -73,54 +84,62 @@ export default function ProjectsSection() {
     {
       id: "warling",
       title: "Warling Dev.",
-      description:
-        "Portfolio profesional como desarrollador web independiente. Servicios técnicos, proceso de trabajo y CTA para agendar consultas gratis.",
-      tags: ["Portfolio", "Full Stack", "Next.js"],
-      serviceType: "Sitio Personal",
+      problem:
+        "Sin una presencia profesional que comunicara servicios técnicos y proceso de trabajo a clientes potenciales.",
+      solution:
+        "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un CTA claro para agendar consultas.",
+      result: "[Resultado — pendiente de dato real del cliente]",
+      tags: ["Sitio Profesional", "Servicios"],
+      serviceType: "Sitio Profesional",
       url: "https://www.warling.top/",
       image: "/projects/warling.webp",
-      imageAlt: "Vista previa de Warling Dev portfolio",
+      imageAlt: "Vista previa de Warling Dev",
       imageRotation: 3,
-      isPersonal: true,
     },
     {
       id: "aromacaribenio",
       title: "Aroma Caribeño",
-      description:
-        "Catálogo digital de perfumes originales árabes y de nicho con compra directa. Identidad visual tropical y experiencia enfocada en conversión.",
+      problem:
+        "Un catálogo de perfumes árabes y de nicho sin una vitrina digital que permitiera la compra directa ni reflejara la identidad de marca.",
+      solution:
+        "Construimos un catálogo digital con compra directa, identidad visual tropical y una experiencia enfocada en conversión.",
+      result: "[Resultado — pendiente de dato real del cliente]",
       tags: ["Tienda WhatsApp", "Perfumes Árabes", "Catálogo"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://aromacaribenio.vercel.app/",
       image: "/projects/aromacaribenio.webp",
       imageAlt: "Vista previa de Aroma Caribeño",
       imageRotation: -4,
-      isCollab: true,
     },
     {
       id: "deliscias-marijo",
       title: "Delicias Marijo",
-      description:
-        "Sitio para negocio gastronómico local. Presentación de productos, identidad de marca y canal de contacto directo para pedidos.",
+      problem:
+        "Un negocio gastronómico local sin canal digital para presentar productos ni recibir pedidos de forma directa y ordenada.",
+      solution:
+        "Diseñamos un sitio con presentación de productos, identidad de marca y un canal de contacto directo para pedidos.",
+      result: "[Resultado — pendiente de dato real del cliente]",
       tags: ["Gastronomía", "Negocio local", "WhatsApp"],
       serviceType: "Landing Page de Conversión",
       url: "https://deliscias-marijo.vercel.app/",
       image: "/projects/deliscias-marijo.webp",
       imageAlt: "Vista previa de Delicias Marijo",
       imageRotation: 3,
-      isCollab: true,
     },
     {
       id: "wai",
       title: "WAI — IA para profesionales",
-      description:
-        "Landing page de producto SaaS de inteligencia artificial. Características, casos de uso, precios y modo claro/oscuro incluido.",
-      tags: ["SaaS", "Inteligencia Artificial", "Dark mode"],
+      problem:
+        "Un producto SaaS de inteligencia artificial sin una página que comunicara su propuesta de valor, casos de uso y precios.",
+      solution:
+        "Construimos una landing de producto con características, casos de uso, precios y modo claro/oscuro para presentar el SaaS con claridad.",
+      result: "[Resultado — pendiente de dato real del cliente]",
+      tags: ["SaaS", "Inteligencia Artificial", "Producto"],
       serviceType: "Landing Page de Conversión",
       url: "https://w-bice-theta.vercel.app/",
       image: "/projects/wai.webp",
       imageAlt: "Vista previa de WAI",
       imageRotation: -3,
-      isCollab: true,
     },
   ];
 
@@ -205,6 +224,7 @@ export default function ProjectsSection() {
 
   return (
     <section
+      id="casos"
       ref={containerRef}
       className="w-full bg-transparent my-20 py-10 md:py-20 px-4 md:px-8"
     >
@@ -213,12 +233,12 @@ export default function ProjectsSection() {
         {/* ── Header ── */}
         <div className="mb-12 md:mb-16">
           <p className="text-xs font-mono uppercase tracking-widest text-white/40 mb-3">
-            03. Proyectos
+            Casos de Éxito
           </p>
           <h2 className="text-4xl md:text-7xl font-black uppercase text-white leading-none">
-            Trabajo Real.
+            Problemas de negocio.
             <br />
-            <span className="text-white/30">Resultados Reales.</span>
+            <span className="text-white/30">Soluciones que escalan.</span>
           </h2>
         </div>
 
@@ -290,25 +310,13 @@ export default function ProjectsSection() {
               {/* ── Contenido (z-10 para estar sobre la imagen) ── */}
               <div className="relative z-10 flex flex-col gap-4 h-full">
 
-                {/* Badges + flecha */}
+                {/* Tipo de servicio + flecha */}
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    {project.isPersonal && (
-                      <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-cyan/40 text-grolow-cyan bg-grolow-cyan/10">
-                        ★ Personal
-                      </span>
-                    )}
-                    {project.isCollab && (
-                      <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-purple-400/40 text-purple-400 bg-purple-400/10">
-                        Colaboración
-                      </span>
-                    )}
-                    <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-white/15 text-white/40">
-                      {project.serviceType}
-                    </span>
-                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-white/15 text-white/40">
+                    {project.serviceType}
+                  </span>
 
-                  <span className="text-white/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base flex-shrink-0">
+                  <span className="text-white/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
                     ↗
                   </span>
                 </div>
@@ -318,10 +326,33 @@ export default function ProjectsSection() {
                   {project.title}
                 </h3>
 
-                {/* Descripción */}
-                <p className="text-slate-400 text-sm leading-relaxed max-w-[58%] md:max-w-[52%]">
-                  {project.description}
-                </p>
+                {/* Problema → Solución → Resultado */}
+                <div className="flex flex-col gap-3 mt-1 max-w-[88%] md:max-w-[80%]">
+                  <div>
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 mb-1">
+                      Problema
+                    </p>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {project.problem}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 mb-1">
+                      Solución
+                    </p>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      {project.solution}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-cyan/70 mb-1">
+                      Resultado
+                    </p>
+                    <p className="text-grolow-cyan text-sm font-medium leading-relaxed">
+                      {project.result}
+                    </p>
+                  </div>
+                </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mt-auto pt-2">

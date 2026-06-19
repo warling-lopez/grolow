@@ -23,12 +23,10 @@ export default function ServicesSection() {
   const services: {
     id: ServiceId;
     title: string;
-    priceLabel: string;
     description: string;
     tags: string[];
     features: string[];
     deliveryTime: string;
-    startingPrice: number;
     highlight?: boolean;
     isNew?: boolean;
     isRecurring?: boolean;
@@ -37,10 +35,8 @@ export default function ServicesSection() {
       id: "landing",
       title: "Landing Page de Conversión",
       description:
-        "Una sola página diseñada para convertir visitas en clientes. Ideal para lanzar un producto, capturar leads o validar tu idea rápidamente.",
+        "Una sola página diseñada para convertir visitas en clientes. Ideal para lanzar un producto, capturar leads o validar una idea rápidamente.",
       deliveryTime: "72 horas",
-      startingPrice: 250,
-      priceLabel: "Desde $250",
       tags: ["Conversión", "Leads", "Lanzamiento"],
       features: [
         "Diseño UI/UX premium",
@@ -54,10 +50,8 @@ export default function ServicesSection() {
       id: "tienda-whatsapp",
       title: "Tienda Online → WhatsApp",
       description:
-        "Tu catálogo en la web, los pedidos directo a tu WhatsApp. Sin comisiones de terceros, sin pasarelas que te cobren por venta. Tú controlas todo.",
+        "Tu catálogo en la web, los pedidos directo a tu WhatsApp. Sin comisiones de terceros, sin pasarelas que cobren por venta. Tú controlas todo.",
       deliveryTime: "72 horas",
-      startingPrice: 400,
-      priceLabel: "Desde $400",
       tags: ["E-commerce", "WhatsApp", "Sin comisiones"],
       features: [
         "Catálogo de productos con fotos",
@@ -72,13 +66,11 @@ export default function ServicesSection() {
       id: "servicios-citas",
       title: "Web de Servicios y Citas",
       description:
-        "Para consultores, salones, clínicas o cualquier negocio que agenda. Presenta tus servicios, capta clientes y automatiza las reservas.",
+        "Para consultores, salones, clínicas o cualquier negocio que agenda. Presentamos tus servicios, captamos clientes y automatizamos las reservas.",
       deliveryTime: "5–7 días",
-      startingPrice: 380,
-      priceLabel: "Desde $380",
       tags: ["Servicios", "Reservas", "Automatización"],
       features: [
-        "Página de servicios con precios",
+        "Página de servicios",
         "Sistema de reservas o citas",
         "Integración con WhatsApp o calendario",
         "Galería de trabajos o testimonios",
@@ -91,8 +83,6 @@ export default function ServicesSection() {
       description:
         "Tienda profesional con pasarela de pago, gestión de inventario, panel de administración y experiencia de compra optimizada para conversión.",
       deliveryTime: "2–3 semanas",
-      startingPrice: 750,
-      priceLabel: "Desde $750",
       tags: ["Tienda", "Pagos online", "Inventario"],
       features: [
         "Pasarela de pago integrada",
@@ -108,8 +98,6 @@ export default function ServicesSection() {
       description:
         "Tienes un sitio pero se ve viejo, lento o no convierte. Lo analizamos, rediseñamos y optimizamos sin perder tu contenido ni tu dominio.",
       deliveryTime: "1 semana",
-      startingPrice: 350,
-      priceLabel: "Desde $350",
       tags: ["Rediseño", "Velocidad", "Conversión"],
       features: [
         "Auditoría de diseño y rendimiento",
@@ -124,11 +112,9 @@ export default function ServicesSection() {
       id: "mantenimiento",
       title: "Mantenimiento Mensual",
       description:
-        "Tu sitio siempre activo, seguro y actualizado. Nos encargamos de todo lo técnico para que tú te concentres en tu negocio.",
+        "Tu sitio siempre activo, seguro y actualizado. Nos encargamos de todo lo técnico para que te concentres en tu negocio.",
       deliveryTime: "Contrato mensual",
-      startingPrice: 80,
-      priceLabel: "$80 / mes",
-      tags: ["Recurrente", "Soporte", "Seguridad", "Actualizaciones", "Si es una web creada por nosotros solo cuesta $50/mes"],
+      tags: ["Recurrente", "Soporte", "Seguridad", "Actualizaciones"],
       features: [
         "Actualizaciones de plugins y CMS",
         "Backups semanales automatizados",
@@ -145,9 +131,7 @@ export default function ServicesSection() {
       description:
         "Lleva tu negocio al bolsillo de tus clientes. Apps nativas o híbridas para iOS y Android con diseño profesional y experiencia fluida.",
       deliveryTime: "1–2 meses",
-      startingPrice: 1200,
-      priceLabel: "Desde $1,200",
-      tags: ["iOS", "Android", "React Native"],
+      tags: ["iOS", "Android", "Multiplataforma"],
       features: [
         "Diseño UI/UX para móvil",
         "iOS y Android desde un mismo código",
@@ -161,10 +145,8 @@ export default function ServicesSection() {
       id: "sistema-medida",
       title: "Sistema a Medida",
       description:
-        "Plataformas, portales, dashboards o cualquier lógica de negocio personalizada. Si lo puedes describir, lo podemos construir.",
+        "Plataformas, portales, dashboards o cualquier lógica de negocio personalizada. Si lo puedes describir, lo construimos.",
       deliveryTime: "Según alcance",
-      startingPrice: 2000,
-      priceLabel: "Desde $2,000",
       tags: ["Plataforma", "Dashboard", "A medida"],
       features: [
         "Arquitectura y base de datos a medida",
@@ -289,9 +271,6 @@ export default function ServicesSection() {
               </ul>
 
               <div className="mt-4 md:mt-0 md:absolute md:bottom-8 md:right-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                <span className="text-grolow-cyan font-mono text-lg md:text-xl font-bold tracking-widest uppercase">
-                  {service.priceLabel}
-                </span>
                 <Link
                   href={`/#contacto?servicio=${service.id}`}
                   onClick={() => {

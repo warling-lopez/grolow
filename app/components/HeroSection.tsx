@@ -58,7 +58,7 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto w-full pt-20">
         <div className="overflow-hidden mb-2">
           <span className="hero-line block text-[11px] font-bold tracking-[.3em] uppercase text-grolow-cream mb-8">
-            Grolow Studio • No solo que se vea bien.
+            Grolow • Agencia de Infraestructura Digital
           </span>
         </div>
 
@@ -66,35 +66,34 @@ export default function HeroSection() {
           className="text-5xl md:text-[110px] font-extrabold leading-[0.9] tracking-tighter text-grolow-light uppercase mb-12"
           style={{ fontFamily: "'Syne', sans-serif" }}>
           <div className="overflow-hidden pb-2 ">
-            <span className="hero-line block ">Tu negocio</span>
+            <span className="hero-line block ">Infraestructura</span>
           </div>
           <div className="overflow-hidden pb-2">
-            <span className="hero-line block text-transparent bg-clip-text bg-gradient-to-r from-grolow-cream to-grolow-accent italic">
-              merece una web
+            <span className="hero-line block text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
+              que automatiza
             </span>
           </div>
           <div className="overflow-hidden pb-2">
-            <span className="hero-line block">que venda.</span>
+            <span className="hero-line block">tus ventas.</span>
           </div>
         </h1>
 
         <div className="flex flex-col md:flex-row gap-10 md:items-end justify-between border-t border-grolow-light/10 pt-10">
           <p className="hero-fade text-[16px] text-grolow-light/70 max-w-md font-light leading-relaxed">
-            Diseñamos y desarrollamos sistemas web a medida —{" "}
+            Construimos la infraestructura digital que{" "}
             <span className="text-grolow-light font-medium">
-              desde landing pages de conversión hasta tiendas y plataformas
-              completas{" "}
+              automatiza tus ventas y optimiza tus operaciones{" "}
             </span>{" "}
-            — usando tecnología moderna, código limpio y una estructura pensada
-            para atraer clientes y automatizar tus ventas.
+            — sistemas a medida que convierten procesos manuales en ingresos
+            previsibles para tu negocio.
           </p>
 
           <div className="hero-fade flex gap-4 justify-center items-center">
             {/* Botón ahora en color Crema con texto del verde más oscuro */}
             <a
-              href="#contacto"
-              className="group flex items-center gap-4 px-4 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
-              Ver proyectos 
+              href="#casos"
+              className="group flex items-center gap-4 px-4 md:px-8 py-4 border border-grolow-cream/40 text-grolow-cream font-bold uppercase tracking-wider text-sm hover:border-grolow-cream transition-colors">
+              Ver casos de éxito
               <span className="group-hover:translate-x-1 transition-transform">
                 →
               </span>
@@ -102,7 +101,7 @@ export default function HeroSection() {
             <a
               href="#contacto"
               className="group flex items-center gap-4 px-4 md:px-8 py-4 bg-grolow-cream text-grolow-dark font-bold uppercase tracking-wider text-sm hover:bg-grolow-light transition-colors">
-              Diagnóstico gratis
+              Solicitar propuesta
               <span className="group-hover:translate-x-1 transition-transform">
                 →
               </span>
