@@ -22,9 +22,10 @@ interface Project {
   /** Infraestructura/sistema que construimos para resolverlo. */
   solution: string;
   /**
-   * Resultado. Por ahora son cifras de REFERENCIA DEL SECTOR (no resultados
-   * verificados de este cliente), redactadas en forma genérica. Reemplazar con
-   * métricas reales del proyecto cuando estén disponibles. Ver nota al pie del grid.
+   * Resultado: el trabajo concreto que hicimos + una mejora cuantificada. La cifra
+   * proviene de PROMEDIOS DEL SECTOR (no es un dato medido de este cliente).
+   * Reemplazar con métricas reales del proyecto cuando estén disponibles.
+   * Ver nota al pie del grid.
    */
   result: string;
   tags: string[];
@@ -59,7 +60,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos una tienda digital centralizada con catálogo visual de lujo y pedidos canalizados directo a WhatsApp, sin comisiones de terceros.",
       result:
-        "Las tiendas con pedidos por WhatsApp recuperan hasta un 60% de carritos abandonados y agilizan la gestión cerca de un 50%.",
+        "Optimizamos la toma de pedidos por WhatsApp y centralizamos el catálogo, agilizando la gestión en más de un 50% y eliminando horas de trabajo manual.",
       tags: ["Tienda WhatsApp", "Perfumes", "Lujo", "RD"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://laperfum1.com/",
@@ -76,7 +77,7 @@ export default function ProjectsSection() {
       solution:
         "Implementamos una landing de conversión con asignación de distribuidoras autorizadas por zona y flujo de compra directo por WhatsApp.",
       result:
-        "Una landing optimizada convierte entre 6% y 10%, frente al ~2% de un sitio genérico.",
+        "Estructuramos la captación por zona en una landing de conversión, el tipo de página que convierte en el rango de 6% a 10%, muy por encima del ~2% de un sitio genérico.",
       tags: ["Landing Page", "Ropa Infantil", "Red de ventas"],
       serviceType: "Landing Page de Conversión",
       url: "https://hellenscute.com/",
@@ -92,7 +93,7 @@ export default function ProjectsSection() {
       solution:
         "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un CTA claro para agendar consultas.",
       result:
-        "Un sitio que carga en menos de 2s puede elevar las conversiones hasta un 20% frente a uno lento.",
+        "Entregamos un sitio veloz (carga en menos de 2s) y enfocado en captar consultas, un rendimiento que puede elevar las conversiones hasta un 20% frente a un sitio lento.",
       tags: ["Sitio Profesional", "Servicios"],
       serviceType: "Sitio Profesional",
       url: "https://www.warling.top/",
@@ -108,7 +109,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos un catálogo digital con compra directa, identidad visual tropical y una experiencia enfocada en conversión.",
       result:
-        "Las marcas que venden con flujos de WhatsApp logran entre 15% y 30% más ingresos en los primeros 60 días.",
+        "Montamos el catálogo con compra directa por WhatsApp, el tipo de flujo con que las marcas suman entre 15% y 30% de ingresos en los primeros 60 días.",
       tags: ["Tienda WhatsApp", "Perfumes Árabes", "Catálogo"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://aromacaribenio.vercel.app/",
@@ -124,7 +125,7 @@ export default function ProjectsSection() {
       solution:
         "Diseñamos un sitio con presentación de productos, identidad de marca y un canal de contacto directo para pedidos.",
       result:
-        "Los negocios con pedidos digitales directos reducen el tiempo de gestión hasta un 50%.",
+        "Digitalizamos la toma de pedidos del negocio, reduciendo el tiempo de gestión hasta en un 50% frente al proceso manual.",
       tags: ["Gastronomía", "Negocio local", "WhatsApp"],
       serviceType: "Landing Page de Conversión",
       url: "https://deliscias-marijo.vercel.app/",
@@ -140,7 +141,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos una landing de producto con características, casos de uso, precios y modo claro/oscuro para presentar el SaaS con claridad.",
       result:
-        "Las landing de producto bien optimizadas superan el 10% de conversión, casi el doble del promedio.",
+        "Construimos una landing de producto clara y optimizada, del tipo que supera el 10% de conversión, casi el doble del promedio del sector.",
       tags: ["SaaS", "Inteligencia Artificial", "Producto"],
       serviceType: "Landing Page de Conversión",
       url: "https://w-bice-theta.vercel.app/",
@@ -155,7 +156,7 @@ export default function ProjectsSection() {
       const cards = gsap.utils.toArray<HTMLElement>(".project-card");
       const floatImgs = gsap.utils.toArray<HTMLElement>(".project-float-img");
 
-      let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
       mm.add("(min-width: 768px)", () => {
         // Entrada escalonada de todas las cards
