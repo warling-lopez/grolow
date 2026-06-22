@@ -27,9 +27,9 @@ function createTransporter() {
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { name, phone, email, needs, billing, process, budget } = body;
+  const { name, phone, email, needs, billing, process: automationProcess, budget } = body;
 
-  if (!name || !phone || !email || !needs || !billing || !process || !budget) {
+  if (!name || !phone || !email || !needs || !billing || !automationProcess || !budget) {
     return NextResponse.json({ error: 'Campos incompletos' }, { status: 400 });
   }
 
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         <tr><td style="padding: 8px 0; color: #94a3b8;">Correo</td><td style="padding: 8px 0; font-weight: bold;">${email}</td></tr>
         <tr><td style="padding: 8px 0; color: #94a3b8;">Servicio</td><td style="padding: 8px 0; font-weight: bold; color: #009b9b;">${serviceLabel}</td></tr>
         <tr><td style="padding: 8px 0; color: #94a3b8;">Facturación</td><td style="padding: 8px 0; font-weight: bold;">${billing}</td></tr>
-        <tr><td style="padding: 8px 0; color: #94a3b8; vertical-align: top;">Proceso a automatizar</td><td style="padding: 8px 0; font-weight: bold;">${process}</td></tr>
+        <tr><td style="padding: 8px 0; color: #94a3b8; vertical-align: top;">Proceso a automatizar</td><td style="padding: 8px 0; font-weight: bold;">${automationProcess}</td></tr>
         <tr><td style="padding: 8px 0; color: #94a3b8;">Presupuesto</td><td style="padding: 8px 0; font-weight: bold; color: #009b9b; font-size: 16px;">${budget}</td></tr>
       </table>
       <hr style="border-color: #1e293b; margin: 24px 0;" />
