@@ -85,7 +85,7 @@ function ContactForm() {
   return (
     <section
       id="contacto"
-      className="w-full py-32 px-6 bg-[#050505] border-t border-white/5">
+      className="w-full py-32 px-6 bg-grolow-dark border-t border-grolow-light/10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
         {/* Lado izquierdo */}
         <div className="flex flex-col justify-between">
@@ -94,11 +94,11 @@ function ContactForm() {
               Hablemos de tu proyecto
             </span>
             <h2
-              className="font-extrabold text-3xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-white mb-6 uppercase wrap-break-word hyphens-auto"
+              className="font-extrabold text-3xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-grolow-light mb-6 uppercase wrap-break-word hyphens-auto"
               style={{ fontFamily: "'Syne', sans-serif" }}
               lang="es">
               Construyamos <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cyan to-white/80 italic">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cyan to-grolow-light/50 italic">
                 infraestructura que escala.
               </span>
             </h2>
@@ -109,14 +109,14 @@ function ContactForm() {
             </p>
           </div>
 
-          <div className="mt-20 space-y-8 border-t border-white/10 pt-10">
+          <div className="mt-20 space-y-8 border-t border-grolow-light/20 pt-10">
             <div>
               <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">
                 Correo directo
               </p>
               <a
                 href="mailto:grolow.web@gmail.com"
-                className="text-xl font-medium text-white hover:text-grolow-cyan transition-colors">
+                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 grolow.web@gmail.com
               </a>
             </div>
@@ -128,7 +128,7 @@ function ContactForm() {
                 href="https://wa.me/18299946354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xl font-medium text-white hover:text-grolow-cyan transition-colors">
+                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 +1 829 994 6354
               </a>
             </div>
@@ -140,7 +140,7 @@ function ContactForm() {
                 href="https://instagram.com/grolow.agency"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xl font-medium text-white hover:text-grolow-cyan transition-colors">
+                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 @grolow.agency
               </a>
             </div>
@@ -150,7 +150,7 @@ function ContactForm() {
         {/* Lado derecho: Formulario */}
         <form
           onSubmit={handleSubmit}
-          className="bg-[#080808] border border-white/5 p-10 md:p-14 flex flex-col gap-10">
+          className="bg-white border border-grolow-light/10 p-10 md:p-14 flex flex-col gap-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
             {[
               {
@@ -180,7 +180,7 @@ function ContactForm() {
                   type={f.type}
                   required
                   placeholder={f.placeholder}
-                  className="w-full bg-transparent border-b border-white/10 pb-3 text-white placeholder:text-slate-700 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+                  className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
                 />
               </div>
             ))}
@@ -198,7 +198,7 @@ function ContactForm() {
               type="email"
               required
               placeholder="correo@empresa.com"
-              className="w-full bg-transparent border-b border-white/10 pb-3 text-white placeholder:text-slate-700 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
             />
           </div>
 
@@ -213,12 +213,12 @@ function ContactForm() {
               id="needs"
               required
               defaultValue={preselectedService}
-              className="w-full bg-transparent border-b border-white/10 pb-3 text-white text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
-              <option value="" className="bg-[#080808]">
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              <option value="" className="bg-white">
                 Selecciona una opción
               </option>
               {SERVICE_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value} className="bg-[#080808]">
+                <option key={opt.value} value={opt.value} className="bg-white">
                   {opt.label}
                 </option>
               ))}
@@ -236,12 +236,12 @@ function ContactForm() {
               id="billing"
               required
               defaultValue=""
-              className="w-full bg-transparent border-b border-white/10 pb-3 text-white text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
-              <option value="" className="bg-[#080808]">
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              <option value="" className="bg-white">
                 Selecciona un rango
               </option>
               {BILLING_OPTIONS.map((opt) => (
-                <option key={opt} value={opt} className="bg-[#080808]">
+                <option key={opt} value={opt} className="bg-white">
                   {opt}
                 </option>
               ))}
@@ -260,7 +260,7 @@ function ContactForm() {
               required
               rows={3}
               placeholder="Ej: tomamos pedidos a mano por WhatsApp y perdemos ventas; queremos un catálogo con inventario en tiempo real."
-              className="w-full bg-transparent border-b border-white/10 pb-3 text-white placeholder:text-slate-700 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
             />
           </div>
 
@@ -275,12 +275,12 @@ function ContactForm() {
               id="budget"
               required
               defaultValue=""
-              className="w-full bg-transparent border-b border-white/10 pb-3 text-white text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
-              <option value="" className="bg-[#080808]">
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              <option value="" className="bg-white">
                 Selecciona un rango
               </option>
               {BUDGET_OPTIONS.map((opt) => (
-                <option key={opt} value={opt} className="bg-[#080808]">
+                <option key={opt} value={opt} className="bg-white">
                   {opt}
                 </option>
               ))}
@@ -294,7 +294,7 @@ function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-6 mt-4 bg-white text-black font-extrabold uppercase tracking-widest text-xs hover:bg-grolow-cyan transition-colors disabled:opacity-50 flex justify-center items-center gap-3">
+            className="w-full py-6 mt-4 bg-grolow-cream text-grolow-dark font-extrabold uppercase tracking-widest text-xs hover:bg-grolow-accent transition-colors disabled:opacity-50 flex justify-center items-center gap-3">
             {isSubmitting ? "Enviando..." : "Solicitar propuesta"}
             {!isSubmitting && <span>→</span>}
           </button>

@@ -199,16 +199,16 @@ export default function ServicesSection() {
   return (
     <section
       ref={containerRef}
-      className="w-full min-h-screen bg-transparent my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
+      className="w-full min-h-screen  my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
     >
-      <h1 className="text-3xl md:text-5xl font-black uppercase text-white pr-16 md:pr-0 pb-8 md:pb-12 border-b border-white/10 w-full max-w-5xl mx-auto">
+      <h1 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pr-16 md:pr-0 pb-8 md:pb-12 border-b border-grolow-light/10 w-full max-w-5xl mx-auto">
         Servicios
       </h1>
       <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-8 md:gap-10">
         {services.map((service) => (
           <div
             key={service.id}
-            className="service-card group relative overflow-hidden bg-white/5 border border-white/10 p-6 md:p-16 backdrop-blur-xl h-auto md:h-125 flex flex-col justify-between rounded-2xl"
+            className="service-card group relative overflow-hidden bg-white/60 border border-grolow-light/10 p-6 md:p-16 backdrop-blur-xl h-auto md:h-125 flex flex-col justify-between rounded-2xl"
           >
             <div className="glow pointer-events-none absolute w-75 h-75 bg-grolow-cyan/20 rounded-full blur-[100px] opacity-0 transition-opacity" />
 
@@ -232,13 +232,13 @@ export default function ServicesSection() {
             </div>
 
             {/* Delivery time */}
-            <div className="absolute top-6 right-6 md:inset-0 md:text-center group-hover:opacity-100 transition-opacity pointer-events-none text-xs md:text-base text-white/50 font-mono">
+            <div className="absolute top-6 right-6 md:inset-0 md:text-center group-hover:opacity-100 transition-opacity pointer-events-none text-xs md:text-base text-grolow-light/50 font-mono">
               {service.deliveryTime}
             </div>
 
             <div className="flex flex-col h-full z-10 mt-8 md:mt-0">
               <div className="flex items-start justify-between">
-                <h3 className="text-2xl md:text-5xl font-black uppercase text-white pr-16 md:pr-0">
+                <h3 className="text-2xl md:text-5xl font-black uppercase text-grolow-light pr-16 md:pr-0">
                   {service.title}
                 </h3>
               </div>
@@ -251,7 +251,7 @@ export default function ServicesSection() {
                 {service.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] md:text-xs border border-white/20 text-white/60 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
+                    className="text-[10px] md:text-xs border border-grolow-light/20 text-grolow-light/60 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
                   >
                     {tag}
                   </span>
@@ -283,7 +283,7 @@ export default function ServicesSection() {
                       }
                     }
                   }}
-                  className="text-[10px] font-extrabold uppercase tracking-widest px-5 py-3 border border-white/20 text-white hover:bg-grolow-cyan hover:border-grolow-cyan hover:text-black transition-colors whitespace-nowrap">
+                  className="text-[10px] font-extrabold uppercase tracking-widest px-5 py-3 border border-grolow-light/20 text-grolow-light hover:bg-grolow-cyan hover:border-grolow-cyan hover:text-grolow-dark transition-colors whitespace-nowrap">
                   Quiero este →
                 </Link>
               </div>

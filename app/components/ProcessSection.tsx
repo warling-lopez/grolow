@@ -107,9 +107,9 @@ export default function ProcessSection() {
             key={step.num}
             className="process-panel w-[100vw] max-w-full h-full flex items-center shrink-0 justify-center relative p-6">
             {/* ... resto de tu código */}{" "}
-            <div className="absolute inset-0 border-r border-white/5 bg-black/40 backdrop-blur-sm" />
+            <div className="absolute inset-0 border-r border-white/5 bg-black backdrop-blur-sm" />
             <div className="relative z-10 max-w-xl mx-auto flex flex-col gap-6">
-              <span className="stagger-text block text-grolow-cyan font-mono text-6xl md:text-8xl opacity-20 font-bold leading-none">
+              <span className="stagger-text block text-grolow-card font-mono text-7xl md:text-9xl opacity-25 font-bold leading-none">
                 {step.num}
               </span>
               <h3

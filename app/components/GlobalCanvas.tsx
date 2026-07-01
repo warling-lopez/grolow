@@ -93,7 +93,7 @@ export default function GlobalCanvas() {
     <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.2} />
-        <directionalLight position={[10, 10, 5]} intensity={2} color="#grolow-cyan" />
+        <directionalLight position={[10, 10, 5]} intensity={2} color="#004643" />
         <Environment preset="city" /> {/* Le da reflejos realistas al wireframe */}
         <ScrollReactiveModel />
       </Canvas>

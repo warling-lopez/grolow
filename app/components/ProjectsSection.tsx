@@ -234,19 +234,19 @@ export default function ProjectsSection() {
     <section
       id="casos"
       ref={containerRef}
-      className="w-full bg-transparent my-20 py-10 md:py-20 px-4 md:px-8"
+      className="w-full backdrop-blur-xs my-20 py-10 md:py-20 px-4 md:px-8"
     >
       <div className="max-w-5xl mx-auto w-full">
 
         {/* ── Header ── */}
         <div className="mb-12 md:mb-16">
-          <p className="text-xs font-mono uppercase tracking-widest text-white/40 mb-3">
+          <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
             Casos de Éxito
           </p>
-          <h2 className="text-4xl md:text-7xl font-black uppercase text-white leading-none">
+          <h2 className="text-4xl md:text-7xl font-black uppercase text-grolow-light leading-none">
             Problemas de negocio.
             <br />
-            <span className="text-white/30">Soluciones que escalan.</span>
+            <span className="text-grolow-light/30">Soluciones que escalan.</span>
           </h2>
         </div>
 
@@ -261,11 +261,11 @@ export default function ProjectsSection() {
               className={[
                 "project-card",
                 "group relative overflow-hidden",
-                "bg-white/5 border border-white/10",
+                "bg-white/60 border border-grolow-light/10",
                 "backdrop-blur-xl rounded-2xl",
                 "p-6 md:p-10",
                 "flex flex-col gap-4",
-                "hover:border-white/20 hover:bg-white/[0.07]",
+                "hover:border-grolow-light/20 hover:bg-white/70",
                 "transition-colors duration-300 no-underline",
                 "min-h-[220px] md:min-h-[260px]",
                 project.isFeatured ? "md:col-span-2" : "",
@@ -291,7 +291,7 @@ export default function ProjectsSection() {
                 aria-hidden="true"
               >
                 {/* Marco / borde sutil */}
-                <div className="absolute inset-0 rounded-xl border border-white/10 z-10" />
+                <div className="absolute inset-0 rounded-xl border border-grolow-light/10 z-10" />
 
                 <img
                   src={project.image}
@@ -305,8 +305,8 @@ export default function ProjectsSection() {
                 />
 
                 {/* Fallback mientras no tienes screenshots */}
-                <div className="absolute inset-0 rounded-xl bg-white/[0.03] flex items-end justify-start p-2">
-                  <span className="text-white/10 font-mono text-[9px] uppercase tracking-widest leading-tight">
+                <div className="absolute inset-0 rounded-xl bg-white/40 flex items-end justify-start p-2">
+                  <span className="text-grolow-light/10 font-mono text-[9px] uppercase tracking-widest leading-tight">
                     {project.url.replace("https://", "").replace(/\/$/, "")}
                   </span>
                 </div>
@@ -320,24 +320,24 @@ export default function ProjectsSection() {
 
                 {/* Tipo de servicio + flecha */}
                 <div className="flex items-start justify-between gap-3">
-                  <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-white/15 text-white/40">
+                  <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-light/15 text-grolow-light/40">
                     {project.serviceType}
                   </span>
 
-                  <span className="text-white/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
+                  <span className="text-grolow-light/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
                     ↗
                   </span>
                 </div>
 
                 {/* Título — max-width para no chocar con la imagen */}
-                <h3 className="text-2xl md:text-4xl font-black uppercase text-white leading-tight max-w-[62%]">
+                <h3 className="text-2xl md:text-4xl font-black uppercase text-grolow-light leading-tight max-w-[62%]">
                   {project.title}
                 </h3>
 
                 {/* Problema → Solución → Resultado */}
                 <div className="flex flex-col gap-3 mt-1 max-w-[88%] md:max-w-[80%]">
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 mb-1">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
                       Problema
                     </p>
                     <p className="text-slate-400 text-sm leading-relaxed">
@@ -345,7 +345,7 @@ export default function ProjectsSection() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 mb-1">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
                       Solución
                     </p>
                     <p className="text-slate-300 text-sm leading-relaxed">
@@ -367,7 +367,7 @@ export default function ProjectsSection() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] md:text-xs border border-white/15 text-white/50 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
+                      className="text-[10px] md:text-xs border border-grolow-light/15 text-grolow-light/50 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
                     >
                       {tag}
                     </span>
@@ -376,11 +376,11 @@ export default function ProjectsSection() {
               </div>
 
               {/* ── Barra inferior ── */}
-              <div className="relative z-10 border-t border-white/5 pt-4 flex items-center justify-between">
-                <span className="text-white/25 font-mono text-xs uppercase tracking-widest">
+              <div className="relative z-10 border-t border-grolow-light/5 pt-4 flex items-center justify-between">
+                <span className="text-grolow-light/25 font-mono text-xs uppercase tracking-widest">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="text-white/20 group-hover:text-grolow-cyan font-mono text-xs tracking-wider transition-colors duration-300">
+                <span className="text-grolow-light/20 group-hover:text-grolow-cyan font-mono text-xs tracking-wider transition-colors duration-300">
                   {project.url.replace("https://", "").replace(/\/$/, "")}
                 </span>
               </div>
@@ -389,7 +389,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Nota al pie: las cifras de "Resultado" son referencias del sector */}
-        <p className="mt-8 md:mt-10 text-[11px] leading-relaxed text-white/30 max-w-2xl">
+        <p className="mt-8 md:mt-10 text-[11px] leading-relaxed text-grolow-light/30 max-w-2xl">
           Cifras de referencia del sector, no resultados garantizados. Reemplazamos con
           métricas verificadas de cada proyecto cuando están disponibles.
         </p>

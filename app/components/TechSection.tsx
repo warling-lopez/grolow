@@ -22,8 +22,8 @@ export default function TechSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 60%',
-          end: 'top 20%',
+          start: 'top 10%',
+          end: 'top 3%',
           scrub: 1,
         },
       }
@@ -43,8 +43,8 @@ export default function TechSection() {
           scrollTrigger: {
             trigger: item,
             start: 'top 90%',
-            end: 'top 40%',
-            scrub: 1.5,
+            end: 'top 80%',
+            scrub: 1,
           },
         }
       );
@@ -52,11 +52,11 @@ export default function TechSection() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="w-full h-screen py-64 px-6 bg-transparent">
+    <section ref={sectionRef} className="w-full  pt-64 pb-80  px-6 backdrop-blur-lg">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20">
-        <div className="lg:w-1/2 sticky top-32 h-fit" style={{ perspective: '800px' }}>
+        <div className="lg:w-1/2 sticky pt-32 h-fit" style={{ perspective: '800px' }}>
           <h2
-            className="tech-title text-6xl md:text-8xl font-extrabold text-white leading-none uppercase"
+            className="tech-title text-6xl md:text-8xl font-extrabold text-grolow-light leading-none uppercase"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
             {'SISTEMAS'.split('').map((l, i) => (
@@ -78,7 +78,7 @@ export default function TechSection() {
           ].map((tech, i) => (
             <div
               key={i}
-              className="tech-item p-12 bg-white/5 border border-white/10 backdrop-blur-md"
+              className="tech-item p-12 bg-white/60 border border-grolow-light/10 backdrop-blur-md"
             >
               <h3 className="text-2xl font-bold uppercase">{tech.name}</h3>
               <p className="text-grolow-cyan font-mono text-xs mt-2">{tech.role}</p>

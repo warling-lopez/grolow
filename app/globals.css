@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020E0E; /* Tu negro verdoso super oscuro */
-  --foreground: #FAFAFA; /* Tu blanco roto */
+  --background: #F6F1E2; /* Crema cálido (modo claro) */
+  --foreground: #0E1512; /* Casi negro (ink) */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-grolow-dark: #020E0E;
-  --color-grolow-card: #076c44; /* Verde oscuro para fondos de tarjetas */
-  --color-grolow-accent: #004643; /* Verde medio para detalles sutiles */
-  --color-grolow-cream: #FAF4D3; /* Crema para alto contraste (botones, marquee) */
-  --color-grolow-light: #FAFAFA; /* Textos principales */
+  --color-grolow-dark: #F6F1E2; /* Token de fondo: ahora crema cálido */
+  --color-grolow-card: #FFFCF4; /* Tarjeta clara */
+  --color-grolow-accent: #002B29; /* Verde más oscuro (final de gradiente) */
+  --color-grolow-cream: #004643; /* Acento verde profundo (botones, eyebrow, gradiente) */
+  --color-grolow-lime: #BEF264; /* Verde lima — mitad inferior del SplitText (editable) */
+  --color-grolow-light: #0E1512; /* Token de texto/bordes: ahora ink */
 }
 
 html, body {

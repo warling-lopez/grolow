@@ -11,10 +11,10 @@ const config: Config = {
     extend: {
       colors: {
         grolow: {
-          cyan: '#009b9b', // Color principal del logo en modo oscuro
-          teal: '#004d4d', // Color principal del logo en modo claro
-          dark: '#050505', // Fondo negro profundo
-          light: '#f8fafc', // Fondo claro
+          cyan: '#004643', // Acento verde profundo (antes cyan #009b9b) — modo claro
+          teal: '#004643', // Acento verde profundo
+          dark: '#F6F1E2', // Token de fondo: crema cálido
+          light: '#0E1512', // Token de texto: ink
         }
       },
     },

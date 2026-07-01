@@ -30,12 +30,12 @@ export default function ValuePropSection() {
   });
 
   return (
-    <section className="w-full py-[40vh] bg-transparent flex justify-center gap-20">
+    <section className="w-full py-[40vh] bg-grolow-dark flex justify-center gap-20">
       {[1, 2, 3].map((i) => (
         <div 
           key={i}
           ref={el => { if(el) itemsRef.current[i] = el }}
-          className="p-10 border border-grolow-cyan/30 bg-black/40 backdrop-blur-md"
+          className="p-10 border border-grolow-light/10 bg-white/60 backdrop-blur-md"
         >
           <span className="text-7xl font-bold">+{i * 20}</span>
         </div>
