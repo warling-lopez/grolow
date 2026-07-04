@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import GlobalCanvas from '@/app/components/GlobalCanvas';
 import WhatsAppButton from '@/app/components/WhatsAppButton';
+import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       smoothWheel: true,
     });
 
+    window.lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -29,6 +32,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     return () => {
       lenis.destroy();
       gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      delete window.lenis;
     };
   }, []);
 
@@ -39,6 +43,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         {children}
       </div>
       <WhatsAppButton />
+      <ScrollToTopButton />
     </>
   );
 }
