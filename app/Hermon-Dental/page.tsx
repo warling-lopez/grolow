@@ -265,9 +265,9 @@ const MARKUP = `
       <p>Aquí conectamos tus reseñas reales de Google para que cada visitante las vea sin salir de la página.</p>
     </div>
     <div class="rev-grid">
-      <div class="rev reveal"><div class="stars">★★★★★</div><p>“[Aquí va una reseña real tomada de tu perfil de Google Maps.]”</p><span>Paciente verificado · Google</span></div>
-      <div class="rev reveal"><div class="stars">★★★★★</div><p>“[Aquí va una reseña real tomada de tu perfil de Google Maps.]”</p><span>Paciente verificado · Google</span></div>
-      <div class="rev reveal"><div class="stars">★★★★★</div><p>“[Aquí va una reseña real tomada de tu perfil de Google Maps.]”</p><span>Paciente verificado · Google</span></div>
+      <div class="rev reveal"><div class="stars">★★★★★</div><p>“Hoy tuve un día traumático por el dolor de mi muela, gracias a ellos todo salió bien, muchas gracias por salvarme 🥹❤️”</p><span>Paciente verificado · Google</span></div>
+      <div class="rev reveal"><div class="stars">★★★★★</div><p>“Excelente atención, doctores capacitados y buena higiene. 👍”</p><span>Paciente verificado · Google</span></div>
+      <div class="rev reveal"><div class="stars">★★★★★</div><p>“Excelente servicio, los Doctores son muy profesionales, dedicados al trabajo y empaticos especialmente el Dr. Montero.  El lugar está muy bien equipado y preparado, el personal de servicio ofrece muy buenas atenciones.”</p><span>Paciente verificado · Google</span></div>
     </div>
   </div>
 </section>
