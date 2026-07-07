@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Bricolage_Grotesque, Manrope } from 'next/font/google';
+import { useEffect } from "react";
+import { Bricolage_Grotesque, Manrope } from "next/font/google";
 
 const bricolage = Bricolage_Grotesque({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-bricolage',
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-bricolage",
+  display: "swap",
 });
 
 const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-manrope',
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
+  display: "swap",
 });
 
 const STYLES = `
@@ -305,7 +305,7 @@ const MARKUP = `
         <li class="reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.9 15.9 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.2 2.2Z"/></svg></span><div><b>(809) 422-6841</b><small>Llámanos o escríbenos directo al WhatsApp</small></div></li>
       </ul>
     </div>
-    <div class="map-ph reveal"><div><b style="font-family:var(--font-bricolage),sans-serif">Mapa de Google aquí</b><br><small>Se integra tu ubicación real de Google Maps con botón de "Cómo llegar".</small></div></div>
+    <div class="map-ph reveal"><div><b style="font-family:var(--font-bricolage),sans-serif">Mapa de Google aquí</b><br><small><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4547.364147229446!2d-69.98236753090656!3d18.483099839858134!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eaf893763653ea5%3A0x68e6001ea986c135!2sHermon%20Dental%20Clinic!5e0!3m2!1ses-419!2sdo!4v1783425702506!5m2!1ses-419!2sdo" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></small></div></div>
   </div>
 </section>
 
@@ -327,17 +327,17 @@ const MARKUP = `
 
 export default function HermonDentalPage() {
   useEffect(() => {
-    const els = document.querySelectorAll('.hermon .reveal');
+    const els = document.querySelectorAll(".hermon .reveal");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add('in');
+            e.target.classList.add("in");
             io.unobserve(e.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
