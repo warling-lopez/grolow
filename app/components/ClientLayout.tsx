@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -10,6 +11,11 @@ import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  // Rutas de landings de cliente que se muestran sin el branding de Grolow
+  // (canvas 3D, botón de WhatsApp de Grolow, etc.)
+  const standalone = pathname?.startsWith('/Hermon-Dental') ?? false;
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -38,12 +44,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <GlobalCanvas />
+      {!standalone && <GlobalCanvas />}
       <div className="relative z-10 h-auto">
         {children}
       </div>
-      <WhatsAppButton />
-      <ScrollToTopButton />
+      {!standalone && <WhatsAppButton />}
+      {!standalone && <ScrollToTopButton />}
     </>
   );
 }
