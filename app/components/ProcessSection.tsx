@@ -86,6 +86,7 @@ export default function ProcessSection() {
 
   return (
     <section
+      id="proceso"
       ref={sectionRef}
       className="h-screen w-full overflow-hidden  bg-transparent relative flex items-center">
       <div className="absolute top-12 left-6 md:left-12 z-20">

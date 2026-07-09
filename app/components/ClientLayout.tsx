@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import GlobalCanvas from '@/app/components/GlobalCanvas';
 import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
+import Header from '@/app/components/Header';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,9 +43,31 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     };
   }, []);
 
+  // Intercepta clicks en enlaces de ancla (#seccion o /#seccion) para que el
+  // scroll sea suave con Lenis en vez del salto nativo del navegador.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement | null)?.closest?.(
+        'a[href*="#"]'
+      ) as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const match = (anchor.getAttribute('href') ?? '').match(/^\/?#([\w-]+)/);
+      if (!match) return;
+      const el = document.getElementById(match[1]);
+      if (!el) return;
+      e.preventDefault();
+      const lenis = window.lenis;
+      if (lenis) lenis.scrollTo(el, { offset: -88, duration: 1.4 });
+      else el.scrollIntoView({ behavior: 'smooth' });
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
   return (
     <>
       {!standalone && <GlobalCanvas />}
+      {!standalone && <Header />}
       <div className="relative z-10 h-auto">
         {children}
       </div>

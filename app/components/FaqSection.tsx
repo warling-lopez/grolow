@@ -60,7 +60,7 @@ export default function FaqSection() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="w-full py-32 px-6 bg-grolow-dark border-t border-grolow-light/10">
+    <section id="faq" ref={sectionRef} className="w-full py-32 px-6 bg-grolow-dark border-t border-grolow-light/10">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-extrabold text-grolow-light tracking-tighter mb-16 uppercase text-center" style={{ fontFamily: "'Syne', sans-serif" }}>
           FAQ 

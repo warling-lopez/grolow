@@ -1,6 +1,5 @@
 "use client";
 import { useRef } from "react";
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -198,6 +197,7 @@ export default function ServicesSection() {
 
   return (
     <section
+      id="servicios"
       ref={containerRef}
       className="w-full min-h-screen  my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
     >
@@ -271,21 +271,20 @@ export default function ServicesSection() {
               </ul>
 
               <div className="mt-4 md:mt-0 md:absolute md:bottom-8 md:right-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                <Link
-                  href={`/#contacto?servicio=${service.id}`}
+                {/* El scroll suave lo maneja el listener global de anclas
+                    (ClientLayout) vía Lenis; aquí solo se preselecciona el
+                    servicio en el formulario de contacto. */}
+                <a
+                  href="#contacto"
                   onClick={() => {
-                    const el = document.getElementById('contacto');
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth' });
-                      const select = el.querySelector<HTMLSelectElement>('#needs');
-                      if (select) {
-                        select.value = service.id;
-                      }
-                    }
+                    const select = document.querySelector<HTMLSelectElement>(
+                      '#contacto #needs'
+                    );
+                    if (select) select.value = service.id;
                   }}
                   className="text-[10px] font-extrabold uppercase tracking-widest px-5 py-3 border border-grolow-light/20 text-grolow-light hover:bg-grolow-cyan hover:border-grolow-cyan hover:text-grolow-dark transition-colors whitespace-nowrap">
                   Quiero este →
-                </Link>
+                </a>
               </div>
             </div>
           </div>
