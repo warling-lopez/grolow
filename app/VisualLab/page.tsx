@@ -10,6 +10,7 @@ import {
   type Variants,
 } from "framer-motion";
 import HeroFallback from "./HeroFallback";
+import PreloaderPuertas from "./PreloaderPuertas";
 
 // Hero 3D (three.js no corre en SSR). Mientras carga el chunk, y si
 // WebGL no está disponible, se muestra el hero estático.
@@ -276,6 +277,10 @@ const reveal: Variants = {
 /* ================================================================== */
 
 export default function VisualLabPage() {
+  // El hero 3D se monta detrás del preloader desde el inicio, pero su
+  // animación de entrada espera al onComplete de las puertas.
+  const [preloaderDone, setPreloaderDone] = useState(false);
+
   return (
     <main
       className={`vl ${inter.variable} ${anton.variable} ${mono.variable} relative min-h-screen`}
@@ -287,9 +292,10 @@ export default function VisualLabPage() {
       }>
       <style>{STYLES}</style>
 
+      <PreloaderPuertas onComplete={() => setPreloaderDone(true)} />
       <Nav />
       <div id="top">
-        <HeroLetrero />
+        <HeroLetrero play={preloaderDone} />
       </div>
       <Marquee />
       <Services />

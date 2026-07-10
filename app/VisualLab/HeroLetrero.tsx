@@ -50,7 +50,10 @@ function easeOutCubic(t: number) {
 
 type LetterAnim = { mesh: THREE.Mesh; delay: number };
 
-function initScene(container: HTMLDivElement): () => void {
+function initScene(
+  container: HTMLDivElement,
+  playRef: { current: boolean }
+): () => void {
   // Detección temprana de WebGL: si no hay contexto, lanzamos y el
   // componente cae al fallback estático.
   const probe = document.createElement("canvas");
@@ -68,7 +71,9 @@ function initScene(container: HTMLDivElement): () => void {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // PCFSoftShadowMap fue deprecado en three moderno; PCF es el
+  // equivalente al que three cae de todas formas.
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -303,8 +308,10 @@ function initScene(container: HTMLDivElement): () => void {
     raf = requestAnimationFrame(frame);
     const t = now / 1000;
 
-    // 1. Entrada escalonada de letras (efecto "instalación").
-    if (!reducedMotion) {
+    // 1. Entrada escalonada de letras (efecto "instalación"). No
+    // arranca hasta que `playRef` lo permita (el preloader avisa con
+    // onComplete cuando las puertas terminaron de abrir).
+    if (!reducedMotion && playRef.current) {
       if (enterStart === null) enterStart = now;
       const elapsed = (now - enterStart) / 1000;
       for (const { mesh, delay } of letters) {
@@ -389,16 +396,23 @@ function initScene(container: HTMLDivElement): () => void {
 
 /* --------------------------- Componente ---------------------------- */
 
-export default function HeroLetrero() {
+export default function HeroLetrero({ play = true }: { play?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
+
+  // Ref para que el loop imperativo de three lea el valor actual de
+  // `play` sin re-crear la escena.
+  const playRef = useRef(play);
+  useEffect(() => {
+    playRef.current = play;
+  }, [play]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
     let cleanup: (() => void) | undefined;
     try {
-      cleanup = initScene(container);
+      cleanup = initScene(container, playRef);
     } catch (err) {
       // WebGL no disponible o falló la fuente: hero estático, nunca
       // pantalla negra vacía.
