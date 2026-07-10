@@ -211,6 +211,7 @@ export default function VideoScrollSection() {
   return (
     <section
       ref={containerRef}
+      data-header-trigger="true"
       className="relative h-screen w-full bg-[#020E0E] overflow-hidden"
     >
       {/* Se añade 'hidden md:block' para anular el video en móviles por completo */}

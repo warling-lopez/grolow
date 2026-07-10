@@ -15,7 +15,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   // Rutas de landings de cliente que se muestran sin el branding de Grolow
   // (canvas 3D, botón de WhatsApp de Grolow, etc.)
-  const standalone = pathname?.startsWith('/Hermon-Dental') ?? false;
+  const standalone =
+    pathname?.startsWith('/Hermon-Dental') ||
+    pathname?.startsWith('/VisualLab') ||
+    false;
 
   useEffect(() => {
     const lenis = new Lenis({

@@ -8,6 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { services } from "./services/Services";
+import { useHeaderTrigger } from "./hooks/useHeaderTrigger";
 
 /* ------------------------------------------------------------------ */
 /* Config                                                              */
@@ -35,6 +36,10 @@ export default function Header() {
 
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 32));
+
+  // True mientras una sección con [data-header-trigger] cruza la banda
+  // del header: texto blanco y header compacto para mantener contraste.
+  const overTrigger = useHeaderTrigger();
 
   const scrollTo = useCallback((target: string, serviceId?: string) => {
     setServicesOpen(false);
@@ -95,15 +100,20 @@ export default function Header() {
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 inset-x-0 z-50 transition-colors duration-500 ${
         solid
-          ? "bg-grolow-dark/85 backdrop-blur-xl border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
+          ? "bg-grolow-dark/5 border-b mix-blend-difference border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
           : "bg-transparent border-b border-transparent"
       }`}>
-      <nav className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 h-[72px]">
+      <nav
+        className={`max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 ${
+          overTrigger ? "h-12" : "h-18"
+        }`}>
         {/* ---------- Logo ---------- */}
         <button
           onClick={scrollTop}
           aria-label="Ir al inicio"
-          className="text-2xl font-extrabold tracking-tight text-grolow-light lowercase italic hover:opacity-70 transition-opacity"
+          className={`font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
+            overTrigger ? "text-lg text-white" : "text-2xl text-grolow-light"
+          }`}
           style={{ fontFamily: "'Syne', sans-serif" }}>
           grolow
         </button>
@@ -116,10 +126,16 @@ export default function Header() {
               onClick={() => setServicesOpen((v) => !v)}
               aria-expanded={servicesOpen}
               aria-haspopup="true"
-              className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold tracking-wide transition-colors ${
+              className={`flex items-center gap-1.5 px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
+                overTrigger ? "text-xs" : "text-sm"
+              } ${
                 servicesOpen
-                  ? "text-grolow-cream"
-                  : "text-grolow-light/80 hover:text-grolow-light"
+                  ? overTrigger
+                    ? "text-white"
+                    : "text-grolow-cream"
+                  : overTrigger
+                    ? "text-white/80 hover:text-white"
+                    : "text-grolow-light/80 hover:text-grolow-light"
               }`}>
               Servicios
               <motion.span
@@ -188,7 +204,11 @@ export default function Header() {
             <button
               key={link.target}
               onClick={() => scrollTo(link.target)}
-              className="px-4 py-2 text-sm font-semibold tracking-wide text-grolow-light/80 hover:text-grolow-light transition-colors">
+              className={`px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
+                overTrigger
+                  ? "text-xs text-white/80 hover:text-white"
+                  : "text-sm text-grolow-light/80 hover:text-grolow-light"
+              }`}>
               {link.label}
             </button>
           ))}
@@ -197,7 +217,9 @@ export default function Header() {
         {/* ---------- CTA desktop ---------- */}
         <button
           onClick={() => scrollTo("contacto")}
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark px-6 py-3 text-sm font-bold hover:bg-grolow-cream hover:text-white transition-colors">
+          className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
+            overTrigger ? "px-4 py-2 text-xs" : "px-6 py-3 text-sm"
+          }`}>
           Trabajemos Juntos
         </button>
 
@@ -211,13 +233,17 @@ export default function Header() {
             animate={
               mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }
             }
-            className="block w-6 h-0.5 bg-grolow-light rounded-full"
+            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
+              overTrigger ? "bg-white" : "bg-grolow-light"
+            }`}
           />
           <motion.span
             animate={
               mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
             }
-            className="block w-6 h-0.5 bg-grolow-light rounded-full"
+            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
+              overTrigger ? "bg-white" : "bg-grolow-light"
+            }`}
           />
         </button>
       </nav>

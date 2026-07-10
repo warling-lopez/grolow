@@ -88,6 +88,7 @@ export default function ProcessSection() {
     <section
       id="proceso"
       ref={sectionRef}
+      data-header-trigger="true"
       className="h-screen w-full overflow-hidden  bg-transparent relative flex items-center">
       <div className="absolute top-12 left-6 md:left-12 z-20">
         <h2
