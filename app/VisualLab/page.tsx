@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { Anton, Inter, Space_Mono } from "next/font/google";
 import {
   AnimatePresence,
@@ -11,6 +12,7 @@ import {
 } from "framer-motion";
 import HeroFallback from "./HeroFallback";
 import PreloaderPuertas from "./PreloaderPuertas";
+import Uniformes from "./images/uniformes.jpg";
 
 // Hero 3D (three.js no corre en SSR). Mientras carga el chunk, y si
 // WebGL no está disponible, se muestra el hero estático.
@@ -92,9 +94,7 @@ const SERVICES: { title: string; desc: string; icon: React.JSX.Element }[] = [
   {
     title: "Letreros",
     desc: "Corporativos, luminosos, letras 3D y números residenciales retroiluminados.",
-    icon: (
-      <path d="M4 5h16v9H4zM8 18h8M12 14v4M8 9h8M8 11.5h5" />
-    ),
+    icon: <path d="M4 5h16v9H4zM8 18h8M12 14v4M8 9h8M8 11.5h5" />,
   },
   {
     title: "Placas de acrílico",
@@ -121,14 +121,14 @@ const SERVICES: { title: string; desc: string; icon: React.JSX.Element }[] = [
   {
     title: "Regalos personalizados",
     desc: "Tazas, vasos térmicos y kits souvenir para tu equipo o evento.",
-    icon: <path d="M6 8h9v4a4.5 4.5 0 01-9 0zM15 9h2.5a2 2 0 010 4H15M6 20h9" />,
+    icon: (
+      <path d="M6 8h9v4a4.5 4.5 0 01-9 0zM15 9h2.5a2 2 0 010 4H15M6 20h9" />
+    ),
   },
   {
     title: "Uniformes y textiles",
     desc: "Polos bordados, t-shirts y prendas personalizadas para tu empresa.",
-    icon: (
-      <path d="M8 4l4 2 4-2 4 3-3 3v10H7V10L4 7zM10 4a2 2 0 004 0" />
-    ),
+    icon: <path d="M8 4l4 2 4-2 4 3-3 3v10H7V10L4 7zM10 4a2 2 0 004 0" />,
   },
 ];
 
@@ -146,9 +146,21 @@ const HIGHLIGHTS = [
    Reemplazar cada <Mockup/> por la foto real cuando estén disponibles. */
 const PORTFOLIO: { title: string; cat: string; kind: MockKind }[] = [
   { title: "Letrero corporativo luminoso", cat: "Letreros", kind: "sign" },
-  { title: "Placa Misión · Visión · Valores", cat: "Acrílicos", kind: "acrylic" },
-  { title: "Número residencial retroiluminado 300", cat: "Letreros", kind: "number" },
-  { title: "Vasos térmicos personalizados", cat: "Vasos Térmicos", kind: "mug" },
+  {
+    title: "Placa Misión · Visión · Valores",
+    cat: "Acrílicos",
+    kind: "acrylic",
+  },
+  {
+    title: "Número residencial retroiluminado 300",
+    cat: "Letreros",
+    kind: "number",
+  },
+  {
+    title: "Vasos térmicos personalizados",
+    cat: "Vasos Térmicos",
+    kind: "mug",
+  },
   { title: "Uniformes bordados", cat: "Uniformes", kind: "shirt" },
   { title: "Tarjetas de presentación", cat: "Papelería", kind: "card" },
   { title: "Kit souvenir de evento", cat: "Kit Souvenirs", kind: "gift" },
@@ -176,14 +188,22 @@ type FieldDef = {
    las fotos reales con estos nombres). Si una imagen falta, la card cae a
    fondo negro con borde dorado sin romper el layout. */
 const QUOTE_CATEGORIES: { id: string; label: string; img: string | null }[] = [
-  { id: "Letrero corporativo", label: "Letrero corporativo", img: "/servicios/letrero-corporativo.jpg" },
-  { id: "Letrero luminoso", label: "Letrero luminoso", img: "/servicios/letrero-luminoso.jpg" },
+  {
+    id: "Letrero corporativo",
+    label: "Letrero corporativo",
+    img: "/servicios/letrero-corporativo.jpg",
+  },
+  {
+    id: "Letrero luminoso",
+    label: "Letrero luminoso",
+    img: "/servicios/letrero-luminoso.jpg",
+  },
   { id: "Letras 3D", label: "Letras 3D", img: "/servicios/letras-3d.jpg" },
   { id: "Placas", label: "Placas", img: "/servicios/placas.jpg" },
   { id: "Papelería", label: "Papelería", img: "/servicios/papeleria.jpg" },
   { id: "Uniformes", label: "Uniformes", img: "/servicios/uniformes.jpg" },
   { id: "Regalos", label: "Regalos", img: "/servicios/regalos.jpg" },
-  { id: "Otro", label: "Otro", img: null },
+  { id: "Otro", label: "Otro", img: "/servicios/otro.jpg" },
 ];
 
 /* Categorías tipo letrero: llevan medidas en pulgadas, ubicación e
@@ -210,20 +230,50 @@ const QUOTE_FIELDS: Record<string, FieldDef[]> = {
   "Letrero luminoso": [],
   "Letras 3D": [],
   Placas: [
-    { name: "tipo", label: "Tipo de placa", type: "select", options: ["Misión / Visión / Valores", "Señalización", "Reconocimiento"] },
+    {
+      name: "tipo",
+      label: "Tipo de placa",
+      type: "select",
+      options: ["Misión / Visión / Valores", "Señalización", "Reconocimiento"],
+    },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "1" },
   ],
   Papelería: [
-    { name: "tipo", label: "Producto", type: "select", options: ["Tarjetas de presentación", "Carnets", "Hojas timbradas", "Sellos"] },
+    {
+      name: "tipo",
+      label: "Producto",
+      type: "select",
+      options: [
+        "Tarjetas de presentación",
+        "Carnets",
+        "Hojas timbradas",
+        "Sellos",
+      ],
+    },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "100" },
   ],
   Uniformes: [
-    { name: "tipo", label: "Prenda", type: "select", options: ["Polo", "T-shirt", "Camisa", "Gorra"] },
+    {
+      name: "tipo",
+      label: "Prenda",
+      type: "select",
+      options: ["Polo", "T-shirt", "Camisa", "Gorra"],
+    },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "10" },
-    { name: "tecnica", label: "Técnica", type: "select", options: ["Bordado", "Estampado"] },
+    {
+      name: "tecnica",
+      label: "Técnica",
+      type: "select",
+      options: ["Bordado", "Estampado"],
+    },
   ],
   Regalos: [
-    { name: "tipo", label: "Tipo de regalo", type: "text", placeholder: "ej. termo, taza, kit souvenir…" },
+    {
+      name: "tipo",
+      label: "Tipo de regalo",
+      type: "text",
+      placeholder: "ej. termo, taza, kit souvenir…",
+    },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "1" },
   ],
   Otro: [],
@@ -424,7 +474,7 @@ function Services() {
                 strokeLinejoin="round"
                 className="h-6 w-6">
                 {s.icon}
-              </svg>
+              </svg>{" "}
             </div>
             <h3
               className="text-xl uppercase tracking-tight text-white"
@@ -446,9 +496,7 @@ function Services() {
 function Portfolio() {
   const [filter, setFilter] = useState("Todos");
   const items =
-    filter === "Todos"
-      ? PORTFOLIO
-      : PORTFOLIO.filter((p) => p.cat === filter);
+    filter === "Todos" ? PORTFOLIO : PORTFOLIO.filter((p) => p.cat === filter);
 
   return (
     <section
@@ -524,52 +572,205 @@ function Mockup({ kind }: { kind: MockKind }) {
   const shapes: Record<MockKind, React.JSX.Element> = {
     sign: (
       <>
-        <rect x="20" y="45" width="160" height="50" rx="6" fill="#141414" stroke={ACCENT} strokeWidth="2" />
-        <text x="100" y="78" textAnchor="middle" fontFamily="var(--font-anton)" fontSize="24" fill={ACCENT}>MARCA</text>
+        <rect
+          x="20"
+          y="45"
+          width="160"
+          height="50"
+          rx="6"
+          fill="#141414"
+          stroke={ACCENT}
+          strokeWidth="2"
+        />
+        <text
+          x="100"
+          y="78"
+          textAnchor="middle"
+          fontFamily="var(--font-anton)"
+          fontSize="24"
+          fill={ACCENT}>
+          MARCA
+        </text>
       </>
     ),
     acrylic: (
       <>
-        <rect x="45" y="25" width="110" height="90" rx="4" fill="#111" stroke="#fff" strokeOpacity="0.4" />
-        <line x1="60" y1="48" x2="140" y2="48" stroke={ACCENT} strokeWidth="3" />
-        <line x1="60" y1="66" x2="130" y2="66" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" />
-        <line x1="60" y1="82" x2="135" y2="82" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" />
+        <rect
+          x="45"
+          y="25"
+          width="110"
+          height="90"
+          rx="4"
+          fill="#111"
+          stroke="#fff"
+          strokeOpacity="0.4"
+        />
+        <line
+          x1="60"
+          y1="48"
+          x2="140"
+          y2="48"
+          stroke={ACCENT}
+          strokeWidth="3"
+        />
+        <line
+          x1="60"
+          y1="66"
+          x2="130"
+          y2="66"
+          stroke="#fff"
+          strokeOpacity="0.4"
+          strokeWidth="2"
+        />
+        <line
+          x1="60"
+          y1="82"
+          x2="135"
+          y2="82"
+          stroke="#fff"
+          strokeOpacity="0.4"
+          strokeWidth="2"
+        />
       </>
     ),
     number: (
-      <text x="100" y="95" textAnchor="middle" fontFamily="var(--font-anton)" fontSize="72" fill="none" stroke={ACCENT} strokeWidth="2">300</text>
+      <text
+        x="100"
+        y="95"
+        textAnchor="middle"
+        fontFamily="var(--font-anton)"
+        fontSize="72"
+        fill="none"
+        stroke={ACCENT}
+        strokeWidth="2">
+        300
+      </text>
     ),
     mug: (
       <>
-        <rect x="60" y="40" width="60" height="60" rx="8" fill="#141414" stroke={ACCENT} strokeWidth="2" />
-        <path d="M120 55 h14 a10 10 0 0 1 0 30 h-14" fill="none" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" />
+        <rect
+          x="60"
+          y="40"
+          width="60"
+          height="60"
+          rx="8"
+          fill="#141414"
+          stroke={ACCENT}
+          strokeWidth="2"
+        />
+        <path
+          d="M120 55 h14 a10 10 0 0 1 0 30 h-14"
+          fill="none"
+          stroke="#fff"
+          strokeOpacity="0.4"
+          strokeWidth="2"
+        />
         <circle cx="90" cy="70" r="10" fill={ACCENT} fillOpacity="0.8" />
       </>
     ),
     shirt: (
-      <path d="M70 40 l20 8 20-8 22 14-14 14v42H62V68L48 54z" fill="#141414" stroke={ACCENT} strokeWidth="2" />
+      <path
+        d="M70 40 l20 8 20-8 22 14-14 14v42H62V68L48 54z"
+        fill="#141414"
+        stroke={ACCENT}
+        strokeWidth="2"
+      />
     ),
     card: (
       <>
-        <rect x="45" y="45" width="100" height="60" rx="6" fill="#141414" stroke="#fff" strokeOpacity="0.4" />
+        <rect
+          x="45"
+          y="45"
+          width="100"
+          height="60"
+          rx="6"
+          fill="#141414"
+          stroke="#fff"
+          strokeOpacity="0.4"
+        />
         <rect x="55" y="55" width="26" height="26" rx="4" fill={ACCENT} />
-        <line x1="90" y1="60" x2="132" y2="60" stroke="#fff" strokeOpacity="0.5" strokeWidth="3" />
-        <line x1="90" y1="72" x2="122" y2="72" stroke="#fff" strokeOpacity="0.3" strokeWidth="2" />
+        <line
+          x1="90"
+          y1="60"
+          x2="132"
+          y2="60"
+          stroke="#fff"
+          strokeOpacity="0.5"
+          strokeWidth="3"
+        />
+        <line
+          x1="90"
+          y1="72"
+          x2="122"
+          y2="72"
+          stroke="#fff"
+          strokeOpacity="0.3"
+          strokeWidth="2"
+        />
       </>
     ),
     gift: (
       <>
-        <rect x="55" y="60" width="90" height="55" rx="4" fill="#141414" stroke={ACCENT} strokeWidth="2" />
-        <rect x="55" y="45" width="90" height="18" rx="3" fill={ACCENT} fillOpacity="0.85" />
-        <line x1="100" y1="45" x2="100" y2="115" stroke="#0A0A0A" strokeWidth="4" />
+        <rect
+          x="55"
+          y="60"
+          width="90"
+          height="55"
+          rx="4"
+          fill="#141414"
+          stroke={ACCENT}
+          strokeWidth="2"
+        />
+        <rect
+          x="55"
+          y="45"
+          width="90"
+          height="18"
+          rx="3"
+          fill={ACCENT}
+          fillOpacity="0.85"
+        />
+        <line
+          x1="100"
+          y1="45"
+          x2="100"
+          y2="115"
+          stroke="#0A0A0A"
+          strokeWidth="4"
+        />
       </>
     ),
     id: (
       <>
-        <rect x="65" y="30" width="70" height="90" rx="8" fill="#141414" stroke="#fff" strokeOpacity="0.4" />
+        <rect
+          x="65"
+          y="30"
+          width="70"
+          height="90"
+          rx="8"
+          fill="#141414"
+          stroke="#fff"
+          strokeOpacity="0.4"
+        />
         <circle cx="100" cy="60" r="16" fill={ACCENT} fillOpacity="0.85" />
-        <line x1="80" y1="90" x2="120" y2="90" stroke="#fff" strokeOpacity="0.5" strokeWidth="3" />
-        <line x1="85" y1="102" x2="115" y2="102" stroke="#fff" strokeOpacity="0.3" strokeWidth="2" />
+        <line
+          x1="80"
+          y1="90"
+          x2="120"
+          y2="90"
+          stroke="#fff"
+          strokeOpacity="0.5"
+          strokeWidth="3"
+        />
+        <line
+          x1="85"
+          y1="102"
+          x2="115"
+          y2="102"
+          stroke="#fff"
+          strokeOpacity="0.3"
+          strokeWidth="2"
+        />
       </>
     ),
   };
@@ -641,8 +842,8 @@ function Cotizador() {
     setForm((f) => ({ ...f, ...patch }));
 
   const fields = useMemo(
-    () => (form.categoria ? QUOTE_FIELDS[form.categoria] ?? [] : []),
-    [form.categoria]
+    () => (form.categoria ? (QUOTE_FIELDS[form.categoria] ?? []) : []),
+    [form.categoria],
   );
   const isSign = SIGN_CATEGORIES.includes(form.categoria);
 
@@ -673,7 +874,7 @@ function Cotizador() {
       lines.push(
         `📐 *Medidas:* ${form.ancho}" x ${form.alto}"${
           anchoCm && altoCm ? ` (${anchoCm}cm x ${altoCm}cm)` : ""
-        }`
+        }`,
       );
     }
     if (isSign && form.ubicacion) {
@@ -714,7 +915,9 @@ function Cotizador() {
     if (step === 2) {
       if (!form.nombre.trim()) return setError("Escribe tu nombre.");
       if (phoneDigits(form.telefono).length !== 10)
-        return setError("El teléfono debe tener 10 dígitos, ej. (809) 000-0000.");
+        return setError(
+          "El teléfono debe tener 10 dígitos, ej. (809) 000-0000.",
+        );
     }
     setStep((s) => Math.min(s + 1, STEP_LABELS.length - 1));
   }
@@ -773,10 +976,18 @@ function Cotizador() {
               exit={reduce ? undefined : { opacity: 0, x: -30 }}
               transition={{ duration: 0.3 }}>
               {step === 0 && (
-                <StepProducto value={form.categoria} onPick={(c) => set({ categoria: c })} />
+                <StepProducto
+                  value={form.categoria}
+                  onPick={(c) => set({ categoria: c })}
+                />
               )}
               {step === 1 && (
-                <StepDetalles form={form} fields={fields} isSign={isSign} set={set} />
+                <StepDetalles
+                  form={form}
+                  fields={fields}
+                  isSign={isSign}
+                  set={set}
+                />
               )}
               {step === 2 && (
                 <StepDatos
@@ -910,8 +1121,8 @@ function StepDetalles({
           <div className="grid grid-cols-2 gap-4">
             {(
               [
-                { name: "ancho", label: 'Ancho (pulgadas)' },
-                { name: "alto", label: 'Alto (pulgadas)' },
+                { name: "ancho", label: "Ancho (pulgadas)" },
+                { name: "alto", label: "Alto (pulgadas)" },
               ] as const
             ).map((m) => {
               const cm = inchesToCm(form[m.name]);
@@ -991,7 +1202,9 @@ function StepDetalles({
             {f.type === "select" ? (
               <select
                 value={(form as Record<string, string>)[f.name]}
-                onChange={(e) => set({ [f.name]: e.target.value } as Partial<QuoteForm>)}
+                onChange={(e) =>
+                  set({ [f.name]: e.target.value } as Partial<QuoteForm>)
+                }
                 className={inputClass}>
                 <option value="">Selecciona…</option>
                 {f.options?.map((o) => (
@@ -1007,7 +1220,9 @@ function StepDetalles({
                 min={f.type === "number" ? 1 : undefined}
                 placeholder={f.placeholder}
                 value={(form as Record<string, string>)[f.name]}
-                onChange={(e) => set({ [f.name]: e.target.value } as Partial<QuoteForm>)}
+                onChange={(e) =>
+                  set({ [f.name]: e.target.value } as Partial<QuoteForm>)
+                }
                 className={inputClass}
               />
             )}
@@ -1310,10 +1525,7 @@ function Contact() {
       id="contacto"
       className="border-t border-white/10 bg-[#0d0d0d] py-24">
       <div className="mx-auto max-w-6xl px-5">
-        <SectionHead
-          kicker="Dónde estamos"
-          title="Visítanos o escríbenos"
-        />
+        <SectionHead kicker="Dónde estamos" title="Visítanos o escríbenos" />
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <div className="space-y-6">
             <InfoRow label="Dirección" value={ADDRESS} />
@@ -1344,7 +1556,7 @@ function Contact() {
             <iframe
               title="Ubicación de Visual Lab"
               src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                ADDRESS
+                ADDRESS,
               )}&z=15&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
