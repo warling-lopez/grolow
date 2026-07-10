@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { Anton, Inter, Space_Mono } from "next/font/google";
 import {
   AnimatePresence,
@@ -8,6 +9,14 @@ import {
   useReducedMotion,
   type Variants,
 } from "framer-motion";
+import HeroFallback from "./HeroFallback";
+
+// Hero 3D (three.js no corre en SSR). Mientras carga el chunk, y si
+// WebGL no está disponible, se muestra el hero estático.
+const HeroLetrero = dynamic(() => import("./HeroLetrero"), {
+  ssr: false,
+  loading: () => <HeroFallback />,
+});
 
 /* ================================================================== */
 /*  CONSTANTES EDITABLES  ·  cambia aquí los datos del negocio         */
@@ -18,7 +27,7 @@ import {
 const WHATSAPP_NUMBER = "12247134650";
 const EMAIL = "graphiclabsrl@gmail.com";
 const ADDRESS =
-  "231 Av. 25 de Febrero, Villa Duarte, Santo Domingo, República Dominicana";
+  "Av. 25 de Febrero 233, Villa Duarte, Santo Domingo, República Dominicana";
 const HORARIO = "Lunes a Sábado · 8:00 AM a 6:00 PM";
 const INSTAGRAM_USER = "laboratorio_visual_";
 const INSTAGRAM_URL = "https://instagram.com/laboratorio_visual_";
@@ -65,34 +74,11 @@ const STYLES = `
     background-size: 44px 44px;
   }
 
-  /* Letrero luminoso: glow + parpadeo al cargar (2-3 flashes, sin loop) */
-  .vl-sign { color:#fff; }
-  .vl-sign--on {
-    color: var(--acc);
-    text-shadow:
-      0 0 6px rgba(255,196,46,.55),
-      0 0 22px rgba(255,196,46,.45),
-      0 0 48px rgba(255,196,46,.28);
-    animation: vl-flicker 1.5s ease-in-out .25s 1 both;
-  }
-  @keyframes vl-flicker {
-    0%   { opacity:.15; text-shadow:none; }
-    5%   { opacity:1; }
-    9%   { opacity:.25; text-shadow:none; }
-    13%  { opacity:1; }
-    17%  { opacity:.2; text-shadow:none; }
-    22%  { opacity:1; }
-    26%  { opacity:.4; text-shadow:none; }
-    30%  { opacity:1; }
-    100% { opacity:1; }
-  }
-
   /* Marquee infinito */
   .vl-marquee { animation: vl-marquee 26s linear infinite; }
   @keyframes vl-marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
   @media (prefers-reduced-motion: reduce) {
-    .vl-sign--on { animation:none; }
     .vl-marquee { animation:none; }
   }
 `;
@@ -185,43 +171,58 @@ type FieldDef = {
   placeholder?: string;
 };
 
-const QUOTE_CATEGORIES: { id: string; label: string; icon: React.JSX.Element }[] = [
-  { id: "Letreros", label: "Letreros", icon: <path d="M4 5h16v9H4zM8 18h8M12 14v4" /> },
-  { id: "Acrílicos", label: "Acrílicos", icon: <path d="M6 3h12v18H6zM9 8h6M9 12h6" /> },
-  { id: "Papelería", label: "Papelería", icon: <path d="M4 4h16v16H4zM8 8h8M8 12h8" /> },
-  { id: "Vasos / Tazas", label: "Vasos / Tazas", icon: <path d="M6 8h9v4a4.5 4.5 0 01-9 0zM15 9h2.5a2 2 0 010 4H15" /> },
-  { id: "Uniformes", label: "Uniformes", icon: <path d="M8 4l4 2 4-2 4 3-3 3v10H7V10L4 7z" /> },
-  { id: "Regalos personalizados", label: "Regalos", icon: <path d="M4 12h16v8H4zM12 12v8M4 8h16v4H4zM12 8a3 3 0 10-3-3" /> },
-  { id: "Otro", label: "Otro", icon: <path d="M12 8v8M8 12h8" /> },
+/* Cards del Paso 1. Las imágenes viven en /public/servicios/ (colocar ahí
+   las fotos reales con estos nombres). Si una imagen falta, la card cae a
+   fondo negro con borde dorado sin romper el layout. */
+const QUOTE_CATEGORIES: { id: string; label: string; img: string | null }[] = [
+  { id: "Letrero corporativo", label: "Letrero corporativo", img: "/servicios/letrero-corporativo.jpg" },
+  { id: "Letrero luminoso", label: "Letrero luminoso", img: "/servicios/letrero-luminoso.jpg" },
+  { id: "Letras 3D", label: "Letras 3D", img: "/servicios/letras-3d.jpg" },
+  { id: "Placas", label: "Placas", img: "/servicios/placas.jpg" },
+  { id: "Papelería", label: "Papelería", img: "/servicios/papeleria.jpg" },
+  { id: "Uniformes", label: "Uniformes", img: "/servicios/uniformes.jpg" },
+  { id: "Regalos", label: "Regalos", img: "/servicios/regalos.jpg" },
+  { id: "Otro", label: "Otro", img: null },
 ];
 
+/* Categorías tipo letrero: llevan medidas en pulgadas, ubicación e
+   iluminación en el Paso 2. */
+const SIGN_CATEGORIES = [
+  "Letrero corporativo",
+  "Letrero luminoso",
+  "Letras 3D",
+  "Placas",
+];
+
+const UBICACIONES = [
+  "Fachada exterior",
+  "Pared interior",
+  "Recepción / lobby",
+  "Poste o estructura independiente",
+  "Otro",
+];
+
+const ILUMINACION_OPCIONES = ["Con luz", "Sin luz", "No estoy seguro"];
+
 const QUOTE_FIELDS: Record<string, FieldDef[]> = {
-  Letreros: [
-    { name: "tipo", label: "Tipo de letrero", type: "select", options: ["Luminoso", "Letras 3D", "Acrílico", "Número residencial retroiluminado"] },
-    { name: "medidas", label: "Medidas aproximadas", type: "text", placeholder: "ej. 2m x 1m" },
-    { name: "ubicacion", label: "Ubicación", type: "select", options: ["Interior", "Exterior"] },
-  ],
-  Acrílicos: [
+  "Letrero corporativo": [],
+  "Letrero luminoso": [],
+  "Letras 3D": [],
+  Placas: [
     { name: "tipo", label: "Tipo de placa", type: "select", options: ["Misión / Visión / Valores", "Señalización", "Reconocimiento"] },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "1" },
-    { name: "tamano", label: "Tamaño aproximado", type: "text", placeholder: "ej. 40 x 60 cm" },
   ],
   Papelería: [
     { name: "tipo", label: "Producto", type: "select", options: ["Tarjetas de presentación", "Carnets", "Hojas timbradas", "Sellos"] },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "100" },
-  ],
-  "Vasos / Tazas": [
-    { name: "tipo", label: "Tipo", type: "select", options: ["Taza cerámica", "Vaso térmico", "Kit souvenir"] },
-    { name: "cantidad", label: "Cantidad", type: "number", placeholder: "12" },
-    { name: "conLogo", label: "¿Con logo?", type: "select", options: ["Sí", "No"] },
   ],
   Uniformes: [
     { name: "tipo", label: "Prenda", type: "select", options: ["Polo", "T-shirt", "Camisa", "Gorra"] },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "10" },
     { name: "tecnica", label: "Técnica", type: "select", options: ["Bordado", "Estampado"] },
   ],
-  "Regalos personalizados": [
-    { name: "tipo", label: "Tipo de regalo", type: "text", placeholder: "ej. termo, kit souvenir…" },
+  Regalos: [
+    { name: "tipo", label: "Tipo de regalo", type: "text", placeholder: "ej. termo, taza, kit souvenir…" },
     { name: "cantidad", label: "Cantidad", type: "number", placeholder: "1" },
   ],
   Otro: [],
@@ -240,6 +241,29 @@ function isoOffset(days: number) {
   const d = new Date();
   d.setDate(d.getDate() + days);
   return d.toISOString().slice(0, 10);
+}
+
+/** Solo los 10 dígitos locales: acepta 809-000-0000, 8090000000 y +1 809 000 0000. */
+function phoneDigits(v: string) {
+  let d = v.replace(/\D/g, "");
+  if (d.length > 10 && d.startsWith("1")) d = d.slice(1);
+  return d.slice(0, 10);
+}
+
+/** Máscara (809) 000-0000 mientras se escribe. */
+function formatPhone(v: string) {
+  const d = phoneDigits(v);
+  if (d.length === 0) return "";
+  if (d.length <= 3) return `(${d}`;
+  if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+}
+
+/** Conversión pulgadas → cm redondeada, para la referencia bajo los inputs. */
+function inchesToCm(inches: string) {
+  const n = parseFloat(inches);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  return Math.round(n * 2.54);
 }
 
 const reveal: Variants = {
@@ -264,7 +288,9 @@ export default function VisualLabPage() {
       <style>{STYLES}</style>
 
       <Nav />
-      <Hero />
+      <div id="top">
+        <HeroLetrero />
+      </div>
       <Marquee />
       <Services />
       <Portfolio />
@@ -331,68 +357,6 @@ function LogoMark({ big = false }: { big?: boolean }) {
         LAB
       </span>
     </span>
-  );
-}
-
-/* ------------------------------ Hero ------------------------------ */
-
-function Hero() {
-  return (
-    <section
-      id="top"
-      className="vl-grid relative flex min-h-screen items-center overflow-hidden pt-16">
-      {/* Halo de luz del acento */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-25 blur-[120px]"
-        style={{ background: ACCENT }}
-      />
-      <div className="relative mx-auto w-full max-w-6xl px-5 pt-10 pb-20">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[color:var(--acc)]"
-          style={{ fontFamily: "var(--font-mono), monospace" }}>
-          Laboratorio Gráfico Visual · Santo Domingo
-        </motion.p>
-
-        <h1
-          className="max-w-4xl text-5xl leading-[0.92] tracking-tight sm:text-7xl md:text-8xl"
-          style={{ fontFamily: "var(--font-anton), sans-serif" }}>
-          <span className="block text-white">HACEMOS QUE</span>
-          <span className="block text-white">TU MARCA</span>
-          <span className="vl-sign vl-sign--on block uppercase">se vea</span>
-        </h1>
-
-        <p className="mt-8 max-w-xl text-lg text-white/70">
-          Letreros luminosos, placas de acrílico, papelería, regalos y textiles
-          personalizados.{" "}
-          <span className="font-semibold text-white">
-            Todo lo personalizamos.
-          </span>
-        </p>
-
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <a
-            href="#cotizador"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--acc)] px-7 py-4 text-sm font-bold uppercase tracking-wider text-black transition-transform hover:scale-[1.03]">
-            Cotiza en 1 minuto
-            <span className="transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </a>
-          <a
-            href={waLink("Hola Visual Lab, quiero información sobre sus servicios.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-[color:var(--acc)] hover:text-[color:var(--acc)]">
-            <WhatsAppIcon className="h-5 w-5" />
-            WhatsApp directo
-          </a>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -623,12 +587,13 @@ function Mockup({ kind }: { kind: MockKind }) {
 type QuoteForm = {
   categoria: string;
   tipo: string;
-  medidas: string;
   ubicacion: string;
   cantidad: string;
-  tamano: string;
-  conLogo: string;
   tecnica: string;
+  ancho: string;
+  alto: string;
+  ubicacionOtro: string;
+  iluminacion: string;
   nota: string;
   fecha: string;
   nombre: string;
@@ -639,12 +604,13 @@ type QuoteForm = {
 const EMPTY_FORM: QuoteForm = {
   categoria: "",
   tipo: "",
-  medidas: "",
   ubicacion: "",
   cantidad: "",
-  tamano: "",
-  conLogo: "",
   tecnica: "",
+  ancho: "",
+  alto: "",
+  ubicacionOtro: "",
+  iluminacion: "",
   nota: "",
   fecha: "",
   nombre: "",
@@ -654,42 +620,80 @@ const EMPTY_FORM: QuoteForm = {
 
 const STEP_LABELS = ["Producto", "Detalles", "Tus datos", "Resumen"];
 
+/* Archivo subido por el cliente (solo client-side, no hay backend). */
+type UploadedFile = { file: File; previewUrl: string | null };
+
 function Cotizador() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<QuoteForm>(EMPTY_FORM);
+  const [fotoLocal, setFotoLocal] = useState<UploadedFile | null>(null);
+  const [logo, setLogo] = useState<UploadedFile | null>(null);
   const [error, setError] = useState("");
   const reduce = useReducedMotion();
 
   const set = (patch: Partial<QuoteForm>) =>
     setForm((f) => ({ ...f, ...patch }));
 
-  const fields = form.categoria ? QUOTE_FIELDS[form.categoria] ?? [] : [];
+  const fields = useMemo(
+    () => (form.categoria ? QUOTE_FIELDS[form.categoria] ?? [] : []),
+    [form.categoria]
+  );
+  const isSign = SIGN_CATEGORIES.includes(form.categoria);
 
-  const detalles = useMemo(() => {
-    // Todos los campos condicionales excepto "tipo" (que va en la línea Producto).
-    return fields
+  const message = useMemo(() => {
+    const empresa = form.empresa ? ` (${form.empresa})` : "";
+
+    // Detalles extra (cantidad, técnica…) excepto "tipo", que va en Producto.
+    const detalles = fields
       .filter((f) => f.name !== "tipo")
       .map((f) => {
         const v = (form as Record<string, string>)[f.name];
         return v ? `${f.label}: ${v}` : null;
       })
       .filter(Boolean)
-      .join(" · ");
-  }, [fields, form]);
+      .join(" - ");
 
-  const message = useMemo(() => {
-    const empresa = form.empresa ? ` (${form.empresa})` : "";
-    return [
-      "🧪 NUEVA COTIZACIÓN · VISUAL LAB",
-      "━━━━━━━━━━━━━━━",
-      `👤 Cliente: ${form.nombre}${empresa}`,
-      `📱 Tel: ${form.telefono}`,
-      `📦 Producto: ${form.categoria}${form.tipo ? " · " + form.tipo : ""}`,
-      `📐 Detalles: ${detalles || "-"}`,
-      `📝 Nota: ${form.nota || "-"}`,
-      `📅 Entrega deseada: ${form.fecha || "A convenir"}`,
-    ].join("\n");
-  }, [form, detalles]);
+    const lines = [
+      "📋 *NUEVA COTIZACION - VISUAL LAB*",
+      "----------------------------",
+      `👤 *Cliente:* ${form.nombre}${empresa}`,
+      `📞 *Tel:* ${form.telefono}`,
+      `📦 *Producto:* ${form.categoria}${form.tipo ? " - " + form.tipo : ""}`,
+    ];
+
+    const anchoCm = inchesToCm(form.ancho);
+    const altoCm = inchesToCm(form.alto);
+    if (form.ancho && form.alto) {
+      lines.push(
+        `📐 *Medidas:* ${form.ancho}" x ${form.alto}"${
+          anchoCm && altoCm ? ` (${anchoCm}cm x ${altoCm}cm)` : ""
+        }`
+      );
+    }
+    if (isSign && form.ubicacion) {
+      const ubic =
+        form.ubicacion === "Otro" && form.ubicacionOtro
+          ? form.ubicacionOtro
+          : form.ubicacion;
+      lines.push(`📍 *Ubicación:* ${ubic}`);
+    }
+    if (isSign && form.iluminacion) {
+      lines.push(`💡 *Iluminación:* ${form.iluminacion}`);
+    }
+    if (detalles) lines.push(`*Detalles:* ${detalles}`);
+    if (form.nota) lines.push(`*Nota:* ${form.nota}`);
+    lines.push(`*Entrega deseada:* ${form.fecha || "A convenir"}`);
+
+    if (fotoLocal && logo) {
+      lines.push("📎 Adjunto la foto del local y mi logo en este chat.");
+    } else if (fotoLocal) {
+      lines.push("📎 Adjunto la foto del local en este chat.");
+    } else if (logo) {
+      lines.push("📎 Adjunto mi logo en este chat.");
+    }
+
+    return lines.join("\n");
+  }, [form, fields, isSign, fotoLocal, logo]);
 
   function next() {
     setError("");
@@ -697,10 +701,14 @@ function Cotizador() {
       setError("Elige un producto para continuar.");
       return;
     }
+    if (step === 1 && isSign && !form.ubicacion) {
+      setError("Indica dónde irá instalado.");
+      return;
+    }
     if (step === 2) {
       if (!form.nombre.trim()) return setError("Escribe tu nombre.");
-      if (!form.telefono.trim())
-        return setError("Escribe un teléfono de contacto.");
+      if (phoneDigits(form.telefono).length !== 10)
+        return setError("El teléfono debe tener 10 dígitos, ej. (809) 000-0000.");
     }
     setStep((s) => Math.min(s + 1, STEP_LABELS.length - 1));
   }
@@ -762,9 +770,18 @@ function Cotizador() {
                 <StepProducto value={form.categoria} onPick={(c) => set({ categoria: c })} />
               )}
               {step === 1 && (
-                <StepDetalles form={form} fields={fields} set={set} />
+                <StepDetalles form={form} fields={fields} isSign={isSign} set={set} />
               )}
-              {step === 2 && <StepDatos form={form} set={set} />}
+              {step === 2 && (
+                <StepDatos
+                  form={form}
+                  set={set}
+                  fotoLocal={fotoLocal}
+                  setFotoLocal={setFotoLocal}
+                  logo={logo}
+                  setLogo={setLogo}
+                />
+              )}
               {step === 3 && <StepResumen message={message} />}
             </motion.div>
           </AnimatePresence>
@@ -822,25 +839,43 @@ function StepProducto({
             <button
               key={c.id}
               onClick={() => onPick(c.id)}
-              className={`flex flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-all ${
+              className={`group relative aspect-[4/3] overflow-hidden rounded-2xl border bg-[#0A0A0A] text-left transition-all duration-300 hover:border-[color:var(--acc)] hover:shadow-[0_0_30px_-12px_var(--acc)] ${
                 active
-                  ? "border-[color:var(--acc)] bg-[var(--acc)]/10 shadow-[0_0_30px_-12px_var(--acc)]"
-                  : "border-white/10 hover:border-white/30"
+                  ? "border-[color:var(--acc)] shadow-[0_0_30px_-12px_var(--acc)]"
+                  : "border-white/10"
               }`}>
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.6}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`h-7 w-7 ${active ? "text-[color:var(--acc)]" : "text-white/70"}`}>
-                {c.icon}
-              </svg>
+              {c.img && (
+                // Imagen alusiva; si no carga, se oculta y queda el fondo
+                // negro con borde dorado (fallback sin romper el layout).
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={c.img}
+                  alt=""
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    const btn = e.currentTarget.closest("button");
+                    if (btn) btn.style.borderColor = "rgba(255,196,46,.45)";
+                  }}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+                />
+              )}
               <span
-                className={`text-xs font-semibold ${active ? "text-white" : "text-white/70"}`}>
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.4))",
+                }}
+              />
+              <span className="absolute bottom-2.5 left-3 right-3 text-xs font-bold uppercase tracking-wider text-[color:var(--acc)] sm:text-sm">
                 {c.label}
               </span>
+              {active && (
+                <span className="absolute right-2.5 top-2.5 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--acc)] text-xs font-bold text-black">
+                  ✓
+                </span>
+              )}
             </button>
           );
         })}
@@ -852,16 +887,99 @@ function StepProducto({
 function StepDetalles({
   form,
   fields,
+  isSign,
   set,
 }: {
   form: QuoteForm;
   fields: FieldDef[];
+  isSign: boolean;
   set: (p: Partial<QuoteForm>) => void;
 }) {
   return (
     <div>
       <StepTitle n={2} title={`Detalles · ${form.categoria}`} />
       <div className="grid gap-4">
+        {/* Medidas en pulgadas con conversión a cm (solo letreros/placas) */}
+        {isSign && (
+          <div className="grid grid-cols-2 gap-4">
+            {(
+              [
+                { name: "ancho", label: 'Ancho (pulgadas)' },
+                { name: "alto", label: 'Alto (pulgadas)' },
+              ] as const
+            ).map((m) => {
+              const cm = inchesToCm(form[m.name]);
+              return (
+                <Field key={m.name} label={m.label}>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={1}
+                    placeholder={m.name === "ancho" ? "60" : "24"}
+                    value={form[m.name]}
+                    onChange={(e) => set({ [m.name]: e.target.value })}
+                    className={inputClass}
+                  />
+                  <span className="mt-1 block text-xs text-white/40">
+                    {cm ? `≈ ${cm} cm` : " "}
+                  </span>
+                </Field>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Ubicación de instalación (solo letreros/placas) */}
+        {isSign && (
+          <>
+            <Field label="¿Dónde irá instalado? *">
+              <select
+                value={form.ubicacion}
+                onChange={(e) => set({ ubicacion: e.target.value })}
+                className={inputClass}>
+                <option value="">Selecciona…</option>
+                {UBICACIONES.map((u) => (
+                  <option key={u} value={u} className="bg-[#141414]">
+                    {u}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            {form.ubicacion === "Otro" && (
+              <Field label="Especifica dónde">
+                <input
+                  value={form.ubicacionOtro}
+                  onChange={(e) => set({ ubicacionOtro: e.target.value })}
+                  placeholder="ej. túnel de entrada, valla en carretera…"
+                  className={inputClass}
+                />
+              </Field>
+            )}
+
+            {/* Iluminación: toggle de 3 botones */}
+            <Field label="Iluminación">
+              <div className="grid grid-cols-3 gap-2">
+                {ILUMINACION_OPCIONES.map((o) => {
+                  const active = form.iluminacion === o;
+                  return (
+                    <button
+                      key={o}
+                      type="button"
+                      onClick={() => set({ iluminacion: o })}
+                      className={`rounded-xl border px-3 py-3 text-xs font-bold transition-colors sm:text-sm ${
+                        active
+                          ? "border-[color:var(--acc)] text-[color:var(--acc)]"
+                          : "border-white/15 text-white/60 hover:border-white/40 hover:text-white"
+                      }`}>
+                      {o}
+                    </button>
+                  );
+                })}
+              </div>
+            </Field>
+          </>
+        )}
+
         {fields.map((f) => (
           <Field key={f.name} label={f.label}>
             {f.type === "select" ? (
@@ -918,9 +1036,17 @@ function StepDetalles({
 function StepDatos({
   form,
   set,
+  fotoLocal,
+  setFotoLocal,
+  logo,
+  setLogo,
 }: {
   form: QuoteForm;
   set: (p: Partial<QuoteForm>) => void;
+  fotoLocal: UploadedFile | null;
+  setFotoLocal: (f: UploadedFile | null) => void;
+  logo: UploadedFile | null;
+  setLogo: (f: UploadedFile | null) => void;
 }) {
   return (
     <div>
@@ -946,13 +1072,121 @@ function StepDatos({
           <input
             type="tel"
             inputMode="tel"
+            autoComplete="tel"
+            maxLength={14}
             value={form.telefono}
-            onChange={(e) => set({ telefono: e.target.value })}
+            onChange={(e) => set({ telefono: formatPhone(e.target.value) })}
             placeholder="(809) 000-0000"
             className={inputClass}
           />
         </Field>
+
+        <FileUpload
+          label="Sube una foto del local (opcional)"
+          accept="image/*"
+          value={fotoLocal}
+          onChange={setFotoLocal}
+        />
+        <FileUpload
+          label="Sube tu logo (opcional)"
+          accept=".png,.jpg,.jpeg,.svg,.pdf,.ai,.eps"
+          value={logo}
+          onChange={setLogo}
+        />
+        <p className="text-xs text-white/40">
+          Los archivos no se envían automáticamente: al abrir WhatsApp,
+          adjúntalos en el chat. El mensaje lo recordará por ti.
+        </p>
       </div>
+    </div>
+  );
+}
+
+/* Input de archivo con preview (imagen) o ícono + nombre (vector/pdf). */
+function FileUpload({
+  label,
+  accept,
+  value,
+  onChange,
+}: {
+  label: string;
+  accept: string;
+  value: UploadedFile | null;
+  onChange: (f: UploadedFile | null) => void;
+}) {
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (value?.previewUrl) URL.revokeObjectURL(value.previewUrl);
+    const isImage = /\.(png|jpe?g|svg|gif|webp)$/i.test(file.name);
+    onChange({ file, previewUrl: isImage ? URL.createObjectURL(file) : null });
+    e.target.value = "";
+  }
+  function remove() {
+    if (value?.previewUrl) URL.revokeObjectURL(value.previewUrl);
+    onChange(null);
+  }
+
+  return (
+    <div>
+      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-white/50">
+        {label}
+      </span>
+      {!value ? (
+        <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 px-4 py-5 text-sm text-white/50 transition-colors hover:border-[color:var(--acc)] hover:text-white">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.6}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-5 w-5">
+            <path d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16" />
+          </svg>
+          Toca para elegir un archivo
+          <input
+            type="file"
+            accept={accept}
+            onChange={handleFile}
+            className="hidden"
+          />
+        </label>
+      ) : (
+        <div className="flex items-center gap-3 rounded-xl border border-white/15 bg-[#0A0A0A] p-3">
+          {value.previewUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={value.previewUrl}
+              alt="Vista previa"
+              className="h-14 w-14 rounded-lg object-cover"
+            />
+          ) : (
+            <span className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 text-[color:var(--acc)]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-6 w-6">
+                <path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8zM14 3v5h5" />
+              </svg>
+            </span>
+          )}
+          <span className="min-w-0 flex-1 truncate text-sm text-white/80">
+            {value.file.name}
+          </span>
+          <button
+            type="button"
+            onClick={remove}
+            aria-label="Quitar archivo"
+            className="shrink-0 rounded-full border border-white/15 px-3 py-1.5 text-xs font-bold text-white/60 transition-colors hover:border-red-400 hover:text-red-400">
+            Quitar
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1155,16 +1389,33 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#0A0A0A] py-12">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-5 text-center sm:flex-row sm:justify-between sm:text-left">
-        <LogoMark />
+        <div className="flex flex-col items-center gap-3 sm:items-start">
+          <LogoMark />
+          <p className="text-xs text-white/40">
+            Av. 25 de Febrero 233, Villa Duarte, Santo Domingo
+          </p>
+        </div>
         <p className="text-xs text-white/40">
-          © {new Date().getFullYear()} Visual Lab · Laboratorio Gráfico Visual ·
-          Santo Domingo, RD
+          © {new Date().getFullYear()} Visual Lab · Laboratorio Gráfico Visual
         </p>
-        <p
-          className="text-xs font-bold uppercase tracking-widest text-[color:var(--acc)]"
-          style={{ fontFamily: "var(--font-mono), monospace" }}>
-          Todo lo personalizamos
-        </p>
+        <div className="flex flex-col items-center gap-2 sm:items-end">
+          <p
+            className="text-xs font-bold uppercase tracking-widest text-[color:var(--acc)]"
+            style={{ fontFamily: "var(--font-mono), monospace" }}>
+            Todo lo personalizamos
+          </p>
+          <p className="text-xs text-white/40">
+            Desarrollado por{" "}
+            <a
+              href="https://grolow.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-white/60 transition-colors hover:text-[color:var(--acc)]">
+              Grolow Studio
+            </a>{" "}
+            · grolow.com
+          </p>
+        </div>
       </div>
     </footer>
   );

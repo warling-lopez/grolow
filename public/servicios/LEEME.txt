@@ -1,0 +1,12 @@
+Coloca aquí las fotos reales de cada servicio (ratio 4:3 recomendado):
+
+  letrero-corporativo.jpg
+  letrero-luminoso.jpg
+  letras-3d.jpg
+  placas.jpg
+  papeleria.jpg
+  uniformes.jpg
+  regalos.jpg
+
+Mientras falten, las cards del cotizador muestran fondo negro con borde
+dorado (no se rompe nada).
