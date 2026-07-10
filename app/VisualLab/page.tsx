@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 
 /* ================================================================== */
-/*  CONSTANTES EDITABLES  —  cambia aquí los datos del negocio         */
+/*  CONSTANTES EDITABLES  ·  cambia aquí los datos del negocio         */
 /* ================================================================== */
 
 /** WhatsApp del negocio. Solo dígitos con código de país (formato wa.me).
@@ -19,7 +19,7 @@ const WHATSAPP_NUMBER = "12247134650";
 const EMAIL = "graphiclabsrl@gmail.com";
 const ADDRESS =
   "231 Av. 25 de Febrero, Villa Duarte, Santo Domingo, República Dominicana";
-const HORARIO = "Lunes a Sábado · 8:00 AM – 6:00 PM";
+const HORARIO = "Lunes a Sábado · 8:00 AM a 6:00 PM";
 const INSTAGRAM_USER = "laboratorio_visual_";
 const INSTAGRAM_URL = "https://instagram.com/laboratorio_visual_";
 /** Acento único de la marca: amarillo dorado (evoca los letreros luminosos). */
@@ -49,7 +49,7 @@ const mono = Space_Mono({
 });
 
 /* ================================================================== */
-/*  CSS scopeado — solo lo que Tailwind no expresa cómodo             */
+/*  CSS scopeado: solo lo que Tailwind no expresa cómodo              */
 /*  (parpadeo de letrero, glow, grid blueprint, marquee)             */
 /* ================================================================== */
 
@@ -289,7 +289,7 @@ function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-        <a href="#top" aria-label="Visual Lab — inicio">
+        <a href="#top" aria-label="Visual Lab, inicio">
           <LogoMark />
         </a>
         <div className="hidden items-center gap-7 md:flex">
@@ -347,7 +347,7 @@ function Hero() {
         className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-25 blur-[120px]"
         style={{ background: ACCENT }}
       />
-      <div className="relative mx-auto w-full max-w-6xl px-5 py-20">
+      <div className="relative mx-auto w-full max-w-6xl px-5 pt-10 pb-20">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -489,7 +489,7 @@ function Portfolio() {
         <SectionHead
           kicker="Sala de exhibición"
           title="Portafolio"
-          sub="Proyectos reales del laboratorio. (Placeholders — se reemplazan por fotos reales.)"
+          sub="Proyectos reales del laboratorio. (Placeholders, se reemplazan por fotos reales.)"
         />
 
         <div className="mt-8 flex flex-wrap gap-2">
@@ -681,13 +681,13 @@ function Cotizador() {
   const message = useMemo(() => {
     const empresa = form.empresa ? ` (${form.empresa})` : "";
     return [
-      "🧪 NUEVA COTIZACIÓN — VISUAL LAB",
+      "🧪 NUEVA COTIZACIÓN · VISUAL LAB",
       "━━━━━━━━━━━━━━━",
       `👤 Cliente: ${form.nombre}${empresa}`,
       `📱 Tel: ${form.telefono}`,
-      `📦 Producto: ${form.categoria}${form.tipo ? " — " + form.tipo : ""}`,
-      `📐 Detalles: ${detalles || "—"}`,
-      `📝 Nota: ${form.nota || "—"}`,
+      `📦 Producto: ${form.categoria}${form.tipo ? " · " + form.tipo : ""}`,
+      `📐 Detalles: ${detalles || "-"}`,
+      `📝 Nota: ${form.nota || "-"}`,
       `📅 Entrega deseada: ${form.fecha || "A convenir"}`,
     ].join("\n");
   }, [form, detalles]);
