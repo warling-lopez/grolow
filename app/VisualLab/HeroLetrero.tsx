@@ -131,6 +131,15 @@ function initScene(
     roughness: 0.7,
     metalness: 0.05,
   });
+  // "LAB" con luz propia: emissive controlado por tiempo para el efecto
+  // de bombillo que hace falso contacto al encender y luego se fija.
+  const matLabFront = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    emissive: 0xffffee, // blanco cálido, como filamento de bombillo
+    emissiveIntensity: 0, // inicia apagado
+    roughness: 0.4,
+    metalness: 0.1,
+  });
 
   const sign = new THREE.Group();
   scene.add(sign);
@@ -192,9 +201,9 @@ function initScene(
 
   // "VISUAL": marca grande en blanco con canto dorado.
   const mainWidth = buildWord("VISUAL", 1.0, DEPTH_MAIN, [matFront, matGold], 0, 0);
-  // "LAB": descriptor pequeño en negro mate (canto dorado también),
-  // alineado a la derecha como en el logo tipográfico.
-  const subWidth = buildWord("LAB", 0.34, DEPTH_SUB, [matDark, matGold], 0, 0);
+  // "LAB": descriptor pequeño que enciende como bombillo (cara emisiva
+  // + canto dorado), alineado a la derecha como en el logo tipográfico.
+  const subWidth = buildWord("LAB", 0.34, DEPTH_SUB, [matLabFront, matGold], 0, 0);
   // Recolocar: centrar VISUAL y colgar LAB debajo, alineado a la
   // derecha (las 6 primeras letras son "VISUAL", el resto "LAB").
   letters.forEach(({ mesh }, i) => {
@@ -321,6 +330,16 @@ function initScene(
           1
         );
         mesh.position.z = THREE.MathUtils.lerp(-1, GAP, easeOutCubic(p));
+      }
+
+      // Encendido "bombillo dañado" de LAB: entre 1.2s y 2.8s hace falso
+      // contacto (chispazos aleatorios), luego calienta y se fija. Sin
+      // loop: pasado el rango queda encendido y ya no vuelve a parpadear.
+      if (elapsed > 1.2 && elapsed < 2.8) {
+        matLabFront.emissiveIntensity =
+          Math.random() > 0.75 ? Math.random() * 2.5 : 0;
+      } else if (elapsed >= 2.8) {
+        matLabFront.emissiveIntensity = 2.0;
       }
     }
 
