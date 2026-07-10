@@ -354,7 +354,6 @@ function Hero() {
           transition={{ duration: 0.6 }}
           className="mb-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-[color:var(--acc)]"
           style={{ fontFamily: "var(--font-mono), monospace" }}>
-          <span className="h-px w-8 bg-[color:var(--acc)]" />
           Laboratorio Gráfico Visual · Santo Domingo
         </motion.p>
 
