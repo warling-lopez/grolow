@@ -302,9 +302,9 @@ export default function PreloaderPuertas({
     // Secuencia completa. Regla dura: a los 2s se desmonta, pase lo
     // que pase con la carga real.
     const timers = [
-      setTimeout(() => setPhase("lit"), 1200),
-      setTimeout(() => setPhase("shake"), 1350),
-      setTimeout(() => setPhase("open"), 1450),
+      setTimeout(() => setPhase("lit"), 100),
+      setTimeout(() => setPhase("shake"), 350),
+      setTimeout(() => setPhase("open"), 650),
       setTimeout(() => setActive(false), 2000),
     ];
 
