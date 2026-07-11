@@ -18,6 +18,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const standalone =
     pathname?.startsWith('/Hermon-Dental') ||
     pathname?.startsWith('/VisualLab') ||
+    pathname?.toLowerCase().startsWith('/piropos') ||
     false;
 
   useEffect(() => {
