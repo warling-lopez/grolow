@@ -19,6 +19,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     pathname?.startsWith('/Hermon-Dental') ||
     pathname?.startsWith('/VisualLab') ||
     pathname?.toLowerCase().startsWith('/piropos') ||
+    pathname?.startsWith('/para-yessica') ||
     false;
 
   useEffect(() => {
