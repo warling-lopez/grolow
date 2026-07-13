@@ -16,9 +16,9 @@ const CARTA = {
   subtitulo: 'mi amiga platónica, de mi corazón',
   saludo: 'Querida yessica:',
   parrafos: [
-    'Hay personas que llegan a tu vida sin avisar y, sin darte cuenta, se vuelven parte de tus días tus horas. Tú eres una de esas personas para mí lo fuiste hace mucho, y aunque ya no seamos tan especiales el uno para el otro yo si, no se si esto lo sabias pero la poesia la iba a dejar hasta que hiciste que me volviera a interesar por ella y hasat el dia de hoy sigo aprendiendo y aplicandola gracias a ella.',
-    'Gracias por cada conversación, por cada risa que me sacabas en su momento, cuando menos lo espero, y por escucharme incluso cuando ni yo mismo sé lo que quiero decir, aunq eso sea un poco vergonzoso, te considero unos de los pocos amigos de verdad que tengo en esta vida, y creeme que los puedo contar con media mano jsjs.',
-    'Eres de esas amistades raras y bonitas: de las que no necesitan verse todos los días para sentirse cerca, de hecho en clase de español siempre me acuerdo de ti porque cuando se habla de escribir algo, estructurarlo y hacer que se sienta siempre llega ese moemnto en el que recuerdo a la persona que me hizo sentir más por ese medio.',
+    'Hay personas que llegan a tu vida sin avisar y, sin darte cuenta, se vuelven parte de tus días tus horas. Tú eres una de esas personas para mí lo fuiste hace mucho, y aunque ya no seamos tan especiales el uno para el otro yo si, no se si esto lo sabias pero la poesia la iba a dejar hasta que hiciste que me volviera a interesar por ella y hasta el dia de hoy sigo aprendiendo y aplicandola gracias a ti.',
+    'Gracias por cada conversación, por cada risa que me sacabas en su momento, cuando menos lo esperaba, y por escucharme incluso cuando ni yo mismo sabia lo que queria decir, aunq eso sea un poco vergonzoso, te considero unos de los pocos amigos de verdad que tengo en esta vida, y creeme que los puedo contar con media mano jsjs.',
+    'Eres de esas amistades raras y bonitas: de las que no necesitan verse todos los días para sentirse cerca, de hecho en clase de español siempre me acuerdo de ti porque cuando se habla de escribir algo, estructurarlo y hacer que se sienta siempre llega ese momento en el que recuerdo a la persona que me hizo sentir más por ese medio.',
     'Quiero que sepas que te admiro, que te aprecio muchísimo, y que tenerte como amiga es de las mejores cosas que me han pasado.',
     'Ojalá la vida nos regale muchos años más de esta amistad tan nuestra.',
   ],
