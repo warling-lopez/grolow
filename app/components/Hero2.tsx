@@ -30,7 +30,7 @@ export type Hero2Props = {
   rotateX?: number; // deg
   rotateZ?: number; // deg
   perspective?: number; // px
-  eyebrow?: string;
+  eyebrow?: React.ReactNode;
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   ctas?: HeroCTA[];
@@ -152,7 +152,8 @@ export default function Hero2({
   rotateX = 15,
   rotateZ = -8,
   perspective = 1000,
-  eyebrow = "Grolow • Agencia de Infraestructura",
+  // Por defecto mantiene el SplitText original de la home.
+  eyebrow = <SplitText>SISTEMAS QUE ESCALAN</SplitText>,
   title = DEFAULT_TITLE,
   subtitle = (
     <>
@@ -216,8 +217,7 @@ export default function Hero2({
       {/* ---------- Contenido del hero ---------- */}
       <div className="relative z-10 max-w-7xl mx-auto w-full text-center flex flex-col items-center pt-20">
         <div className="mb-15 text-sm sm:text-base font-bold tracking-widest uppercase text-grolow-cream/80">
-          {" "}
-          <SplitText>SISTEMAS QUE ESCALAN</SplitText>
+          {eyebrow}
         </div>
         <h1
           className="text-4xl sm:text-6xl md:text-[92px] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-10 max-w-5xl"
