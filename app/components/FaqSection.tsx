@@ -7,13 +7,13 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
-  { 
-    q: "¿Cuánto cuesta un proyecto?", 
-    a: "Depende del tipo de sistema. Una landing page parte desde $300, una tienda online desde $450, y los sistemas más completos desde $1200. El diagnóstico es gratis y sin compromiso — te decimos exactamente qué necesitas y cuánto cuesta antes de empezar." 
+  {
+    q: "¿Cuánto cuesta un proyecto?",
+    a: "Puedes empezar con el plan mensual: US$150 de setup y US$45 al mes, con dominio, hosting y todos los cambios incluidos. Si prefieres pagarlo de una vez, desde US$550. Antes de que decidas nada te digo exactamente qué necesitas y cuánto cuesta, gratis."
   },
-  { 
-    q: "¿Qué pasa si necesito cambios después de la entrega?", 
-    a: "Los primeros 15 días incluyen ajustes sin costo. Después podemos acordar un plan de mantenimiento mensual o trabajar cambios puntuales según tus necesidades." 
+  {
+    q: "¿Qué pasa si necesito cambios después de la entrega?",
+    a: "Los primeros 15 días incluyen ajustes sin costo. Después, con el plan mensual me escribes por WhatsApp y yo hago el cambio; si vas por pago único, cotizamos cada cambio aparte."
   },
   { 
     q: "¿Usan WordPress o constructores visuales?", 
@@ -23,25 +23,37 @@ const faqs = [
     q: "¿Se puede editar la web una vez entregada?", 
     a: "Sí. Entregamos un sistema con la estructura necesaria para que el contenido sea 100% editable y restructurable." 
   },
-  { 
-    q: "¿Qué necesito para poder empezar?", 
-    a: "Debes tener claro el branding de tu marca, una estructura básica y el objetivo de la web. Si no tienes alguno de estos puntos definidos, podemos guiarte." 
+  {
+    q: "¿Qué necesito para poder empezar?",
+    a: "Fotos de tus productos y saber qué quieres lograr. Si no tienes logo ni colores definidos, no es un problema — lo resolvemos en la primera llamada."
   },
   { 
     q: "¿Utilizan plantillas o los diseños son a medida?", 
     a: "Todo lo que realizamos es a medida. Desde la arquitectura hasta el desarrollo. Cada proyecto es único, enfocado en sistemas funcionales y pensado para llegar a los objetivos de la marca." 
   },
-  { 
-    q: "¿Con qué tipo de marcas/negocios trabajan?", 
-    a: "Trabajamos con negocios que quieren dar un paso más allá, que entienden el valor de una infraestructura digital bien hecha. Hacemos webs que marcan presencia y escalan junto a tu negocio." 
+  {
+    q: "¿Con qué tipo de marcas/negocios trabajan?",
+    a: "Sobre todo con negocios que venden por Instagram y WhatsApp y ya no dan abasto mandando fotos una por una: perfumerías, ropa, comida, distribuidoras. Si vendes por chat y pierdes pedidos, es exactamente para ti."
   },
-  { 
-    q: "¿Qué servicios ofrecen?", 
-    a: "En Grolow ofrecemos: Diseño y desarrollo web full-stack, aplicaciones móviles, arquitectura de software y desarrollo de sistemas a medida." 
+  {
+    q: "¿Y si mi negocio es pequeño?",
+    a: "La mayoría de mis clientes lo son. Por eso existe el plan mensual: US$45 al mes es menos de lo que muchos gastan en un solo día de anuncios, y esto trabaja los 30 días."
+  },
+  {
+    q: "¿La web es mía?",
+    a: "El contenido y tu marca son tuyos siempre. En el plan mensual yo mantengo el dominio y el hosting mientras el plan esté activo; si algún día quieres llevártelo todo, se puede coordinar el traspaso."
+  },
+  {
+    q: "¿Qué servicios ofrecen?",
+    a: "En Grolow ofrecemos: Diseño y desarrollo web full-stack, aplicaciones móviles, arquitectura de software y desarrollo de sistemas a medida."
   }
 ];
 
-export default function FaqSection() {
+export type Faq = { q: string; a: string };
+
+/** Sin props usa el FAQ general de la home; las landings pasan el suyo. */
+export default function FaqSection({ items }: { items?: Faq[] } = {}) {
+  const faqList = items ?? faqs;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -62,12 +74,12 @@ export default function FaqSection() {
   return (
     <section id="faq" ref={sectionRef} className="w-full py-32 px-6 bg-grolow-dark border-t border-grolow-light/10">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-grolow-light tracking-tighter mb-16 uppercase text-center" style={{ fontFamily: "'Syne', sans-serif" }}>
+        <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold text-grolow-light tracking-tighter mb-16 uppercase text-center" style={{ fontFamily: "'Syne', sans-serif" }}>
           FAQ 
         </h2>
 
         <div className="flex flex-col gap-4">
-          {faqs.map((faq, index) => {
+          {faqList.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div 

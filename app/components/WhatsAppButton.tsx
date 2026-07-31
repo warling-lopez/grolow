@@ -1,16 +1,37 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+
+/**
+ * El mensaje precargado cambia según el nicho de la página: en una landing de
+ * clínicas no puede llegar un "quiero mi catálogo". Los corchetes son
+ * intencionales — el cliente sustituye [producto] y arranca escribiendo en vez
+ * de quedarse pensando qué poner.
+ */
+const MESSAGES: Record<string, string> = {
+  '/catalogos-whatsapp':
+    'Hola, vendo [producto] y quiero mi catálogo con pedidos por WhatsApp',
+  '/webs-para-clinicas':
+    'Hola, tengo una clínica y quiero que mis pacientes agenden en línea',
+};
+
+const DEFAULT_MESSAGE =
+  'Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp.';
+
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+  const message = MESSAGES[pathname ?? ''] ?? DEFAULT_MESSAGE;
+
   return (
     <a
-      href="https://wa.me/18299946354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
+      href={'https://wa.me/18299946354?text=' + encodeURIComponent(message)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Contactar por WhatsApp"
+      aria-label="Escríbeme por WhatsApp"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
       {/* Tooltip */}
       <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#111] text-white text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border border-white/10 pointer-events-none">
-        Contacto
+        Escríbeme por WhatsApp
       </span>
 
       {/* Botón circular */}

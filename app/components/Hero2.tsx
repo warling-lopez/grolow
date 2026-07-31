@@ -54,17 +54,17 @@ const DEFAULT_IMAGES: HeroCard[] = Array.from({ length: 16 }, (_, i) => ({
 const DEFAULT_DURATIONS = [40, 55, 48, 60];
 
 const DEFAULT_CTAS: HeroCTA[] = [
-  { label: "Ver casos de éxito", href: "#casos", variant: "outline" },
-  { label: "Solicitar propuesta", href: "#contacto", variant: "solid" },
+  { label: "Ver trabajos reales", href: "#casos", variant: "outline" },
+  { label: "Pedir mi propuesta gratis", href: "#contacto", variant: "solid" },
 ];
 
 const DEFAULT_TITLE = (
   <>
-    Infraestructura{" "}
+    Tu catálogo completo{" "}
     <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
-      que automatiza
+      en un enlace.
     </span>{" "}
-    tus ventas.
+    Los pedidos, directo a tu WhatsApp.
   </>
 );
 
@@ -153,16 +153,26 @@ export default function Hero2({
   rotateZ = -8,
   perspective = 1000,
   // Por defecto mantiene el SplitText original de la home.
-  eyebrow = <SplitText>SISTEMAS QUE ESCALAN</SplitText>,
+  //
+  // SplitText es `whitespace-nowrap` (el efecto de doble capa recortada lo
+  // exige), así que la etiqueta no puede partirse en dos líneas: si no cabe,
+  // la sección la recorta. Con un texto de 36 caracteres el tamaño por
+  // defecto de SplitText (clamp 1.5rem…3rem) se salía en móvil, de ahí este
+  // clamp más contenido.
+  eyebrow = (
+    <SplitText className="text-[clamp(0.8rem,3.2vw,1.5rem)]">
+      PEDIDOS ORDENADOS, NO CHATS PERDIDOS
+    </SplitText>
+  ),
   title = DEFAULT_TITLE,
   subtitle = (
     <>
-      Construimos la infraestructura digital que{" "}
+      Deja de mandar fotos sueltas y de perder pedidos entre conversaciones.{" "}
       <span className="text-grolow-light font-medium">
-        automatiza tus ventas y optimiza tus operaciones
-      </span>{" "}
-      — sistemas a medida que convierten procesos manuales en ingresos
-      previsibles.
+        Tus clientes ven todo tu inventario, eligen y te escriben con el pedido
+        ya armado
+      </span>
+      . Sin comisiones por venta. Listo en 72 horas.
     </>
   ),
   ctas = DEFAULT_CTAS,
@@ -219,8 +229,11 @@ export default function Hero2({
         <div className="mb-15 text-sm sm:text-base font-bold tracking-widest uppercase text-grolow-cream/80">
           {eyebrow}
         </div>
+        {/* Tamaño fluido en vez de saltos por breakpoint: el titular pasó de
+            41 a 70 caracteres y con `md:text-[92px]` fijo se iba a 6 líneas en
+            tablet y sacaba el hero fuera del viewport en portátiles de 800px. */}
         <h1
-          className="text-4xl sm:text-6xl md:text-[92px] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-10 max-w-5xl"
+          className="text-[clamp(1.75rem,6.2vw,5rem)] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-10 max-w-5xl"
           style={{ fontFamily: "'Syne', sans-serif" }}
           lang="es">
           {title}

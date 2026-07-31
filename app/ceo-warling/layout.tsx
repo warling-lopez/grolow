@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Warling López — Full-Stack Developer & Founder',
     description:
       'Desarrollador full-stack y fundador de Grolow. Construyo sistemas a medida que escalan.',
-    url: 'https://grolow.agency/ceo-warling',
+    url: 'https://www.grolow.com/ceo-warling',
     siteName: 'Warling López',
     locale: 'es_DO',
     type: 'profile',

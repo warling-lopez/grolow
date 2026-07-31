@@ -7,7 +7,7 @@ const SERVICE_LABELS: Record<string, string> = {
   'servicios-citas': 'Web de Servicios y Citas',
   ecommerce: 'E-commerce Completo',
   rediseno: 'Rediseño de Sitio Existente',
-  mantenimiento: 'Mantenimiento Mensual',
+  mantenimiento: 'Yo me encargo de los cambios',
   'app-movil': 'App Móvil',
   'sistema-medida': 'Sistema a Medida',
   store: 'Tienda Online → WhatsApp',
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         <tr><td style="padding: 8px 0; color: #475569;">Presupuesto</td><td style="padding: 8px 0; font-weight: bold; color: #004643; font-size: 16px;">${budget}</td></tr>
       </table>
       <hr style="border-color: #D8D0BB; margin: 24px 0;" />
-      <p style="margin: 0; color: #64748b; font-size: 13px;">Grolow Studio · grolow.agency</p>
+      <p style="margin: 0; color: #64748b; font-size: 13px;">Grolow Studio · grolow.com</p>
     </div>
   `;
 
@@ -65,10 +65,10 @@ export async function POST(req: Request) {
       <div style="margin: 32px 0; padding: 20px; background: #EFE7D0; border-left: 3px solid #004643; border-radius: 4px;">
         <p style="margin: 0; font-size: 14px; color: #475569;">¿Necesitas algo urgente? Escríbenos directo:</p>
         <p style="margin: 8px 0 0; font-weight: bold;">WhatsApp: <a href="https://wa.me/18299946354" style="color: #004643;">+1 829 994 6354</a></p>
-        <p style="margin: 4px 0 0; font-weight: bold;">Instagram: <a href="https://instagram.com/grolow.agency" style="color: #004643;">@grolow.agency</a></p>
+        <p style="margin: 4px 0 0; font-weight: bold;">Instagram: <a href="https://instagram.com/grolow.studio" style="color: #004643;">@grolow.studio</a></p>
       </div>
       <hr style="border-color: #D8D0BB; margin: 24px 0;" />
-      <p style="margin: 0; color: #64748b; font-size: 13px;">Grolow Studio · grolow.agency</p>
+      <p style="margin: 0; color: #64748b; font-size: 13px;">Grolow Studio · grolow.com</p>
     </div>
   `;
 

@@ -7,6 +7,8 @@ import TechSection from "@/app/components/TechSection";
 import FaqSection from "@/app/components/FaqSection";
 import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
+import PricingSection from "@/app/components/PricingSection";
+import AboutSection from "@/app/components/AboutSection";
 
 export default function Home() {
   return (
@@ -26,13 +28,23 @@ export default function Home() {
         <VideoScrollSection />
       </div>
 
-      <div className="h-[calc(100vh+3450px)] md:h-[calc(100vh+3800px)]">
-        <ServicesSection />
-      </div>
+      {/* Sin altura fija: ServicesSection no está pineada, así que se mide
+          sola. La altura reservada anterior estaba calculada para las 8
+          tarjetas y dejaba ~2.500px en blanco ahora que sólo se muestran 3
+          hasta abrir el acordeón. */}
+      <ServicesSection />
+
+      {/* Planes justo después de servicios: el precio es lo siguiente que
+          pregunta quien acaba de entender qué se le vende. */}
+      <PricingSection />
 
       <div className="h-[calc(100vh + 250px)] md:h-[calc(100vh+250px)]">
         <TechSection />
       </div>
+
+      {/* La persona detrás, antes del FAQ y del formulario. */}
+      <AboutSection />
+
       <div>
         <FaqSection />
         <ContactSection />

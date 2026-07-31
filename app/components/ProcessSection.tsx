@@ -9,18 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 const steps = [
   {
     num: "Paso 01",
-    title: "Diagnóstico",
-    desc: "Analizamos tu negocio, tus clientes y tu objetivo real. Detectamos qué frena tus ventas y qué tipo de sistema necesitas.",
+    title: "Hablamos 20 minutos",
+    desc: "Te pregunto qué vendes, cómo te llegan hoy los pedidos y dónde se te pierde el tiempo. Salgo de ahí con una propuesta clara y un precio cerrado. Gratis y sin compromiso.",
   },
   {
     num: "Paso 02",
-    title: "Diseño y desarrollo",
-    desc: "Construimos tu sistema desde cero. UI/UX premium, código limpio, sin plantillas genéricas. Tú apruebas antes del lanzamiento.",
+    title: "Lo construyo y tú lo apruebas",
+    desc: "Diseño y programo tu sistema desde cero, sin plantillas. Te muestro avances antes de publicar nada. Si algo no te gusta, se cambia.",
   },
   {
     num: "Paso 03",
-    title: "Entrega y soporte",
-    desc: "Desplegamos, conectamos WhatsApp o tu CRM, y te entregamos listo para recibir tráfico. Con guía de uso incluida.",
+    title: "Publicamos y te enseño a usarlo",
+    desc: "Lo dejo funcionando, conectado a tu WhatsApp, y te explico cómo usarlo en una llamada. Los primeros 15 días, cualquier ajuste va incluido.",
   },
 ];
 

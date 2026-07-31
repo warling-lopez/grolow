@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProjectId =
+export type ProjectId =
   | "laperfum"
   | "hellenscute"
   | "warling"
@@ -22,10 +22,10 @@ interface Project {
   /** Infraestructura/sistema que construimos para resolverlo. */
   solution: string;
   /**
-   * Resultado: el trabajo concreto que hicimos + una mejora cuantificada. La cifra
-   * proviene de PROMEDIOS DEL SECTOR (no es un dato medido de este cliente).
-   * Reemplazar con métricas reales del proyecto cuando estén disponibles.
-   * Ver nota al pie del grid.
+   * Resultado: el cambio operativo real y verificable de ESTE proyecto.
+   * Prohibido usar porcentajes o cifras que no se hayan medido en este cliente
+   * concreto — una cifra inventada obliga a un descargo, y el descargo destruye
+   * la credibilidad del resto de la página.
    */
   result: string;
   tags: string[];
@@ -48,7 +48,28 @@ interface Project {
   isFeatured?: boolean;
 }
 
-export default function ProjectsSection() {
+/**
+ * URL visible de una tarjeta. Los proyectos alojados en un subdominio de
+ * `.vercel.app` se leen como prácticas y no como clientes, así que en esos
+ * casos no se muestra dominio alguno — la tarjeta sigue enlazando igual.
+ */
+function displayUrl(url: string): string | null {
+  if (url.includes(".vercel.app")) return null;
+  return url.replace("https://", "").replace(/\/$/, "");
+}
+
+export type ProjectsSectionProps = {
+  /** Si se pasa, sólo se muestran estos proyectos y en este orden. */
+  only?: ProjectId[];
+  eyebrow?: string;
+  heading?: React.ReactNode;
+};
+
+export default function ProjectsSection({
+  only,
+  eyebrow = "Casos de Éxito",
+  heading,
+}: ProjectsSectionProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const projects: Project[] = [
@@ -60,7 +81,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos una tienda digital centralizada con catálogo visual de lujo y pedidos canalizados directo a WhatsApp, sin comisiones de terceros.",
       result:
-        "Optimizamos la toma de pedidos por WhatsApp y centralizamos el catálogo, agilizando la gestión en más de un 50% y eliminando horas de trabajo manual.",
+        "Todo el catálogo quedó en un solo enlace. Los pedidos entran por WhatsApp ya armados, con el producto y la cantidad, en vez de reconstruirse a lo largo de una conversación.",
       tags: ["Tienda WhatsApp", "Perfumes", "Lujo", "RD"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://laperfum1.com/",
@@ -77,7 +98,7 @@ export default function ProjectsSection() {
       solution:
         "Implementamos una landing de conversión con asignación de distribuidoras autorizadas por zona y flujo de compra directo por WhatsApp.",
       result:
-        "Estructuramos la captación por zona en una landing de conversión, el tipo de página que convierte en el rango de 6% a 10%, muy por encima del ~2% de un sitio genérico.",
+        "Cada visitante se dirige automáticamente a la distribuidora de su zona. Se acabó el reenvío manual de clientes entre vendedoras.",
       tags: ["Landing Page", "Ropa Infantil", "Red de ventas"],
       serviceType: "Landing Page de Conversión",
       url: "https://hellenscute.com/",
@@ -93,7 +114,7 @@ export default function ProjectsSection() {
       solution:
         "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un CTA claro para agendar consultas.",
       result:
-        "Entregamos un sitio veloz (carga en menos de 2s) y enfocado en captar consultas, un rendimiento que puede elevar las conversiones hasta un 20% frente a un sitio lento.",
+        "Un sitio que carga en menos de 2 segundos y explica servicios y proceso sin que él tenga que repetirlo en cada conversación.",
       tags: ["Sitio Profesional", "Servicios"],
       serviceType: "Sitio Profesional",
       url: "https://www.warling.top/",
@@ -109,7 +130,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos un catálogo digital con compra directa, identidad visual tropical y una experiencia enfocada en conversión.",
       result:
-        "Montamos el catálogo con compra directa por WhatsApp, el tipo de flujo con que las marcas suman entre 15% y 30% de ingresos en los primeros 60 días.",
+        "Catálogo con compra directa e identidad visual propia, en lugar de un feed de Instagram donde los productos se pierden hacia abajo.",
       tags: ["Tienda WhatsApp", "Perfumes Árabes", "Catálogo"],
       serviceType: "Tienda Online → WhatsApp",
       url: "https://aromacaribenio.vercel.app/",
@@ -125,7 +146,7 @@ export default function ProjectsSection() {
       solution:
         "Diseñamos un sitio con presentación de productos, identidad de marca y un canal de contacto directo para pedidos.",
       result:
-        "Digitalizamos la toma de pedidos del negocio, reduciendo el tiempo de gestión hasta en un 50% frente al proceso manual.",
+        "Los pedidos dejaron de tomarse por mensajes sueltos y pasaron a un canal ordenado, con los productos presentados y con precios visibles.",
       tags: ["Gastronomía", "Negocio local", "WhatsApp"],
       serviceType: "Landing Page de Conversión",
       url: "https://deliscias-marijo.vercel.app/",
@@ -141,7 +162,7 @@ export default function ProjectsSection() {
       solution:
         "Construimos una landing de producto con características, casos de uso, precios y modo claro/oscuro para presentar el SaaS con claridad.",
       result:
-        "Construimos una landing de producto clara y optimizada, del tipo que supera el 10% de conversión, casi el doble del promedio del sector.",
+        "Una página que explica el producto, sus casos de uso y sus precios sin necesidad de una demo en vivo.",
       tags: ["SaaS", "Inteligencia Artificial", "Producto"],
       serviceType: "Landing Page de Conversión",
       url: "https://w-bice-theta.vercel.app/",
@@ -150,6 +171,13 @@ export default function ProjectsSection() {
       imageRotation: -3,
     },
   ];
+
+  // `only` filtra y además fija el orden de aparición.
+  const visibleProjects = only
+    ? only
+        .map((id) => projects.find((p) => p.id === id))
+        .filter((p): p is Project => Boolean(p))
+    : projects;
 
   useGSAP(
     () => {
@@ -241,18 +269,24 @@ export default function ProjectsSection() {
         {/* ── Header ── */}
         <div className="mb-12 md:mb-16">
           <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
-            Casos de Éxito
+            {eyebrow}
           </p>
-          <h2 className="text-4xl md:text-7xl font-black uppercase text-grolow-light leading-none">
-            Problemas de negocio.
-            <br />
-            <span className="text-grolow-light/30">Soluciones que escalan.</span>
+          <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase text-grolow-light leading-none">
+            {heading ?? (
+              <>
+                Problemas de negocio.
+                <br />
+                <span className="text-grolow-light/30">
+                  Soluciones que escalan.
+                </span>
+              </>
+            )}
           </h2>
         </div>
 
         {/* ── Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {projects.map((project, index) => (
+          {visibleProjects.map((project, index) => (
             <a
               key={project.id}
               href={project.url}
@@ -307,7 +341,7 @@ export default function ProjectsSection() {
                 {/* Fallback mientras no tienes screenshots */}
                 <div className="absolute inset-0 rounded-xl bg-white/40 flex items-end justify-start p-2">
                   <span className="text-grolow-light/10 font-mono text-[9px] uppercase tracking-widest leading-tight">
-                    {project.url.replace("https://", "").replace(/\/$/, "")}
+                    {displayUrl(project.url) ?? project.title}
                   </span>
                 </div>
               </div>
@@ -381,18 +415,12 @@ export default function ProjectsSection() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-grolow-light/20 group-hover:text-grolow-cyan font-mono text-xs tracking-wider transition-colors duration-300">
-                  {project.url.replace("https://", "").replace(/\/$/, "")}
+                  {displayUrl(project.url) ?? project.title}
                 </span>
               </div>
             </a>
           ))}
         </div>
-
-        {/* Nota al pie: las cifras de "Resultado" son referencias del sector */}
-        <p className="mt-8 md:mt-10 text-[11px] leading-relaxed text-grolow-light/30 max-w-2xl">
-          Cifras de referencia del sector, no resultados garantizados. Reemplazamos con
-          métricas verificadas de cada proyecto cuando están disponibles.
-        </p>
       </div>
     </section>
   );

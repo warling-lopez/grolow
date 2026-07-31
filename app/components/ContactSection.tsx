@@ -2,31 +2,43 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
+/** Mismo orden que la portada: la tienda WhatsApp primero. */
 const SERVICE_OPTIONS = [
-  { value: "landing", label: "Landing Page de Conversión" },
   { value: "tienda-whatsapp", label: "Tienda Online → WhatsApp" },
+  { value: "landing", label: "Landing Page de Conversión" },
   { value: "servicios-citas", label: "Web de Servicios y Citas" },
   { value: "ecommerce", label: "E-commerce Completo" },
   { value: "rediseno", label: "Rediseño de Sitio Existente" },
-  { value: "mantenimiento", label: "Mantenimiento Mensual" },
+  { value: "mantenimiento", label: "Yo me encargo de los cambios" },
   { value: "app-movil", label: "App Móvil" },
   { value: "sistema-medida", label: "Sistema a Medida" },
   { value: "other", label: "Asesoría / Otro" },
 ];
 
+// Rangos ajustados al cliente real (perfumería, ropa, comida): los tramos
+// anteriores empezaban en $5,000/mes y descartaban a quien sí compra.
 const BILLING_OPTIONS = [
-  "Menos de $5,000 / mes",
-  "$5,000 – $20,000 / mes",
-  "$20,000 – $50,000 / mes",
-  "Más de $50,000 / mes",
+  "Menos de US$1,000 / mes",
+  "US$1,000 – US$5,000 / mes",
+  "US$5,000 – US$20,000 / mes",
+  "Más de US$20,000 / mes",
 ];
 
+// Alineado con la sección de planes. Sin mínimo de $1,500: la barrera de
+// entrada ahora es el plan mensual.
 const BUDGET_OPTIONS = [
-  "$1,500 – $3,000",
-  "$3,000 – $7,000",
-  "$7,000 – $15,000",
-  "Más de $15,000",
+  "Plan mensual (US$150 setup + US$45/mes)",
+  "US$550 – US$900 (pago único)",
+  "US$900 – US$1,500",
+  "Más de US$1,500",
 ];
+
+/** Mensaje precargado del enlace de WhatsApp. */
+const WHATSAPP_HREF =
+  "https://wa.me/18299946354?text=" +
+  encodeURIComponent(
+    "Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp."
+  );
 
 function ContactForm() {
   const searchParams = useSearchParams();
@@ -103,9 +115,8 @@ function ContactForm() {
               </span>
             </h2>
             <p className="text-slate-400 text-lg leading-relaxed max-w-md">
-              Evaluamos cada proyecto para asegurarnos de ser el socio correcto
-              para tu negocio. Cuéntanos dónde estás hoy y qué quieres automatizar;
-              te respondemos con una propuesta clara en menos de 24 horas.
+              Cuéntame qué vendes y cómo te llegan hoy los pedidos. Te respondo
+              con una propuesta y un precio cerrado en menos de 24 horas.
             </p>
           </div>
 
@@ -125,23 +136,24 @@ function ContactForm() {
                 WhatsApp
               </p>
               <a
-                href="https://wa.me/18299946354?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+Grolow"
+                href={WHATSAPP_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
-                +1 829 994 6354
+                Escríbeme por WhatsApp
               </a>
+              <p className="text-sm text-slate-500 mt-1">+1 829 994 6354</p>
             </div>
             <div>
               <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">
                 Instagram
               </p>
               <a
-                href="https://instagram.com/grolow.agency"
+                href="https://instagram.com/grolow.studio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
-                @grolow.agency
+                @grolow.studio
               </a>
             </div>
           </div>
@@ -268,7 +280,7 @@ function ContactForm() {
             <label
               htmlFor="budget"
               className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
-              Presupuesto estimado (mínimo $1,500 USD)
+              Presupuesto o plan que te interesa
             </label>
             <select
               ref={budgetRef}
@@ -295,11 +307,11 @@ function ContactForm() {
             type="submit"
             disabled={isSubmitting}
             className="w-full py-6 mt-4 bg-grolow-cream text-grolow-dark font-extrabold uppercase tracking-widest text-xs hover:bg-grolow-accent transition-colors disabled:opacity-50 flex justify-center items-center gap-3">
-            {isSubmitting ? "Enviando..." : "Solicitar propuesta"}
+            {isSubmitting ? "Enviando..." : "Pedir mi propuesta gratis"}
             {!isSubmitting && <span>→</span>}
           </button>
           <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest -mt-2.5">
-            Evaluamos cada proyecto · Presupuesto mínimo $1,500 USD · Respuesta en menos de 24 horas.
+            Propuesta y precio cerrado · Gratis y sin compromiso · Respuesta en menos de 24 horas.
           </p>
         </form>
       </div>

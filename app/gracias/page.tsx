@@ -31,7 +31,7 @@ export default function GraciasPage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://wa.me/18299946354?text=Hola%2C+acabo+de+llenar+el+formulario+en+grolow.agency"
+            href="https://wa.me/18299946354?text=Hola%2C+acabo+de+llenar+el+formulario+en+grolow.com"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-[#25D366] text-black font-extrabold uppercase tracking-widest text-xs hover:opacity-90 transition-opacity">
@@ -45,13 +45,13 @@ export default function GraciasPage() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-grolow-light/10 text-[11px] text-slate-600 uppercase tracking-widest">
-          Grolow Studio · grolow.agency ·{' '}
+          Grolow Studio · grolow.com ·{' '}
           <a
-            href="https://instagram.com/grolow.agency"
+            href="https://instagram.com/grolow.studio"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-grolow-cyan transition-colors">
-            @grolow.agency
+            @grolow.studio
           </a>
         </div>
       </div>
