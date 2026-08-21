@@ -7,6 +7,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import Link from "next/link";
 import {
   AnimatePresence,
   motion,
@@ -323,11 +324,12 @@ export default function Header() {
                     ))}
                   </ul>
                   <div className="border-t border-grolow-light/10 mt-1 pt-1">
-                    <button
-                      onClick={() => scrollTo("servicios")}
-                      className="w-full rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream hover:bg-grolow-dark transition-colors text-left">
+                    <Link
+                      href="/servicios/"
+                      onClick={() => setServicesOpen(false)}
+                      className="block w-full rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream hover:bg-grolow-dark transition-colors text-left">
                       {c.allServices}
-                    </button>
+                    </Link>
                   </div>
                 </motion.div>
               )}
@@ -418,6 +420,13 @@ export default function Header() {
                   </li>
                 ))}
               </ul>
+
+              <Link
+                href="/servicios/"
+                onClick={() => setMobileOpen(false)}
+                className="block w-full py-3 text-left text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
+                {c.allServices}
+              </Link>
 
               <div className="border-t border-grolow-light/10 mt-4 pt-2">
                 {NAV_LINKS.map((link) => (
