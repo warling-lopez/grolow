@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import {
   AnimatePresence,
   motion,
@@ -14,15 +20,115 @@ import { useHeaderTrigger } from "./hooks/useHeaderTrigger";
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
 
+/** Inglés es el idioma por defecto; español queda como opción del toggle. */
+export type Lang = "en" | "es";
+
+const DEFAULT_LANG: Lang = "en";
+const LANGS: Lang[] = ["en", "es"];
+const LANG_STORAGE_KEY = "grolow-lang";
+
 const NAV_LINKS = [
-  { label: "Proyectos", target: "casos" },
-  { label: "Proceso", target: "proceso" },
-  { label: "FAQ´s", target: "faq" },
-  { label: "Contacto", target: "contacto" },
+  { target: "casos", label: { en: "Projects", es: "Proyectos" } },
+  { target: "proceso", label: { en: "Process", es: "Proceso" } },
+  { target: "faq", label: { en: "FAQ's", es: "FAQ´s" } },
+  { target: "contacto", label: { en: "Contact", es: "Contacto" } },
 ];
+
+const COPY = {
+  en: {
+    home: "Go to home",
+    services: "Services",
+    allServices: "See all services →",
+    delivery: (time: string) => `Delivery in ${time}`,
+    popular: "Popular",
+    cta: "Let's Work Together",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    language: "Language",
+  },
+  es: {
+    home: "Ir al inicio",
+    services: "Servicios",
+    allServices: "Ver todos los servicios →",
+    delivery: (time: string) => `Entrega en ${time}`,
+    popular: "Popular",
+    cta: "Trabajemos Juntos",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
+    language: "Idioma",
+  },
+} as const;
 
 /** Compensa la altura del header fijo al hacer scroll a una sección. */
 const SCROLL_OFFSET = -88;
+
+/* ------------------------------------------------------------------ */
+/* Store de idioma (localStorage + sincronía entre pestañas)           */
+/* ------------------------------------------------------------------ */
+
+const LANG_EVENT = "grolow:langchange";
+
+function readLang(): Lang {
+  const saved = localStorage.getItem(LANG_STORAGE_KEY);
+  return saved === "en" || saved === "es" ? saved : DEFAULT_LANG;
+}
+
+function subscribeLang(onChange: () => void) {
+  window.addEventListener(LANG_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(LANG_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function writeLang(lang: Lang) {
+  localStorage.setItem(LANG_STORAGE_KEY, lang);
+  window.dispatchEvent(new Event(LANG_EVENT));
+}
+
+/* ------------------------------------------------------------------ */
+/* Toggle EN / ES                                                      */
+/* ------------------------------------------------------------------ */
+
+function LangToggle({
+  lang,
+  compact,
+  label,
+}: {
+  lang: Lang;
+  compact: boolean;
+  label: string;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label={label}
+      className={`flex items-center rounded-full border overflow-hidden font-extrabold transition-colors duration-300 ${
+        compact
+          ? "border-white/30 text-[10px]"
+          : "border-grolow-light/20 text-[11px]"
+      }`}>
+      {LANGS.map((l) => (
+        <button
+          key={l}
+          onClick={() => writeLang(l)}
+          aria-pressed={lang === l}
+          className={`px-2.5 py-1 uppercase tracking-wide transition-colors ${
+            lang === l
+              ? compact
+                ? "bg-white text-grolow-dark"
+                : "bg-grolow-light text-grolow-dark"
+              : compact
+                ? "text-white/60 hover:text-white"
+                : "text-grolow-light/60 hover:text-grolow-light"
+          }`}>
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /* Header                                                              */
@@ -33,6 +139,20 @@ export default function Header() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
+
+  // El idioma vive en localStorage: el servidor y la hidratación rinden
+  // inglés, y la preferencia guardada se aplica en cuanto está disponible.
+  const lang = useSyncExternalStore(
+    subscribeLang,
+    readLang,
+    () => DEFAULT_LANG,
+  );
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const c = COPY[lang];
 
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 32));
@@ -48,9 +168,8 @@ export default function Header() {
     // Preselecciona el servicio en el formulario de contacto (mismo
     // comportamiento que el botón "Quiero este" de ServicesSection).
     if (serviceId) {
-      const select = document.querySelector<HTMLSelectElement>(
-        "#contacto #needs"
-      );
+      const select =
+        document.querySelector<HTMLSelectElement>("#contacto #needs");
       if (select) select.value = serviceId;
     }
 
@@ -91,17 +210,26 @@ export default function Header() {
     };
   }, [servicesOpen]);
 
-  const solid = scrolled || servicesOpen || mobileOpen;
+  // Con un menú abierto el header necesita fondo opaco propio: el
+  // mix-blend-difference del estado scrolled se aplicaría también al panel
+  // y dejaría ver el hero a través de los ítems.
+  const menuOpen = servicesOpen || mobileOpen;
+
+  // overTrigger sigue mandando en los tamaños, pero los colores claros solo
+  // valen sobre la sección oscura: con el menú abierto el fondo es crema.
+  const onDark = overTrigger && !menuOpen;
 
   return (
     <motion.header
       initial={{ y: -90, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-500 ${
-        solid
-          ? "bg-grolow-dark/5 border-b mix-blend-difference border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
-          : "bg-transparent border-b border-transparent"
+      className={`fixed top-0 inset-x-0 z-50 isolate transition-colors duration-500 ${
+        menuOpen
+          ? "bg-grolow-dark border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.35)]"
+          : scrolled
+            ? "bg-grolow-dark/5 border-b mix-blend-difference border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
+            : "bg-transparent border-b border-transparent"
       }`}>
       <nav
         className={`max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 ${
@@ -110,10 +238,10 @@ export default function Header() {
         {/* ---------- Logo ---------- */}
         <button
           onClick={scrollTop}
-          aria-label="Ir al inicio"
+          aria-label={c.home}
           className={`font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
-            overTrigger ? "text-lg text-white" : "text-2xl text-grolow-light"
-          }`}
+            overTrigger ? "text-lg" : "text-2xl"
+          } ${onDark ? "text-white" : "text-grolow-light"}`}
           style={{ fontFamily: "'Syne', sans-serif" }}>
           grolow
         </button>
@@ -130,14 +258,14 @@ export default function Header() {
                 overTrigger ? "text-xs" : "text-sm"
               } ${
                 servicesOpen
-                  ? overTrigger
+                  ? onDark
                     ? "text-white"
                     : "text-grolow-cream"
-                  : overTrigger
+                  : onDark
                     ? "text-white/80 hover:text-white"
                     : "text-grolow-light/80 hover:text-grolow-light"
               }`}>
-              Servicios
+              {c.services}
               <motion.span
                 animate={{ rotate: servicesOpen ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
@@ -167,19 +295,25 @@ export default function Header() {
                           className="w-full flex items-center justify-between gap-4 rounded-xl px-4 py-3 text-left hover:bg-grolow-dark transition-colors group">
                           <span>
                             <span className="flex items-center gap-2 text-sm font-bold text-grolow-light group-hover:text-grolow-cream transition-colors">
-                              {service.title}
+                              {lang === "en" ? service.titleEn : service.title}
                               {service.highlight && (
                                 <span className="text-[9px] font-extrabold uppercase tracking-widest bg-grolow-lime text-grolow-light px-2 py-0.5 rounded-full">
-                                  Popular
+                                  {c.popular}
                                 </span>
                               )}
                             </span>
                             <span className="block text-xs text-grolow-light/55 mt-0.5">
-                              Entrega en {service.deliveryTime}
+                              {c.delivery(
+                                lang === "en"
+                                  ? service.deliveryTimeEn
+                                  : service.deliveryTime,
+                              )}
                             </span>
                           </span>
                           <span className="text-xs font-extrabold text-grolow-cream whitespace-nowrap">
-                            {service.priceLabel}
+                            {lang === "en"
+                              ? service.priceLabelEn
+                              : service.priceLabel}
                             <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">
                               →
                             </span>
@@ -192,7 +326,7 @@ export default function Header() {
                     <button
                       onClick={() => scrollTo("servicios")}
                       className="w-full rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream hover:bg-grolow-dark transition-colors text-left">
-                      Ver todos los servicios →
+                      {c.allServices}
                     </button>
                   </div>
                 </motion.div>
@@ -205,47 +339,52 @@ export default function Header() {
               key={link.target}
               onClick={() => scrollTo(link.target)}
               className={`px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
-                overTrigger
-                  ? "text-xs text-white/80 hover:text-white"
-                  : "text-sm text-grolow-light/80 hover:text-grolow-light"
+                overTrigger ? "text-xs" : "text-sm"
+              } ${
+                onDark
+                  ? "text-white/80 hover:text-white"
+                  : "text-grolow-light/80 hover:text-grolow-light"
               }`}>
-              {link.label}
+              {link.label[lang]}
             </button>
           ))}
         </div>
 
-        {/* ---------- CTA desktop ---------- */}
-        <button
-          onClick={() => scrollTo("contacto")}
-          className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
-            overTrigger ? "px-4 py-2 text-xs" : "px-6 py-3 text-sm"
-          }`}>
-          Trabajemos Juntos
-        </button>
+        {/* ---------- Idioma + CTA + hamburguesa ---------- */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <LangToggle lang={lang} compact={onDark} label={c.language} />
 
-        {/* ---------- Hamburguesa móvil ---------- */}
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={mobileOpen}
-          className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
-          <motion.span
-            animate={
-              mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }
-            }
-            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
-              overTrigger ? "bg-white" : "bg-grolow-light"
-            }`}
-          />
-          <motion.span
-            animate={
-              mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
-            }
-            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
-              overTrigger ? "bg-white" : "bg-grolow-light"
-            }`}
-          />
-        </button>
+          {/* ---------- CTA desktop ---------- */}
+          <button
+            onClick={() => scrollTo("contacto")}
+            className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
+              overTrigger ? "px-4 py-2 text-xs" : "px-6 py-3 text-sm"
+            }`}>
+            {c.cta}
+          </button>
+
+          {/* ---------- Hamburguesa móvil ---------- */}
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? c.closeMenu : c.openMenu}
+            aria-expanded={mobileOpen}
+            className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+            <motion.span
+              animate={mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+              className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
+                onDark ? "bg-white" : "bg-grolow-light"
+              }`}
+            />
+            <motion.span
+              animate={
+                mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
+              }
+              className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
+                onDark ? "bg-white" : "bg-grolow-light"
+              }`}
+            />
+          </button>
+        </div>
       </nav>
 
       {/* ---------- Menú móvil ---------- */}
@@ -256,10 +395,10 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden bg-grolow-dark/95 backdrop-blur-xl border-b border-grolow-light/10">
+            className="md:hidden overflow-hidden bg-grolow-dark border-b border-grolow-light/10">
             <div className="px-6 pb-8 pt-2 max-h-[calc(100vh-72px)] overflow-y-auto">
               <p className="text-[10px] font-extrabold uppercase tracking-widest text-grolow-light/50 mt-4 mb-2">
-                Servicios
+                {c.services}
               </p>
               <ul className="space-y-1">
                 {services.map((service) => (
@@ -268,10 +407,12 @@ export default function Header() {
                       onClick={() => scrollTo("contacto", service.id)}
                       className="w-full flex items-center justify-between gap-3 py-2.5 text-left">
                       <span className="text-sm font-bold text-grolow-light">
-                        {service.title}
+                        {lang === "en" ? service.titleEn : service.title}
                       </span>
                       <span className="text-xs font-extrabold text-grolow-cream whitespace-nowrap">
-                        {service.priceLabel}
+                        {lang === "en"
+                          ? service.priceLabelEn
+                          : service.priceLabel}
                       </span>
                     </button>
                   </li>
@@ -284,7 +425,7 @@ export default function Header() {
                     key={link.target}
                     onClick={() => scrollTo(link.target)}
                     className="block w-full py-3 text-left text-base font-bold text-grolow-light/85 hover:text-grolow-light transition-colors">
-                    {link.label}
+                    {link.label[lang]}
                   </button>
                 ))}
               </div>
@@ -292,7 +433,7 @@ export default function Header() {
               <button
                 onClick={() => scrollTo("contacto")}
                 className="mt-6 w-full rounded-full bg-grolow-light text-grolow-dark py-4 text-sm font-bold text-center">
-                Trabajemos Juntos
+                {c.cta}
               </button>
             </div>
           </motion.div>

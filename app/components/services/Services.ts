@@ -1,13 +1,14 @@
-
-
-
 type Service = {
   id: string;
   title: string;
+  /** Versión en inglés de los campos visibles en el nav (idioma por defecto). */
+  titleEn: string;
   description: string;
   deliveryTime: string;
+  deliveryTimeEn: string;
   startingPrice: number;
   priceLabel: string;
+  priceLabelEn: string;
   tags: string[];
   features: string[];
   highlight?: boolean;
@@ -24,11 +25,14 @@ export const services: Service[] = [
   {
     id: "tienda-whatsapp",
     title: "Tienda Online → WhatsApp",
+    titleEn: "Online Store → WhatsApp",
     description:
       "Tu inventario completo en un enlace que puedes poner en tu bio de Instagram. El cliente elige, y el pedido te llega a WhatsApp listo, con producto, cantidad y precio. Sin comisiones por venta, sin pasarelas que te descuenten.",
     deliveryTime: "72 horas",
+    deliveryTimeEn: "72 hours",
     startingPrice: 550,
     priceLabel: "Desde US$550 o US$45/mes",
+    priceLabelEn: "From US$550 or US$45/mo",
     tags: ["E-commerce", "WhatsApp", "Sin comisiones"],
     features: [
       "Catálogo de productos con fotos",
@@ -42,11 +46,14 @@ export const services: Service[] = [
   {
     id: "landing",
     title: "Landing Page de Conversión",
+    titleEn: "Conversion Landing Page",
     description:
       "Una sola página diseñada para convertir visitas en clientes. Ideal para lanzar un producto, capturar leads o validar tu idea rápidamente.",
     deliveryTime: "72 horas",
+    deliveryTimeEn: "72 hours",
     startingPrice: 550,
     priceLabel: "Desde US$550 o US$45/mes",
+    priceLabelEn: "From US$550 or US$45/mo",
     tags: ["Conversión", "Leads", "Lanzamiento"],
     features: [
       "Diseño UI/UX premium",
@@ -59,11 +66,14 @@ export const services: Service[] = [
   {
     id: "servicios-citas",
     title: "Web de Servicios y Citas",
+    titleEn: "Services & Booking Website",
     description:
       "Para consultores, salones, clínicas o cualquier negocio que agenda. Presenta tus servicios, capta clientes y automatiza las reservas.",
     deliveryTime: "5–7 días",
+    deliveryTimeEn: "5–7 days",
     startingPrice: 550,
     priceLabel: "Desde US$550 o US$45/mes",
+    priceLabelEn: "From US$550 or US$45/mo",
     tags: ["Servicios", "Reservas", "Automatización"],
     features: [
       "Página de servicios con precios",
@@ -76,11 +86,14 @@ export const services: Service[] = [
   {
     id: "ecommerce",
     title: "E-commerce Completo",
+    titleEn: "Full E-commerce",
     description:
       "Tienda profesional con pasarela de pago, gestión de inventario, panel de administración y experiencia de compra optimizada para conversión.",
     deliveryTime: "2–3 semanas",
+    deliveryTimeEn: "2–3 weeks",
     startingPrice: 600,
     priceLabel: "Desde US$600",
+    priceLabelEn: "From US$600",
     tags: ["Tienda", "Pagos online", "Inventario"],
     features: [
       "Pasarela de pago integrada",
@@ -93,11 +106,14 @@ export const services: Service[] = [
   {
     id: "sistema-medida",
     title: "Sistema a Medida",
+    titleEn: "Custom System",
     description:
       "Plataformas, portales, dashboards o cualquier lógica de negocio personalizada. Si lo puedes describir, lo podemos construir.",
     deliveryTime: "Según alcance",
+    deliveryTimeEn: "Scope-based",
     startingPrice: 800,
     priceLabel: "Desde US$800",
+    priceLabelEn: "From US$800",
     tags: ["Plataforma", "Dashboard", "A medida"],
     features: [
       "Arquitectura y base de datos a medida",
