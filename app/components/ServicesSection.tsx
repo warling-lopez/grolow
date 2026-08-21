@@ -216,9 +216,9 @@ export default function ServicesSection() {
       ref={containerRef}
       className="w-full min-h-screen  my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
     >
-      <h1 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pr-16 md:pr-0 pb-8 md:pb-12 border-b border-grolow-light/10 w-full max-w-5xl mx-auto">
+      <h2 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pr-16 md:pr-0 pb-8 md:pb-12 border-b border-grolow-light/10 w-full max-w-5xl mx-auto">
         Servicios
-      </h1>
+      </h2>
       <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-8 md:gap-10">
         {primaryServices.map((service) => (
           <ServiceCard key={service.id} service={service} />
