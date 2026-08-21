@@ -1,7 +1,7 @@
 // En tu page.tsx
+import Link from "next/link";
 import Hero2 from "@/app/components/Hero2";
 import VideoScrollSection from "@/app/components/VideoScrollSection";
-import ServicesSection from "@/app/components/ServicesSection";
 import ProcessSection from "@/app/components/ProcessSection";
 import TechSection from "@/app/components/TechSection";
 import FaqSection from "@/app/components/FaqSection";
@@ -20,7 +20,15 @@ export default function Home() {
         <ProcessSection />
       </div>
 
-      <ProyectsSection />
+      <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
+
+      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 -mt-10 md:-mt-14 mb-4 flex justify-center">
+        <Link
+          href="/servicios/"
+          className="text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
+          Ver todos los servicios →
+        </Link>
+      </div>
 
       <div
         className="hidden md:block"
@@ -28,14 +36,8 @@ export default function Home() {
         <VideoScrollSection />
       </div>
 
-      {/* Sin altura fija: ServicesSection no está pineada, así que se mide
-          sola. La altura reservada anterior estaba calculada para las 8
-          tarjetas y dejaba ~2.500px en blanco ahora que sólo se muestran 3
-          hasta abrir el acordeón. */}
-      <ServicesSection />
-
-      {/* Planes justo después de servicios: el precio es lo siguiente que
-          pregunta quien acaba de entender qué se le vende. */}
+      {/* Planes: el precio es lo siguiente que pregunta quien acaba de
+          entender qué se le vende. */}
       <PricingSection />
 
       <div className="h-[calc(100vh + 250px)] md:h-[calc(100vh+250px)]">
