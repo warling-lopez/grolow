@@ -22,7 +22,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     pathname?.startsWith('/para-yessica') ||
     pathname?.startsWith('/ceo-warling') ||
     false;
-
+ 
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
