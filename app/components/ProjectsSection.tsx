@@ -3,6 +3,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLang, type Lang } from "./hooks/useLang";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,8 +20,10 @@ interface Project {
   title: string;
   /** Situación previa del cliente: el problema de negocio que enfrentaba. */
   problem: string;
+  problemEn: string;
   /** Infraestructura/sistema que construimos para resolverlo. */
   solution: string;
+  solutionEn: string;
   /**
    * Resultado: el cambio operativo real y verificable de ESTE proyecto.
    * Prohibido usar porcentajes o cifras que no se hayan medido en este cliente
@@ -28,8 +31,11 @@ interface Project {
    * la credibilidad del resto de la página.
    */
   result: string;
+  resultEn: string;
   tags: string[];
+  tagsEn: string[];
   serviceType: string;
+  serviceTypeEn: string;
   url: string;
   /**
    * Ruta relativa al screenshot del proyecto.
@@ -65,12 +71,48 @@ export type ProjectsSectionProps = {
   heading?: React.ReactNode;
 };
 
+const HEADING_DEFAULT: Record<Lang, React.ReactNode> = {
+  en: (
+    <>
+      Business problems.
+      <br />
+      <span className="text-grolow-light/30">Solutions that scale.</span>
+    </>
+  ),
+  es: (
+    <>
+      Problemas de negocio.
+      <br />
+      <span className="text-grolow-light/30">Soluciones que escalan.</span>
+    </>
+  ),
+};
+
+const LABELS = {
+  en: {
+    eyebrow: "Success Stories",
+    problem: "Problem",
+    solution: "Solution",
+    result: "Result",
+  },
+  es: {
+    eyebrow: "Casos de Éxito",
+    problem: "Problema",
+    solution: "Solución",
+    result: "Resultado",
+  },
+} as const;
+
 export default function ProjectsSection({
   only,
-  eyebrow = "Casos de Éxito",
+  eyebrow,
   heading,
 }: ProjectsSectionProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const l = LABELS[lang];
+  const resolvedEyebrow = eyebrow ?? l.eyebrow;
+  const resolvedHeading = heading ?? HEADING_DEFAULT[lang];
 
   const projects: Project[] = [
     {
@@ -78,12 +120,20 @@ export default function ProjectsSection({
       title: "La Perfurm RD",
       problem:
         "Gestionaba un catálogo de perfumes nicho de forma manual y dispersa, sin una vitrina centralizada que reflejara la exclusividad de la marca ni canalizara los pedidos.",
+      problemEn:
+        "They managed a niche perfume catalog manually and scattered across channels, with no centralized showcase reflecting the brand's exclusivity or channeling orders.",
       solution:
         "Construimos una tienda digital centralizada con catálogo visual de lujo y pedidos canalizados directo a WhatsApp, sin comisiones de terceros.",
+      solutionEn:
+        "We built a centralized digital store with a luxury visual catalog and orders channeled straight to WhatsApp, with no third-party commissions.",
       result:
         "Todo el catálogo quedó en un solo enlace. Los pedidos entran por WhatsApp ya armados, con el producto y la cantidad, en vez de reconstruirse a lo largo de una conversación.",
+      resultEn:
+        "The whole catalog now lives in a single link. Orders arrive on WhatsApp already put together, with product and quantity, instead of being pieced together across a conversation.",
       tags: ["Tienda WhatsApp", "Perfumes", "Lujo", "RD"],
+      tagsEn: ["WhatsApp Store", "Perfume", "Luxury", "DR"],
       serviceType: "Tienda Online → WhatsApp",
+      serviceTypeEn: "Online Store → WhatsApp",
       url: "https://laperfum1.com/",
       image: "/projects/laperfum.webp",
       imageAlt: "Vista previa de La Perfurm RD",
@@ -95,12 +145,20 @@ export default function ProjectsSection({
       title: "Hellen's Cute Kids",
       problem:
         "Una red de distribuidoras de ropa infantil sin un sistema que organizara las ventas por zona ni encaminara la compra de forma ordenada.",
+      problemEn:
+        "A network of children's clothing distributors with no system to organize sales by zone or route purchases in an orderly way.",
       solution:
         "Implementamos una landing de conversión con asignación de distribuidoras autorizadas por zona y flujo de compra directo por WhatsApp.",
+      solutionEn:
+        "We implemented a conversion landing page that assigns authorized distributors by zone, with a direct purchase flow through WhatsApp.",
       result:
         "Cada visitante se dirige automáticamente a la distribuidora de su zona. Se acabó el reenvío manual de clientes entre vendedoras.",
+      resultEn:
+        "Every visitor is automatically routed to the distributor in their zone. Manually forwarding customers between sellers is over.",
       tags: ["Landing Page", "Ropa Infantil", "Red de ventas"],
+      tagsEn: ["Landing Page", "Children's Clothing", "Sales Network"],
       serviceType: "Landing Page de Conversión",
+      serviceTypeEn: "Conversion Landing Page",
       url: "https://hellenscute.com/",
       image: "/projects/hellenscute.webp",
       imageAlt: "Vista previa de Hellen's Cute Kids",
@@ -111,12 +169,20 @@ export default function ProjectsSection({
       title: "Warling Dev.",
       problem:
         "Sin una presencia profesional que comunicara servicios técnicos y proceso de trabajo a clientes potenciales.",
+      problemEn:
+        "No professional presence to communicate technical services and work process to potential clients.",
       solution:
         "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un CTA claro para agendar consultas.",
+      solutionEn:
+        "We built a professional site with services, work process and a clear CTA to book consultations.",
       result:
         "Un sitio que carga en menos de 2 segundos y explica servicios y proceso sin que él tenga que repetirlo en cada conversación.",
+      resultEn:
+        "A site that loads in under 2 seconds and explains services and process so he doesn't have to repeat them in every conversation.",
       tags: ["Sitio Profesional", "Servicios"],
+      tagsEn: ["Professional Site", "Services"],
       serviceType: "Sitio Profesional",
+      serviceTypeEn: "Professional Site",
       url: "https://www.warling.top/",
       image: "/projects/warling.webp",
       imageAlt: "Vista previa de Warling Dev",
@@ -127,12 +193,20 @@ export default function ProjectsSection({
       title: "Aroma Caribeño",
       problem:
         "Un catálogo de perfumes árabes y de nicho sin una vitrina digital que permitiera la compra directa ni reflejara la identidad de marca.",
+      problemEn:
+        "A catalog of Arabic and niche perfumes with no digital showcase enabling direct purchase or reflecting the brand's identity.",
       solution:
         "Construimos un catálogo digital con compra directa, identidad visual tropical y una experiencia enfocada en conversión.",
+      solutionEn:
+        "We built a digital catalog with direct purchase, tropical visual identity and an experience focused on conversion.",
       result:
         "Catálogo con compra directa e identidad visual propia, en lugar de un feed de Instagram donde los productos se pierden hacia abajo.",
+      resultEn:
+        "A catalog with direct purchase and its own visual identity, instead of an Instagram feed where products get lost scrolling down.",
       tags: ["Tienda WhatsApp", "Perfumes Árabes", "Catálogo"],
+      tagsEn: ["WhatsApp Store", "Arabic Perfume", "Catalog"],
       serviceType: "Tienda Online → WhatsApp",
+      serviceTypeEn: "Online Store → WhatsApp",
       url: "https://aromacaribenio.vercel.app/",
       image: "/projects/aromacaribenio.webp",
       imageAlt: "Vista previa de Aroma Caribeño",
@@ -143,12 +217,20 @@ export default function ProjectsSection({
       title: "Delicias Marijo",
       problem:
         "Un negocio gastronómico local sin canal digital para presentar productos ni recibir pedidos de forma directa y ordenada.",
+      problemEn:
+        "A local food business with no digital channel to present products or receive orders directly and in an orderly way.",
       solution:
         "Diseñamos un sitio con presentación de productos, identidad de marca y un canal de contacto directo para pedidos.",
+      solutionEn:
+        "We designed a site with product presentation, brand identity and a direct contact channel for orders.",
       result:
         "Los pedidos dejaron de tomarse por mensajes sueltos y pasaron a un canal ordenado, con los productos presentados y con precios visibles.",
+      resultEn:
+        "Orders stopped being taken through scattered messages and moved to an orderly channel, with products presented and prices visible.",
       tags: ["Gastronomía", "Negocio local", "WhatsApp"],
+      tagsEn: ["Food", "Local Business", "WhatsApp"],
       serviceType: "Landing Page de Conversión",
+      serviceTypeEn: "Conversion Landing Page",
       url: "https://deliscias-marijo.vercel.app/",
       image: "/projects/deliscias-marijo.webp",
       imageAlt: "Vista previa de Delicias Marijo",
@@ -159,12 +241,20 @@ export default function ProjectsSection({
       title: "WAI — IA para profesionales",
       problem:
         "Un producto SaaS de inteligencia artificial sin una página que comunicara su propuesta de valor, casos de uso y precios.",
+      problemEn:
+        "An AI SaaS product with no page communicating its value proposition, use cases and pricing.",
       solution:
         "Construimos una landing de producto con características, casos de uso, precios y modo claro/oscuro para presentar el SaaS con claridad.",
+      solutionEn:
+        "We built a product landing page with features, use cases, pricing and light/dark mode to present the SaaS clearly.",
       result:
         "Una página que explica el producto, sus casos de uso y sus precios sin necesidad de una demo en vivo.",
+      resultEn:
+        "A page that explains the product, its use cases and its pricing without needing a live demo.",
       tags: ["SaaS", "Inteligencia Artificial", "Producto"],
+      tagsEn: ["SaaS", "Artificial Intelligence", "Product"],
       serviceType: "Landing Page de Conversión",
+      serviceTypeEn: "Conversion Landing Page",
       url: "https://w-bice-theta.vercel.app/",
       image: "/projects/wai.webp",
       imageAlt: "Vista previa de WAI",
@@ -269,18 +359,10 @@ export default function ProjectsSection({
         {/* ── Header ── */}
         <div className="mb-12 md:mb-16">
           <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
-            {eyebrow}
+            {resolvedEyebrow}
           </p>
           <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase text-grolow-light leading-none">
-            {heading ?? (
-              <>
-                Problemas de negocio.
-                <br />
-                <span className="text-grolow-light/30">
-                  Soluciones que escalan.
-                </span>
-              </>
-            )}
+            {resolvedHeading}
           </h2>
         </div>
 
@@ -355,7 +437,7 @@ export default function ProjectsSection({
                 {/* Tipo de servicio + flecha */}
                 <div className="flex items-start justify-between gap-3">
                   <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-light/15 text-grolow-light/40">
-                    {project.serviceType}
+                    {lang === "en" ? project.serviceTypeEn : project.serviceType}
                   </span>
 
                   <span className="text-grolow-light/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
@@ -372,33 +454,33 @@ export default function ProjectsSection({
                 <div className="flex flex-col gap-3 mt-1 max-w-[88%] md:max-w-[80%]">
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
-                      Problema
+                      {l.problem}
                     </p>
                     <p className="text-slate-400 text-sm leading-relaxed">
-                      {project.problem}
+                      {lang === "en" ? project.problemEn : project.problem}
                     </p>
                   </div>
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
-                      Solución
+                      {l.solution}
                     </p>
                     <p className="text-slate-300 text-sm leading-relaxed">
-                      {project.solution}
+                      {lang === "en" ? project.solutionEn : project.solution}
                     </p>
                   </div>
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-cyan/70 mb-1">
-                      Resultado
+                      {l.result}
                     </p>
                     <p className="text-grolow-cyan text-sm font-medium leading-relaxed">
-                      {project.result}
+                      {lang === "en" ? project.resultEn : project.result}
                     </p>
                   </div>
                 </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mt-auto pt-2">
-                  {project.tags.map((tag) => (
+                  {(lang === "en" ? project.tagsEn : project.tags).map((tag) => (
                     <span
                       key={tag}
                       className="text-[10px] md:text-xs border border-grolow-light/15 text-grolow-light/50 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"

@@ -1,18 +1,35 @@
+"use client";
 import ServicesSection from "@/app/components/ServicesSection";
 import ProjectsSection from "@/app/components/ProjectsSection";
 import ContactSection from "@/app/components/ContactSection";
+import { useLang } from "@/app/components/hooks/useLang";
+
+const COPY = {
+  en: {
+    eyebrow: "What we do",
+    heading1: "All our services,",
+    heading2: "in one place.",
+  },
+  es: {
+    eyebrow: "Lo que hacemos",
+    heading1: "Todos los servicios,",
+    heading2: "en un solo lugar.",
+  },
+} as const;
 
 export default function ServiciosPage() {
+  const lang = useLang();
+  const c = COPY[lang];
   return (
     <main className="w-full">
       <div className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-36 md:pt-44">
         <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
-          Lo que hacemos
+          {c.eyebrow}
         </p>
         <h1 className="text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase text-grolow-light leading-none">
-          Todos los servicios,
+          {c.heading1}
           <br />
-          <span className="text-grolow-light/30">en un solo lugar.</span>
+          <span className="text-grolow-light/30">{c.heading2}</span>
         </h1>
       </div>
 

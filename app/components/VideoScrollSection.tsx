@@ -3,11 +3,31 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLang } from "./hooks/useLang";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const COPY = {
+  en: {
+    eyebrow: "Grolow System",
+    wordControl: "Total",
+    wordAbsoluto: "Control",
+    wordSolocon: "Only with",
+    wordGrolow: "Grolow.",
+  },
+  es: {
+    eyebrow: "Grolow System",
+    wordControl: "Control",
+    wordAbsoluto: "Absoluto",
+    wordSolocon: "Solo con",
+    wordGrolow: "Grolow.",
+  },
+} as const;
+
 export default function VideoScrollSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const c = COPY[lang];
   const videoRef = useRef<HTMLVideoElement>(null);
   const textFirstRef = useRef<HTMLDivElement>(null);
   const textSecondRef = useRef<HTMLDivElement>(null);
@@ -230,16 +250,16 @@ export default function VideoScrollSection() {
         className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 md:px-6"
       >
         <span className="text-grolow-cyan font-mono tracking-widest text-[10px] md:text-sm mb-4 md:mb-6 uppercase">
-          Grolow System
+          {c.eyebrow}
         </span>
         <h2
           className="text-5xl sm:text-6xl md:text-8xl font-extrabold text-white text-center uppercase leading-[0.9]"
           style={{ fontFamily: "'Syne', sans-serif" }}
         >
-          <span className="word-control inline-block">Control</span>
+          <span className="word-control inline-block">{c.wordControl}</span>
           <br />
           <span className="word-absoluto italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block mt-2 md:mt-0">
-            Absoluto
+            {c.wordAbsoluto}
           </span>
         </h2>
       </div>
@@ -250,15 +270,15 @@ export default function VideoScrollSection() {
         className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 md:px-6 opacity-0"
       >
         <span className="text-grolow-cyan font-mono tracking-widest text-[10px] md:text-sm mb-4 md:mb-6 uppercase">
-          Grolow System
+          {c.eyebrow}
         </span>
         <h2
           className="text-5xl sm:text-6xl md:text-8xl font-extrabold text-white text-center uppercase leading-[0.9]"
           style={{ fontFamily: "'Syne', sans-serif" }}
         >
-          <span className="word-solocon inline-block">Solo con</span>{" "}
+          <span className="word-solocon inline-block">{c.wordSolocon}</span>{" "}
           <span className="word-grolow italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block mt-2 md:mt-0">
-            Grolow.
+            {c.wordGrolow}
           </span>
         </h2>
       </div>

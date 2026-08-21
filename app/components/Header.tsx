@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   AnimatePresence,
@@ -16,17 +10,13 @@ import {
 } from "framer-motion";
 import { services } from "./services/Services";
 import { useHeaderTrigger } from "./hooks/useHeaderTrigger";
+import { useLang, writeLang, type Lang } from "./hooks/useLang";
 
 /* ------------------------------------------------------------------ */
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
 
-/** Inglés es el idioma por defecto; español queda como opción del toggle. */
-export type Lang = "en" | "es";
-
-const DEFAULT_LANG: Lang = "en";
 const LANGS: Lang[] = ["en", "es"];
-const LANG_STORAGE_KEY = "grolow-lang";
 
 const NAV_LINKS = [
   { target: "casos", label: { en: "Projects", es: "Proyectos" } },
@@ -62,31 +52,6 @@ const COPY = {
 
 /** Compensa la altura del header fijo al hacer scroll a una sección. */
 const SCROLL_OFFSET = -88;
-
-/* ------------------------------------------------------------------ */
-/* Store de idioma (localStorage + sincronía entre pestañas)           */
-/* ------------------------------------------------------------------ */
-
-const LANG_EVENT = "grolow:langchange";
-
-function readLang(): Lang {
-  const saved = localStorage.getItem(LANG_STORAGE_KEY);
-  return saved === "en" || saved === "es" ? saved : DEFAULT_LANG;
-}
-
-function subscribeLang(onChange: () => void) {
-  window.addEventListener(LANG_EVENT, onChange);
-  window.addEventListener("storage", onChange);
-  return () => {
-    window.removeEventListener(LANG_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
-  };
-}
-
-function writeLang(lang: Lang) {
-  localStorage.setItem(LANG_STORAGE_KEY, lang);
-  window.dispatchEvent(new Event(LANG_EVENT));
-}
 
 /* ------------------------------------------------------------------ */
 /* Toggle EN / ES                                                      */
@@ -141,13 +106,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
 
-  // El idioma vive en localStorage: el servidor y la hidratación rinden
-  // inglés, y la preferencia guardada se aplica en cuanto está disponible.
-  const lang = useSyncExternalStore(
-    subscribeLang,
-    readLang,
-    () => DEFAULT_LANG,
-  );
+  const lang = useLang();
 
   useEffect(() => {
     document.documentElement.lang = lang;

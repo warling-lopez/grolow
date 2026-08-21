@@ -3,30 +3,57 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLang } from "./hooks/useLang";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
+const stepsEn = [
+  {
+    num: "Step 01",
+    title: "We talk for 20 minutes",
+    desc: "We ask what you sell, how orders reach you today, and where time gets lost. We come out of that with a clear proposal and a fixed price. Free, no commitment.",
+  },
+  {
+    num: "Step 02",
+    title: "We build it and you approve it",
+    desc: "We design and program your system from scratch, no templates. We show you progress before publishing anything. If something's off, it gets changed.",
+  },
+  {
+    num: "Step 03",
+    title: "We launch it and teach you to use it",
+    desc: "We leave it running, connected to your WhatsApp, and walk you through using it on a call. The first 15 days, any adjustment is included.",
+  },
+];
+
+const stepsEs = [
   {
     num: "Paso 01",
     title: "Hablamos 20 minutos",
-    desc: "Te pregunto qué vendes, cómo te llegan hoy los pedidos y dónde se te pierde el tiempo. Salgo de ahí con una propuesta clara y un precio cerrado. Gratis y sin compromiso.",
+    desc: "Te preguntamos qué vendes, cómo te llegan hoy los pedidos y dónde se te pierde el tiempo. Salimos de ahí con una propuesta clara y un precio cerrado. Gratis y sin compromiso.",
   },
   {
     num: "Paso 02",
-    title: "Lo construyo y tú lo apruebas",
-    desc: "Diseño y programo tu sistema desde cero, sin plantillas. Te muestro avances antes de publicar nada. Si algo no te gusta, se cambia.",
+    title: "Lo construimos y tú lo apruebas",
+    desc: "Diseñamos y programamos tu sistema desde cero, sin plantillas. Te mostramos avances antes de publicar nada. Si algo no te gusta, se cambia.",
   },
   {
     num: "Paso 03",
-    title: "Publicamos y te enseño a usarlo",
-    desc: "Lo dejo funcionando, conectado a tu WhatsApp, y te explico cómo usarlo en una llamada. Los primeros 15 días, cualquier ajuste va incluido.",
+    title: "Publicamos y te enseñamos a usarlo",
+    desc: "Lo dejamos funcionando, conectado a tu WhatsApp, y te explicamos cómo usarlo en una llamada. Los primeros 15 días, cualquier ajuste va incluido.",
   },
 ];
+
+const COPY = {
+  en: { heading: "OUR", headingAccent: "METHOD." },
+  es: { heading: "NUESTRO", headingAccent: "MÉTODO." },
+} as const;
 
 export default function ProcessSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const c = COPY[lang];
+  const steps = lang === "en" ? stepsEn : stepsEs;
 
 
   useGSAP(
@@ -94,7 +121,7 @@ export default function ProcessSection() {
         <h2
           className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter uppercase"
           style={{ fontFamily: "'Syne', sans-serif" }}>
-          NUESTRO <span className="text-grolow-cyan italic">MÉTODO.</span>
+          {c.heading} <span className="text-grolow-cyan italic">{c.headingAccent}</span>
         </h2>
       </div>
 

@@ -3,8 +3,42 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLang } from "./hooks/useLang";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const COPY = {
+  en: {
+    eyebrow: "Who's behind it",
+    alt: "Warling López, founder of Grolow",
+    body: (
+      <>
+        We&apos;re led by{" "}
+        <span className="text-grolow-light font-medium">Warling López</span>,
+        a programmer with 5 years of experience. Grolow isn&apos;t an agency
+        with twenty people and a contact form: you talk directly with us, we
+        build your system and we answer when you write. That means we know
+        exactly what&apos;s inside your site and we can fix anything the same
+        day.
+      </>
+    ),
+  },
+  es: {
+    eyebrow: "Quién está detrás",
+    alt: "Warling López, fundador de Grolow",
+    body: (
+      <>
+        Estamos liderados por{" "}
+        <span className="text-grolow-light font-medium">Warling López</span>,
+        programador con 5 años de experiencia. Grolow no es una agencia con
+        veinte personas y un formulario de contacto: hablas con nosotros
+        directamente, nosotros construimos tu sistema y respondemos cuando
+        escribes. Eso significa que sabemos exactamente qué hay dentro de tu
+        web y podemos arreglar cualquier cosa el mismo día.
+      </>
+    ),
+  },
+} as const;
 
 /**
  * PENDIENTE: coloca una foto real en /public/warling.webp
@@ -18,6 +52,8 @@ const PHOTO_SRC = "/warling.webp";
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const c = COPY[lang];
 
   useGSAP(
     () => {
@@ -52,7 +88,7 @@ export default function AboutSection() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={PHOTO_SRC}
-            alt="Warling López, fundador de Grolow"
+            alt={c.alt}
             className="relative w-full h-full object-cover"
             loading="lazy"
             onError={(e) => {
@@ -65,16 +101,10 @@ export default function AboutSection() {
         {/* Texto */}
         <div className="flex flex-col gap-4">
           <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40">
-            Quién está detrás
+            {c.eyebrow}
           </p>
           <p className="text-base md:text-xl text-slate-400 leading-relaxed">
-            Soy{" "}
-            <span className="text-grolow-light font-medium">Warling López</span>,
-            programador con 5 años de experiencia. Grolow no es una agencia con
-            veinte personas y un formulario de contacto: hablas conmigo, yo
-            construyo tu sistema y yo respondo cuando escribes. Eso significa que
-            sé exactamente qué hay dentro de tu web y puedo arreglar cualquier
-            cosa el mismo día.
+            {c.body}
           </p>
         </div>
       </div>

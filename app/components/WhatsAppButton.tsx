@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useLang } from './hooks/useLang';
 
 /**
  * El mensaje precargado cambia según el nicho de la página: en una landing de
@@ -8,30 +9,43 @@ import { usePathname } from 'next/navigation';
  * intencionales — el cliente sustituye [producto] y arranca escribiendo en vez
  * de quedarse pensando qué poner.
  */
-const MESSAGES: Record<string, string> = {
-  '/catalogos-whatsapp':
-    'Hola, vendo [producto] y quiero mi catálogo con pedidos por WhatsApp',
-  '/webs-para-clinicas':
-    'Hola, tengo una clínica y quiero que mis pacientes agenden en línea',
+const MESSAGES: Record<string, { en: string; es: string }> = {
+  '/catalogos-whatsapp': {
+    en: "Hi, I sell [product] and I'd like my catalog with WhatsApp orders",
+    es: 'Hola, vendo [producto] y quiero mi catálogo con pedidos por WhatsApp',
+  },
+  '/webs-para-clinicas': {
+    en: "Hi, I have a clinic and I'd like my patients to book online",
+    es: 'Hola, tengo una clínica y quiero que mis pacientes agenden en línea',
+  },
 };
 
-const DEFAULT_MESSAGE =
-  'Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp.';
+const DEFAULT_MESSAGE = {
+  en: "Hi, I have a business selling [type] and I'd like to see how a catalog with WhatsApp orders would work for us.",
+  es: 'Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp.',
+};
+
+const COPY = {
+  en: { label: 'Message us on WhatsApp' },
+  es: { label: 'Escríbenos por WhatsApp' },
+} as const;
 
 export default function WhatsAppButton() {
   const pathname = usePathname();
-  const message = MESSAGES[pathname ?? ''] ?? DEFAULT_MESSAGE;
+  const lang = useLang();
+  const message = (MESSAGES[pathname ?? ''] ?? DEFAULT_MESSAGE)[lang];
+  const label = COPY[lang].label;
 
   return (
     <a
       href={'https://wa.me/18299946354?text=' + encodeURIComponent(message)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Escríbeme por WhatsApp"
+      aria-label={label}
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
       {/* Tooltip */}
       <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#111] text-white text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border border-white/10 pointer-events-none">
-        Escríbeme por WhatsApp
+        {label}
       </span>
 
       {/* Botón circular */}

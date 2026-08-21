@@ -3,6 +3,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLang } from "./hooks/useLang";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,16 +14,44 @@ gsap.registerPlugin(ScrollTrigger);
  *
  * NOTA DE COPY: nunca usar la palabra "mantenimiento" de cara al cliente.
  * Un dueño mira su web funcionando y no entiende qué se le mantiene; el plan
- * se vende como "yo me encargo de los cambios".
+ * se vende como "nosotros nos encargamos de los cambios".
  */
-const plans: {
+type Plan = {
   id: string;
   title: string;
   price: string;
-  priceNote?: string;
   features: string[];
   recommended?: boolean;
-}[] = [
+};
+
+const plansEn: Plan[] = [
+  {
+    id: "mensual",
+    title: "Monthly Plan",
+    price: "Setup US$150 + US$45/mo",
+    features: [
+      "Your full store or site, custom-built",
+      "Domain and hosting included, nothing extra to pay",
+      "Unlimited changes to products, prices and photos: you message us on WhatsApp and we make it happen",
+      "Backups and monitoring",
+      "12-month minimum term",
+    ],
+    recommended: true,
+  },
+  {
+    id: "unico",
+    title: "One-Time Payment",
+    price: "From US$550",
+    features: [
+      "The same system, paid all at once",
+      "Domain and hosting are on you",
+      "15 days of adjustments included",
+      "Later changes are quoted separately",
+    ],
+  },
+];
+
+const plansEs: Plan[] = [
   {
     id: "mensual",
     title: "Plan Mensual",
@@ -30,7 +59,7 @@ const plans: {
     features: [
       "Tu tienda o web completa, hecha a medida",
       "Dominio y hosting incluidos, no pagas nada aparte",
-      "Cambios ilimitados de productos, precios y fotos: me escribes por WhatsApp y yo lo hago",
+      "Cambios ilimitados de productos, precios y fotos: nos escribes por WhatsApp y nosotros lo hacemos",
       "Respaldos y monitoreo",
       "Permanencia mínima de 12 meses",
     ],
@@ -49,8 +78,28 @@ const plans: {
   },
 ];
 
+const COPY = {
+  en: {
+    heading: "Two ways to work with us",
+    recommended: "Recommended",
+    cta: "I want this →",
+    footer:
+      "Most people choose the monthly plan because they never have to worry about uploading a new product or renewing anything.",
+  },
+  es: {
+    heading: "Dos formas de trabajar con nosotros",
+    recommended: "Recomendado",
+    cta: "Quiero este →",
+    footer:
+      "La mayoría elige el plan mensual porque nunca tiene que preocuparse por subir un producto nuevo ni por renovar nada.",
+  },
+} as const;
+
 export default function PricingSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const c = COPY[lang];
+  const plans = lang === "en" ? plansEn : plansEs;
 
   useGSAP(
     () => {
@@ -80,7 +129,7 @@ export default function PricingSection() {
     >
       <div className="max-w-5xl mx-auto w-full">
         <h2 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pb-8 md:pb-12 border-b border-grolow-light/10">
-          Dos formas de trabajar conmigo
+          {c.heading}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 md:mt-14">
@@ -91,7 +140,7 @@ export default function PricingSection() {
             >
               {plan.recommended && (
                 <span className="self-start text-[10px] md:text-xs font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-cyan/40 text-grolow-cyan bg-grolow-cyan/10 mb-6">
-                  Recomendado
+                  {c.recommended}
                 </span>
               )}
 
@@ -121,7 +170,7 @@ export default function PricingSection() {
                     href="#contacto"
                     className="inline-block text-[10px] font-extrabold uppercase tracking-widest px-5 py-3 border border-grolow-light/20 text-grolow-light hover:bg-grolow-cyan hover:border-grolow-cyan hover:text-grolow-dark transition-colors whitespace-nowrap"
                   >
-                    Quiero este →
+                    {c.cta}
                   </a>
                 </div>
               </div>
@@ -130,8 +179,7 @@ export default function PricingSection() {
         </div>
 
         <p className="mt-8 md:mt-10 text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl">
-          La mayoría elige el plan mensual porque nunca tiene que preocuparse por
-          subir un producto nuevo ni por renovar nada.
+          {c.footer}
         </p>
       </div>
     </section>

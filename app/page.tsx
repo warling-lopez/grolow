@@ -1,4 +1,5 @@
 // En tu page.tsx
+"use client";
 import Link from "next/link";
 import Hero2 from "@/app/components/Hero2";
 import VideoScrollSection from "@/app/components/VideoScrollSection";
@@ -9,8 +10,16 @@ import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
 import PricingSection from "@/app/components/PricingSection";
 import AboutSection from "@/app/components/AboutSection";
+import { useLang } from "@/app/components/hooks/useLang";
+
+const COPY = {
+  en: { allServices: "See all services →" },
+  es: { allServices: "Ver todos los servicios →" },
+} as const;
 
 export default function Home() {
+  const lang = useLang();
+  const c = COPY[lang];
   return (
     <main className="w-full">
       <Hero2 />
@@ -26,7 +35,7 @@ export default function Home() {
         <Link
           href="/servicios/"
           className="text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
-          Ver todos los servicios →
+          {c.allServices}
         </Link>
       </div>
 

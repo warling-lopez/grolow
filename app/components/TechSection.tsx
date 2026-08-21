@@ -3,11 +3,37 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useLang } from './hooks/useLang';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const COPY = {
+  en: {
+    titleWord: 'SYSTEMS',
+    titleAccent: 'THAT SCALE.',
+    items: [
+      { name: 'Automation', role: 'Processes without manual work' },
+      { name: 'Real Time', role: 'Data synced instantly' },
+      { name: 'Security', role: 'Protection for your data' },
+      { name: 'Scalability', role: 'Grows without rebuilding everything' },
+    ],
+  },
+  es: {
+    titleWord: 'SISTEMAS',
+    titleAccent: 'QUE ESCALAN.',
+    items: [
+      { name: 'Automatización', role: 'Procesos sin trabajo manual' },
+      { name: 'Tiempo Real', role: 'Datos sincronizados al instante' },
+      { name: 'Seguridad', role: 'Protección de tus datos' },
+      { name: 'Escalabilidad', role: 'Crece sin rehacer todo' },
+    ],
+  },
+} as const;
+
 export default function TechSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const c = COPY[lang];
 
   useGSAP(() => {
     // Revelado de las letras del título
@@ -59,23 +85,18 @@ export default function TechSection() {
             className="tech-title text-6xl md:text-8xl font-extrabold text-grolow-light leading-none uppercase"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
-            {'SISTEMAS'.split('').map((l, i) => (
+            {c.titleWord.split('').map((l, i) => (
               <span key={i} className="inline-block">
                 {l}
               </span>
             ))}{' '}
             <br />
-            <span className="text-grolow-cyan italic">QUE ESCALAN.</span>
+            <span className="text-grolow-cyan italic">{c.titleAccent}</span>
           </h2>
         </div>
 
         <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 pt-32">
-          {[
-            { name: 'Automatización', role: 'Procesos sin trabajo manual' },
-            { name: 'Tiempo Real', role: 'Datos sincronizados al instante' },
-            { name: 'Seguridad', role: 'Protección de tus datos' },
-            { name: 'Escalabilidad', role: 'Crece sin rehacer todo' },
-          ].map((tech, i) => (
+          {c.items.map((tech, i) => (
             <div
               key={i}
               className="tech-item p-12 bg-white/60 border border-grolow-light/10 backdrop-blur-md"
