@@ -25,9 +25,7 @@ export default function Home() {
       <Hero2 />
 
       {/* Proceso / método justo debajo del hero */}
-      <div className="h-[calc(100vh+2200px)] md:h-[calc(100vh+4100px)]">
-        <ProcessSection />
-      </div>
+      <ProcessSection />
 
       <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
 
