@@ -417,7 +417,7 @@ function ServiceCard({ service, lang }: { service: Service; lang: "en" | "es" })
       </div>
 
       {/* Delivery time */}
-      <div className="absolute top-6 right-6 md:inset-0 md:text-center group-hover:opacity-100 transition-opacity pointer-events-none text-xs md:text-base text-grolow-light/50 font-mono">
+      <div className="absolute top-6 right-6 md:inset-0 md:text-center group-hover:opacity-100 transition-opacity pointer-events-none text-xs md:text-base text-grolow-light/70 font-mono">
         {isEn ? service.deliveryTimeEn : service.deliveryTime}
       </div>
 
@@ -428,7 +428,7 @@ function ServiceCard({ service, lang }: { service: Service; lang: "en" | "es" })
           </h3>
         </div>
 
-        <p className="mt-3 md:mt-4 text-slate-400 max-w-md text-sm md:text-base leading-relaxed">
+        <p className="mt-3 md:mt-4 text-grolow-light/75 max-w-md text-sm md:text-base leading-relaxed">
           {isEn ? service.descriptionEn : service.description}
         </p>
 
@@ -436,7 +436,7 @@ function ServiceCard({ service, lang }: { service: Service; lang: "en" | "es" })
           {(isEn ? service.tagsEn : service.tags).map((tag) => (
             <span
               key={tag}
-              className="text-[10px] md:text-xs border border-grolow-light/20 text-grolow-light/60 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
+              className="text-[10px] md:text-xs border border-grolow-light/20 text-grolow-light/75 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
             >
               {tag}
             </span>
@@ -447,7 +447,7 @@ function ServiceCard({ service, lang }: { service: Service; lang: "en" | "es" })
           {(isEn ? service.featuresEn : service.features).map((feature, index) => (
             <li
               key={index}
-              className="text-xs md:text-sm text-slate-400 flex items-center gap-2"
+              className="text-xs md:text-sm text-grolow-light/75 flex items-center gap-2"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-grolow-cyan inline-block shrink-0" />
               {feature}

@@ -146,7 +146,7 @@ export default function ProcessSection() {
                 style={{ fontFamily: "'Syne', sans-serif" }}>
                 {step.title}
               </h3>
-              <p className="stagger-text text-slate-400 text-xl leading-relaxed">
+              <p className="stagger-text text-grolow-light/75 text-xl leading-relaxed">
                 {step.desc}
               </p>
             </div>

@@ -47,13 +47,13 @@ export default function GraciasPage() {
           <span className="text-grolow-cyan italic">{c.headingLine2}</span>
         </h1>
 
-        <p className="text-slate-400 text-lg leading-relaxed mb-4">
+        <p className="text-grolow-light/75 text-lg leading-relaxed mb-4">
           {c.body1a}
           <strong className="text-grolow-light">{c.body1strong}</strong>
           {c.body1b}
         </p>
 
-        <p className="text-slate-500 text-sm mb-12">
+        <p className="text-grolow-light/75 text-sm mb-12">
           {c.body2}
         </p>
 
@@ -72,7 +72,7 @@ export default function GraciasPage() {
           </Link>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-grolow-light/10 text-[11px] text-slate-600 uppercase tracking-widest">
+        <div className="mt-16 pt-8 border-t border-grolow-light/10 text-[11px] text-grolow-light/80 uppercase tracking-widest">
           Grolow Studio · grolow.com ·{' '}
           <a
             href="https://instagram.com/grolow.studio"

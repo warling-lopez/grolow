@@ -3,7 +3,8 @@
 import ContactSection from "@/app/components/ContactSection";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import { useLang } from "@/app/components/hooks/useLang";
-import { pathFor, whatsappHref } from "@/app/lib/i18n";
+import WhatsAppLink from "@/app/components/WhatsAppLink";
+import { pathFor } from "@/app/lib/i18n";
 import Link from "next/link";
 
 const COPY = {
@@ -42,11 +43,11 @@ export default function ContactoPage() {
   const c = COPY[lang];
 
   return (
-    <main className="w-full pb-16">
+    <main className="w-full bg-grolow-dark pb-16">
       <Breadcrumbs routeId="contacto" lang={lang} />
 
       <header className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-8 md:pt-10">
-        <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
+        <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
           {c.eyebrow}
         </p>
         <h1 className="text-[clamp(2rem,5.5vw,4rem)] font-black uppercase text-grolow-light leading-[1.02] tracking-tight">
@@ -68,13 +69,12 @@ export default function ContactoPage() {
           </h2>
           <p className="text-grolow-light/70 mt-2">{c.whatsappText}</p>
           <div className="flex flex-wrap items-center gap-4 mt-4">
-            <a
-              href={whatsappHref(c.whatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              message={c.whatsappMessage}
+              placement="contact-page"
               className="inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold px-6 py-3 text-sm hover:bg-grolow-cream hover:text-white transition-colors">
               {c.whatsappLabel}
-            </a>
+            </WhatsAppLink>
             <Link
               href={pathFor("precios", lang)!}
               className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">

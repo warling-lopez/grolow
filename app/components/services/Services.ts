@@ -19,7 +19,7 @@ type Service = {
  * no un servicio más de la lista.
  *
  * Los precios de entrada están alineados con la sección de planes: nada por
- * debajo de US$550 en pago único, con el plan mensual como alternativa.
+ * dentro de los rangos publicados en app/lib/pricing.ts.
  */
 export const services: Service[] = [
   {

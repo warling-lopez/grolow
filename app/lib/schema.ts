@@ -10,6 +10,7 @@ import {
 import { NAV_LABEL } from "@/app/lib/content/labels";
 import { HOME_FAQ_EN, HOME_FAQ_ES, type Faq } from "@/app/lib/content/home-faq";
 import { lastModifiedFor } from "@/app/lib/lastmod";
+import { TIERS } from "@/app/lib/pricing";
 import type { PageContent } from "@/app/lib/content/types";
 import type { SeoEntry } from "@/app/lib/seo-content";
 
@@ -24,15 +25,22 @@ import type { SeoEntry } from "@/app/lib/seo-content";
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
 function breadcrumbList(id: RouteId, lang: Lang) {
-  const trail: RouteId[] = ["home", ...ancestorsFor(id), id];
+  // Se omite cualquier eslabón que no exista en este idioma: una entrada con
+  // `item` nulo invalida el BreadcrumbList entero en los validadores.
+  const trail = (["home", ...ancestorsFor(id), id] as RouteId[]).flatMap(
+    (routeId) => {
+      const url = urlFor(routeId, lang);
+      return url === null ? [] : [{ routeId, url }];
+    },
+  );
 
   return {
     "@type": "BreadcrumbList",
-    itemListElement: trail.map((routeId, index) => ({
+    itemListElement: trail.map(({ routeId, url }, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: NAV_LABEL[routeId][lang],
-      item: urlFor(routeId, lang),
+      item: url,
     })),
   };
 }
@@ -63,34 +71,47 @@ function serviceNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageConten
 }
 
 /**
- * Los dos planes publicados en la página de precios. Son los mismos números
- * que aparecen en el texto: si cambian ahí, tienen que cambiar aquí.
+ * Ofertas derivadas de la tabla de precios. Los números son exactamente los
+ * mismos que ve el visitante en la página: si cambian en `pricing.ts`, cambian
+ * aquí solos.
  */
 function offerNodes(lang: Lang) {
-  return [
-    {
+  return TIERS.map((tier) => {
+    const base = {
       "@type": "Offer",
-      name: lang === "es" ? "Plan mensual" : "Monthly plan",
-      description:
-        lang === "es"
-          ? "Sitio a medida con dominio, alojamiento y mantenimiento incluidos. US$150 de setup y US$45 al mes."
-          : "Custom site with domain, hosting and maintenance included. US$150 setup and US$45 per month.",
-      price: "45.00",
+      name: tier.name[lang],
+      description: tier.what[lang],
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-    },
-    {
-      "@type": "Offer",
-      name: lang === "es" ? "Pago único" : "One-time payment",
-      description:
-        lang === "es"
-          ? "El mismo sistema pagado de una vez. El código queda contigo."
-          : "The same system paid at once. The code stays with you.",
-      price: "550.00",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-    },
-  ];
+    };
+
+    if (tier.hourly !== undefined) {
+      return {
+        ...base,
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: tier.hourly,
+          priceCurrency: "USD",
+          // Código UN/CEFACT de "hora": lo que espera schema.org.
+          unitCode: "HUR",
+        },
+      };
+    }
+
+    // Los proyectos por fases no llevan precio: declarar uno inventado sería
+    // peor que no declararlo.
+    if (tier.min === undefined) return base;
+
+    return {
+      ...base,
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        minPrice: tier.min,
+        maxPrice: tier.max,
+        priceCurrency: "USD",
+      },
+    };
+  });
 }
 
 function articleNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageContent) {

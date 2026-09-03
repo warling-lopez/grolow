@@ -48,7 +48,10 @@ const COPY = {
  * había una marca anónima. Mientras el archivo no exista, la tarjeta muestra
  * las iniciales como fallback.
  */
-const PHOTO_SRC = "/warling.webp";
+// `null` mientras el archivo no exista: con una ruta fija el navegador pedía
+// /warling.webp en cada carga y se llevaba un 404. Pon aquí la ruta
+// ("/warling.webp") en cuanto subas la foto a /public y la tarjeta la usa.
+const PHOTO_SRC: string | null = null;
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -82,28 +85,30 @@ export default function AboutSection() {
         {/* Foto */}
         <div className="relative w-32 h-32 md:w-44 md:h-44 shrink-0 rounded-2xl overflow-hidden border border-grolow-light/10 bg-white/40">
           {/* Fallback: iniciales, visibles mientras no exista la foto */}
-          <span className="absolute inset-0 flex items-center justify-center text-3xl md:text-5xl font-black uppercase text-grolow-light/25">
+          <span className="absolute inset-0 flex items-center justify-center text-3xl md:text-5xl font-black uppercase text-grolow-light/60">
             WL
           </span>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={PHOTO_SRC}
-            alt={c.alt}
-            className="relative w-full h-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              // Sin foto todavía: se oculta la img y quedan las iniciales.
-              (e.currentTarget as HTMLImageElement).style.display = "none";
-            }}
-          />
+          {PHOTO_SRC && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={PHOTO_SRC}
+              alt={c.alt}
+              className="relative w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                // Si el archivo desaparece, quedan las iniciales.
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
+          )}
         </div>
 
         {/* Texto */}
         <div className="flex flex-col gap-4">
-          <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40">
+          <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream">
             {c.eyebrow}
           </p>
-          <p className="text-base md:text-xl text-slate-400 leading-relaxed">
+          <p className="text-base md:text-xl text-grolow-light/75 leading-relaxed">
             {c.body}
           </p>
         </div>

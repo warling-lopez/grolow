@@ -9,7 +9,16 @@ import type { Lang, RouteId } from "@/app/lib/i18n";
  * de que cada página la respete a mano.
  */
 
-export type Bullet = { title: string; text: string };
+export type Bullet = {
+  title: string;
+  text: string;
+  /**
+   * Cuando el bullet describe otra página, el título se convierte en el
+   * enlace. El nombre de la cosa es mejor anchor text que un «ver más» al
+   * final del párrafo.
+   */
+  to?: RouteId;
+};
 
 export type Section = {
   h2: string;

@@ -2,27 +2,70 @@
 
 import { usePathname } from 'next/navigation';
 import { useLang } from './hooks/useLang';
+import { trackWhatsAppClick } from '@/app/lib/analytics';
+import { langFromPathname, resolveRoute, whatsappHref, type Lang, type RouteId } from '@/app/lib/i18n';
 
 /**
- * El mensaje precargado cambia según el nicho de la página: en una landing de
- * clínicas no puede llegar un "quiero mi catálogo". Los corchetes son
- * intencionales — el cliente sustituye [producto] y arranca escribiendo en vez
- * de quedarse pensando qué poner.
+ * El mensaje precargado cambia según la página: en la de software no puede
+ * llegar un "quiero mi catálogo". Los corchetes son intencionales — el cliente
+ * sustituye [producto] y arranca escribiendo en vez de quedarse pensando.
+ *
+ * Antes este mapa estaba indexado por dos rutas que nunca existieron
+ * (`/catalogos-whatsapp` y `/webs-para-clinicas`, las mismas URLs a las que
+ * apuntaban los canonical rotos), así que el mensaje contextual no se activaba
+ * nunca y todas las páginas mandaban el genérico de catálogo. Ahora se resuelve
+ * contra el registro de rutas, que es lo único que no puede desincronizarse.
  */
-const MESSAGES: Record<string, { en: string; es: string }> = {
-  '/catalogos-whatsapp': {
+const MESSAGES: Partial<Record<RouteId, { en: string; es: string }>> = {
+  tiendaWhatsapp: {
     en: "Hi, I sell [product] and I'd like my catalog with WhatsApp orders",
     es: 'Hola, vendo [producto] y quiero mi catálogo con pedidos por WhatsApp',
   },
-  '/webs-para-clinicas': {
+  clinicas: {
     en: "Hi, I have a clinic and I'd like my patients to book online",
     es: 'Hola, tengo una clínica y quiero que mis pacientes agenden en línea',
   },
+  desarrolloWeb: {
+    en: "Hi, I'm looking for a custom website for my business. What I need is:",
+    es: 'Hola, quiero un sitio web a medida para mi negocio. Lo que necesito es:',
+  },
+  disenoWeb: {
+    en: 'Hi, I want to redesign my business website. Here is the context:',
+    es: 'Hola, quiero rediseñar el sitio de mi negocio. Les cuento:',
+  },
+  software: {
+    en: 'Hi, I need a custom system for my business. The process is:',
+    es: 'Hola, necesito un sistema a medida para mi negocio. El proceso es:',
+  },
+  apps: {
+    en: "Hi, I'm considering a mobile app for my business. It would be used for:",
+    es: 'Hola, estoy evaluando una aplicación móvil para mi negocio. Sería para:',
+  },
+  empresas: {
+    en: 'Hi, I represent a company and we want to rebuild our website.',
+    es: 'Hola, represento a una empresa y queremos renovar nuestro sitio.',
+  },
+  consultores: {
+    en: 'Hi, I am a consultant and I want a site that brings me clients.',
+    es: 'Hola, soy consultor(a) y quiero un sitio que me traiga clientes.',
+  },
+  creadores: {
+    en: 'Hi, I am a creator and I sell [product]. I want my own site.',
+    es: 'Hola, soy creador(a) de contenido y vendo [producto]. Quiero un sitio propio.',
+  },
+  precios: {
+    en: 'Hi, I would like a proposal for my project. What I need is:',
+    es: 'Hola, quiero una propuesta para mi proyecto. Lo que necesito es:',
+  },
 };
 
+/**
+ * Genérico deliberadamente neutral: el botón flota en todas las páginas, así
+ * que no puede dar por sentado que el visitante viene por un catálogo.
+ */
 const DEFAULT_MESSAGE = {
-  en: "Hi, I have a business selling [type] and I'd like to see how a catalog with WhatsApp orders would work for us.",
-  es: 'Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp.',
+  en: "Hi, I'd like a website for my business. What I need is:",
+  es: 'Hola, quiero un sitio web para mi negocio. Lo que necesito es:',
 };
 
 const COPY = {
@@ -31,17 +74,23 @@ const COPY = {
 } as const;
 
 export default function WhatsAppButton() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   const lang = useLang();
-  const message = (MESSAGES[pathname ?? ''] ?? DEFAULT_MESSAGE)[lang];
+
+  const routeLang: Lang = langFromPathname(pathname);
+  const segments = pathname.split('/').filter(Boolean).slice(1);
+  const routeId = resolveRoute(routeLang, segments);
+
+  const message = ((routeId && MESSAGES[routeId]) ?? DEFAULT_MESSAGE)[lang];
   const label = COPY[lang].label;
 
   return (
     <a
-      href={'https://wa.me/18299946354?text=' + encodeURIComponent(message)}
+      href={whatsappHref(message)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
+      onClick={() => trackWhatsAppClick(pathname, 'floating')}
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
       {/* Tooltip */}
       <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#111] text-white text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border border-white/10 pointer-events-none">

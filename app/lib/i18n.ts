@@ -199,6 +199,57 @@ const ROUTE_TABLE = {
     changeFrequency: "yearly",
   },
 
+  // ── Blog ───────────────────────────────────────────────────────────────
+  // Solo en español: los dos artículos atacan búsquedas del mercado
+  // dominicano ("cuánto cuesta una página web en República Dominicana") que en
+  // inglés no tienen volumen aquí. Al no declararse el slug `en`, no se genera
+  // esa variante ni se anuncia un hreflang hacia una URL que no existiría.
+  blog: {
+    slug: { es: "blog" },
+    index: true,
+    parent: "home",
+    schema: "collection",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogPrecios: {
+    slug: { es: "blog/cuanto-cuesta-una-pagina-web-en-republica-dominicana" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.8,
+    changeFrequency: "yearly",
+  },
+  blogWordpress: {
+    slug: { es: "blog/wordpress-o-codigo-a-medida" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.8,
+    changeFrequency: "yearly",
+  },
+
+  // ── Legales ────────────────────────────────────────────────────────────
+  // `index: false` mientras queden marcadores `[COMPLETAR: ...]` dentro:
+  // publicar un aviso legal a medio rellenar en los resultados de búsqueda es
+  // peor que no tenerlo indexado. Al rellenarlos, poner `index: true` y entran
+  // solas al sitemap.
+  privacidad: {
+    slug: { es: "politica-de-privacidad", en: "privacy-policy" },
+    index: false,
+    parent: "home",
+  },
+  cookies: {
+    slug: { es: "politica-de-cookies", en: "cookie-policy" },
+    index: false,
+    parent: "home",
+  },
+  terminos: {
+    slug: { es: "terminos-y-condiciones", en: "terms-and-conditions" },
+    index: false,
+    parent: "home",
+  },
+
   // ── Sin publicar / sin indexar ─────────────────────────────────────────
   // A la espera del primer caso real de clínica.
   clinicas: {

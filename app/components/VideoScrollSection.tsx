@@ -258,7 +258,7 @@ export default function VideoScrollSection() {
         >
           <span className="word-control inline-block">{c.wordControl}</span>
           <br />
-          <span className="word-absoluto italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block mt-2 md:mt-0">
+          <span className="word-absoluto italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-lime inline-block mt-2 md:mt-0">
             {c.wordAbsoluto}
           </span>
         </h2>
@@ -277,7 +277,7 @@ export default function VideoScrollSection() {
           style={{ fontFamily: "'Syne', sans-serif" }}
         >
           <span className="word-solocon inline-block">{c.wordSolocon}</span>{" "}
-          <span className="word-grolow italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-cyan inline-block mt-2 md:mt-0">
+          <span className="word-grolow italic text-transparent bg-clip-text bg-gradient-to-r from-white to-grolow-lime inline-block mt-2 md:mt-0">
             {c.wordGrolow}
           </span>
         </h2>

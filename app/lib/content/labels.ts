@@ -39,6 +39,18 @@ export const NAV_LABEL: Record<RouteId, Record<Lang, string>> = {
   casoHellens: { es: "Hellen's Cute Kids", en: "Hellen's Cute Kids" },
   casoWarling: { es: "Warling Dev", en: "Warling Dev" },
   contacto: { es: "Contacto", en: "Contact" },
+  blog: { es: "Blog", en: "Blog" },
+  blogPrecios: {
+    es: "Cuánto cuesta una página web en RD",
+    en: "What a website costs in the DR",
+  },
+  blogWordpress: {
+    es: "WordPress o código a medida",
+    en: "WordPress or custom code",
+  },
+  privacidad: { es: "Política de privacidad", en: "Privacy policy" },
+  cookies: { es: "Política de cookies", en: "Cookie policy" },
+  terminos: { es: "Términos y condiciones", en: "Terms and conditions" },
   clinicas: { es: "Webs para clínicas", en: "Websites for clinics" },
   gracias: { es: "Gracias", en: "Thank you" },
 };

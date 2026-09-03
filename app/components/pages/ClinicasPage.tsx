@@ -126,7 +126,7 @@ const config: NicheLandingConfig = {
     },
     {
       q: "¿La web es mía?",
-      a: "El contenido y tu marca son tuyos siempre. En el plan mensual yo mantengo el dominio y el hosting mientras el plan esté activo; si algún día quieres llevártelo todo, se puede coordinar el traspaso.",
+      a: "El dominio se registra a tu nombre, y el contenido y tu marca son tuyos siempre. Al entregar te paso los accesos completos; si algún día quieres llevártelo a otro equipo, se coordina el traspaso sin condiciones.",
     },
   ],
 

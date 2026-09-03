@@ -13,6 +13,23 @@ import AboutSection from "@/app/components/AboutSection";
 import { useLang } from "@/app/components/hooks/useLang";
 import { pathFor } from "@/app/lib/i18n";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
+import DifferentiationSection from "@/app/components/DifferentiationSection";
+
+/**
+ * Capturas reales de los proyectos en línea, para el mosaico del hero.
+ *
+ * Hero2 traía 16 rectángulos de color como marcador de posición, con la nota
+ * de reemplazarlos por capturas reales. Se ciclan los seis proyectos hasta
+ * llenar las columnas.
+ */
+const PREVIEWS = [
+  { src: "/projects/laperfum.webp", name: "La Perfurm RD" },
+  { src: "/projects/hellenscute.webp", name: "Hellen's Cute Kids" },
+  { src: "/projects/warling.webp", name: "Warling Dev" },
+  { src: "/projects/aromacaribenio.webp", name: "Aroma Caribeño" },
+  { src: "/projects/deliscias-marijo.webp", name: "Delicias Marijo" },
+  { src: "/projects/wai.webp", name: "WAI" },
+];
 
 const COPY = {
   en: { allServices: "See all services →" },
@@ -22,9 +39,24 @@ const COPY = {
 export default function Home() {
   const lang = useLang();
   const c = COPY[lang];
+
+  const heroImages = Array.from({ length: 16 }, (_, i) => {
+    const project = PREVIEWS[i % PREVIEWS.length];
+    return {
+      src: project.src,
+      alt:
+        lang === "es"
+          ? `Vista previa del sitio de ${project.name}`
+          : `Preview of the ${project.name} website`,
+    };
+  });
   return (
     <main className="w-full">
-      <Hero2 />
+      <Hero2 images={heroImages} />
+
+      {/* Por qué nosotros, antes que el proceso: es la pregunta que trae el
+          visitante después del hero. */}
+      <DifferentiationSection />
 
       {/* Proceso / método justo debajo del hero */}
       <ProcessSection />

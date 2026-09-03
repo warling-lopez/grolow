@@ -6,7 +6,7 @@ export const preciosContent: ContentTable = {
     h1: "Cuánto cuesta una página web en República Dominicana",
     lead: [
       "Es la pregunta que todo el mundo hace primero y casi nadie responde en su sitio. Aquí van los números, los nuestros y los del mercado, para que puedas comparar antes de escribir a nadie.",
-      "Una página web en República Dominicana puede costar desde nada hasta varios miles de dólares. La diferencia no es el capricho de quien cotiza: es qué se construye y quién lo construye.",
+      "Una página web en República Dominicana puede costar desde nada hasta varios miles de dólares. La diferencia no es el capricho de quien cotiza: es qué se construye y quién lo construye. Nuestro trabajo empieza en US$250.",
     ],
     sections: [
       {
@@ -32,24 +32,29 @@ export const preciosContent: ContentTable = {
       },
       {
         h2: "Lo que cobramos nosotros",
-        subsections: [
+        body: [
+          "Cotizamos por tipo de proyecto, no por plan de suscripción. Lo que mueve el número es el alcance, y el rango de cada tipo depende de lo que le pongas dentro.",
+        ],
+        bullets: [
           {
-            h3: "Plan mensual: US$150 de setup + US$45 al mes",
-            body: [
-              "Incluye el sitio construido a medida, el dominio, el alojamiento y el mantenimiento mientras el plan esté activo. Está pensado para negocios que prefieren no desembolsar todo de una vez y no quieren ocuparse de la parte técnica.",
-            ],
+            title: "Landing page — US$250 a US$450",
+            text: "Una sola página construida para que el visitante haga una acción concreta. Sube según lo que lleve integrado: WhatsApp, chatbot, formularios y automatismos de contacto.",
           },
           {
-            h3: "Pago único: desde US$550",
-            body: [
-              "El mismo sistema, pagado de una vez. El dominio y el alojamiento corren por tu cuenta, y el código queda contigo. Es la opción de quien quiere control total y no quiere una cuota recurrente.",
-            ],
+            title: "Sitio web corporativo — US$450 a US$800",
+            text: "Varias páginas con tus servicios, tu equipo y tus vías de contacto. Sube según la cantidad de páginas y las integraciones que necesite con lo que ya usas.",
           },
           {
-            h3: "Proyectos con sistema o integraciones",
-            body: [
-              "Paneles internos, reservas, inventario o aplicaciones móviles se cotizan por proyecto, porque el alcance cambia demasiado entre un caso y otro como para publicar un número honesto. Lo que sí es fijo: el número se cierra antes de empezar y no se mueve durante el proyecto.",
-            ],
+            title: "Tienda en línea — US$800 a US$1.500",
+            text: "Catálogo navegable con pedidos, por WhatsApp o con cobro en línea. Sube según la cantidad de páginas y el tamaño del inventario: no es lo mismo de 20 a 50 productos que de 50 a 150, o más de 500.",
+          },
+          {
+            title: "Automatizaciones, IA y canales de comunicación — US$25 por hora",
+            text: "Procesos que hoy haces a mano, asistentes con IA, email marketing y conexión entre herramientas. Se cobra por hora porque el alcance real solo se conoce al abrir el proceso: se estima antes de empezar y se factura lo trabajado.",
+          },
+          {
+            title: "Aplicación móvil, web app, SaaS y sistemas a medida — por proyecto",
+            text: "Producto propio con varios roles, base de datos y una operación completa por detrás. Son proyectos largos, así que se dividen en fases y cada fase se cotiza y se cobra por separado, con su alcance cerrado.",
           },
         ],
       },
@@ -100,14 +105,18 @@ export const preciosContent: ContentTable = {
       },
       {
         q: "¿Hay costos que aparezcan después?",
-        a: "El dominio se renueva cada año y esa renovación es tuya. En el plan de pago único, el alojamiento también. Todo eso se dice en la propuesta, con su monto aproximado, antes de que firmes.",
+        a: "El dominio y el alojamiento se renuevan cada año y esa renovación es tuya. Se dice en la propuesta, con su monto aproximado, antes de que firmes.",
       },
       {
-        q: "¿Puedo empezar con el plan mensual y pasarme al pago único?",
-        a: "Sí. Se calcula la diferencia según lo ya abonado y se hace el traspaso del código y los accesos.",
+        q: "¿Cómo se paga?",
+        a: "Los proyectos con rango cerrado se dividen en dos: una parte al empezar y el resto contra entrega. Las automatizaciones por hora se facturan por lo trabajado. Los proyectos por fases se cobran fase a fase.",
       },
     ],
     related: [
+      {
+        to: "blogPrecios",
+        label: "Artículo: cuánto cuesta una página web en RD en 2026, con los rangos del mercado",
+      },
       { to: "desarrolloWeb", label: "Qué incluye el desarrollo web a medida" },
       { to: "empresas", label: "Sitios web para empresas medianas" },
       { to: "casos", label: "Casos de éxito con proyectos reales" },
@@ -126,7 +135,7 @@ export const preciosContent: ContentTable = {
     h1: "What a website costs in the Dominican Republic",
     lead: [
       "It's the question everyone asks first and almost nobody answers on their site. Here are the numbers — ours and the market's — so you can compare before writing to anyone.",
-      "A website in the Dominican Republic can cost anywhere from nothing to several thousand dollars. The difference isn't the whim of whoever quotes it: it's what gets built, and who builds it.",
+      "A website in the Dominican Republic can cost anywhere from nothing to several thousand dollars. The difference isn't the whim of whoever quotes it: it's what gets built, and who builds it. Our work starts at US$250.",
     ],
     sections: [
       {
@@ -152,24 +161,29 @@ export const preciosContent: ContentTable = {
       },
       {
         h2: "What we charge",
-        subsections: [
+        body: [
+          "We quote by project type, not by subscription plan. Scope is what moves the number, and each type's range depends on what you put inside it.",
+        ],
+        bullets: [
           {
-            h3: "Monthly plan: US$150 setup + US$45 per month",
-            body: [
-              "Includes the custom-built site, domain, hosting and maintenance while the plan is active. It's designed for businesses that would rather not pay everything at once and don't want to handle the technical side.",
-            ],
+            title: "Landing page — US$250 to US$450",
+            text: "A single page built so the visitor takes one concrete action. It rises with what's integrated: WhatsApp, chatbot, forms and contact automations.",
           },
           {
-            h3: "One-time payment: from US$550",
-            body: [
-              "The same system, paid at once. Domain and hosting are on you, and the code stays with you. This is the option for people who want full control and no recurring fee.",
-            ],
+            title: "Corporate website — US$450 to US$800",
+            text: "Several pages covering your services, your team and your contact routes. It rises with the number of pages and the integrations it needs with what you already use.",
           },
           {
-            h3: "Projects with systems or integrations",
-            body: [
-              "Internal dashboards, bookings, inventory or mobile apps are quoted per project, because scope varies too much between cases to publish an honest number. What is fixed: the number closes before we start and doesn't move during the project.",
-            ],
+            title: "Online store — US$800 to US$1,500",
+            text: "A browsable catalog with ordering, over WhatsApp or with online payment. It rises with page count and inventory size: 20–50 products is not the same as 50–150, or more than 500.",
+          },
+          {
+            title: "Automations, AI and communication channels — US$25 per hour",
+            text: "Processes you run by hand today, AI assistants, email marketing and connecting tools. Billed hourly because the real scope only shows once the process is opened: estimated up front, invoiced for time worked.",
+          },
+          {
+            title: "Mobile apps, web apps, SaaS and custom systems — per project",
+            text: "A product of your own with several roles, a database and a full operation behind it. These are long projects, so they're split into phases; each phase is quoted and invoiced separately with its own closed scope.",
           },
         ],
       },
@@ -220,11 +234,11 @@ export const preciosContent: ContentTable = {
       },
       {
         q: "Are there costs that appear later?",
-        a: "The domain renews yearly and that renewal is yours. On the one-time plan, hosting is too. All of it is stated in the proposal, with approximate amounts, before you sign.",
+        a: "Domain and hosting renew yearly and that renewal is yours. It's stated in the proposal, with approximate amounts, before you sign.",
       },
       {
-        q: "Can I start on the monthly plan and move to one-time?",
-        a: "Yes. We calculate the difference against what you've already paid and hand over the code and credentials.",
+        q: "How is payment structured?",
+        a: "Projects with a closed range are split in two: part at the start and the rest on delivery. Hourly automation work is invoiced for time worked. Phased projects are billed phase by phase.",
       },
     ],
     related: [

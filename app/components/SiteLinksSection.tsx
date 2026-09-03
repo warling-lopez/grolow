@@ -98,12 +98,14 @@ const COPY = {
     segmentsTitle: "Para quién lo construimos",
     prices: "Cuánto cuesta una página web en República Dominicana",
     cases: "Casos de éxito con proyectos que puedes abrir y revisar",
+    blog: "Artículos sobre precios y tecnología en el mercado dominicano",
   },
   en: {
     servicesTitle: "What we build",
     segmentsTitle: "Who we build it for",
     prices: "What a website costs in the Dominican Republic",
     cases: "Case studies you can open and inspect yourself",
+    blog: "Artículos sobre precios y tecnología (en español)",
   },
 } as const;
 
@@ -118,7 +120,7 @@ function LinkGrid({ entries, lang }: { entries: Entry[]; lang: Lang }) {
             <span className="font-bold text-grolow-light group-hover:text-grolow-cream transition-colors">
               {entry.label[lang]}
             </span>
-            <span className="block text-sm text-grolow-light/60 mt-1 leading-relaxed">
+            <span className="block text-sm text-grolow-light/75 mt-1 leading-relaxed">
               {entry.blurb[lang]}
             </span>
           </Link>
@@ -154,6 +156,13 @@ export default function SiteLinksSection() {
           href={pathFor("casos", lang)!}
           className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.cases}
+        </Link>
+        {/* El blog solo existe en español: se enlaza a /es/blog desde ambos
+            idiomas en vez de generar una variante inglesa vacía. */}
+        <Link
+          href={pathFor("blog", "es")!}
+          className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
+          {c.blog}
         </Link>
       </div>
     </section>

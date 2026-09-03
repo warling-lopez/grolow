@@ -8,6 +8,7 @@ import GlobalCanvas from '@/app/components/GlobalCanvas';
 import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,6 +84,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div className="relative z-10 h-auto">
         {children}
       </div>
+      {!standalone && <Footer />}
       {!standalone && <WhatsAppButton />}
       {!standalone && <ScrollToTopButton />}
     </>

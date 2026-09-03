@@ -76,14 +76,14 @@ const HEADING_DEFAULT: Record<Lang, React.ReactNode> = {
     <>
       Business problems.
       <br />
-      <span className="text-grolow-light/30">Solutions that scale.</span>
+      <span className="text-grolow-light/55">Solutions that scale.</span>
     </>
   ),
   es: (
     <>
       Problemas de negocio.
       <br />
-      <span className="text-grolow-light/30">Soluciones que escalan.</span>
+      <span className="text-grolow-light/55">Soluciones que escalan.</span>
     </>
   ),
 };
@@ -358,7 +358,7 @@ export default function ProjectsSection({
 
         {/* ── Header ── */}
         <div className="mb-12 md:mb-16">
-          <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
+          <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
             {resolvedEyebrow}
           </p>
           <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase text-grolow-light leading-none">
@@ -422,7 +422,7 @@ export default function ProjectsSection({
 
                 {/* Fallback mientras no tienes screenshots */}
                 <div className="absolute inset-0 rounded-xl bg-white/40 flex items-end justify-start p-2">
-                  <span className="text-grolow-light/10 font-mono text-[9px] uppercase tracking-widest leading-tight">
+                  <span className="text-grolow-light/60 font-mono text-[9px] uppercase tracking-widest leading-tight">
                     {displayUrl(project.url) ?? project.title}
                   </span>
                 </div>
@@ -436,11 +436,11 @@ export default function ProjectsSection({
 
                 {/* Tipo de servicio + flecha */}
                 <div className="flex items-start justify-between gap-3">
-                  <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-light/15 text-grolow-light/40">
+                  <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-md border border-grolow-light/15 text-grolow-light/70">
                     {lang === "en" ? project.serviceTypeEn : project.serviceType}
                   </span>
 
-                  <span className="text-grolow-light/30 group-hover:text-grolow-cyan group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
+                  <span className="text-grolow-light/75 group-hover:text-grolow-cream group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
                     ↗
                   </span>
                 </div>
@@ -453,18 +453,18 @@ export default function ProjectsSection({
                 {/* Problema → Solución → Resultado */}
                 <div className="flex flex-col gap-3 mt-1 max-w-[88%] md:max-w-[80%]">
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-cream mb-1">
                       {l.problem}
                     </p>
-                    <p className="text-slate-400 text-sm leading-relaxed">
+                    <p className="text-grolow-light/75 text-sm leading-relaxed">
                       {lang === "en" ? project.problemEn : project.problem}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-light/30 mb-1">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-grolow-cream mb-1">
                       {l.solution}
                     </p>
-                    <p className="text-slate-300 text-sm leading-relaxed">
+                    <p className="text-grolow-light/75 text-sm leading-relaxed">
                       {lang === "en" ? project.solutionEn : project.solution}
                     </p>
                   </div>
@@ -483,7 +483,7 @@ export default function ProjectsSection({
                   {(lang === "en" ? project.tagsEn : project.tags).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] md:text-xs border border-grolow-light/15 text-grolow-light/50 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
+                      className="text-[10px] md:text-xs border border-grolow-light/15 text-grolow-light/70 px-2 py-1 md:px-3 uppercase tracking-wider rounded-md"
                     >
                       {tag}
                     </span>
@@ -493,10 +493,10 @@ export default function ProjectsSection({
 
               {/* ── Barra inferior ── */}
               <div className="relative z-10 border-t border-grolow-light/5 pt-4 flex items-center justify-between">
-                <span className="text-grolow-light/25 font-mono text-xs uppercase tracking-widest">
+                <span className="text-grolow-light/70 font-mono text-xs uppercase tracking-widest">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="text-grolow-light/20 group-hover:text-grolow-cyan font-mono text-xs tracking-wider transition-colors duration-300">
+                <span className="text-grolow-light/75 group-hover:text-grolow-cream font-mono text-xs tracking-wider transition-colors duration-300">
                   {displayUrl(project.url) ?? project.title}
                 </span>
               </div>

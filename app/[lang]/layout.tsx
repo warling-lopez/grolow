@@ -9,6 +9,7 @@ import {
   isLang,
   type Lang,
 } from "@/app/lib/i18n";
+import { businessPriceRange } from "@/app/lib/pricing";
 import "../globals.css";
 
 /** Las dos variantes de idioma se generan en build: nada de render dinámico. */
@@ -83,9 +84,9 @@ function businessSchema(lang: Lang) {
       addressCountry: "DO",
     },
     areaServed: { "@type": "Country", name: "República Dominicana" },
-    // Rango real publicado en la página de planes: US$150 de setup y desde
-    // US$550 el pago único.
-    priceRange: "US$150–US$550",
+    // Se calcula desde la tabla de precios, así que no puede quedarse
+    // desfasado respecto a lo que dice la página.
+    priceRange: businessPriceRange(),
     currenciesAccepted: "USD",
     sameAs: organization.sameAs,
   };

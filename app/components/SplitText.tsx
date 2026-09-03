@@ -39,7 +39,7 @@ export default function SplitText({
           "pb-5 pr-5 pl-5 rounded-b-xl",
           bottomClassName,
         ].join(" ")}
-        style={{ filter, display: "block;" }}>
+        style={{ filter, display: "block" }}>
         {children}
       </span>
 

@@ -82,7 +82,7 @@ const config: NicheLandingConfig = {
       <>
         Catálogos que ya
         <br />
-        <span className="text-grolow-light/30">reciben pedidos.</span>
+        <span className="text-grolow-light/55">reciben pedidos.</span>
       </>
     ),
   },
@@ -96,7 +96,7 @@ const config: NicheLandingConfig = {
   pricing: {
     headline: "Cuánto cuesta",
     setup: "Setup US$190 + US$40 al mes",
-    note: "La mayoría elige el plan mensual porque nunca tiene que preocuparse por subir un producto nuevo ni por renovar nada.",
+    note: "El rango depende del tamaño del catálogo: no cuesta lo mismo de 20 a 50 productos que más de 500.",
     bullets: [
       "Tu catálogo completo, hecho a medida y con tu marca",
       "Dominio y hosting incluidos, no pagas nada aparte",
@@ -122,7 +122,7 @@ const config: NicheLandingConfig = {
     },
     {
       q: "¿Quién sube los productos nuevos?",
-      a: "Yo. Me escribes por WhatsApp con la foto y el precio, y lo subo. Eso va incluido en el plan mensual, sin límite de cambios.",
+      a: "Puedes subirlo tú desde el panel, que queda a tu nombre. Si prefieres no ocuparte, me escribes por WhatsApp con la foto y el precio y lo subo yo.",
     },
     {
       q: "¿Cuánto tarda?",
@@ -130,7 +130,7 @@ const config: NicheLandingConfig = {
     },
     {
       q: "¿El catálogo es mío?",
-      a: "El contenido y tu marca son tuyos siempre. En el plan mensual yo mantengo el dominio y el hosting mientras el plan esté activo; si algún día quieres llevártelo todo, se puede coordinar el traspaso.",
+      a: "El dominio se registra a tu nombre, y el contenido y tu marca son tuyos siempre. Al entregar te paso los accesos completos; si algún día quieres llevártelo a otro equipo, se coordina el traspaso sin condiciones.",
     },
   ],
 

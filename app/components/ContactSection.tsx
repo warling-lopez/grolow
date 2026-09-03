@@ -61,22 +61,27 @@ const BILLING_OPTIONS = [
   { en: "More than US$20,000 / mo", es: "Más de US$20,000 / mes" },
 ];
 
-// Alineado con la sección de planes. Sin mínimo de $1,500: la barrera de
-// entrada ahora es el plan mensual.
+// Alineado con los rangos de app/lib/pricing.ts: los tramos coinciden con lo
+// que el visitante acaba de leer en la página de precios.
 const BUDGET_OPTIONS = [
+  { en: "US$250 – US$450 (landing page)", es: "US$250 – US$450 (landing page)" },
   {
-    en: "Monthly plan (US$150 setup + US$45/mo)",
-    es: "Plan mensual (US$150 setup + US$45/mes)",
+    en: "US$450 – US$800 (corporate site)",
+    es: "US$450 – US$800 (sitio corporativo)",
   },
-  { en: "US$550 – US$900 (one-time)", es: "US$550 – US$900 (pago único)" },
-  { en: "US$900 – US$1,500", es: "US$900 – US$1,500" },
+  { en: "US$800 – US$1,500 (online store)", es: "US$800 – US$1,500 (tienda en línea)" },
   { en: "More than US$1,500", es: "Más de US$1,500" },
+  {
+    en: "Hourly work (automations, AI)",
+    es: "Trabajo por horas (automatizaciones, IA)",
+  },
+  { en: "Not sure yet", es: "Todavía no lo sé" },
 ];
 
 /** Mensaje precargado del enlace de WhatsApp. */
 const WHATSAPP_MESSAGE = {
-  en: "Hi, I have a business selling [type] and I'd like to see how a catalog with WhatsApp orders would work for us.",
-  es: "Hola, tengo un negocio de [tipo] y quiero ver cómo funcionaría un catálogo con pedidos por WhatsApp.",
+  en: "Hi, I'd like a website for my business. What I need is:",
+  es: "Hola, quiero un sitio web para mi negocio. Lo que necesito es:",
 };
 
 const COPY = {
@@ -217,18 +222,18 @@ function ContactForm() {
               style={{ fontFamily: "'Syne', sans-serif" }}
               lang={lang}>
               {c.titleLine1} <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cyan to-grolow-light/50 italic">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-light italic">
                 {c.titleLine2}
               </span>
             </h2>
-            <p className="text-slate-400 text-lg leading-relaxed max-w-md">
+            <p className="text-grolow-light/75 text-lg leading-relaxed max-w-md">
               {c.intro}
             </p>
           </div>
 
           <div className="mt-20 space-y-8 border-t border-grolow-light/20 pt-10">
             <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">
+              <p className="text-[10px] text-grolow-light/75 uppercase tracking-widest mb-2">
                 {c.directEmail}
               </p>
               <a
@@ -238,7 +243,7 @@ function ContactForm() {
               </a>
             </div>
             <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">
+              <p className="text-[10px] text-grolow-light/75 uppercase tracking-widest mb-2">
                 {c.whatsappLabel}
               </p>
               <a
@@ -248,10 +253,10 @@ function ContactForm() {
                 className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 {c.whatsappCta}
               </a>
-              <p className="text-sm text-slate-500 mt-1">+1 829 994 6354</p>
+              <p className="text-sm text-grolow-light/75 mt-1">+1 829 994 6354</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">
+              <p className="text-[10px] text-grolow-light/75 uppercase tracking-widest mb-2">
                 {c.instagram}
               </p>
               <a
@@ -289,7 +294,7 @@ function ContactForm() {
               <div key={f.id} className="flex flex-col gap-4">
                 <label
                   htmlFor={f.id}
-                  className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+                  className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
                   {f.label}
                 </label>
                 <input
@@ -298,7 +303,7 @@ function ContactForm() {
                   type={f.type}
                   required
                   placeholder={f.placeholder}
-                  className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+                  className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
                 />
               </div>
             ))}
@@ -307,7 +312,7 @@ function ContactForm() {
           <div className="flex flex-col gap-4">
             <label
               htmlFor="email"
-              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
               {c.emailLabel}
             </label>
             <input
@@ -316,14 +321,14 @@ function ContactForm() {
               type="email"
               required
               placeholder={c.emailPlaceholder}
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
             />
           </div>
 
           <div className="flex flex-col gap-4">
             <label
               htmlFor="needs"
-              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
               {c.needsLabel}
             </label>
             <select
@@ -346,7 +351,7 @@ function ContactForm() {
           <div className="flex flex-col gap-4">
             <label
               htmlFor="billing"
-              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
               {c.billingLabel}
             </label>
             <select
@@ -369,7 +374,7 @@ function ContactForm() {
           <div className="flex flex-col gap-4">
             <label
               htmlFor="process"
-              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
               {c.processLabel}
             </label>
             <textarea
@@ -378,14 +383,14 @@ function ContactForm() {
               required
               rows={3}
               placeholder={c.processPlaceholder}
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-slate-500 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
+              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
             />
           </div>
 
           <div className="flex flex-col gap-4">
             <label
               htmlFor="budget"
-              className="text-[10px] font-bold text-slate-400 tracking-[.2em] uppercase">
+              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
               {c.budgetLabel}
             </label>
             <select
@@ -416,7 +421,7 @@ function ContactForm() {
             {isSubmitting ? c.submitting : c.submit}
             {!isSubmitting && <span>→</span>}
           </button>
-          <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest -mt-2.5">
+          <p className="text-center text-[10px] text-grolow-light/80 uppercase tracking-widest -mt-2.5">
             {c.disclaimer}
           </p>
         </form>

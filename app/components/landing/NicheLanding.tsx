@@ -119,7 +119,7 @@ export default function NicheLanding({
                 <h3 className="text-lg md:text-xl font-bold uppercase text-grolow-light leading-tight">
                   {pain.title}
                 </h3>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+                <p className="text-sm md:text-base text-grolow-light/75 leading-relaxed">
                   {pain.body}
                 </p>
               </div>
@@ -145,13 +145,13 @@ export default function NicheLanding({
                 {/* `grolow-card` (#FFFCF4) sólo se ve sobre fondo oscuro como
                     en ProcessSection; aquí el fondo es crema, así que el número
                     va en tinta translúcida. */}
-                <span className="text-grolow-light/20 font-mono text-5xl md:text-7xl font-bold leading-none">
+                <span className="text-grolow-light/55 font-mono text-5xl md:text-7xl font-bold leading-none">
                   {step.num}
                 </span>
                 <h3 className="text-xl md:text-2xl font-bold uppercase text-grolow-light leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+                <p className="text-sm md:text-base text-grolow-light/75 leading-relaxed">
                   {step.body}
                 </p>
               </div>
@@ -187,7 +187,7 @@ export default function NicheLanding({
                 {pricing.setup}
               </p>
               {pricing.note && (
-                <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+                <p className="mt-4 text-sm text-grolow-light/75 leading-relaxed">
                   {pricing.note}
                 </p>
               )}
@@ -203,7 +203,7 @@ export default function NicheLanding({
               {pricing.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className="text-sm md:text-base text-slate-400 flex items-start gap-3 leading-relaxed"
+                  className="text-sm md:text-base text-grolow-light/75 flex items-start gap-3 leading-relaxed"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-grolow-cyan inline-block shrink-0 mt-2" />
                   {bullet}

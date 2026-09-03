@@ -67,7 +67,7 @@ export default function FaqSection({ items }: { items?: Faq[] } = {}) {
                   className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="p-8 pt-0 text-slate-400 text-base leading-relaxed border-t border-grolow-light/10 mt-4">
+                    <p className="p-8 pt-0 text-grolow-light/75 text-base leading-relaxed border-t border-grolow-light/10 mt-4">
                       {faq.a}
                     </p>
                   </div>

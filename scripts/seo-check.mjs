@@ -327,9 +327,45 @@ async function checkInfrastructure() {
   }
 }
 
+/**
+ * Las páginas legales están fuera del sitemap (noindex) mientras tengan
+ * marcadores sin rellenar. Se listan aparte para que no se olviden.
+ */
+async function checkLegalPlaceholders() {
+  const legal = [
+    "/es/politica-de-privacidad",
+    "/es/politica-de-cookies",
+    "/es/terminos-y-condiciones",
+    "/en/privacy-policy",
+    "/en/cookie-policy",
+    "/en/terms-and-conditions",
+  ];
+  let total = 0;
+  for (const path of legal) {
+    const { response, body } = await get(path);
+    if (!response.ok) {
+      fail(path, `página legal no accesible (${response.status})`);
+      continue;
+    }
+    const pending = [...body.matchAll(/\[COMPLETAR: ([^\]]+)\]/g)].map((m) => m[1]);
+    total += pending.length;
+    if (pending.length > 0) {
+      notes.push(
+        `${path}: ${pending.length} marcador(es) por rellenar — ${[...new Set(pending)].join(", ")}`,
+      );
+    }
+  }
+  if (total > 0) {
+    notes.push(
+      "las legales siguen en noindex: al rellenar los marcadores, poner index: true en i18n.ts",
+    );
+  }
+}
+
 console.log(`Verificando ${BASE}\n`);
 
 await checkInfrastructure();
+await checkLegalPlaceholders();
 
 const urls = await sitemapUrls();
 notes.push(`${urls.length} URLs en el sitemap`);

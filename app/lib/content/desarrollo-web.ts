@@ -90,7 +90,7 @@ export const desarrolloWebContent: ContentTable = {
       },
       {
         q: "¿El sitio es mío o queda atado a ustedes?",
-        a: "El dominio se registra a tu nombre. En el plan de pago único el código queda contigo. En el plan mensual el mantenimiento y el alojamiento van incluidos mientras el plan esté activo.",
+        a: "El dominio se registra a tu nombre y el código queda contigo al entregar. Los accesos se traspasan completos, sin condiciones y sin permanencia.",
       },
       {
         q: "¿Puedo editar los textos yo mismo?",
@@ -111,6 +111,10 @@ export const desarrolloWebContent: ContentTable = {
         label: "Caso: Warling Dev, un sitio profesional de servicios",
       },
       { to: "precios", label: "Cuánto cuesta una página web en RD" },
+      {
+        to: "blogWordpress",
+        label: "Artículo: WordPress o código a medida, cuál le conviene a tu negocio",
+      },
     ],
     cta: {
       heading: "Cuéntanos qué necesita hacer tu sitio",
@@ -210,7 +214,7 @@ export const desarrolloWebContent: ContentTable = {
       },
       {
         q: "Is the site mine, or tied to you?",
-        a: "The domain is registered in your name. On the one-time plan the code stays with you. On the monthly plan, maintenance and hosting are included while the plan is active.",
+        a: "The domain is registered in your name and the code stays with you on delivery. Credentials are handed over in full, with no conditions and no lock-in.",
       },
       {
         q: "Can I edit the text myself?",

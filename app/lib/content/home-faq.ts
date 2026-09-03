@@ -13,11 +13,11 @@ export type Faq = { q: string; a: string };
 export const HOME_FAQ_EN: Faq[] = [
   {
     q: "How much does a project cost?",
-    a: "You can start with the monthly plan: US$150 setup and US$45 a month, with domain, hosting and all changes included. If you'd rather pay it all at once, plans start at US$550. Before you decide anything, we'll tell you exactly what you need and how much it costs, for free."
+    a: "It depends on the project type: a landing page runs US$250 to US$450, a corporate site US$450 to US$800, and an online store US$800 to US$1,500. Automations and AI integrations are billed at US$25 an hour. Before you decide anything, we'll tell you exactly what you need and how much it costs, for free."
   },
   {
     q: "What happens if I need changes after delivery?",
-    a: "The first 15 days include adjustments at no cost. After that, on the monthly plan you message us on WhatsApp and we make the change; on the one-time plan, each change is quoted separately."
+    a: "The first 15 days include adjustments at no cost. After that, content changes are quoted separately or covered by hours, depending on what the proposal agreed."
   },
   {
     q: "Do you use WordPress or visual builders?",
@@ -41,11 +41,11 @@ export const HOME_FAQ_EN: Faq[] = [
   },
   {
     q: "What if my business is small?",
-    a: "Most of our clients are. That's why the monthly plan exists: US$45 a month is less than what many spend in a single day of ads, and this works all 30 days."
+    a: "Most of our clients are. That's why the entry point is a landing page from US$250: one page done properly to receive whoever arrives from your social channels, without paying for a full site you don't need yet."
   },
   {
     q: "Is the site mine?",
-    a: "The content and your brand are always yours. On the monthly plan we maintain the domain and hosting while the plan is active; if you ever want to take it all with you, we can coordinate the handoff."
+    a: "Yes. The domain is registered in your name and the content and your brand are always yours. On delivery we hand over the credentials, and if you ever want to move everything to another team, the handover is coordinated with no conditions."
   },
   {
     q: "What services do you offer?",
@@ -56,11 +56,11 @@ export const HOME_FAQ_EN: Faq[] = [
 export const HOME_FAQ_ES: Faq[] = [
   {
     q: "¿Cuánto cuesta un proyecto?",
-    a: "Puedes empezar con el plan mensual: US$150 de setup y US$45 al mes, con dominio, hosting y todos los cambios incluidos. Si prefieres pagarlo de una vez, desde US$550. Antes de que decidas nada te decimos exactamente qué necesitas y cuánto cuesta, gratis."
+    a: "Depende del tipo de proyecto: una landing page va de US$250 a US$450, un sitio corporativo de US$450 a US$800 y una tienda en línea de US$800 a US$1,500. Las automatizaciones e integraciones con IA se cobran a US$25 la hora. Antes de que decidas nada te decimos exactamente qué necesitas y cuánto cuesta, gratis."
   },
   {
     q: "¿Qué pasa si necesito cambios después de la entrega?",
-    a: "Los primeros 15 días incluyen ajustes sin costo. Después, con el plan mensual nos escribes por WhatsApp y nosotros hacemos el cambio; si vas por pago único, cotizamos cada cambio aparte."
+    a: "Los primeros 15 días incluyen ajustes sin costo. Después, los cambios de contenido se cotizan aparte o se cubren con horas, según lo que se haya acordado en la propuesta."
   },
   {
     q: "¿Usan WordPress o constructores visuales?",
@@ -84,11 +84,11 @@ export const HOME_FAQ_ES: Faq[] = [
   },
   {
     q: "¿Y si mi negocio es pequeño?",
-    a: "La mayoría de nuestros clientes lo son. Por eso existe el plan mensual: US$45 al mes es menos de lo que muchos gastan en un solo día de anuncios, y esto trabaja los 30 días."
+    a: "La mayoría de nuestros clientes lo son. Por eso el punto de entrada es una landing page desde US$250: una sola página bien hecha que recibe a quien llega de tus redes, sin pagar por un sitio completo que todavía no necesitas."
   },
   {
     q: "¿La web es mía?",
-    a: "El contenido y tu marca son tuyos siempre. En el plan mensual nosotros mantenemos el dominio y el hosting mientras el plan esté activo; si algún día quieres llevártelo todo, se puede coordinar el traspaso."
+    a: "Sí. El dominio se registra a tu nombre y el contenido y tu marca son tuyos siempre. Al entregar te pasamos los accesos, y si algún día quieres llevártelo todo a otro equipo, se coordina el traspaso sin condiciones."
   },
   {
     q: "¿Qué servicios ofrecen?",

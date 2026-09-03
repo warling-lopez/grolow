@@ -14,13 +14,18 @@ export default function Breadcrumbs({
   routeId: RouteId;
   lang: Lang;
 }) {
-  const trail = ancestorsFor(routeId);
+  // Se omite cualquier ancestro que no exista en este idioma, para no emitir
+  // un enlace roto en la miga.
+  const trail = ancestorsFor(routeId).flatMap((id) => {
+    const href = pathFor(id, lang);
+    return href === null ? [] : [{ id, href }];
+  });
 
   return (
     <nav
       aria-label={lang === "es" ? "Migas de pan" : "Breadcrumb"}
       className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-28 md:pt-32">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-grolow-light/50">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-grolow-light/70">
         <li>
           <Link
             href={pathFor("home", lang)!}
@@ -28,11 +33,11 @@ export default function Breadcrumbs({
             {NAV_LABEL.home[lang]}
           </Link>
         </li>
-        {trail.map((id) => (
+        {trail.map(({ id, href }) => (
           <li key={id} className="flex items-center gap-2">
             <span aria-hidden="true">/</span>
             <Link
-              href={pathFor(id, lang)!}
+              href={href}
               className="hover:text-grolow-light transition-colors">
               {NAV_LABEL[id][lang]}
             </Link>

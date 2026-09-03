@@ -224,7 +224,70 @@ export const SEO: Record<RouteId, SeoTable> = {
     },
   },
 
+  blog: {
+    es: {
+      title: "Blog sobre desarrollo web en Rep. Dominicana | Grolow",
+      description:
+        "Artículos sobre las decisiones previas a contratar: cuánto cuesta un sitio de verdad, qué tecnología conviene y cómo leer una cotización sin dudas.",
+    },
+  },
+
+  blogPrecios: {
+    es: {
+      title: "¿Cuánto cuesta una página web en RD en 2026? | Grolow",
+      description:
+        "Los rangos reales del mercado dominicano, qué compra cada uno, los costos que no salen en la cotización y las señales de alerta al comparar propuestas.",
+    },
+  },
+
+  blogWordpress: {
+    es: {
+      title: "WordPress o código a medida: cuál te conviene | Grolow",
+      description:
+        "Comparación honesta, con declaración de interés incluida: cuándo WordPress es la decisión correcta y cuándo el desarrollo a medida se justifica de verdad.",
+    },
+  },
+
   // ── Sin indexar: no las revisa el verificador de longitudes ────────────
+  privacidad: {
+    es: {
+      title: "Política de privacidad | Grolow",
+      description:
+        "Qué datos recogemos en grolow.com, para qué los usamos, con qué proveedores se comparten y cómo ejercer tus derechos sobre ellos.",
+    },
+    en: {
+      title: "Privacy policy | Grolow",
+      description:
+        "What data we collect on grolow.com, what we use it for, which providers process it and how to exercise your rights over it.",
+    },
+  },
+
+  cookies: {
+    es: {
+      title: "Política de cookies | Grolow",
+      description:
+        "Qué cookies usa grolow.com, para qué sirven y cómo desactivarlas. Sin cookies publicitarias ni de remarketing.",
+    },
+    en: {
+      title: "Cookie policy | Grolow",
+      description:
+        "Which cookies grolow.com uses, what they do and how to turn them off. No advertising or remarketing cookies.",
+    },
+  },
+
+  terminos: {
+    es: {
+      title: "Términos y condiciones | Grolow",
+      description:
+        "Condiciones de uso del sitio y de contratación: cotizaciones, pagos, plazos, propiedad del trabajo entregado y ley aplicable.",
+    },
+    en: {
+      title: "Terms and conditions | Grolow",
+      description:
+        "Terms for using the site and contracting our services: quotes, payment, timelines, ownership of delivered work and governing law.",
+    },
+  },
+
   clinicas: {
     es: {
       title: "Webs para clínicas con citas en línea | Grolow",

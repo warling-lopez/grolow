@@ -113,7 +113,7 @@ function LangToggle({
                 : "bg-grolow-light text-grolow-dark"
               : compact
                 ? "text-white/60 hover:text-white"
-                : "text-grolow-light/60 hover:text-grolow-light"
+                : "text-grolow-light/75 hover:text-grolow-light"
           }`}>
           {l}
         </a>
@@ -212,8 +212,8 @@ export default function Header() {
   }, [servicesOpen]);
 
   // Con un menú abierto el header necesita fondo opaco propio: el
-  // mix-blend-difference del estado scrolled se aplicaría también al panel
-  // y dejaría ver el hero a través de los ítems.
+  // fondo translúcido del estado scrolled dejaría ver el hero a través de
+  // los ítems del panel.
   const menuOpen = servicesOpen || mobileOpen;
 
   // overTrigger sigue mandando en los tamaños, pero los colores claros solo
@@ -227,15 +227,17 @@ export default function Header() {
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 inset-x-0 z-50 isolate transition-colors duration-500 ${
         menuOpen
-          ? "bg-grolow-dark border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.35)]"
+          ? "bg-grolow-dark/80 border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.35)]"
           : scrolled
-            ? "bg-grolow-dark/5 border-b mix-blend-difference border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
+            // Antes llevaba `mix-blend-difference`, que sobre el fondo crema
+            // invertía el texto y dejaba el logo y el menú casi ilegibles al
+            // hacer scroll. Un crema translúcido con desenfoque mantiene la
+            // tinta a pleno contraste.
+            ? "bg-transparent backdrop-blur-md border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
             : "bg-transparent border-b border-transparent"
       }`}>
       <nav
-        className={`max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 ${
-          overTrigger ? "h-12" : "h-18"
-        }`}>
+        className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 h-12">
         {/* ---------- Logo ---------- */}
         <button
           onClick={scrollTop}
@@ -367,7 +369,7 @@ export default function Header() {
           <Link
             href={pathFor("contacto", lang)!}
             className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
-              overTrigger ? "px-4 py-2 text-xs" : "px-6 py-3 text-sm"
+              overTrigger ? "px-4 py-2 text-xs" : "px-4 py-2 text-sm"
             }`}>
             {c.cta}
           </Link>
@@ -406,7 +408,7 @@ export default function Header() {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden overflow-hidden bg-grolow-dark border-b border-grolow-light/10">
             <div className="px-6 pb-8 pt-2 max-h-[calc(100vh-72px)] overflow-y-auto">
-              <p className="text-[10px] font-extrabold uppercase tracking-widest text-grolow-light/50 mt-4 mb-2">
+              <p className="text-[10px] font-extrabold uppercase tracking-widest text-grolow-light/70 mt-4 mb-2">
                 {c.services}
               </p>
               <ul className="space-y-1">

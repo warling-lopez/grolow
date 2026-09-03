@@ -28,6 +28,12 @@ const SOURCE: Record<RouteId, string> = {
   casoHellens: "app/lib/content/case-studies.ts",
   casoWarling: "app/lib/content/case-studies.ts",
   contacto: "app/components/pages/ContactoPage.tsx",
+  blog: "app/lib/content/blog.ts",
+  blogPrecios: "app/lib/content/blog-precios.ts",
+  blogWordpress: "app/lib/content/blog-wordpress.ts",
+  privacidad: "app/lib/content/legal.ts",
+  cookies: "app/lib/content/legal.ts",
+  terminos: "app/lib/content/legal.ts",
   clinicas: "app/components/pages/ClinicasPage.tsx",
   gracias: "app/components/pages/GraciasPage.tsx",
 };

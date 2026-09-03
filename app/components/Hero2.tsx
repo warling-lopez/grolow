@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import SplitText from "./SplitText";
 import { useLang } from "./hooks/useLang";
+import { pathFor, type RouteId } from "@/app/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /* Tipos / API del componente                                          */
@@ -52,28 +53,34 @@ const DEFAULT_IMAGES: HeroCard[] = Array.from({ length: 16 }, (_, i) => ({
   alt: `Proyecto ${i + 1}`,
 }));
 
+/** Los CTA por defecto ya no van a anclas: casos y contacto son páginas. */
+const CTA_ROUTES: Record<string, RouteId> = {
+  "#casos": "casos",
+  "#contacto": "contacto",
+};
+
 const DEFAULT_DURATIONS = [40, 55, 48, 60];
 
 const COPY = {
   en: {
-    eyebrow: "ORDERS ORGANIZED, NOT CHATS LOST",
+    eyebrow: "REAL CODE, NOT TEMPLATES",
     title: (
       <>
-        Your full catalog{" "}
+        Custom web development{" "}
         <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
-          in one link.
+          for companies,
         </span>{" "}
-        Orders, straight to your WhatsApp.
+        consultancies and creators.
       </>
     ),
     subtitle: (
       <>
-        Stop sending loose photos and losing orders between conversations.{" "}
+        We build in our own code, not on WordPress or templates.{" "}
         <span className="text-grolow-light font-medium">
-          Your customers see your whole inventory, choose, and message you
-          with the order already put together
+          That means a site that does exactly what your business needs
         </span>
-        . No sales commissions. Live in 72 hours.
+        , without the weight of twenty plugins you will never use — and a team
+        you message directly, with no account executive in between.
       </>
     ),
     ctas: [
@@ -86,32 +93,28 @@ const COPY = {
     ],
   },
   es: {
-    eyebrow: "PEDIDOS ORDENADOS, NO CHATS PERDIDOS",
+    eyebrow: "CÓDIGO PROPIO, NO PLANTILLAS",
     title: (
       <>
-        Tu catálogo completo{" "}
+        Desarrollo web a medida{" "}
         <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
-          en un enlace.
+          para empresas,
         </span>{" "}
-        Los pedidos, directo a tu WhatsApp.
+        consultoras y creadores.
       </>
     ),
     subtitle: (
       <>
-        Deja de mandar fotos sueltas y de perder pedidos entre conversaciones.{" "}
+        Construimos en código propio, no en WordPress ni en plantillas.{" "}
         <span className="text-grolow-light font-medium">
-          Tus clientes ven todo tu inventario, eligen y te escriben con el
-          pedido ya armado
+          Eso significa un sitio que hace exactamente lo que tu negocio necesita
         </span>
-        . Sin comisiones por venta. Listo en 72 horas.
+        , sin el peso de veinte plugins que nunca vas a usar, y un equipo al que
+        le escribes directo sin pasar por un ejecutivo de cuentas.
       </>
     ),
     ctas: [
-      {
-        label: "Ver trabajos reales",
-        href: "#casos",
-        variant: "outline" as const,
-      },
+      { label: "Ver trabajos reales", href: "#casos", variant: "outline" as const },
       {
         label: "Pedir nuestra propuesta gratis",
         href: "#contacto",
@@ -229,7 +232,14 @@ export default function Hero2({
   );
   const resolvedTitle = title ?? t.title;
   const resolvedSubtitle = subtitle ?? t.subtitle;
-  const resolvedCtas = ctas ?? t.ctas;
+  // Los CTA por defecto apuntaban a anclas de la portada. Ahora casos y
+  // contacto son páginas propias, así que el enlace va a la ruta real.
+  const resolvedCtas =
+    ctas ??
+    t.ctas.map((cta) => {
+      const route = CTA_ROUTES[cta.href];
+      return { ...cta, href: route ? pathFor(route, lang)! : cta.href };
+    });
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center px-6 overflow-hidden bg-grolow-dark">
