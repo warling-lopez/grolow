@@ -1,39 +1,37 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  DEFAULT_LOCALE,
+  langFromPathname,
+  switchLocale,
+  type Lang,
+} from "@/app/lib/i18n";
 
-/** Inglés es el idioma por defecto; español queda como opción del toggle. */
-export type Lang = "en" | "es";
+export type { Lang };
 
-export const DEFAULT_LANG: Lang = "en";
+/** Español: es el mercado principal y el idioma del `x-default`. */
+export const DEFAULT_LANG: Lang = DEFAULT_LOCALE;
 
-const LANG_STORAGE_KEY = "grolow-lang";
-const LANG_EVENT = "grolow:langchange";
-
-function readLang(): Lang {
-  const saved = localStorage.getItem(LANG_STORAGE_KEY);
-  return saved === "en" || saved === "es" ? saved : DEFAULT_LANG;
-}
-
-function subscribeLang(onChange: () => void) {
-  window.addEventListener(LANG_EVENT, onChange);
-  window.addEventListener("storage", onChange);
-  return () => {
-    window.removeEventListener(LANG_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
-  };
-}
-
-export function writeLang(lang: Lang) {
-  localStorage.setItem(LANG_STORAGE_KEY, lang);
-  window.dispatchEvent(new Event(LANG_EVENT));
+/**
+ * Idioma activo, derivado del prefijo de la URL (`/es/...`, `/en/...`).
+ *
+ * Antes se leía de `localStorage`, lo que obligaba al servidor a renderizar
+ * siempre un idioma fijo: el HTML servido salía en inglés aunque las meta
+ * tags fueran en español, y los rastreadores (Bing en particular) indexaban
+ * esa versión. Al depender de la URL, el mismo valor se resuelve en servidor
+ * y en cliente, y cada URL sirve un solo idioma coherente.
+ */
+export function useLang(): Lang {
+  return langFromPathname(usePathname());
 }
 
 /**
- * Idioma activo, leído de localStorage y sincronizado entre pestañas y con
- * el toggle del header. El servidor y la hidratación siempre rinden
- * DEFAULT_LANG; la preferencia guardada se aplica en cuanto está disponible.
+ * Cambia de idioma navegando a la URL equivalente, en vez de sustituir texto
+ * en el cliente. Cada idioma tiene su propia URL indexable.
  */
-export function useLang(): Lang {
-  return useSyncExternalStore(subscribeLang, readLang, () => DEFAULT_LANG);
+export function useLangSwitch(): (lang: Lang) => void {
+  const router = useRouter();
+  const pathname = usePathname();
+  return (lang: Lang) => router.push(switchLocale(pathname ?? "/", lang));
 }

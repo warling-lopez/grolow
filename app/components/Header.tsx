@@ -10,19 +10,34 @@ import {
 } from "framer-motion";
 import { services } from "./services/Services";
 import { useHeaderTrigger } from "./hooks/useHeaderTrigger";
-import { useLang, writeLang, type Lang } from "./hooks/useLang";
+import { usePathname, useRouter } from "next/navigation";
+import { useLang, type Lang } from "./hooks/useLang";
+import { pathFor, switchLocale, type RouteId } from "@/app/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
 
-const LANGS: Lang[] = ["en", "es"];
+const LANGS: Lang[] = ["es", "en"];
 
-const NAV_LINKS = [
-  { target: "casos", label: { en: "Projects", es: "Proyectos" } },
+/**
+ * `route` => enlace real a una página propia. `target` => sección de la
+ * portada: fuera de la portada el ancla no existe, así que se navega a la
+ * portada con el fragmento en vez de dejar un botón que no hace nada.
+ */
+const NAV_LINKS: {
+  target: string;
+  route?: RouteId;
+  label: Record<Lang, string>;
+}[] = [
+  { target: "casos", route: "casos", label: { en: "Projects", es: "Proyectos" } },
   { target: "proceso", label: { en: "Process", es: "Proceso" } },
   { target: "faq", label: { en: "FAQ's", es: "FAQ´s" } },
-  { target: "contacto", label: { en: "Contact", es: "Contacto" } },
+  {
+    target: "contacto",
+    route: "contacto",
+    label: { en: "Contact", es: "Contacto" },
+  },
 ];
 
 const COPY = {
@@ -66,6 +81,7 @@ function LangToggle({
   compact: boolean;
   label: string;
 }) {
+  const pathname = usePathname() ?? "/";
   return (
     <div
       role="group"
@@ -76,10 +92,20 @@ function LangToggle({
           : "border-grolow-light/20 text-[11px]"
       }`}>
       {LANGS.map((l) => (
-        <button
+        // Enlace nativo a propósito, no <Link>.
+        //
+        // El idioma vive en el segmento dinámico de la ruta, así que cambiarlo
+        // obliga a Next a remontar el root layout entero: con una transición de
+        // cliente se destruía y recreaba el canvas WebGL en cada cambio, y los
+        // contextos se acumulaban hasta que el navegador empezaba a descartar
+        // los más viejos. Una navegación de documento completa reinicia el 3D
+        // una sola vez y limpia, y además es la única forma de que <html lang>
+        // cambie de verdad. Sigue siendo un <a href> rastreable.
+        <a
           key={l}
-          onClick={() => writeLang(l)}
-          aria-pressed={lang === l}
+          href={switchLocale(pathname, l)}
+          hrefLang={l}
+          aria-current={lang === l ? "true" : undefined}
           className={`px-2.5 py-1 uppercase tracking-wide transition-colors ${
             lang === l
               ? compact
@@ -90,7 +116,7 @@ function LangToggle({
                 : "text-grolow-light/60 hover:text-grolow-light"
           }`}>
           {l}
-        </button>
+        </a>
       ))}
     </div>
   );
@@ -107,10 +133,7 @@ export default function Header() {
   const servicesRef = useRef<HTMLDivElement>(null);
 
   const lang = useLang();
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
+  const router = useRouter();
 
   const c = COPY[lang];
 
@@ -142,6 +165,24 @@ export default function Header() {
       el.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
+
+  /**
+   * Secciones que solo existen en la portada. Si ya estamos en ella se hace
+   * scroll suave; si no, se navega a la portada con el fragmento, en vez de
+   * dejar un botón que no responde.
+   */
+  const goToSection = useCallback(
+    (target: string) => {
+      if (document.getElementById(target)) {
+        scrollTo(target);
+        return;
+      }
+      setServicesOpen(false);
+      setMobileOpen(false);
+      router.push(`${pathFor("home", lang)}#${target}`);
+    },
+    [lang, router, scrollTo],
+  );
 
   const scrollTop = useCallback(() => {
     setServicesOpen(false);
@@ -284,7 +325,7 @@ export default function Header() {
                   </ul>
                   <div className="border-t border-grolow-light/10 mt-1 pt-1">
                     <Link
-                      href="/servicios/"
+                      href={pathFor("servicios", lang)!}
                       onClick={() => setServicesOpen(false)}
                       className="block w-full rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream hover:bg-grolow-dark transition-colors text-left">
                       {c.allServices}
@@ -295,20 +336,27 @@ export default function Header() {
             </AnimatePresence>
           </div>
 
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.target}
-              onClick={() => scrollTo(link.target)}
-              className={`px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
-                overTrigger ? "text-xs" : "text-sm"
-              } ${
-                onDark
-                  ? "text-white/80 hover:text-white"
-                  : "text-grolow-light/80 hover:text-grolow-light"
-              }`}>
-              {link.label[lang]}
-            </button>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const className = `px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
+              overTrigger ? "text-xs" : "text-sm"
+            } ${
+              onDark
+                ? "text-white/80 hover:text-white"
+                : "text-grolow-light/80 hover:text-grolow-light"
+            }`;
+            return link.route ? (
+              <Link key={link.target} href={pathFor(link.route, lang)!} className={className}>
+                {link.label[lang]}
+              </Link>
+            ) : (
+              <button
+                key={link.target}
+                onClick={() => goToSection(link.target)}
+                className={className}>
+                {link.label[lang]}
+              </button>
+            );
+          })}
         </div>
 
         {/* ---------- Idioma + CTA + hamburguesa ---------- */}
@@ -316,13 +364,13 @@ export default function Header() {
           <LangToggle lang={lang} compact={onDark} label={c.language} />
 
           {/* ---------- CTA desktop ---------- */}
-          <button
-            onClick={() => scrollTo("contacto")}
+          <Link
+            href={pathFor("contacto", lang)!}
             className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
               overTrigger ? "px-4 py-2 text-xs" : "px-6 py-3 text-sm"
             }`}>
             {c.cta}
-          </button>
+          </Link>
 
           {/* ---------- Hamburguesa móvil ---------- */}
           <button
@@ -381,28 +429,39 @@ export default function Header() {
               </ul>
 
               <Link
-                href="/servicios/"
+                href={pathFor("servicios", lang)!}
                 onClick={() => setMobileOpen(false)}
                 className="block w-full py-3 text-left text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
                 {c.allServices}
               </Link>
 
               <div className="border-t border-grolow-light/10 mt-4 pt-2">
-                {NAV_LINKS.map((link) => (
-                  <button
-                    key={link.target}
-                    onClick={() => scrollTo(link.target)}
-                    className="block w-full py-3 text-left text-base font-bold text-grolow-light/85 hover:text-grolow-light transition-colors">
-                    {link.label[lang]}
-                  </button>
-                ))}
+                {NAV_LINKS.map((link) =>
+                  link.route ? (
+                    <Link
+                      key={link.target}
+                      href={pathFor(link.route, lang)!}
+                      onClick={() => setMobileOpen(false)}
+                      className="block w-full py-3 text-left text-base font-bold text-grolow-light/85 hover:text-grolow-light transition-colors">
+                      {link.label[lang]}
+                    </Link>
+                  ) : (
+                    <button
+                      key={link.target}
+                      onClick={() => goToSection(link.target)}
+                      className="block w-full py-3 text-left text-base font-bold text-grolow-light/85 hover:text-grolow-light transition-colors">
+                      {link.label[lang]}
+                    </button>
+                  ),
+                )}
               </div>
 
-              <button
-                onClick={() => scrollTo("contacto")}
-                className="mt-6 w-full rounded-full bg-grolow-light text-grolow-dark py-4 text-sm font-bold text-center">
+              <Link
+                href={pathFor("contacto", lang)!}
+                onClick={() => setMobileOpen(false)}
+                className="mt-6 block w-full rounded-full bg-grolow-light text-grolow-dark py-4 text-sm font-bold text-center">
                 {c.cta}
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}

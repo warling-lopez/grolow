@@ -36,15 +36,21 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    // La limpieza tiene que quitar *esta misma* función: gsap compara por
+    // identidad de referencia, así que la flecha nueva que se pasaba antes a
+    // `remove` no quitaba nada. El callback original seguía vivo llamando a
+    // `raf()` sobre un Lenis ya destruido, y se acumulaba uno por cada
+    // desmontaje.
+    const raf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
 
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      // Primero se descuelga del ticker y solo después se destruye, para que
+      // ningún frame pendiente encuentre la instancia a medio destruir.
+      gsap.ticker.remove(raf);
       lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
       delete window.lenis;
     };
   }, []);

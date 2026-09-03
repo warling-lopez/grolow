@@ -3,6 +3,8 @@ import ServicesSection from "@/app/components/ServicesSection";
 import ProjectsSection from "@/app/components/ProjectsSection";
 import ContactSection from "@/app/components/ContactSection";
 import { useLang } from "@/app/components/hooks/useLang";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+import SiteLinksSection from "@/app/components/SiteLinksSection";
 
 const COPY = {
   en: {
@@ -22,7 +24,9 @@ export default function ServiciosPage() {
   const c = COPY[lang];
   return (
     <main className="w-full">
-      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-36 md:pt-44">
+      <Breadcrumbs routeId="servicios" lang={lang} />
+
+      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-8 md:pt-10">
         <p className="text-xs font-mono uppercase tracking-widest text-grolow-light/40 mb-3">
           {c.eyebrow}
         </p>
@@ -34,6 +38,10 @@ export default function ServiciosPage() {
       </div>
 
       <ServicesSection />
+
+      {/* Enlaces a cada página de servicio: el índice tiene que repartir
+          hacia las páginas que compiten por cada palabra clave. */}
+      <SiteLinksSection />
 
       <ProjectsSection />
 

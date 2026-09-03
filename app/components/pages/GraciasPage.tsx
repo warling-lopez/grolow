@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useLang } from '@/app/components/hooks/useLang';
+import { pathFor } from '@/app/lib/i18n';
 
 const COPY = {
   en: {
@@ -65,7 +66,7 @@ export default function GraciasPage() {
             {c.whatsappCta}
           </a>
           <Link
-            href="/"
+            href={pathFor("home", lang)!}
             className="px-8 py-4 border border-grolow-light/20 text-grolow-light font-bold uppercase tracking-widest text-xs hover:border-grolow-cyan hover:text-grolow-cyan transition-colors">
             {c.home}
           </Link>
