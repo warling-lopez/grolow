@@ -16,27 +16,35 @@ const BLOCKS: {
   body: Record<Lang, string>;
 }[] = [
   {
-    title: { es: "Código, no plantillas.", en: "Code, not templates." },
+    title: {
+      es: "Se adapta a ti.",
+      en: "It adapts to you.",
+    },
     body: {
-      es: "La mayoría de los sitios en RD se montan sobre WordPress y plugins. Nosotros programamos desde cero: más rápido, más seguro, y sin los límites de lo que el constructor permita.",
-      en: "Most sites in the DR are assembled on WordPress and plugins. We write code from scratch: faster, safer, and without the limits of whatever the builder allows.",
+      es: "La herramienta cambia según tu negocio, no al revés. Construimos exactamente lo que necesitas, en lugar de obligarte a cambiar tu forma de trabajar.",
+      en: "The tool adapts to your business, not the other way around. We build exactly what you need instead of forcing you to change how you work.",
     },
   },
+
   {
     title: {
-      es: "Hablas con quien construye.",
-      en: "You talk to whoever builds it.",
+      es: "Sin límites artificiales.",
+      en: "No artificial limits.",
     },
     body: {
-      es: "No hay capas ni ejecutivos de cuenta. El que diseña tu sistema es el que te responde cuando escribes.",
-      en: "No layers and no account executives. The person who designs your system is the person who answers when you write.",
+      es: "Añade las funciones que realmente necesitas, sin depender de lo que una plataforma decidió ofrecerte. Tu idea no tiene que encajar en lo que ya existe.",
+      en: "Add the features you actually need without depending on what a platform decided to offer. Your idea doesn't have to fit into what already exists.",
     },
   },
+
   {
-    title: { es: "Sistemas, no páginas.", en: "Systems, not pages." },
+    title: {
+      es: "Crece contigo.",
+      en: "Grows with you.",
+    },
     body: {
-      es: "Si tu operación necesita reservas, catálogo, panel interno o integraciones, se construye. No te adaptamos a un tema comprado.",
-      en: "If your operation needs bookings, a catalog, an internal dashboard or integrations, it gets built. We don't fit you into a purchased theme.",
+      es: "Empieza con lo necesario y amplíalo cuando tu negocio lo requiera. Añade nuevas funciones, integraciones y capacidades sin tener que reconstruir todo desde cero.",
+      en: "Start with what you need and expand as your business requires it. Add new features, integrations, and capabilities without having to rebuild everything from scratch.",
     },
   },
 ];
