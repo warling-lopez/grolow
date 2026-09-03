@@ -117,7 +117,7 @@ export default function ProcessSection() {
       ref={sectionRef}
       data-header-trigger="true"
       className="h-screen w-full overflow-hidden  bg-transparent relative flex items-center">
-      <div className="absolute top-12 left-6 md:left-12 z-20">
+      <div className="absolute top-20 left-6 md:left-12 z-20">
         <h2
           className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter uppercase"
           style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -146,7 +146,7 @@ export default function ProcessSection() {
                 style={{ fontFamily: "'Syne', sans-serif" }}>
                 {step.title}
               </h3>
-              <p className="stagger-text text-grolow-light/75 text-xl leading-relaxed">
+              <p className="stagger-text text-grolow-dark/75 text-xl leading-relaxed">
                 {step.desc}
               </p>
             </div>
