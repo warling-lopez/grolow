@@ -233,8 +233,8 @@ export default function Header() {
             // invertía el texto y dejaba el logo y el menú casi ilegibles al
             // hacer scroll. Un crema translúcido con desenfoque mantiene la
             // tinta a pleno contraste.
-            ? "bg-transparent backdrop-blur-md border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
-            : "bg-transparent border-b border-transparent"
+            ? "bg-transparent backdrop-blur-md border-b border-grolow-dark/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
+            : "bg-transparent border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06) "
       }`}>
       <nav
         className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 h-12">
@@ -243,7 +243,7 @@ export default function Header() {
           onClick={scrollTop}
           aria-label={c.home}
           className={`font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
-            overTrigger ? "text-lg" : "text-2xl"
+            overTrigger ? "text-lg text-color-background" : "text-2xl"
           } ${onDark ? "text-white" : "text-grolow-light"}`}
           style={{ fontFamily: "'Syne', sans-serif" }}>
           grolow
