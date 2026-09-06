@@ -115,7 +115,7 @@ function offerNodes(lang: Lang) {
 }
 
 function articleNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageContent) {
-  const modified = lastModifiedFor(id).toISOString();
+  const modified = lastModifiedFor(id)?.toISOString();
   return {
     "@type": "Article",
     "@id": `${urlFor(id, lang)}#article`,
@@ -123,9 +123,9 @@ function articleNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageConten
     description: seo.description,
     inLanguage: HTML_LANG[lang],
     // Sin fecha de publicación inventada: se usa la del último cambio real
-    // registrado en el repositorio para ambos campos.
-    datePublished: modified,
-    dateModified: modified,
+    // registrado en el repositorio para ambos campos, y si no se conoce no se
+    // declara ninguna.
+    ...(modified && { datePublished: modified, dateModified: modified }),
     author: { "@id": ORGANIZATION_ID },
     publisher: { "@id": ORGANIZATION_ID },
     mainEntityOfPage: urlFor(id, lang),

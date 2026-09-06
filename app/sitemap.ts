@@ -27,10 +27,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       locales.map((lang) => [HREFLANG[lang], urlFor(id, lang)!]),
     );
 
+    // Sin fecha real (git no disponible en el build) se omite el campo entero:
+    // un `lastmod` inventado es peor que ninguno, porque Google deja de fiarse
+    // del `lastmod` de todo el dominio en cuanto detecta que va inflado.
+    const lastModified = lastModifiedFor(id) ?? undefined;
+
     for (const lang of locales) {
       entries.push({
         url: urlFor(id, lang)!,
-        lastModified: lastModifiedFor(id),
+        ...(lastModified && { lastModified }),
         changeFrequency: route.changeFrequency,
         priority: route.priority,
         alternates: { languages },

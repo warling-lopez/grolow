@@ -38,30 +38,45 @@ const SOURCE: Record<RouteId, string> = {
   gracias: "app/components/pages/GraciasPage.tsx",
 };
 
-const cache = new Map<string, Date>();
+/** `null` = ya se consultó y no hay fecha real; se cachea para no repetir. */
+const cache = new Map<string, Date | null>();
 
-/** Fecha del último commit que modificó el fichero, o la de build si falla. */
-function gitLastModified(file: string): Date {
+/**
+ * Fecha del último commit que modificó el fichero, o `null` si no se puede
+ * saber: sin git en el entorno de build, o fichero sin commits dentro del
+ * historial disponible (Vercel clona en superficial, así que un fichero que
+ * lleve tiempo sin tocarse puede quedar fuera).
+ *
+ * Antes se caía a `new Date()`. Eso no es "no lo sé", es una fecha falsa: si
+ * git fallara en el despliegue, las 35 URLs saldrían con el mismo `lastmod` de
+ * build en cada deploy, Google lo detecta como inflado y deja de usar la señal
+ * en todo el dominio. No declararlo es una pérdida pequeña; declararlo mal
+ * cuesta la credibilidad del sitemap entero.
+ */
+function gitLastModified(file: string): Date | null {
   const cached = cache.get(file);
-  if (cached) return cached;
+  if (cached !== undefined) return cached;
 
-  let result = new Date();
+  let result: Date | null = null;
   try {
     const iso = execFileSync("git", ["log", "-1", "--format=%cI", "--", file], {
       cwd: process.cwd(),
       encoding: "utf8",
       stdio: ["ignore", "pipe", "ignore"],
     }).trim();
-    // Fichero sin commits todavía (recién creado): sale cadena vacía.
-    if (iso) result = new Date(iso);
+    if (iso) {
+      const parsed = new Date(iso);
+      if (!Number.isNaN(parsed.getTime())) result = parsed;
+    }
   } catch {
-    // Sin git disponible en el entorno de build: se cae a la fecha de build.
+    // git no disponible: se queda en `null`.
   }
 
   cache.set(file, result);
   return result;
 }
 
-export function lastModifiedFor(id: RouteId): Date {
+/** Fecha real del último cambio de la ruta, o `null` si no se puede saber. */
+export function lastModifiedFor(id: RouteId): Date | null {
   return gitLastModified(path.posix.normalize(SOURCE[id]));
 }
