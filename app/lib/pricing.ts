@@ -1,4 +1,4 @@
-import type { Lang } from "@/app/lib/i18n";
+import type { Lang, RouteId } from "@/app/lib/i18n";
 
 /**
  * Tabla de precios: fuente única.
@@ -105,6 +105,41 @@ export const TIERS: Tier[] = [
     perProject: true,
   },
 ];
+
+/**
+ * Qué tramos de la tabla cubre cada página de servicio.
+ *
+ * Solo sirve para los `offers` del JSON-LD: las páginas de servicio no
+ * publican números —cierran con «propuesta cerrada en 24 horas», a propósito—,
+ * así que el precio se declara aquí apuntando a `/precios`, que es la página
+ * que sí lo enseña. Los importes salen de `TIERS`, el mismo sitio del que salen
+ * la página de precios y la sección de planes de la portada, así que el schema
+ * no puede decir un número distinto del que ve el visitante.
+ *
+ * Una página sin entrada aquí no declara ofertas. Es preferible a asignarle un
+ * tramo por aproximación.
+ */
+const SERVICE_TIERS: Partial<Record<RouteId, readonly string[]>> = {
+  // El sitio a medida, en sus dos tamaños habituales.
+  desarrolloWeb: ["landing", "corporativo"],
+  disenoWeb: ["landing", "corporativo"],
+  // Segmentos: mismo entregable, distinto público.
+  empresas: ["corporativo"],
+  consultores: ["landing", "corporativo"],
+  creadores: ["landing", "corporativo"],
+  // Catálogo con pedidos: es literalmente el tramo «tienda».
+  tiendaWhatsapp: ["tienda"],
+  // Producto propio: se cotiza por fases, así que el `Offer` va sin importe.
+  apps: ["producto"],
+  software: ["producto", "automatizacion"],
+};
+
+/** Tramos aplicables a una ruta, en el orden de la tabla de precios. */
+export function tiersFor(id: RouteId): Tier[] {
+  const ids = SERVICE_TIERS[id];
+  if (!ids) return [];
+  return TIERS.filter((tier) => ids.includes(tier.id));
+}
 
 /** Precio formateado para mostrar, p. ej. `US$250 – US$450` o `US$25/hora`. */
 export function priceLabel(tier: Tier, lang: Lang): string {

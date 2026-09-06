@@ -10,7 +10,7 @@ import {
 import { NAV_LABEL } from "@/app/lib/content/labels";
 import { HOME_FAQ_EN, HOME_FAQ_ES, type Faq } from "@/app/lib/content/home-faq";
 import { lastModifiedFor } from "@/app/lib/lastmod";
-import { TIERS } from "@/app/lib/pricing";
+import { TIERS, tiersFor, type Tier } from "@/app/lib/pricing";
 import type { PageContent } from "@/app/lib/content/types";
 import type { SeoEntry } from "@/app/lib/seo-content";
 
@@ -58,6 +58,10 @@ function faqPage(items: Faq[] | undefined) {
 }
 
 function serviceNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageContent) {
+  // Solo los tramos que cubre esta página, no la tabla entera: declarar el
+  // precio de una tienda en la página de aplicaciones móviles sería falso.
+  const offers = offerNodes(lang, tiersFor(id));
+
   return {
     "@type": "Service",
     "@id": `${urlFor(id, lang)}#service`,
@@ -67,22 +71,32 @@ function serviceNode(id: RouteId, lang: Lang, seo: SeoEntry, content: PageConten
     provider: { "@id": ORGANIZATION_ID },
     areaServed: { "@type": "Country", name: "República Dominicana" },
     url: urlFor(id, lang),
+    ...(offers.length > 0 && { offers }),
   };
 }
 
 /**
- * Ofertas derivadas de la tabla de precios. Los números son exactamente los
- * mismos que ve el visitante en la página: si cambian en `pricing.ts`, cambian
- * aquí solos.
+ * Ofertas derivadas de la tabla de precios. Sin argumento salen los cinco
+ * tramos —lo que corresponde a la página de precios—; las páginas de servicio
+ * pasan solo los suyos.
+ *
+ * Los números son exactamente los mismos que publica la web: si cambian en
+ * `pricing.ts`, cambian a la vez en la página de precios, en la portada y aquí.
+ * Es lo que evita que el visitante lea un importe y el buscador otro.
  */
-function offerNodes(lang: Lang) {
-  return TIERS.map((tier) => {
+function offerNodes(lang: Lang, tiers: Tier[] = TIERS) {
+  // La página de precios es la que publica los importes; las de servicio no
+  // enseñan números, así que su `Offer` apunta allí en vez de a sí misma.
+  const pricingUrl = urlFor("precios", lang);
+
+  return tiers.map((tier) => {
     const base = {
       "@type": "Offer",
       name: tier.name[lang],
       description: tier.what[lang],
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
+      ...(pricingUrl && { url: pricingUrl }),
     };
 
     if (tier.hourly !== undefined) {
