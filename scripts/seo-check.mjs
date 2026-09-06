@@ -306,9 +306,12 @@ async function checkInfrastructure() {
     fail("/0deeefb9ef99b29d454c912c326c0619.txt", "clave de IndexNow no accesible");
   }
 
+  // 308 y no 307: la raíz y `/es` son la misma página para siempre, y solo el
+  // permanente consolida las dos URLs y traspasa la autoridad. Si esto vuelve a
+  // salir 307, alguien reintrodujo la redirección fuera de `next.config.ts`.
   const root = await get("/");
-  if (root.response.status !== 307) {
-    fail("/", `redirige con ${root.response.status}, se esperaba 307`);
+  if (root.response.status !== 308) {
+    fail("/", `redirige con ${root.response.status}, se esperaba 308`);
   } else if (!(root.response.headers.get("location") ?? "").endsWith("/es")) {
     fail("/", `redirige a ${root.response.headers.get("location")}, se esperaba /es`);
   }
