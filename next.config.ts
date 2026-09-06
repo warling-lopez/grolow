@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 
 /**
+ * Raíz → idioma por defecto.
+ *
+ * Vive aquí y no en un `proxy.ts` porque los `redirects` de la configuración se
+ * evalúan **antes** que el proxy («Execution order» en la documentación de
+ * `proxy`), se resuelven en el CDN y, sobre todo, se emiten como **308
+ * permanente**: es la señal que consolida `/` y `/es` en una sola URL y le
+ * traspasa la autoridad. El 307 anterior decía justo lo contrario —que la raíz
+ * puede cambiar de destino en cualquier momento— y con esa señal el buscador no
+ * consolida ni indexa.
+ *
+ * Consecuencia asumida: se descarta negociar el idioma por `Accept-Language`.
+ * El mercado es República Dominicana, el cambio a inglés está en el header, y
+ * una redirección que varía según el visitante es incompatible con una
+ * permanente (obligaría además a un `Vary: Accept-Language` que hoy no existe).
+ */
+const ROOT_REDIRECT = {
+  source: "/",
+  // Literal, como el resto del fichero: `next.config` se evalúa fuera del
+  // grafo de módulos de la app y no conviene acoplarlo a `app/lib/i18n`.
+  destination: "/es",
+  permanent: true, // 308
+};
+
+/**
  * Rutas antiguas → rutas nuevas con prefijo de idioma.
  *
  * Todas con 301 explícito (`permanent: true` emitiría 308; los buscadores lo
@@ -41,11 +65,14 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return LEGACY_REDIRECTS.map(({ source, destination }) => ({
-      source,
-      destination,
-      statusCode: 301,
-    }));
+    return [
+      ROOT_REDIRECT,
+      ...LEGACY_REDIRECTS.map(({ source, destination }) => ({
+        source,
+        destination,
+        statusCode: 301,
+      })),
+    ];
   },
 
   images: {
