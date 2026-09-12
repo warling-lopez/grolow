@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import Hero2 from "@/app/components/Hero2";
 import SplitText from "@/app/components/SplitText";
@@ -13,6 +13,50 @@ import Brand, { withBrand } from "@/app/components/Brand";
 type Lang = "es" | "en";
 
 const STORAGE_KEY = "ceo-warling-lang";
+
+/* ------------------------------------------------------------------ */
+/* Idioma persistido                                                   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * `localStorage` es un almacén externo a React, así que se lee con
+ * `useSyncExternalStore` y no con `useState` + `useEffect`.
+ *
+ * El patrón anterior —estado inicial "es" y un efecto que lo corregía al
+ * montar— provocaba un render en cascada: React pintaba en español, el efecto
+ * llamaba a `setState` y volvía a pintar. Para quien tenía guardado "en" eso
+ * era un parpadeo visible de la página entera en el idioma equivocado.
+ *
+ * De regalo, suscribirse al evento `storage` sincroniza el idioma entre
+ * pestañas abiertas.
+ */
+const langListeners = new Set<() => void>();
+
+function subscribeLang(onChange: () => void) {
+  langListeners.add(onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    langListeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+/** Devuelve un primitivo: React compara por valor y no entra en bucle. */
+function getLangSnapshot(): Lang {
+  return localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "es";
+}
+
+/** En el servidor no hay almacén; el idioma por defecto del sitio es español. */
+function getLangServerSnapshot(): Lang {
+  return "es";
+}
+
+function persistLang(next: Lang) {
+  localStorage.setItem(STORAGE_KEY, next);
+  // `storage` solo lo reciben las OTRAS pestañas, así que a los suscriptores
+  // de esta hay que avisarles a mano.
+  for (const listener of langListeners) listener();
+}
 
 const t = {
   es: {
@@ -376,7 +420,7 @@ function PortfolioHeader({
           href="#top"
           className="font-extrabold tracking-tight capitalize italic text-xl text-grolow-light hover:opacity-70 transition-opacity"
           style={syne}>
-          warling.
+          Warling.
         </a>
 
         <div className="hidden md:flex items-center gap-1">
@@ -424,18 +468,11 @@ function PortfolioHeader({
 /* ------------------------------------------------------------------ */
 
 export default function CeoWarlingPage() {
-  const [lang, setLangState] = useState<Lang>("es");
-
-  // Recupera el idioma elegido en visitas anteriores.
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "es" || saved === "en") setLangState(saved);
-  }, []);
-
-  const setLang = (l: Lang) => {
-    setLangState(l);
-    localStorage.setItem(STORAGE_KEY, l);
-  };
+  const lang = useSyncExternalStore(
+    subscribeLang,
+    getLangSnapshot,
+    getLangServerSnapshot,
+  );
 
   const d = t[lang];
 
@@ -443,7 +480,7 @@ export default function CeoWarlingPage() {
     <main id="top" className="w-full bg-grolow-dark text-grolow-light">
       <PortfolioHeader
         lang={lang}
-        setLang={setLang}
+        setLang={persistLang}
         nav={d.nav}
         cta={d.hero.ctaContact}
       />

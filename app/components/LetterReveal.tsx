@@ -14,14 +14,17 @@ import { useEffect, useRef, useState } from "react";
  * variable `--i` de cada letra. Se dispara una sola vez: una animación que se
  * repite cada vez que pasas por delante cansa.
  *
- * Los espacios se emiten como `&nbsp;` dentro de su propio `<span>` para que
- * `inline-block` no los colapse.
+ * El texto accesible va en un `<span class="sr-only">`: se lee una palabra y no
+ * una letra por segundo. No se usa `aria-label` sobre el contenedor porque en
+ * un elemento genérico —un `span` sin rol— ese atributo está prohibido y los
+ * lectores lo ignoran (regla `aria-prohibited-attr`).
  *
- * Para el lector de pantalla el texto va en un `<span class="sr-only">` y las
- * letras quedan `aria-hidden`, así que se lee una palabra y no una letra por
- * segundo. No se usa `aria-label` sobre el contenedor: en un elemento genérico
- * —un `span` sin rol— ese atributo está prohibido y los lectores lo ignoran
- * (regla `aria-prohibited-attr`).
+ * Las letras NO son nodos de texto: cada una viaja en `data-c` y la pinta CSS
+ * con `content: attr(data-c)`. Si fueran texto real, el titular contendría la
+ * frase dos veces —una en el `sr-only` y otra repartida en letras— y eso es lo
+ * que ve un rastreador: el h2 del método decía literalmente
+ * «NUESTRONUESTRO MÉTODO.MÉTODO.». Con el pseudo-elemento el documento contiene
+ * la frase una sola vez y la animación funciona igual.
  */
 export default function LetterReveal({
   text,
@@ -77,11 +80,11 @@ export default function LetterReveal({
           key={i}
           aria-hidden="true"
           className="letter-reveal__char"
+          data-c={char === " " ? " " : char}
           style={
             { "--i": i, "--step": `${step}ms`, "--delay": `${delay}ms` } as React.CSSProperties
-          }>
-          {char === " " ? " " : char}
-        </span>
+          }
+        />
       ))}
     </Tag>
   );
