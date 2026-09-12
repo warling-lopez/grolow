@@ -312,13 +312,10 @@ export default function Header() {
                               )}
                             </span>
                           </span>
-                          <span className="text-xs font-extrabold text-grolow-cream whitespace-nowrap">
-                            {lang === "en"
-                              ? service.priceLabelEn
-                              : service.priceLabel}
-                            <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">
-                              →
-                            </span>
+                          <span
+                            aria-hidden="true"
+                            className="text-xs font-extrabold text-grolow-cream inline-block group-hover:translate-x-1 transition-transform">
+                            →
                           </span>
                         </button>
                       </motion.li>
@@ -406,7 +403,7 @@ export default function Header() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden overflow-hidden bg-grolow-dark border-b border-grolow-light/10">
-            <div className="px-6 pb-8 pt-2 max-h-[calc(100vh-72px)] overflow-y-auto">
+            <div className="px-6 pb-8 pt-2 max-h-[calc(100dvh-72px)] overflow-y-auto">
               <p className="text-[10px] font-extrabold uppercase tracking-widest text-grolow-light/70 mt-4 mb-2">
                 {c.services}
               </p>
@@ -419,10 +416,10 @@ export default function Header() {
                       <span className="text-sm font-bold text-grolow-light">
                         {lang === "en" ? service.titleEn : service.title}
                       </span>
-                      <span className="text-xs font-extrabold text-grolow-cream whitespace-nowrap">
-                        {lang === "en"
-                          ? service.priceLabelEn
-                          : service.priceLabel}
+                      <span
+                        aria-hidden="true"
+                        className="text-xs font-extrabold text-grolow-cream">
+                        →
                       </span>
                     </button>
                   </li>

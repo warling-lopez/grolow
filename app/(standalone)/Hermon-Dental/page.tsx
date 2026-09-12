@@ -33,7 +33,7 @@ const STYLES = `
     color:var(--ink);
     background:var(--white);
     line-height:1.6;
-    min-height:100vh;
+    min-height:100dvh;
     overflow-x:hidden;
   }
   .hermon *{margin:0;padding:0;box-sizing:border-box}

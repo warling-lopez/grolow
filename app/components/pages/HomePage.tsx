@@ -5,7 +5,6 @@ import EngineeringSection from "@/app/components/EngineeringSection";
 import FaqSection from "@/app/components/FaqSection";
 import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
-import PricingSection from "@/app/components/PricingSection";
 import TestimonialsSection from "@/app/components/TestimonialsSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
 import DifferentiationSection from "@/app/components/DifferentiationSection";
@@ -52,10 +51,6 @@ export default function Home({ lang }: { lang: Lang }) {
           {c.allServices}
         </Link>
       </div>
-
-      {/* Planes: el precio es lo siguiente que pregunta quien acaba de
-          entender qué se le vende. */}
-      <PricingSection />
 
       <EngineeringSection lang={lang} />
 

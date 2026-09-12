@@ -12,6 +12,16 @@ import {
   type Lang,
 } from "@/app/lib/i18n";
 import { businessPriceRange } from "@/app/lib/pricing";
+import {
+  AREA_SERVED,
+  EMAIL,
+  KNOWS_ABOUT,
+  ORGANIZATION_ID,
+  ORG_SAME_AS,
+  PERSON_ID,
+  PHONE,
+  personNode,
+} from "@/app/lib/content/entity";
 import "../globals.css";
 
 /**
@@ -90,22 +100,26 @@ function businessSchema(lang: Lang) {
 
   const organization = {
     "@type": "Organization",
-    "@id": `${SITE_URL}/#organization`,
+    "@id": ORGANIZATION_ID,
     name: "Grolow",
+    // Desambigua la marca de sus homónimos en inglés (un cultivar de arbusto y
+    // una marca de vino). Sin esto, seis letras sueltas no le dicen nada a un
+    // buscador sobre qué clase de entidad es.
+    alternateName: [
+      "Grolow Studio",
+      "Grolow — Estudio de desarrollo web",
+      "Grolow Santo Domingo",
+    ],
     url: SITE_URL,
     description,
-    email: "grolow.web@gmail.com",
-    telephone: "+1-829-994-6354",
-    founder: {
-      "@type": "Person",
-      name: "Warling López",
-      jobTitle: "Full-Stack Developer & Founder",
-      url: `${SITE_URL}/ceo-warling`,
-    },
-    sameAs: [
-      "https://www.facebook.com/share/1KWFa6vDno/?mibextid=wwXIfr",
-      "https://www.instagram.com/grolow.studio/",
-    ],
+    email: EMAIL,
+    telephone: PHONE,
+    // Referencia por `@id`, no anidado: el fundador es una entidad con nodo
+    // propio en este mismo grafo, así que los artículos pueden firmarlo y los
+    // perfiles de `sameAs` quedan atados a él.
+    founder: { "@id": PERSON_ID },
+    knowsAbout: KNOWS_ABOUT,
+    sameAs: ORG_SAME_AS,
   };
 
   const localBusiness = {
@@ -122,11 +136,23 @@ function businessSchema(lang: Lang) {
       addressLocality: "Santo Domingo",
       addressCountry: "DO",
     },
-    areaServed: { "@type": "Country", name: "República Dominicana" },
+    // Con grano de ciudad además de país: una consulta con intención local
+    // («…en Santiago») no tiene a qué agarrarse si solo se declara el país.
+    areaServed: AREA_SERVED,
     // Se calcula desde la tabla de precios, así que no puede quedarse
     // desfasado respecto a lo que dice la página.
     priceRange: businessPriceRange(),
     currenciesAccepted: "USD",
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: lang === "es" ? "ventas" : "sales",
+        telephone: PHONE,
+        email: EMAIL,
+        availableLanguage: ["Spanish", "English"],
+        areaServed: "DO",
+      },
+    ],
     sameAs: organization.sameAs,
   };
 
@@ -141,7 +167,7 @@ function businessSchema(lang: Lang) {
 
   return {
     "@context": "https://schema.org",
-    "@graph": [organization, localBusiness, website],
+    "@graph": [organization, personNode(lang), localBusiness, website],
   };
 }
 
