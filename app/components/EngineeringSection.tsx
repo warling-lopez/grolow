@@ -164,7 +164,7 @@ export default function EngineeringSection({ lang }: { lang: Lang }) {
               href={AUDIT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-grolow-brand px-5 py-2.5 text-sm font-bold text-grolow-ink transition-colors hover:bg-white">
+              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-grolow-brand px-5 py-2.5 text-sm font-bold text-grolow-ink transition-colors hover:bg-white">
               {c.audit}
               <span aria-hidden="true">↗</span>
             </a>
@@ -216,14 +216,14 @@ export default function EngineeringSection({ lang }: { lang: Lang }) {
             <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
               {c.toolsLabel}
             </span>
-            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <ul className="flex flex-wrap items-center gap-x-6 -my-2">
               {TOOLS.map((tool) => (
                 <li key={tool.name}>
                   <a
                     href={tool.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-white/70 underline-offset-4 transition-colors hover:text-grolow-brand-bright hover:underline">
+                    className="inline-block py-3 text-sm text-white/70 underline-offset-4 transition-colors hover:text-grolow-brand-bright hover:underline">
                     {tool.name}
                   </a>
                 </li>

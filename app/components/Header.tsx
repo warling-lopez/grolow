@@ -106,7 +106,7 @@ function LangToggle({
           href={switchLocale(pathname, l)}
           hrefLang={l}
           aria-current={lang === l ? "true" : undefined}
-          className={`px-2.5 py-1 uppercase tracking-wide transition-colors ${
+          className={`grid min-h-11 min-w-11 place-items-center px-2.5 uppercase tracking-wide transition-colors ${
             lang === l
               ? compact
                 ? "bg-white text-grolow-ink"
@@ -242,7 +242,7 @@ export default function Header() {
         <button
           onClick={scrollTop}
           aria-label={`grolow — ${c.home}`}
-          className={`font-brand capitalize hover:opacity-70 transition-all duration-300 ${
+          className={`font-brand capitalize inline-flex min-h-11 items-center hover:opacity-70 transition-all duration-300 ${
             overTrigger ? "text-lg text-color-background" : "text-2xl"
           } ${onDark ? "text-white" : "text-grolow-light"}`}>
           grolow
@@ -375,7 +375,7 @@ export default function Header() {
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? c.closeMenu : c.openMenu}
             aria-expanded={mobileOpen}
-            className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+            className="md:hidden relative w-11 h-11 flex flex-col items-center justify-center gap-1.5">
             <motion.span
               animate={mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
               className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${

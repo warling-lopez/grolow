@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { useLang } from "@/app/components/hooks/useLang";
 import { pathFor, type Lang, type RouteId } from "@/app/lib/i18n";
 
 /**
@@ -109,19 +106,46 @@ const COPY = {
   },
 } as const;
 
-function LinkGrid({ entries, lang }: { entries: Entry[]; lang: Lang }) {
+/**
+ * Tarjeta de enlace.
+ *
+ * El enlace envuelve la tarjeta entera, no solo el título: además de leerse
+ * mejor, resuelve de paso el problema de área táctil que traía la lista
+ * anterior, donde el objetivo eran 16px de alto de texto. Aquí el objetivo es
+ * la tarjeta completa, muy por encima de los 44×44 recomendados.
+ *
+ * El `<a>` ES la tarjeta, así que `focus-visible` va sobre él y el borde
+ * completo marca el foco de teclado — no hace falta `focus-within`.
+ */
+function LinkCards({ entries, lang }: { entries: Entry[]; lang: Lang }) {
   return (
-    <ul className="grid gap-5 sm:grid-cols-2">
-      {entries.map((entry) => (
-        <li key={entry.to}>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {entries.map((entry, i) => (
+        <li
+          key={entry.to}
+          className="rise-in"
+          style={{ animationDelay: `${i * 70}ms` }}>
           <Link
             href={pathFor(entry.to, lang)!}
-            className="block border-l-2 border-grolow-cream/40 pl-4 hover:border-grolow-cream transition-colors group">
-            <span className="font-bold text-grolow-light group-hover:text-grolow-cream transition-colors">
-              {entry.label[lang]}
-            </span>
-            <span className="block text-sm text-grolow-light/75 mt-1 leading-relaxed">
-              {entry.blurb[lang]}
+            className="group relative flex h-full flex-col justify-between gap-4 overflow-hidden rounded-xl border border-grolow-light/12 bg-grolow-card p-5 transition-colors hover:border-grolow-cream/50 focus-visible:border-grolow-cream md:p-6">
+            {/* Filo de color que solo aparece al apuntar: da la señal de
+                interacción sin mover la tarjeta ni pedir una sombra. */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-grolow-cream transition-transform duration-300 group-hover:scale-x-100"
+            />
+            <div>
+              <h3 className="font-display text-base font-black uppercase leading-tight tracking-tight text-grolow-light md:text-lg">
+                {entry.label[lang]}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-grolow-light/75">
+                {entry.blurb[lang]}
+              </p>
+            </div>
+            <span
+              aria-hidden="true"
+              className="text-lg font-bold text-grolow-cream transition-transform duration-300 group-hover:translate-x-1">
+              →
             </span>
           </Link>
         </li>
@@ -130,38 +154,37 @@ function LinkGrid({ entries, lang }: { entries: Entry[]; lang: Lang }) {
   );
 }
 
-export default function SiteLinksSection() {
-  const lang = useLang();
+export default function SiteLinksSection({ lang }: { lang: Lang }) {
   const c = COPY[lang];
 
   return (
-    <section className="max-w-5xl mx-auto w-full px-4 md:px-8 py-16 md:py-24">
-      <h2 className="text-2xl md:text-4xl font-black uppercase text-grolow-light tracking-tight mb-8">
+    <section className="max-w-6xl mx-auto w-full px-4 md:px-8 py-16 md:py-24">
+      <h2 className="font-display text-2xl md:text-4xl font-black uppercase text-grolow-light tracking-tight mb-8">
         {c.servicesTitle}
       </h2>
-      <LinkGrid entries={SERVICES} lang={lang} />
+      <LinkCards entries={SERVICES} lang={lang} />
 
-      <h2 className="text-2xl md:text-4xl font-black uppercase text-grolow-light tracking-tight mt-16 mb-8">
+      <h2 className="font-display text-2xl md:text-4xl font-black uppercase text-grolow-light tracking-tight mt-16 md:mt-20 mb-8">
         {c.segmentsTitle}
       </h2>
-      <LinkGrid entries={SEGMENTS} lang={lang} />
+      <LinkCards entries={SEGMENTS} lang={lang} />
 
-      <div className="mt-12 flex flex-col gap-3">
+      <div className="mt-12 flex flex-col">
         <Link
           href={pathFor("precios", lang)!}
-          className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
+          className="inline-block py-2.5 text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.prices}
         </Link>
         <Link
           href={pathFor("casos", lang)!}
-          className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
+          className="inline-block py-2.5 text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.cases}
         </Link>
         {/* El blog solo existe en español: se enlaza a /es/blog desde ambos
             idiomas en vez de generar una variante inglesa vacía. */}
         <Link
           href={pathFor("blog", "es")!}
-          className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
+          className="inline-block py-2.5 text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.blog}
         </Link>
       </div>

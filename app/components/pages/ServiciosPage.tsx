@@ -41,7 +41,7 @@ export default function ServiciosPage() {
 
       {/* Enlaces a cada página de servicio: el índice tiene que repartir
           hacia las páginas que compiten por cada palabra clave. */}
-      <SiteLinksSection />
+      <SiteLinksSection lang={lang} />
 
       <ProjectsSection />
 

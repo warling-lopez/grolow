@@ -42,12 +42,12 @@ export default function Home({ lang }: { lang: Lang }) {
 
       {/* Enlaces a las páginas de servicio y de segmento: es lo que reparte
           autoridad desde la portada hacia el resto del sitio. */}
-      <SiteLinksSection />
+      <SiteLinksSection lang={lang} />
 
       <div className="max-w-5xl mx-auto w-full px-4 md:px-8 -mt-10 md:-mt-14 mb-4 flex justify-center">
         <Link
           href={pathFor("servicios", lang)!}
-          className="text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
+          className="inline-flex min-h-11 items-center text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
           {c.allServices}
         </Link>
       </div>

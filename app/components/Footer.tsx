@@ -97,8 +97,10 @@ export default function Footer() {
   /** El blog solo existe en español; se enlaza a su versión real. */
   const hrefFor = (id: RouteId) => pathFor(id, lang) ?? pathFor(id, "es");
 
+  // `block py-3` lleva el objetivo táctil de 20px a 44px sin añadir un hueco
+  // visible: sustituye al `space-y-3` que tenía la lista.
   const linkClass =
-    "text-sm text-white/65 hover:text-grolow-brand-bright transition-colors";
+    "block py-3 text-sm text-white/65 hover:text-grolow-brand-bright transition-colors";
 
   return (
     <footer
@@ -145,7 +147,7 @@ export default function Footer() {
             <h2 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white mb-5">
               {c.menu}
             </h2>
-            <ul className="space-y-3">
+            <ul className="-my-2">
               {MENU.map((id) => {
                 const href = hrefFor(id);
                 if (!href) return null;
@@ -165,7 +167,7 @@ export default function Footer() {
             <h2 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white mb-5">
               {c.legal}
             </h2>
-            <ul className="space-y-3">
+            <ul className="-my-2">
               {LEGAL.map((id) => {
                 const href = hrefFor(id);
                 if (!href) return null;
@@ -185,7 +187,7 @@ export default function Footer() {
             <h2 className="text-[11px] font-bold uppercase tracking-[0.18em] text-white mb-5">
               {c.contact}
             </h2>
-            <ul className="space-y-3">
+            <ul className="-my-2">
               <li>
                 <a href={`mailto:${EMAIL}`} className={linkClass}>
                   {EMAIL}
@@ -200,7 +202,7 @@ export default function Footer() {
                   +1 829 994 6354 ({c.phoneNote})
                 </a>
               </li>
-              <li className="text-sm text-white/65">{c.place}</li>
+              <li className="py-3 text-sm text-white/65">{c.place}</li>
             </ul>
 
             <ul className="mt-7 flex items-center gap-4" aria-label={c.social}>
@@ -235,7 +237,7 @@ export default function Footer() {
           <p className="text-xs uppercase tracking-wider text-white/50">
             © {year} <Brand />. {c.rights}
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          <ul className="flex flex-wrap gap-x-5 -my-2">
             {LEGAL.map((id) => {
               const href = hrefFor(id);
               if (!href) return null;
@@ -243,7 +245,7 @@ export default function Footer() {
                 <li key={id}>
                   <Link
                     href={href}
-                    className="text-xs text-white/50 hover:text-grolow-brand-bright transition-colors">
+                    className="inline-flex min-h-11 items-center text-xs text-white/50 hover:text-grolow-brand-bright transition-colors">
                     {LABEL[id][lang]}
                   </Link>
                 </li>

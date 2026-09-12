@@ -29,7 +29,7 @@ export default function Breadcrumbs({
         <li>
           <Link
             href={pathFor("home", lang)!}
-            className="hover:text-grolow-light transition-colors">
+            className="inline-flex min-h-11 items-center hover:text-grolow-light transition-colors">
             {NAV_LABEL.home[lang]}
           </Link>
         </li>
@@ -38,7 +38,7 @@ export default function Breadcrumbs({
             <span aria-hidden="true">/</span>
             <Link
               href={href}
-              className="hover:text-grolow-light transition-colors">
+              className="inline-flex min-h-11 items-center hover:text-grolow-light transition-colors">
               {NAV_LABEL[id][lang]}
             </Link>
           </li>

@@ -162,7 +162,7 @@ export default function ContentPage({
                   {/* Anchor text descriptivo: dice a dónde lleva. */}
                   <Link
                     href={href}
-                    className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
+                    className="inline-flex min-h-11 items-center text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
                     {withBrand(link.label)}
                   </Link>
                 </li>

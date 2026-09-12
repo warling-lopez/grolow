@@ -237,7 +237,7 @@ function ContactForm() {
               </p>
               <a
                 href="mailto:grolow.web@gmail.com"
-                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
+                className="inline-flex min-h-11 items-center text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 grolow.web@gmail.com
               </a>
             </div>
@@ -249,7 +249,7 @@ function ContactForm() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
+                className="inline-flex min-h-11 items-center text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 {c.whatsappCta}
               </a>
               <p className="text-sm text-grolow-light/75 mt-1">+1 829 994 6354</p>
@@ -262,7 +262,7 @@ function ContactForm() {
                 href="https://instagram.com/grolow.studio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
+                className="inline-flex min-h-11 items-center text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
                 @grolow.studio
               </a>
             </div>
@@ -302,7 +302,7 @@ function ContactForm() {
                   type={f.type}
                   required
                   placeholder={f.placeholder}
-                  className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+                  className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
                 />
               </div>
             ))}
@@ -320,7 +320,7 @@ function ContactForm() {
               type="email"
               required
               placeholder={c.emailPlaceholder}
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
+              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors"
             />
           </div>
 
@@ -335,7 +335,7 @@ function ContactForm() {
               id="needs"
               required
               defaultValue={preselectedService}
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
               <option value="" className="bg-white">
                 {c.needsPlaceholder}
               </option>
@@ -358,7 +358,7 @@ function ContactForm() {
               id="billing"
               required
               defaultValue=""
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
               <option value="" className="bg-white">
                 {c.billingPlaceholder}
               </option>
@@ -382,7 +382,7 @@ function ContactForm() {
               required
               rows={3}
               placeholder={c.processPlaceholder}
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
+              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light placeholder:text-grolow-light/75 text-sm focus:outline-none focus:border-grolow-cyan transition-colors resize-none"
             />
           </div>
 
@@ -397,7 +397,7 @@ function ContactForm() {
               id="budget"
               required
               defaultValue=""
-              className="w-full bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
+              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
               <option value="" className="bg-white">
                 {c.budgetPlaceholder}
               </option>
