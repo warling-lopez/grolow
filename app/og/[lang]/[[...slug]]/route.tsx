@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 import {
@@ -53,6 +56,26 @@ export function generateStaticParams() {
   return params;
 }
 
+/**
+ * Fuente de marca para el rótulo de la imagen.
+ *
+ * Se lee del disco en TTF y no del `.woff2` del sitio porque Satori —el
+ * motor de `ImageResponse`— no descomprime woff2: con ese formato la imagen
+ * se genera igual, pero el rótulo sale en la fuente por defecto y nadie se
+ * entera hasta que alguien comparte un enlace.
+ *
+ * El subset lleva solo las letras de «grolow», así que pesa 6 KB, y como las
+ * 43 imágenes se prerenderizan en build el fichero se lee una vez por imagen
+ * y nunca en tiempo de respuesta.
+ */
+let brandFont: Promise<Buffer> | null = null;
+function loadBrandFont() {
+  brandFont ??= readFile(
+    join(process.cwd(), "app/fonts/sergio-trendy-wordmark.ttf"),
+  );
+  return brandFont;
+}
+
 /** Ajusta el cuerpo al largo del titular para que nunca se desborde. */
 function fontSizeFor(headline: string): number {
   if (headline.length > 62) return 54;
@@ -83,6 +106,8 @@ export async function GET(
     }
   }
 
+  const brand = await loadBrandFont();
+
   return new ImageResponse(
     (
       <div
@@ -98,11 +123,10 @@ export async function GET(
         <div
           style={{
             display: "flex",
-            fontSize: 42,
-            fontWeight: 800,
-            fontStyle: "italic",
+            fontFamily: "Grolow",
+            fontSize: 56,
             color: INK,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.02em",
           }}>
           grolow
         </div>
@@ -137,6 +161,16 @@ export async function GET(
         />
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Grolow",
+          data: brand as unknown as ArrayBuffer,
+          style: "normal",
+          weight: 400,
+        },
+      ],
+    },
   );
 }

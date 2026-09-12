@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import Brand from "@/app/components/Brand";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -319,7 +320,7 @@ const MARKUP = `
     </a>
     <div class="foot-meta">
       © 2026 Hermon Dental Clinic · Av. Los Beisbolistas esq. Duarte Vieja, Plaza Anabella, Local 204 · Santo Domingo, R.D.<br>
-      Demo diseñada por <b>Grolow Studio</b> · grolow.com
+      Demo diseñada por <b><Brand /> Studio</b> · grolow.com
     </div>
   </div>
 </footer>

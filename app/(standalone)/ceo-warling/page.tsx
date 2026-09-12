@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Hero2 from "@/app/components/Hero2";
 import SplitText from "@/app/components/SplitText";
+import Brand, { withBrand } from "@/app/components/Brand";
 
 /* ------------------------------------------------------------------ */
 /* i18n — diccionario ES/EN                                            */
@@ -34,7 +35,7 @@ const t = {
       subtitle: (
         <>
           Desarrollador full-stack y fundador de{" "}
-          <span className="text-grolow-light font-medium">Grolow</span>. Diseño
+          <Brand className="text-grolow-light" />. Diseño
           y construyo plataformas web a medida — de la idea al despliegue, con
           código limpio y sin atajos.
         </>
@@ -69,7 +70,7 @@ const t = {
           period: "2025 — Presente",
           points: [
             "Fundé y dirijo una agencia enfocada en sistemas de ventas y plataformas a medida.",
-            "Diseño y desarrollo landings y sistemas para clientes reales (Hermon Dental, VisualLab).",
+            "Diseño y desarrollo landings y sistemas para clientes reales (Hermon Dental).",
             "Stack: Next.js, React, TypeScript, Three.js, GSAP, Tailwind CSS.",
           ],
         },
@@ -105,12 +106,6 @@ const t = {
           desc: "Landing page para clínica dental — captación de citas y presencia digital profesional.",
           href: "/Hermon-Dental",
           tags: ["Next.js", "Framer Motion"],
-        },
-        {
-          name: "VisualLab",
-          desc: "Landing con hero 3D interactivo para empresa de letreros y rotulación.",
-          href: "/VisualLab",
-          tags: ["R3F", "Three.js"],
         },
         {
           name: "warling.top",
@@ -180,7 +175,7 @@ const t = {
       subtitle: (
         <>
           Full-stack developer and founder of{" "}
-          <span className="text-grolow-light font-medium">Grolow</span>. I
+          <Brand className="text-grolow-light" />. I
           design and build custom web platforms — from idea to deployment, with
           clean code and no shortcuts.
         </>
@@ -215,7 +210,7 @@ const t = {
           period: "2025 — Present",
           points: [
             "Founded and lead an agency focused on sales systems and custom platforms.",
-            "Design and build landing pages and systems for real clients (Hermon Dental, VisualLab).",
+            "Design and build landing pages and systems for real clients (Hermon Dental).",
             "Stack: Next.js, React, TypeScript, Three.js, GSAP, Tailwind CSS.",
           ],
         },
@@ -251,12 +246,6 @@ const t = {
           desc: "Landing page for a dental clinic — appointment capture and a professional digital presence.",
           href: "/Hermon-Dental",
           tags: ["Next.js", "Framer Motion"],
-        },
-        {
-          name: "VisualLab",
-          desc: "Landing with an interactive 3D hero for a signage company.",
-          href: "/VisualLab",
-          tags: ["R3F", "Three.js"],
         },
         {
           name: "warling.top",
@@ -385,7 +374,7 @@ function PortfolioHeader({
       <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-6 h-16">
         <a
           href="#top"
-          className="font-extrabold tracking-tight lowercase italic text-xl text-grolow-light hover:opacity-70 transition-opacity"
+          className="font-extrabold tracking-tight capitalize italic text-xl text-grolow-light hover:opacity-70 transition-opacity"
           style={syne}>
           warling.
         </a>
@@ -483,7 +472,7 @@ export default function CeoWarlingPage() {
               <p
                 key={i}
                 className="text-base md:text-lg text-grolow-light/75 font-light leading-relaxed">
-                {p}
+                {withBrand(p)}
               </p>
             ))}
           </motion.div>
@@ -519,7 +508,7 @@ export default function CeoWarlingPage() {
                   {item.role}
                 </h3>
                 <p className="text-sm font-semibold text-grolow-light/60 mt-1 mb-5">
-                  {item.company}
+                  {withBrand(item.company)}
                 </p>
                 <ul className="space-y-2.5">
                   {item.points.map((point, j) => (
@@ -572,7 +561,7 @@ export default function CeoWarlingPage() {
                   <h3
                     className="text-2xl md:text-3xl font-extrabold text-grolow-light group-hover:text-grolow-cream transition-colors"
                     style={syne}>
-                    {project.name}
+                    {withBrand(project.name)}
                   </h3>
                   <p className="text-sm md:text-base text-grolow-light/70 font-light leading-relaxed mt-3">
                     {project.desc}

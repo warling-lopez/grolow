@@ -242,7 +242,7 @@ export default function Header() {
         <button
           onClick={scrollTop}
           aria-label={`grolow — ${c.home}`}
-          className={`font-display font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
+          className={`font-brand capitalize hover:opacity-70 transition-all duration-300 ${
             overTrigger ? "text-lg text-color-background" : "text-2xl"
           } ${onDark ? "text-white" : "text-grolow-light"}`}>
           grolow

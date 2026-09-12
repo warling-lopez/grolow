@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Brand from "@/app/components/Brand";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -15,7 +16,7 @@ const COPY = {
       <>
         We&apos;re led by{" "}
         <span className="text-grolow-light font-medium">Warling López</span>,
-        a programmer with 5 years of experience. Grolow isn&apos;t an agency
+        a programmer with 5 years of experience. <Brand /> isn&apos;t an agency
         with twenty people and a contact form: you talk directly with us, we
         build your system and we answer when you write. That means we know
         exactly what&apos;s inside your site and we can fix anything the same
@@ -30,7 +31,7 @@ const COPY = {
       <>
         Estamos liderados por{" "}
         <span className="text-grolow-light font-medium">Warling López</span>,
-        programador con 5 años de experiencia. Grolow no es una agencia con
+        programador con 5 años de experiencia. <Brand /> no es una agencia con
         veinte personas y un formulario de contacto: hablas con nosotros
         directamente, nosotros construimos tu sistema y respondemos cuando
         escribes. Eso significa que sabemos exactamente qué hay dentro de tu

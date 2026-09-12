@@ -17,7 +17,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   // (canvas 3D, botón de WhatsApp de Grolow, etc.)
   const standalone =
     pathname?.startsWith('/Hermon-Dental') ||
-    pathname?.startsWith('/VisualLab') ||
     pathname?.toLowerCase().startsWith('/piropos') ||
     pathname?.startsWith('/para-yessica') ||
     pathname?.startsWith('/ceo-warling') ||

@@ -3,6 +3,7 @@ import Breadcrumbs from "@/app/components/Breadcrumbs";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import { pathFor, type Lang, type RouteId } from "@/app/lib/i18n";
 import type { PageContent } from "@/app/lib/content/types";
+import { withBrand } from "@/app/components/Brand";
 
 /**
  * Plantilla única de las páginas de servicio, segmento y utilidad.
@@ -162,7 +163,7 @@ export default function ContentPage({
                   <Link
                     href={href}
                     className="text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
-                    {link.label}
+                    {withBrand(link.label)}
                   </Link>
                 </li>
               ))}
@@ -179,7 +180,7 @@ export default function ContentPage({
             message={cta.message}
             placement="page-cta"
             className="inline-flex items-center gap-2 mt-6 rounded-full bg-grolow-light text-grolow-dark font-bold px-6 py-3 text-sm hover:bg-grolow-cream hover:text-white transition-colors">
-            {cta.label}
+            {withBrand(cta.label)}
           </WhatsAppLink>
         </section>
       </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Brand from "@/app/components/Brand";
 import { pathFor, type Lang } from "@/app/lib/i18n";
 
 /**
@@ -32,8 +33,7 @@ const PROJECTS: Project[] = [
 
 const COPY = {
   es: {
-    brand: "grolow",
-    brandAccent: "sistemas",
+    brandAccent: "Sistemas",
     tagline: "Construimos sistemas de operación a medida.",
     services: "Paneles internos • Inventario y reservas • Portales de cliente",
     proof: "proyectos en producción",
@@ -43,8 +43,7 @@ const COPY = {
     mosaicLabel: "Capturas de proyectos de Grolow en producción",
   },
   en: {
-    brand: "grolow",
-    brandAccent: "systems",
+    brandAccent: "Systems",
     tagline: "We build the system your business runs on.",
     services: "Internal dashboards • Inventory and scheduling • Client portals",
     proof: "projects in production",
@@ -125,11 +124,12 @@ export default function Hero3({ lang }: { lang: Lang }) {
               captura del mosaico; a este tamaño el elemento mayor vuelve a ser
               texto, que ya viene en el HTML y no cuesta una descarga. */}
           <div aria-hidden="true" className="mb-8 select-none leading-[0.82]">
-            <span className="font-brand block text-[clamp(3.5rem,23vw,9rem)] lowercase text-white">
-              {c.brand}
-            </span>
+            <Brand
+              as="div"
+              className="block text-[clamp(3.5rem,23vw,9rem)] text-white"
+            />
             <span
-              className="font-brand block text-[clamp(2.9rem,18.7vw,7.25rem)] lowercase text-transparent"
+              className="font-brand block text-[clamp(2.9rem,18.7vw,7.25rem)] capitalize text-transparent"
               style={{
                 backgroundImage:
                   "linear-gradient(100deg, #06E0DA 0%, #008F8B 45%, #00524F 100%)",

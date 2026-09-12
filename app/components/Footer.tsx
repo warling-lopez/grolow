@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Brand from "@/app/components/Brand";
 import { useLang } from "@/app/components/hooks/useLang";
 import { pathFor, type Lang, type RouteId } from "@/app/lib/i18n";
 
@@ -111,13 +112,18 @@ export default function Footer() {
           lienzo en vez de estar centrado en una caja. Es decoración pura: el
           nombre accesible ya lo da el enlace de la columna de marca.
 
-          17.5vw no es un número al azar: en esta fuente «grolow» mide 5.086×
-          su cuerpo, así que ese valor lo deja tocando los dos márgenes en
-          cualquier viewport. Más grande se sale por la derecha. */}
+          El cuerpo se deriva del ancho disponible en vez de fijarse en `vw`:
+          en Sergio Trendy «grolow» mide 3.64× su font-size, y el contenedor
+          descuenta 2rem de padding en móvil y 4rem a partir de `md`. Con un
+          `vw` plano el rótulo se salía 7px a 375 y 13px a 768 —el padding es
+          fijo y el cuerpo no—, y como el contenedor recorta, lo que se perdía
+          era la «w». El 3.7 en vez de 3.64 deja el margen para la barra de
+          scroll, que `100vw` sí cuenta. */}
       <div className="overflow-hidden px-4 md:px-8 pt-14 md:pt-20" aria-hidden="true">
-        <span className="font-display block select-none font-extrabold italic lowercase tracking-[-0.045em] leading-[0.72] text-[17.5vw] text-white">
-          grolow
-        </span>
+        <Brand
+          as="div"
+          className="block select-none tracking-[-0.045em] leading-[0.72] text-white text-[calc((100vw-2rem)/3.7)] md:text-[calc((100vw-4rem)/3.7)]"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto w-full px-4 md:px-8 pt-14 md:pt-20 pb-10">
@@ -227,7 +233,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto w-full px-4 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-xs uppercase tracking-wider text-white/50">
-            © {year} Grolow. {c.rights}
+            © {year} <Brand />. {c.rights}
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {LEGAL.map((id) => {
