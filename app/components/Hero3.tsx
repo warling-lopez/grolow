@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import Brand from "@/app/components/Brand";
@@ -7,6 +5,12 @@ import { pathFor, type Lang } from "@/app/lib/i18n";
 
 /**
  * Hero de portada: rótulo a la izquierda, mosaico de trabajo real a la derecha.
+ *
+ * Server Component a propósito. Llevaba `'use client'` sin usar una sola API
+ * de cliente —ni estado, ni efectos, ni manejadores— y eso metía todo el
+ * bloque, sus datos y sus dependencias en el bundle que el navegador tiene que
+ * descargar, parsear e hidratar ANTES de poder pintar. El elemento LCP de la
+ * página vive aquí, así que era el peor sitio posible para pagar ese coste.
  *
  * Sustituye a `Hero2`, cuyo mosaico ocupaba el fondo entero detrás de un velo
  * al 97% de opacidad: se pagaban seis imágenes para que casi no se vieran. Aquí

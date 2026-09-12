@@ -1,15 +1,24 @@
 'use client';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import Lenis from '@studio-freight/lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import type LenisType from '@studio-freight/lenis';
 import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 
-gsap.registerPlugin(ScrollTrigger);
+/**
+ * Lenis y GSAP se cargan dinámicamente, no con un import de módulo.
+ *
+ * Estáticos, entraban en el chunk raíz que sirve TODAS las rutas: 43 KB
+ * transferidos y ~253 ms de evaluación en el hilo principal antes de que el
+ * navegador pudiera pintar. Ninguno de los dos hace falta para el primer
+ * pintado —solo animan el scroll, que por definición ocurre después—, así que
+ * se piden dentro del efecto y salen de la ruta crítica.
+ *
+ * Los tipos sí se importan estáticos (`import type`): desaparecen al compilar
+ * y no arrastran nada al bundle.
+ */
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -23,34 +32,54 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     false;
  
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-    });
+    // `cancelled` cubre el desmontaje mientras los módulos están en vuelo: sin
+    // él se crearía un Lenis huérfano que nadie destruye.
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
 
-    window.lenis = lenis;
+    (async () => {
+      const [{ default: Lenis }, { default: gsap }, { ScrollTrigger }] =
+        await Promise.all([
+          import('@studio-freight/lenis'),
+          import('gsap'),
+          import('gsap/dist/ScrollTrigger'),
+        ]);
+      if (cancelled) return;
 
-    lenis.on('scroll', ScrollTrigger.update);
+      gsap.registerPlugin(ScrollTrigger);
 
-    // La limpieza tiene que quitar *esta misma* función: gsap compara por
-    // identidad de referencia, así que la flecha nueva que se pasaba antes a
-    // `remove` no quitaba nada. El callback original seguía vivo llamando a
-    // `raf()` sobre un Lenis ya destruido, y se acumulaba uno por cada
-    // desmontaje.
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
+      const lenis: LenisType = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+      });
 
-    gsap.ticker.lagSmoothing(0);
+      window.lenis = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+
+      // La limpieza tiene que quitar *esta misma* función: gsap compara por
+      // identidad de referencia, así que la flecha nueva que se pasaba antes a
+      // `remove` no quitaba nada. El callback original seguía vivo llamando a
+      // `raf()` sobre un Lenis ya destruido, y se acumulaba uno por cada
+      // desmontaje.
+      const raf = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+
+      teardown = () => {
+        // Primero se descuelga del ticker y solo después se destruye, para que
+        // ningún frame pendiente encuentre la instancia a medio destruir.
+        gsap.ticker.remove(raf);
+        lenis.destroy();
+        delete window.lenis;
+      };
+    })();
 
     return () => {
-      // Primero se descuelga del ticker y solo después se destruye, para que
-      // ningún frame pendiente encuentre la instancia a medio destruir.
-      gsap.ticker.remove(raf);
-      lenis.destroy();
-      delete window.lenis;
+      cancelled = true;
+      teardown?.();
     };
   }, []);
 

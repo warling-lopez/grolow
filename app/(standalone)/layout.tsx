@@ -33,7 +33,7 @@ const brand = localFont({
   src: "../fonts/sergio-trendy-latin.woff2",
   variable: "--font-brand-face",
   display: "swap",
-  adjustFontFallback: false,
+  adjustFontFallback: "Arial",
   fallback: ["system-ui", "sans-serif"],
 });
 

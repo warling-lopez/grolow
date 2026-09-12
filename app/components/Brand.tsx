@@ -23,7 +23,6 @@ export default function Brand({
 }) {
   return <Tag className={`font-brand ${className}`}>Grolow</Tag>;
 }
-
 /**
  * Pinta el nombre de la marca en su fuente dentro de una cadena cualquiera.
  *

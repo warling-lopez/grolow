@@ -42,8 +42,12 @@ const brand = localFont({
   src: "../fonts/sergio-trendy-latin.woff2",
   variable: "--font-brand-face",
   display: "swap",
-  // Sin esto el rótulo salta de tamaño al cambiar la reserva por la real.
-  adjustFontFallback: false,
+  // `adjustFontFallback` genera un @font-face de reserva con `size-adjust` y
+  // overrides de métricas, para que el texto ocupe lo mismo antes y después de
+  // que llegue la fuente real. Estaba en `false`, que es justo lo contrario: el
+  // rótulo cambiaba de tamaño al intercambiar y el navegador registraba un
+  // candidato de LCP nuevo y mayor en ese instante.
+  adjustFontFallback: "Arial",
   fallback: ["Impact", "Haettenschweiler", "sans-serif"],
 });
 

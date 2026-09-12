@@ -1,6 +1,6 @@
 {
   "url": "http://localhost:3001/es",
-  "measuredAt": "2026-09-12T07:51:00.874Z",
+  "measuredAt": "2026-09-12T08:17:45.181Z",
   "lighthouseVersion": "12.8.2",
   "formFactor": "mobile",
   "scores": {
@@ -12,7 +12,7 @@
   "metrics": {
     "lcp": "3.5\u00a0s",
     "cls": "0",
-    "tbt": "0\u00a0ms",
-    "si": "1.2\u00a0s"
+    "tbt": "20\u00a0ms",
+    "si": "1.0\u00a0s"
   }
 }

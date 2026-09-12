@@ -59,7 +59,7 @@ export const TOOLS: { name: string; url: string }[] = [
 ];
 
 export const AUDIT_URL =
-  "https://pagespeed.web.dev/analyze?url=https%3A%2F%2Fwww.grolow.com%2Fes";
+  "https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fgrolow.com%2F";
 
 export const COPY = {
   es: {
