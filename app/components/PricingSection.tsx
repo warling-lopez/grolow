@@ -66,7 +66,7 @@ export default function PricingSection() {
     <section
       id="planes"
       ref={sectionRef}
-      className="w-full py-24 md:py-32 px-4 md:px-8 flex flex-col items-center backdrop-blur-xs">
+      className="w-full py-24 md:py-32 px-4 md:px-8 flex flex-col items-center bg-grolow-dark">
       <div className="max-w-5xl mx-auto w-full">
         <h2 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pb-8 md:pb-12 border-b border-grolow-light/10">
           {c.heading}

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import SplitText from "./SplitText";
 import { useLang } from "./hooks/useLang";
@@ -10,7 +11,7 @@ import { pathFor, type RouteId } from "@/app/lib/i18n";
 /* ------------------------------------------------------------------ */
 
 export type HeroCard = {
-  /** Ruta del screenshot (ej. "/proyects/uno.png"). Si falta → bloque de color. */
+  /** Ruta del screenshot. Si falta → bloque de color. */
   src?: string;
   alt?: string;
   /** Color de fallback cuando no hay src. Si falta, se rota entre los del tema. */
@@ -28,7 +29,7 @@ export type Hero2Props = {
   images?: HeroCard[];
   /** Duración (s) de cada columna → distintas = efecto parallax. */
   durations?: number[];
-  /** Inclinación 3D — totalmente configurable. */
+  /** Inclinación de la rejilla. */
   rotateX?: number; // deg
   rotateZ?: number; // deg
   perspective?: number; // px
@@ -46,11 +47,9 @@ const NUM_COLS = 4;
 
 const FALLBACK_COLORS = ["#E8DEC4", "#DCEAE0", "#E3E9DD", "#EFE7D0"];
 
-/** Set de placeholders para que se vea lleno sin pasar props.
- *  Reemplaza estos por tus screenshots reales pasando `images`. */
-const DEFAULT_IMAGES: HeroCard[] = Array.from({ length: 16 }, (_, i) => ({
+const DEFAULT_IMAGES: HeroCard[] = Array.from({ length: 12 }, (_, i) => ({
   color: FALLBACK_COLORS[i % FALLBACK_COLORS.length],
-  alt: `Proyecto ${i + 1}`,
+  alt: "",
 }));
 
 /** Los CTA por defecto ya no van a anclas: casos y contacto son páginas. */
@@ -63,60 +62,68 @@ const DEFAULT_DURATIONS = [40, 55, 48, 60];
 
 const COPY = {
   en: {
-    eyebrow: "REAL CODE, NOT TEMPLATES",
+    eyebrow: "OPERATIONS SYSTEMS",
     title: (
       <>
-        Custom web development{" "}
+        We build the{" "}
         <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
-          for companies,
+          system
         </span>{" "}
-        consultancies and creators.
+        your business runs on.
       </>
     ),
     subtitle: (
       <>
-        We build in our own code, not on WordPress or templates.{" "}
+        Internal dashboards, inventory, scheduling and client portals.{" "}
         <span className="text-grolow-light font-medium">
-          That means a site that does exactly what your business needs
-        </span>
-        , without the weight of twenty plugins you will never use — and a team
-        you message directly, with no account executive in between.
+          For when the business has outgrown the spreadsheet and the WhatsApp
+          group.
+        </span>{" "}
+        Custom code, built on how you actually work.
       </>
     ),
     ctas: [
-      { label: "See real work", href: "#casos", variant: "outline" as const },
       {
-        label: "Request our free proposal",
+        label: "Systems in production",
+        href: "#casos",
+        variant: "outline" as const,
+      },
+      {
+        label: "Book a diagnosis",
         href: "#contacto",
         variant: "solid" as const,
       },
     ],
   },
   es: {
-    eyebrow: "CÓDIGO PROPIO, NO PLANTILLAS",
+    eyebrow: "SISTEMAS DE OPERACIÓN",
     title: (
       <>
-        Desarrollo web a medida{" "}
+        Construimos{" "}
         <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-accent italic">
-          para empresas,
+          sistemas de operación
         </span>{" "}
-        consultoras y creadores.
+        a medida.
       </>
     ),
     subtitle: (
       <>
-        Construimos en código propio, no en WordPress ni en plantillas.{" "}
+        Paneles internos, inventario, reservas y portales de cliente.{" "}
         <span className="text-grolow-light font-medium">
-          Eso significa un sitio que hace exactamente lo que tu negocio necesita
-        </span>
-        , sin el peso de veinte plugins que nunca vas a usar, y un equipo al que
-        le escribes directo sin pasar por un ejecutivo de cuentas.
+          Cuando el negocio ya creció más de lo que aguanta el Excel y el grupo
+          de WhatsApp.
+        </span>{" "}
+        Código propio, sobre tu proceso real.
       </>
     ),
     ctas: [
-      { label: "Ver trabajos reales", href: "#casos", variant: "outline" as const },
       {
-        label: "Pedir nuestra propuesta gratis",
+        label: "Sistemas en producción",
+        href: "#casos",
+        variant: "outline" as const,
+      },
+      {
+        label: "Agendar diagnóstico",
         href: "#contacto",
         variant: "solid" as const,
       },
@@ -139,18 +146,25 @@ function splitIntoColumns(images: HeroCard[]): HeroCard[][] {
 /* Card                                                               */
 /* ------------------------------------------------------------------ */
 
+/**
+ * `sizes` es obligatorio aquí: la rejilla mide 170% del viewport en móvil y
+ * 120% a partir de `sm`, repartido en 2 y 4 columnas respectivamente. Sin este
+ * dato Next asume 100vw y sirve una imagen ~4× más pesada de la que se ve.
+ */
+const CARD_SIZES = "(max-width: 639px) 42vw, (max-width: 1024px) 30vw, 320px";
+
 function Card({ card }: { card: HeroCard }) {
   return (
     <div
       className="relative w-full aspect-16/10 rounded-xl overflow-hidden border border-grolow-light/10 shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
-      style={{ backgroundColor: card.color ?? "#E8DEC4" }}>
+      style={{ backgroundColor: card.color ?? FALLBACK_COLORS[0] }}>
       {card.src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={card.src}
           alt={card.alt ?? ""}
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
+          fill
+          sizes={CARD_SIZES}
+          className="object-cover"
           draggable={false}
         />
       ) : (
@@ -218,22 +232,17 @@ export default function Hero2({
   const lang = useLang();
   const t = COPY[lang];
 
-  // Por defecto mantiene el SplitText original de la home.
-  //
   // SplitText es `whitespace-nowrap` (el efecto de doble capa recortada lo
-  // exige), así que la etiqueta no puede partirse en dos líneas: si no cabe,
-  // la sección la recorta. Con un texto de 36 caracteres el tamaño por
-  // defecto de SplitText (clamp 1.5rem…3rem) se salía en móvil, de ahí este
-  // clamp más contenido.
+  // exige), así que la etiqueta no puede partirse en dos líneas. Con la
+  // etiqueta nueva —21 caracteres frente a los 28 de antes— cabe un cuerpo
+  // bastante mayor en móvil sin que la sección la recorte.
   const resolvedEyebrow = eyebrow ?? (
-    <SplitText className="text-[clamp(0.8rem,3.2vw,1.5rem)]">
+    <SplitText className="text-[clamp(1rem,4.4vw,1.75rem)]">
       {t.eyebrow}
     </SplitText>
   );
   const resolvedTitle = title ?? t.title;
   const resolvedSubtitle = subtitle ?? t.subtitle;
-  // Los CTA por defecto apuntaban a anclas de la portada. Ahora casos y
-  // contacto son páginas propias, así que el enlace va a la ruta real.
   const resolvedCtas =
     ctas ??
     t.ctas.map((cta) => {
@@ -243,7 +252,7 @@ export default function Hero2({
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center px-6 overflow-hidden bg-grolow-dark">
-      {/* ---------- Fondo: rejilla inclinada 3D (parallax) ---------- */}
+      {/* ---------- Fondo: rejilla inclinada (parallax) ---------- */}
       <div
         className="absolute bg-black inset-0 z-0 flex items-start justify-center"
         style={{ perspective: `${perspective}px` }}
@@ -275,7 +284,7 @@ export default function Hero2({
         </div>
       </div>
 
-      {/* ---------- Overlay oscuro (radial + lineal) ---------- */}
+      {/* ---------- Velo (radial + lineal) ---------- */}
       <div
         className="absolute inset-0 z-5"
         aria-hidden="true"
@@ -287,24 +296,32 @@ export default function Hero2({
 
       {/* ---------- Contenido del hero ---------- */}
       <div className="relative z-10 max-w-7xl mx-auto w-full text-center flex flex-col items-center pt-20">
-        <div className="mb-15 text-sm sm:text-base font-bold tracking-widest uppercase text-grolow-cream/80">
+        <div className="mb-10 md:mb-14 font-bold tracking-widest uppercase text-grolow-cream/80">
           {resolvedEyebrow}
         </div>
-        {/* Tamaño fluido en vez de saltos por breakpoint: el titular pasó de
-            41 a 70 caracteres y con `md:text-[92px]` fijo se iba a 6 líneas en
-            tablet y sacaba el hero fuera del viewport en portátiles de 800px. */}
+
+        {/* `w-full` no es decorativo: el contenedor es un flex en columna con
+            `items-center`, así que sus hijos se dimensionan a su contenido. Sin
+            esto el h1 tomaba el ancho de su palabra más larga —525px en un
+            móvil de 375— y la sección, que es `overflow-hidden`, la recortaba
+            por los dos lados. El desbordamiento no aparecía en un test de
+            scroll horizontal justamente porque se recorta en vez de desplazar.
+
+            `hyphens-auto` es la red de seguridad: con `lang` declarado, una
+            palabra que no quepa se parte en vez de salirse. Con el clamp actual
+            no debería llegar a usarse, pero evita que un copy más largo vuelva
+            a recortarse sin avisar. */}
         <h1
-          className="text-[clamp(1.75rem,6.2vw,5rem)] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-10 max-w-5xl"
-          style={{ fontFamily: "'Syne', sans-serif" }}
+          className="font-display w-full text-[clamp(1.5rem,6.6vw,4.5rem)] font-extrabold leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter text-grolow-light uppercase mb-8 md:mb-10 max-w-5xl text-balance wrap-break-word hyphens-auto"
           lang={lang}>
           {resolvedTitle}
         </h1>
 
-        <p className="text-[16px] text-grolow-light/75 max-w-xl font-light leading-relaxed mb-10">
+        <p className="w-full text-[clamp(1rem,4.2vw,1.1875rem)] text-grolow-light/75 max-w-xl font-light leading-relaxed mb-10">
           {resolvedSubtitle}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-center w-full sm:w-auto">
           {resolvedCtas.map((cta) => (
             <a
               key={cta.href}

@@ -41,8 +41,7 @@ export default function GraciasPage() {
         <span className="inline-block text-5xl mb-8">✅</span>
 
         <h1
-          className="font-extrabold text-4xl md:text-5xl uppercase leading-none tracking-tighter text-grolow-light mb-6"
-          style={{ fontFamily: "'Syne', sans-serif" }}>
+          className="font-display font-extrabold text-4xl md:text-5xl uppercase leading-none tracking-tighter text-grolow-light mb-6">
           {c.headingLine1} <br />
           <span className="text-grolow-cyan italic">{c.headingLine2}</span>
         </h1>

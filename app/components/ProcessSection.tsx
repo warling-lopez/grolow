@@ -1,157 +1,116 @@
-"use client";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { useLang } from "./hooks/useLang";
+import LetterReveal from "./LetterReveal";
+import type { Lang } from "@/app/lib/i18n";
 
-gsap.registerPlugin(ScrollTrigger);
+/**
+ * El método, en cuatro pasos numerados.
+ *
+ * Antes era un carrusel horizontal con `ScrollTrigger` + `pin`: la sección
+ * secuestraba el scroll durante ~4.000px (500 de pausa por panel más el
+ * desplazamiento entre ellos) para enseñar tres tarjetas. Costaba GSAP en el
+ * bundle, no funcionaba con el teclado y obligaba a `window.innerWidth`, que
+ * se recalcula en cada resize.
+ *
+ * Ahora es una rejilla estática. Lo único que se mueve son las letras del
+ * titular y la entrada de cada tarjeta, ambas en CSS. Sin `'use client'`: el
+ * único componente de cliente es `LetterReveal`, así que el resto del bloque
+ * —incluido todo el texto— se renderiza en el servidor y sale en el HTML
+ * inicial, que es lo que rastrea el buscador.
+ *
+ * El numeral fantasma va en un `aria-hidden` detrás del contenido: es
+ * decoración tipográfica, y un lector de pantalla que anuncie «cero uno» antes
+ * de cada título solo estorba.
+ */
 
-const stepsEn = [
-  {
-    num: "Step 01",
-    title: "We talk for 20 minutes",
-    desc: "We ask what you sell, how orders reach you today, and where time gets lost. We come out of that with a clear proposal and a fixed price. Free, no commitment.",
-  },
-  {
-    num: "Step 02",
-    title: "We build it and you approve it",
-    desc: "We design and program your system from scratch, no templates. We show you progress before publishing anything. If something's off, it gets changed.",
-  },
-  {
-    num: "Step 03",
-    title: "We launch it and teach you to use it",
-    desc: "We leave it running, connected to your WhatsApp, and walk you through using it on a call. The first 15 days, any adjustment is included.",
-  },
-];
+type Step = {
+  num: string;
+  title: Record<Lang, string>;
+  desc: Record<Lang, string>;
+};
 
-const stepsEs = [
+const STEPS: Step[] = [
   {
-    num: "Paso 01",
-    title: "Hablamos 20 minutos",
-    desc: "Te preguntamos qué vendes, cómo te llegan hoy los pedidos y dónde se te pierde el tiempo. Salimos de ahí con una propuesta clara y un precio cerrado. Gratis y sin compromiso.",
+    num: "01",
+    title: { es: "Diagnóstico", en: "Diagnosis" },
+    desc: {
+      es: "Nos sentamos sobre tu operación real: qué se hace a mano hoy, quién lo hace y cuánto tiempo cuesta. Salimos con un documento, no con una intuición. Parte del trabajo es decirte qué no conviene tocar.",
+      en: "We sit down with how you actually operate: what gets done by hand today, who does it, and what it costs in time. We leave with a document, not a hunch. Part of the job is telling you what to leave alone.",
+    },
   },
   {
-    num: "Paso 02",
-    title: "Lo construimos y tú lo apruebas",
-    desc: "Diseñamos y programamos tu sistema desde cero, sin plantillas. Te mostramos avances antes de publicar nada. Si algo no te gusta, se cambia.",
+    num: "02",
+    title: { es: "Alcance y precio", en: "Scope and price" },
+    desc: {
+      es: "Propuesta por escrito con alcance cerrado, fases, fechas y precio cerrado. Antes de escribir una línea de código, sabes qué recibes y cuánto cuesta.",
+      en: "A written proposal with fixed scope, phases, dates and a fixed price. Before a single line of code, you know what you get and what it costs.",
+    },
   },
   {
-    num: "Paso 03",
-    title: "Publicamos y te enseñamos a usarlo",
-    desc: "Lo dejamos funcionando, conectado a tu WhatsApp, y te explicamos cómo usarlo en una llamada. Los primeros 15 días, cualquier ajuste va incluido.",
+    num: "03",
+    title: { es: "Construcción", en: "Build" },
+    desc: {
+      es: "Código propio y entregas parciales revisables. Ves el sistema funcionando por fases, no un PDF de avance. Si algo no encaja con tu proceso, se corrige ahí.",
+      en: "Custom code and reviewable partial deliveries. You see the system running phase by phase, not a progress PDF. If something doesn't fit your process, it gets fixed then.",
+    },
+  },
+  {
+    num: "04",
+    title: { es: "Puesta en marcha", en: "Go live" },
+    desc: {
+      es: "Publicación, datos migrados y tu equipo formado. El repositorio queda a tu nombre: sin licencias mensuales y sin quedarte atrapado con nosotros.",
+      en: "Launch, data migrated and your team trained. The repository is yours: no monthly licences, and no being locked in with us.",
+    },
   },
 ];
 
 const COPY = {
-  en: { heading: "OUR", headingAccent: "METHOD." },
-  es: { heading: "NUESTRO", headingAccent: "MÉTODO." },
+  en: { heading: "OUR", headingAccent: "METHOD.", label: "How we work" },
+  es: { heading: "NUESTRO", headingAccent: "MÉTODO.", label: "Cómo trabajamos" },
 } as const;
 
-export default function ProcessSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollWrapperRef = useRef<HTMLDivElement>(null);
-  const lang = useLang();
+export default function ProcessSection({ lang }: { lang: Lang }) {
   const c = COPY[lang];
-  const steps = lang === "en" ? stepsEn : stepsEs;
-
-
-  useGSAP(
-    () => {
-      const wrapper = scrollWrapperRef.current;
-      const panels = gsap.utils.toArray<HTMLElement>(".process-panel");
-      if (!wrapper || panels.length === 0) return;
-
-      const numPanels = panels.length;
-      const pauseDistance = 500; // Los 500px que me pediste de pausa por método
-      
-      // Calculamos cuánto mide un panel (100vw en píxeles)
-      const panelWidth = window.innerWidth; 
-      
-      // El scroll total será el movimiento horizontal de los paneles restantes + las pausas de cada uno
-      const totalScroll = ((numPanels - 1) * panelWidth) + (numPanels * pauseDistance);
-
-      // Creamos una Timeline maestra vinculada al ScrollTrigger
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: `+=${totalScroll}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // Construimos el comportamiento paso a paso en la Timeline
-      panels.forEach((panel, index) => {
-        // 1. Animación de entrada de los textos de este panel específico
-        tl.from(panel.querySelectorAll(".stagger-text"), {
-          y: 50,
-          opacity: 0,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power3.out",
-        });
-
-        // 2. PAUSA: Añadimos un espacio vacío en la timeline para congelar la pantalla 500px
-        tl.to({}, { duration: pauseDistance / 1000 }); 
-
-        // 3. MOVIMIENTO: Si NO es el último panel, hacemos el scroll horizontal hacia el siguiente
-        if (index < numPanels - 1) {
-          tl.to(wrapper, {
-            x: `-${panelWidth * (index + 1)}`,
-            duration: 1, // Duración del viaje entre paneles
-            ease: "power2.inOut", // Suaviza la transición de movimiento
-          });
-        }
-      });
-    },
-    { scope: sectionRef }
-  );
 
   return (
     <section
       id="proceso"
-      ref={sectionRef}
-      data-header-trigger="true"
-      className="h-screen w-full overflow-hidden  bg-transparent relative flex items-center">
-      <div className="absolute top-20 left-6 md:left-12 z-20">
-        <h2
-          className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter uppercase"
-          style={{ fontFamily: "'Syne', sans-serif" }}>
-          {c.heading} <span className="text-grolow-cyan italic">{c.headingAccent}</span>
-        </h2>
-      </div>
+      className="w-full bg-grolow-dark border-y border-grolow-light/10">
+      <div className="max-w-6xl mx-auto w-full px-4 md:px-8 py-20 md:py-28">
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-grolow-light/75 mb-4">
+          {c.label}
+        </p>
 
-      {/* Cambiamos w-[300vw] por w-max para que tome el ancho exacto de sus hijos */}
-      <div
-        ref={scrollWrapperRef}
-        className="flex h-full w-max"
-        style={{ willChange: "transform" }}>
-        {steps.map((step) => (
-          // Cambiamos w-screen por w-[100vw] restringido, asegurando que no pase el ancho real
-          <div
-            key={step.num}
-            className="process-panel w-[100vw] max-w-full h-full flex items-center shrink-0 justify-center relative p-6">
-            {/* ... resto de tu código */}{" "}
-            <div className="absolute inset-0 border-r border-white/5 bg-black backdrop-blur-sm" />
-            <div className="relative z-10 max-w-xl mx-auto flex flex-col gap-6">
-              <span className="stagger-text block text-grolow-card font-mono text-7xl md:text-9xl opacity-25 font-bold leading-none">
+        <h2 className="font-display text-[clamp(2rem,7vw,3.5rem)] font-extrabold text-grolow-light tracking-tighter uppercase leading-[0.95] mb-14 md:mb-20">
+          <LetterReveal text={c.heading} />{" "}
+          <LetterReveal
+            text={c.headingAccent}
+            className="text-grolow-cyan italic"
+            delay={180}
+          />
+        </h2>
+
+        <ol className="grid gap-px bg-grolow-light/10 sm:grid-cols-2 lg:grid-cols-4 border border-grolow-light/10">
+          {STEPS.map((step, i) => (
+            <li
+              key={step.num}
+              data-step={step.num}
+              className="step-card relative isolate overflow-hidden bg-grolow-dark p-6 md:p-8 rise-in"
+              style={{ animationDelay: `${i * 90}ms` }}>
+
+              <span className="block text-sm font-mono font-bold text-grolow-cyan mb-4">
                 {step.num}
               </span>
-              <h3
-                className="stagger-text text-4xl md:text-6xl font-bold text-white uppercase tracking-tight"
-                style={{ fontFamily: "'Syne', sans-serif" }}>
-                {step.title}
+
+              <h3 className="font-display text-xl md:text-2xl lg:text-lg xl:text-xl font-black uppercase text-grolow-light tracking-tight leading-tight wrap-break-word hyphens-auto"
+                lang={lang}>
+                {step.title[lang]}
               </h3>
-              <p className="stagger-text text-grolow-dark/75 text-xl leading-relaxed">
-                {step.desc}
+
+              <p className="mt-4 text-base text-grolow-light/75 leading-relaxed">
+                {step.desc[lang]}
               </p>
-            </div>
-          </div>
-        ))}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

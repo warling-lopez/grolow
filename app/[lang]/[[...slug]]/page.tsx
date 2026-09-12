@@ -34,7 +34,9 @@ import ContactoPage from "@/app/components/pages/ContactoPage";
  * Las rutas que no aparecen aquí las renderiza `ContentPage` a partir del
  * contenido declarado en `app/lib/content`.
  */
-const CUSTOM_PAGES: Partial<Record<RouteId, React.ComponentType>> = {
+const CUSTOM_PAGES: Partial<
+  Record<RouteId, React.ComponentType<{ lang: Lang }>>
+> = {
   home: HomePage,
   servicios: ServiciosPage,
   clinicas: ClinicasPage,
@@ -139,7 +141,7 @@ export default async function Page({
         />
       )}
       {Custom ? (
-        <Custom />
+        <Custom lang={lang} />
       ) : (
         <ContentPage content={content!} routeId={id} lang={lang} />
       )}

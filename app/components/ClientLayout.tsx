@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import GlobalCanvas from '@/app/components/GlobalCanvas';
 import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
@@ -79,7 +78,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      {!standalone && <GlobalCanvas />}
       {!standalone && <Header />}
       <div className="relative z-10 h-auto">
         {children}

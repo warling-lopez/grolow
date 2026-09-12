@@ -218,8 +218,7 @@ function ContactForm() {
               {c.eyebrow}
             </span>
             <h2
-              className="font-extrabold text-3xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-grolow-light mb-6 uppercase wrap-break-word hyphens-auto"
-              style={{ fontFamily: "'Syne', sans-serif" }}
+              className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl leading-tight md:leading-none tracking-tight md:tracking-tighter text-grolow-light mb-6 uppercase wrap-break-word hyphens-auto"
               lang={lang}>
               {c.titleLine1} <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-grolow-cream to-grolow-light italic">

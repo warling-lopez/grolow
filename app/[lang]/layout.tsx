@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Noto_Sans_Sundanese } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import ClientLayout from "@/app/components/ClientLayout";
 import Analytics from "@/app/components/Analytics";
@@ -11,6 +13,39 @@ import {
 } from "@/app/lib/i18n";
 import { businessPriceRange } from "@/app/lib/pricing";
 import "../globals.css";
+
+/**
+ * Tipografía del sitio.
+ *
+ * `Noto Sans Sundanese` es la familia de todo: cuerpo y titulares. Pese al
+ * nombre, su versión de Google trae los subsets `latin` y `latin-ext`, así que
+ * cubre el español completo (ñ y acentos incluidos); sin `latin-ext` esos
+ * caracteres saldrían de la fuente de reserva y el texto se vería con dos
+ * tipografías mezcladas.
+ *
+ * `Sergio Trendy` queda reservada para el rótulo de marca. Va subseteada al
+ * latín que puede aparecer en un rótulo: 100 KB de .ttf → 16 KB de .woff2.
+ *
+ * ⚠️ LICENCIA: el fichero que hay en `public/fonts/sergio_trendy` es la versión
+ * demo, y su readme dice «FREE for PERSONAL USE ONLY — NO COMMERCIAL USE
+ * ALLOWED». grolow.com es un sitio comercial, así que antes de publicar hay que
+ * comprar la licencia en kulokale.com/product/sergio-trendy o cambiar de fuente.
+ */
+const noto = Noto_Sans_Sundanese({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto",
+  display: "swap",
+});
+
+const brand = localFont({
+  src: "../fonts/sergio-trendy-latin.woff2",
+  variable: "--font-brand-face",
+  display: "swap",
+  // Sin esto el rótulo salta de tamaño al cambiar la reserva por la real.
+  adjustFontFallback: false,
+  fallback: ["Impact", "Haettenschweiler", "sans-serif"],
+});
 
 /** Las dos variantes de idioma se generan en build: nada de render dinámico. */
 export function generateStaticParams() {
@@ -117,7 +152,9 @@ export default async function LangRootLayout({
   if (!isLang(lang)) notFound();
 
   return (
-    <html lang={HTML_LANG[lang]} className="bg-grolow-dark">
+    <html
+      lang={HTML_LANG[lang]}
+      className={`${noto.variable} ${brand.variable} bg-grolow-dark`}>
       <body className="antialiased text-grolow-light relative">
         <script
           type="application/ld+json"

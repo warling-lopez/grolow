@@ -109,7 +109,7 @@ function LangToggle({
           className={`px-2.5 py-1 uppercase tracking-wide transition-colors ${
             lang === l
               ? compact
-                ? "bg-white text-grolow-dark"
+                ? "bg-white text-grolow-ink"
                 : "bg-grolow-light text-grolow-dark"
               : compact
                 ? "text-white/60 hover:text-white"
@@ -241,11 +241,10 @@ export default function Header() {
         {/* ---------- Logo ---------- */}
         <button
           onClick={scrollTop}
-          aria-label={c.home}
-          className={`font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
+          aria-label={`grolow — ${c.home}`}
+          className={`font-display font-extrabold tracking-tight lowercase italic hover:opacity-70 transition-all duration-300 ${
             overTrigger ? "text-lg text-color-background" : "text-2xl"
-          } ${onDark ? "text-white" : "text-grolow-light"}`}
-          style={{ fontFamily: "'Syne', sans-serif" }}>
+          } ${onDark ? "text-white" : "text-grolow-light"}`}>
           grolow
         </button>
 

@@ -11,6 +11,15 @@ export type SplitTextProps = {
   className?: string;
 };
 
+/**
+ * El relleno va en `em`, no en píxeles fijos.
+ *
+ * Con `p-5` (20px) el recuadro quedaba desproporcionado en cuerpos pequeños:
+ * a 17px de texto, los 40px de relleno vertical pesaban más que las letras y
+ * el corte a mitad de altura se leía como un fallo de render en vez de como
+ * un efecto. En `em` el recuadro escala con el texto y la costura cae siempre
+ * en el centro óptico de las mayúsculas.
+ */
 export default function SplitText({
   children,
   split = "50%",
@@ -28,7 +37,7 @@ export default function SplitText({
   return (
     <span
       className={[
-        "relative inline-block whitespace-nowrap uppercase font-black overflow-hidden pt-5  ",
+        "relative inline-block whitespace-nowrap uppercase font-black overflow-hidden pt-[0.42em]",
         "leading-[0.85] tracking-tight",
         className,
       ].join(" ")}>
@@ -36,7 +45,7 @@ export default function SplitText({
       <span
         className={[
           bottomBgColor,
-          "pb-5 pr-5 pl-5 rounded-b-xl",
+          "pb-[0.42em] px-[0.5em] rounded-b-xl",
           bottomClassName,
         ].join(" ")}
         style={{ filter, display: "block" }}>
@@ -47,7 +56,7 @@ export default function SplitText({
       <span
         aria-hidden="true"
         className={[
-          "absolute inset-0 select-none pointer-events-none pt-5 pr-5 pl-5 rounded-t-xl",
+          "absolute inset-0 select-none pointer-events-none pt-[0.42em] px-[0.5em] rounded-t-xl",
           topBgColor,
           topClassName,
         ].join(" ")}

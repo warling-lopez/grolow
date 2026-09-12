@@ -1,65 +1,43 @@
-// En tu page.tsx
-"use client";
 import Link from "next/link";
-import Hero2 from "@/app/components/Hero2";
-import VideoScrollSection from "@/app/components/VideoScrollSection";
+import Hero3 from "@/app/components/Hero3";
 import ProcessSection from "@/app/components/ProcessSection";
-import TechSection from "@/app/components/TechSection";
+import EngineeringSection from "@/app/components/EngineeringSection";
 import FaqSection from "@/app/components/FaqSection";
 import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
 import PricingSection from "@/app/components/PricingSection";
-import AboutSection from "@/app/components/AboutSection";
-import { useLang } from "@/app/components/hooks/useLang";
-import { pathFor } from "@/app/lib/i18n";
+import TestimonialsSection from "@/app/components/TestimonialsSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
 import DifferentiationSection from "@/app/components/DifferentiationSection";
+import { pathFor, type Lang } from "@/app/lib/i18n";
 
 /**
- * Capturas reales de los proyectos en línea, para el mosaico del hero.
+ * Portada.
  *
- * Hero2 traía 16 rectángulos de color como marcador de posición, con la nota
- * de reemplazarlos por capturas reales. Se ciclan los seis proyectos hasta
- * llenar las columnas.
+ * Ya no es `'use client'`: el idioma llega por props desde la ruta en vez de
+ * leerse con `useLang()`, así que el árbol de la portada se renderiza en el
+ * servidor y solo bajan al bundle las secciones que de verdad tienen estado
+ * (hero, precios, FAQ, contacto…).
  */
-const PREVIEWS = [
-  { src: "/projects/laperfum.webp", name: "La Perfurm RD" },
-  { src: "/projects/hellenscute.webp", name: "Hellen's Cute Kids" },
-  { src: "/projects/warling.webp", name: "Warling Dev" },
-  { src: "/projects/aromacaribenio.webp", name: "Aroma Caribeño" },
-  { src: "/projects/deliscias-marijo.webp", name: "Delicias Marijo" },
-  { src: "/projects/wai.webp", name: "WAI" },
-];
 
 const COPY = {
   en: { allServices: "See all services →" },
   es: { allServices: "Ver todos los servicios →" },
 } as const;
 
-export default function Home() {
-  const lang = useLang();
+export default function Home({ lang }: { lang: Lang }) {
   const c = COPY[lang];
 
-  const heroImages = Array.from({ length: 16 }, (_, i) => {
-    const project = PREVIEWS[i % PREVIEWS.length];
-    return {
-      src: project.src,
-      alt:
-        lang === "es"
-          ? `Vista previa del sitio de ${project.name}`
-          : `Preview of the ${project.name} website`,
-    };
-  });
   return (
     <main className="w-full">
-      <Hero2 images={heroImages} />
+      <Hero3 lang={lang} />
 
       {/* Por qué nosotros, antes que el proceso: es la pregunta que trae el
           visitante después del hero. */}
-      <DifferentiationSection />
+      <DifferentiationSection lang={lang} />
 
       {/* Proceso / método justo debajo del hero */}
-      <ProcessSection />
+      <ProcessSection lang={lang} />
 
       <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
 
@@ -75,27 +53,19 @@ export default function Home() {
         </Link>
       </div>
 
-      <div
-        className="hidden md:block"
-        style={{ height: "calc(100vh + 3200px)" }}>
-        <VideoScrollSection />
-      </div>
-
       {/* Planes: el precio es lo siguiente que pregunta quien acaba de
           entender qué se le vende. */}
       <PricingSection />
 
-      <div className="h-[calc(100vh + 250px)] md:h-[calc(100vh+250px)]">
-        <TechSection />
-      </div>
+      <EngineeringSection lang={lang} />
 
-      {/* La persona detrás, antes del FAQ y del formulario. */}
-      <AboutSection />
+      {/* Prueba social antes del FAQ: quien llega aquí ya entendió la oferta
+          y lo siguiente que pesa es que otro lo haya hecho antes. Si todavía
+          no hay testimonios reales, la sección no se pinta. */}
+      <TestimonialsSection lang={lang} />
 
-      <div>
-        <FaqSection />
-        <ContactSection />
-      </div>
+      <FaqSection />
+      <ContactSection />
     </main>
   );
 }

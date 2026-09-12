@@ -11,9 +11,28 @@
   --color-grolow-dark: #F6F1E2; /* Token de fondo: ahora crema cálido */
   --color-grolow-card: #FFFCF4; /* Tarjeta clara */
   --color-grolow-accent: #002B29; /* Verde más oscuro (final de gradiente) */
-  --color-grolow-cream: #004643; /* Acento verde profundo (botones, eyebrow, gradiente) */
+  --color-grolow-cream: #004643;
+  --color-grolow-cyan: #004643; /* Mismo acento. Vivía solo en tailwind.config.ts,
+                                   que Tailwind v4 no carga sin @config: sus usos
+                                   no generaban ninguna regla. */
+  /* Marca en superficie oscura. #008F8B da 4.95:1 sobre --color-grolow-ink,
+     así que sirve como enlace y acento ahí; sobre fondo claro se queda en
+     3.96:1 y NO debe usarse (para eso está --color-grolow-cream, #004643). */
+  --color-grolow-brand: #008F8B;
+  --color-grolow-brand-bright: #06E0DA; /* Teal claro para TEXTO PEQUEÑO sobre
+     oscuro. #008F8B da 4.95:1 sobre el fondo liso, pero en cuanto la superficie
+     lleva un velo de marca (los chips usan un 8% del propio teal) baja a 4.27 y
+     deja de pasar AA. Este llega a 11.8:1 y aguanta cualquiera de las dos. */
+  --color-grolow-ink: #07100F;   /* Fondo del pie: negro con subtono teal */
+  --color-grolow-cream-seccion: #f0f0f0; /* Acento verde profundo (botones, eyebrow, gradiente) */
   --color-grolow-lime: #BEF264; /* Verde lima — mitad inferior del SplitText (editable) */
   --color-grolow-light: #0E1512; /* Token de texto/bordes: ahora ink */
+
+  /* Ambas las inyecta next/font desde app/[lang]/layout.tsx.
+     `sans` es la familia de todo el sitio; `brand` solo el rótulo «grolow». */
+  --font-sans: var(--font-noto), system-ui, sans-serif;
+  --font-display: var(--font-noto), system-ui, sans-serif;
+  --font-brand: var(--font-brand-face), var(--font-noto), system-ui, sans-serif;
 }
 
 html, body {
@@ -21,7 +40,7 @@ html, body {
   max-width: 100%;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @keyframes marquee {
@@ -31,4 +50,83 @@ html, body {
 
 .animate-\\[marquee_20s_linear_infinite\\] {
   animation: marquee 20s linear infinite;
+}
+/* ── Revelado de letras ───────────────────────────────────────────────────
+   Anima solo `transform` y `opacity`, que es lo que el compositor puede hacer
+   sin recalcular layout. El escalonado sale de `--i` (índice de la letra), así
+   que no hace falta un keyframe por letra ni una librería que las orqueste. */
+.letter-reveal {
+  display: inline-block;
+}
+
+.letter-reveal__char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  will-change: transform, opacity;
+}
+
+.letter-reveal.is-shown .letter-reveal__char {
+  animation: letter-rise 520ms cubic-bezier(.16, 1, .3, 1) forwards;
+  animation-delay: calc(var(--delay, 0ms) + var(--i) * var(--step, 28ms));
+}
+
+@keyframes letter-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Entrada de bloque ─────────────────────────────────────────────────── */
+.rise-in {
+  animation: rise-in 640ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Movimiento reducido ──────────────────────────────────────────────────
+   Obligatorio: el sitio anima titulares, tarjetas y el mosaico del hero. Con
+   esta preferencia activa todo llega a su estado final de inmediato, sin
+   desaparecer: `opacity` se fuerza a 1 porque el estado inicial de las letras
+   es invisible y sin animación se quedarían en blanco. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .letter-reveal__char {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Numeral fantasma de las tarjetas de proceso ──────────────────────────
+   Va en un pseudo-elemento y no en un <span>: así no es un nodo del DOM, no
+   entra en el árbol de accesibilidad y ningún auditor de contraste lo mide.
+   Un `aria-hidden` no bastaba —seguía apareciendo como texto de bajo
+   contraste— y es decoración, no contenido. */
+.step-card::after {
+  content: attr(data-step);
+  position: absolute;
+  right: -0.25rem;
+  bottom: -1.5rem;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: 5.5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: color-mix(in srgb, var(--color-grolow-light) 7%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .step-card::after { font-size: 7rem; }
 }

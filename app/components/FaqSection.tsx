@@ -39,7 +39,7 @@ export default function FaqSection({ items }: { items?: Faq[] } = {}) {
   return (
     <section id="faq" ref={sectionRef} className="w-full py-32 px-6 bg-grolow-dark border-t border-grolow-light/10">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold text-grolow-light tracking-tighter mb-16 uppercase text-center" style={{ fontFamily: "'Syne', sans-serif" }}>
+        <h2 className="font-display text-[clamp(2rem,5vw,3rem)] font-extrabold text-grolow-light tracking-tighter mb-16 uppercase text-center">
           FAQ 
         </h2>
 
@@ -55,7 +55,7 @@ export default function FaqSection({ items }: { items?: Faq[] } = {}) {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full p-8 flex justify-between items-center text-left hover:bg-grolow-light/4 transition-colors"
                 >
-                  <span className="text-lg md:text-xl font-bold text-grolow-light uppercase tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <span className="font-display text-lg md:text-xl font-bold text-grolow-light uppercase tracking-tight">
                     {faq.q}
                   </span>
                   <span className={`text-grolow-cyan text-2xl font-light transform transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
