@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import ClientLayout from "@/app/components/ClientLayout";
 import Analytics from "@/app/components/Analytics";
 import { SITE_URL } from "@/app/lib/i18n";
-import "../globals.css";
+import "../globals.css"; 
 
 /**
  * Root layout de las landings que no llevan prefijo de idioma: sitios de

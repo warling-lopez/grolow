@@ -7,7 +7,6 @@ import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
 import TestimonialsSection from "@/app/components/TestimonialsSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
-import DifferentiationSection from "@/app/components/DifferentiationSection";
 import { pathFor, type Lang } from "@/app/lib/i18n";
 
 /**
@@ -33,7 +32,6 @@ export default function Home({ lang }: { lang: Lang }) {
 
       {/* Por qué nosotros, antes que el proceso: es la pregunta que trae el
           visitante después del hero. */}
-      <DifferentiationSection lang={lang} />
 
       {/* Proceso / método justo debajo del hero */}
       <ProcessSection lang={lang} />

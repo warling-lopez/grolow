@@ -73,7 +73,7 @@ export default function ProcessSection({ lang }: { lang: Lang }) {
   return (
     <section
       id="proceso"
-      className="w-full bg-grolow-dark border-y border-grolow-light/10">
+      className="method-section w-full bg-grolow-dark border-y border-grolow-light/10">
       <div className="max-w-6xl mx-auto w-full px-4 md:px-8 py-20 md:py-28">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-grolow-light/75 mb-4">
           {c.label}
@@ -88,29 +88,46 @@ export default function ProcessSection({ lang }: { lang: Lang }) {
           />
         </h2>
 
-        <ol className="grid gap-px bg-grolow-light/10 sm:grid-cols-2 lg:grid-cols-4 border border-grolow-light/10">
-          {STEPS.map((step, i) => (
-            <li
-              key={step.num}
-              data-step={step.num}
-              className="step-card relative isolate overflow-hidden bg-grolow-dark p-6 md:p-8 rise-in"
-              style={{ animationDelay: `${i * 90}ms` }}>
+        {/* Raíl del carrusel.
 
-              <span className="block text-sm font-mono font-bold text-grolow-cyan mb-4">
-                {step.num}
-              </span>
+            Dos capas: la de abajo es un contenedor con scroll horizontal y
+            `scroll-snap`, que funciona en cualquier navegador y se arrastra con
+            el dedo o con el teclado. Encima, donde el navegador sabe animar
+            ligado al scroll, el raíl deja de desplazarse a mano y la tira se
+            mueve sola según avanza la sección por la pantalla.
 
-              <h3 className="font-display text-xl md:text-2xl lg:text-lg xl:text-xl font-black uppercase text-grolow-light tracking-tight leading-tight wrap-break-word hyphens-auto"
-                lang={lang}>
-                {step.title[lang]}
-              </h3>
+            Lo que NO hace: fijar la sección ni alargar la página. El scroll
+            sigue siendo del visitante; esto solo lo aprovecha. La versión
+            anterior de esta sección secuestraba ~4.000px de scroll para
+            enseñar tres tarjetas, y eso es justo lo que se quitó. */}
+        <div
+          className="method-rail -mx-4 px-4 md:-mx-8 md:px-8"
+          role="group"
+          aria-label={c.label}>
+          <ol className="method-track flex gap-4">
+            {STEPS.map((step) => (
+              <li
+                key={step.num}
+                data-step={step.num}
+                className="step-card method-card relative isolate flex flex-col overflow-hidden rounded-xl border border-grolow-light/12 bg-grolow-card p-6 md:p-8">
+                <span className="block text-sm font-mono font-bold text-grolow-cyan mb-4">
+                  {step.num}
+                </span>
 
-              <p className="mt-4 text-base text-grolow-light/75 leading-relaxed">
-                {step.desc[lang]}
-              </p>
-            </li>
-          ))}
-        </ol>
+                <h3
+                  className="font-display text-xl md:text-2xl font-black uppercase text-grolow-light tracking-tight leading-tight"
+                  lang={lang}>
+                  {step.title[lang]}
+                </h3>
+
+                <p className="mt-4 text-base text-grolow-light/75 leading-relaxed">
+                  {step.desc[lang]}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
       </div>
     </section>
   );

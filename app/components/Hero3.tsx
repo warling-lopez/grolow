@@ -59,16 +59,27 @@ const COPY = {
 } as const;
 
 /** Una captura del mosaico. */
-function Shot({ project, lang }: { project: Project; lang: Lang }) {
+function Shot({
+  project,
+  lang,
+  decorative = false,
+}: {
+  project: Project;
+  lang: Lang;
+  /** Copia del bucle: sin texto alternativo, para no duplicar el contenido. */
+  decorative?: boolean;
+}) {
   return (
     <figure className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-[0_24px_60px_-20px_rgba(0,0,0,.8)]">
       <div className="relative aspect-16/10">
         <Image
           src={project.src}
           alt={
-            lang === "es"
-              ? `Página de inicio de ${project.name}`
-              : `Home page of ${project.name}`
+            decorative
+              ? ""
+              : lang === "es"
+                ? `Página de inicio de ${project.name}`
+                : `Home page of ${project.name}`
           }
           fill
           sizes="(max-width: 1023px) 45vw, 26vw"
@@ -117,9 +128,9 @@ export default function Hero3({ lang }: { lang: Lang }) {
         }}
       />
 
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-28 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-8 lg:pb-24 lg:pt-32">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-28 md:px-8 lg:min-h-[40rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-8 lg:pb-24 lg:pt-32">
         {/* ─────────────── Columna de texto ─────────────── */}
-        <div className="relative z-10">
+        <div className="relative z-10 lg:self-center">
           {/* Rótulo. Decorativo: el nombre accesible lo da el h1 y el header.
 
               El cuerpo sale de medir la fuente: «grolow» en Sergio Trendy mide
@@ -191,21 +202,83 @@ export default function Hero3({ lang }: { lang: Lang }) {
             La inclinación vive en un contenedor aparte para que el `rotate` no
             arrastre al texto ni cree un contexto de apilamiento sobre él. En
             móvil se endereza y se reduce a dos columnas rectas: una pila
-            inclinada a 360px de ancho solo desperdicia espacio. */}
-        <div className="relative" role="group" aria-label={c.mosaicLabel}>
+            inclinada a 360px de ancho solo desperdicia espacio.
+
+            A partir de `lg` las columnas se desplazan en bucle en direcciones
+            opuestas —la izquierda baja, la derecha sube— en CSS puro. Por
+            debajo de `lg` no hay animación y las tarjetas duplicadas ni se
+            renderizan: en móvil serían seis tarjetas de relleno que el
+            visitante tendría que pasar con el dedo. */}
+        <div className="relative">
+          <div
+            // Los desplazamientos negativos cancelan el `pt-32` y el `pb-24` del
+            // contenedor: la ventana deja de terminar donde empieza el texto y
+            // llega al borde de la sección, arriba y abajo. Las tarjetas no
+            // cambian de tamaño —su ancho lo sigue marcando la rejilla—, solo
+            // se ve más recorrido.
+            className="relative lg:absolute lg:inset-x-0 lg:-top-32 lg:-bottom-24 lg:[clip-path:inset(0_-100vw)]"
+            role="group"
+            aria-label={c.mosaicLabel}>
           <div className="grid grid-cols-2 gap-4 lg:[transform:perspective(1400px)rotateY(-14deg)rotateZ(-3deg)_scale(1.12)] lg:[transform-origin:left_center]">
             {columns.map((column, i) => (
               <div
                 key={i}
-                className={`flex flex-col gap-4 ${i === 1 ? "mt-8 lg:mt-14" : ""}`}>
-                {column.map((project) => (
-                  <Shot key={project.src} project={project} lang={lang} />
+                className={`mosaic-col ${
+                  i === 0 ? "mosaic-col--down" : "mosaic-col--up"
+                } flex flex-col gap-4 ${i === 1 ? "mt-8 lg:mt-0" : ""}`}>
+                {/* Tres bloques idénticos, no nueve tarjetas sueltas.
+
+                    Con las seis como hijos directos, el recorrido del bucle
+                    había que deducirlo de la altura total asumiendo que todas
+                    miden lo mismo — y no lo hacen: el redondeo de `aspect-ratio`
+                    deja ~1px de diferencia por tarjeta, que se acumulaba en 3px
+                    de salto en cada vuelta. Con bloques iguales el recorrido
+                    sale exacto por construcción.
+
+                    ¿Por qué TRES y no dos? Porque la ventana ahora llega a los
+                    bordes de la sección y es más alta que un bloque. Con dos,
+                    al final del ciclo quedaba un hueco vacío por debajo: el
+                    contenido no alcanzaba a cubrirla. Con tres, la ventana
+                    puede medir hasta dos bloques y siempre queda tapada. */}
+                {[0, 1, 2].map((copy) => (
+                  <div
+                    key={copy}
+                    className={`flex flex-col gap-4 ${copy > 0 ? "hidden lg:flex" : ""}`}
+                    // Las vueltas extra repiten la misma información: si no se
+                    // ocultan, un lector de pantalla lee los proyectos tres veces.
+                    aria-hidden={copy > 0 ? "true" : undefined}>
+                    {column.map((project) => (
+                      <Shot
+                        key={project.src}
+                        project={project}
+                        lang={lang}
+                        decorative={copy > 0}
+                      />
+                    ))}
+                  </div>
                 ))}
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Velo superior.
+
+          Al sangrar el mosaico hasta el borde de la sección, las capturas
+          pasan por detrás del header —que es transparente y sin blur— y cinco
+          elementos del menú quedaban sobre imágenes claras. Este degradado les
+          devuelve una base oscura sin tapar el mosaico: es opaco en los
+          primeros 30% (la banda del menú) y se desvanece por completo antes de
+          llegar al titular.
+
+          Solo en `lg`: por debajo el mosaico va apilado bajo el texto y no
+          hay nada que velar. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 hidden h-44 bg-linear-to-b from-grolow-ink from-30% via-grolow-ink/60 via-65% to-transparent lg:block"
+      />
 
       {/* Degradado de salida hacia el crema del resto del sitio. */}
       <div

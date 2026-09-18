@@ -35,8 +35,21 @@
   --font-brand: var(--font-brand-face), var(--font-noto), system-ui, sans-serif;
 }
 
-html, body {
+/* `overflow-x` SOLO en `html`, nunca en `body`.
+
+   Con la regla en ambos, el `body` se convierte en contenedor de scroll — y
+   entonces cualquier línea de tiempo ligada al scroll se ancla a él en vez de
+   a la ventana. Como el body no se desplaza nunca (lo hace el viewport), el
+   progreso se queda congelado y las animaciones de scroll no avanzan. Costó
+   encontrarlo porque todo lo demás parecía correcto.
+
+   En `html` el recorte se propaga al viewport igual, así que la protección
+   contra desbordes laterales se mantiene. */
+html {
   overflow-x: hidden;
+}
+
+html, body {
   max-width: 100%;
   background: var(--background);
   color: var(--foreground);
@@ -135,4 +148,165 @@ html, body {
 
 @media (min-width: 1024px) {
   .step-card::after { font-size: 7rem; }
+}
+
+/* ── Mosaico del hero: desplazamiento en bucle ────────────────────────────
+   Las dos columnas se mueven en direcciones opuestas: la izquierda baja y la
+   derecha sube. Solo a partir de `lg`, que es donde el mosaico pasa a ocupar
+   su propia columna junto al texto; por debajo va apilado y quieto.
+
+   El recorrido exacto está razonado en los keyframes: no es el 50% pelado.
+   Al terminar, el segundo bloque ocupa la posición del primero y el reinicio
+   es imperceptible.
+
+   Solo se anima `transform`: el compositor lo resuelve sin recalcular layout
+   ni repintar, que es lo que permite que doce tarjetas se muevan sin coste
+   medible en el hilo principal. */
+/* El desplazamiento NO es -50%.
+
+   La columna tiene dos bloques idénticos separados por un hueco, así que su
+   alto es 2·bloque + hueco. Para que el segundo bloque caiga exactamente donde
+   estaba el primero hay que recorrer bloque + hueco, y eso es medio alto MÁS
+   medio hueco — no medio alto pelado. Con -50% a secas el bucle se desviaba y
+   el reinicio se veía como un tirón.
+
+   `--mosaic-gap` mantiene el número atado al `gap` real de la columna: si se
+   cambia uno hay que cambiar el otro. */
+@keyframes mosaic-up {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, var(--mosaic-shift), 0); }
+}
+
+@keyframes mosaic-down {
+  from { transform: translate3d(0, var(--mosaic-shift), 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+@media (min-width: 64rem) {
+  .mosaic-col {
+    /* Deben coincidir con el JSX: `gap-4` (1rem) y tres bloques repetidos. */
+    --mosaic-gap: 1rem;
+    --mosaic-copies: 3;
+    /* Un bloque más un hueco. Con N bloques iguales, el alto total es
+       N·bloque + (N-1)·hueco, así que (alto + hueco) / N == bloque + hueco. */
+    --mosaic-shift: calc((-100% - var(--mosaic-gap)) / var(--mosaic-copies));
+    will-change: transform;
+    animation-duration: 46s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  /* Velocidades distintas: con la misma cadencia las dos columnas se leen
+     como un bloque rígido moviéndose, no como dos planos independientes. */
+  .mosaic-col--down { animation-name: mosaic-down; animation-duration: 52s; }
+  .mosaic-col--up   { animation-name: mosaic-up; }
+
+  /* Al apuntar sobre el mosaico se detiene, para poder mirar una captura o
+     seguir un enlace sin perseguirlo. */
+  .mosaic-col:hover,
+  .mosaic-col:focus-within {
+    animation-play-state: paused;
+  }
+}
+
+/* El bloque global de movimiento reducido ya neutraliza la duración, pero eso
+   dejaría la columna congelada a mitad de recorrido. Aquí se cancela la
+   animación entera y se devuelve a su posición inicial. */
+@media (prefers-reduced-motion: reduce) {
+  .mosaic-col {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ── «Nuestro método»: carrusel ligado al scroll ──────────────────────────
+   Capa base — funciona siempre: el raíl es un contenedor con scroll
+   horizontal y anclaje. Se arrastra con el dedo, con la rueda lateral o con
+   el teclado, y no depende de ninguna función moderna. */
+.method-rail {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* Oculta la barra sin quitar la capacidad de desplazar. */
+  scrollbar-width: none;
+  /* Permite medir el ancho del raíl desde dentro con `cqw`. */
+  container-type: inline-size;
+}
+
+.method-rail::-webkit-scrollbar { display: none; }
+
+/* La tira mide lo que suman sus tarjetas, no lo que mide el raíl.
+
+   Con el ancho por defecto —el del raíl— las tarjetas en `%` se medían sobre
+   ella y el recorrido `calc(-100% + 100cqw)` daba exactamente cero: la tira y
+   el raíl valían lo mismo. De ahí que las tarjetas se dimensionen en `cqw`
+   (contra el raíl) y la tira en `max-content`. */
+.method-track {
+  width: max-content;
+}
+
+.method-card {
+  scroll-snap-align: start;
+  /* Una tarjeta y un asomo de la siguiente: el asomo es lo que le dice al
+     visitante que hay más a la derecha sin necesidad de flechas. */
+  flex: 0 0 82cqw;
+}
+
+@media (min-width: 40rem) { .method-card { flex: 0 0 46cqw; } }
+@media (min-width: 64rem) { .method-card { flex: 0 0 34cqw; } }
+
+/* Capa de mejora — solo si el navegador sabe animar con el scroll, hay sitio
+   y el visitante no ha pedido menos movimiento. Si falta cualquiera de las
+   tres, se queda la capa base, que es perfectamente usable. */
+@supports (animation-timeline: view()) {
+  @media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
+    .method-rail {
+      overflow-x: hidden;
+    }
+
+    /* La línea de tiempo se declara en la SECCIÓN y se referencia por nombre.
+
+       Con `view()` a secas el sujeto habría sido la propia tira, y `view()`
+       mide contra el scrollport más cercano — que al poner `overflow-x: hidden`
+       pasa a ser el raíl, no la página. Resultado: el progreso se quedaba
+       clavado en 0.5 pasara lo que pasara con el scroll, porque la tira nunca
+       se mueve respecto a su raíl. Declarándola en la sección, que sí está en
+       el flujo de la página, el avance se mide contra la ventana. */
+    .method-section {
+      view-timeline-name: --method-view;
+      view-timeline-axis: block;
+    }
+
+    .method-track {
+      animation: method-pan linear both;
+      animation-timeline: --method-view;
+      /* Arranca con la sección ya centrada, no cuando asoma.
+
+         Con `cover 12%` el recorrido empezaba mientras la sección todavía
+         estaba entrando por abajo: al llegar al centro —que es cuando de
+         verdad la estás leyendo— el progreso ya iba por 0.50 y de la primera
+         tarjeta solo quedaba la mitad. Medido.
+
+         `cover 50%` es exactamente el punto en que la sección queda centrada
+         en la ventana, así que hasta ahí la tira no se ha movido y la tarjeta
+         1 se ve entera.
+
+         Y termina en `70%`, no más tarde: medido, el raíl deja de verse entero
+         a partir de `cover 74%`. Cerrando antes, el recorrido se consume con
+         las tarjetas todavía delante en vez de completarse cuando ya se han
+         ido. Comprimir el tramo también lo hace más rápido —408px de
+         desplazamiento en 319px de scroll— que es como se pidió. */
+      animation-range: cover 50% cover 70%;
+    }
+  }
+}
+
+/* El recorrido es exactamente «lo que sobra»: ancho de la tira menos ancho del
+   raíl. `100cqw` es el ancho del raíl —de ahí el `container-type`— y `-100%`
+   el de la tira, porque un porcentaje en `translate` se mide sobre el propio
+   elemento. Así la última tarjeta queda alineada al borde derecho, sin hueco
+   ni recorte, con cualquier número de tarjetas. */
+@keyframes method-pan {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(calc(-100% + 100cqw), 0, 0); }
 }

@@ -477,7 +477,17 @@ export default function CeoWarlingPage() {
   const d = t[lang];
 
   return (
-    <main id="top" className="w-full bg-grolow-dark text-grolow-light">
+    // El recorte lateral va aquí y no en el `body`.
+    //
+    // Esta página desborda de verdad —el mosaico de Hero2 mide 170% del ancho
+    // y su propio header se pasa en tablet—, y antes lo tapaba un
+    // `overflow-x: hidden` global. Ese global convertía el `body` en contenedor
+    // de scroll y rompía las animaciones ligadas al scroll de TODO el sitio,
+    // así que se quitó. El recorte se queda donde hace falta: en la página que
+    // realmente desborda.
+    <main
+      id="top"
+      className="w-full overflow-x-hidden bg-grolow-dark text-grolow-light">
       <PortfolioHeader
         lang={lang}
         setLang={persistLang}

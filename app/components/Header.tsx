@@ -4,10 +4,29 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   AnimatePresence,
-  motion,
+  LazyMotion,
+  m,
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
+/**
+ * Carga diferida del motor de animación.
+ *
+ * `motion.*` arrastra todo Framer Motion al bundle inicial: 140 KB sin
+ * comprimir, 45 KB transferidos, de los que Lighthouse medía un 54% sin usar.
+ * Y el header está en la ruta crítica, así que ese coste se paga antes del
+ * primer pintado.
+ *
+ * `LazyMotion` + `m.*` dejan en el bundle solo el núcleo y piden el resto en
+ * una petición aparte, después del primer pintado. `domAnimation` cubre lo
+ * que este header usa —transform, opacity, AnimatePresence—; deja fuera layout
+ * y drag, que aquí no se usan. Por eso va en modo `strict`: si alguien escribe
+ * `motion.*` en este árbol, falla en desarrollo en vez de volver a colar el
+ * paquete entero sin que nadie se entere.
+ */
+const cargarAnimacion = () =>
+  import("framer-motion").then((mod) => mod.domAnimation);
+
 import { services } from "./services/Services";
 import { useHeaderTrigger } from "./hooks/useHeaderTrigger";
 import { usePathname, useRouter } from "next/navigation";
@@ -86,7 +105,7 @@ function LangToggle({
     <div
       role="group"
       aria-label={label}
-      className={`flex items-center rounded-full border overflow-hidden font-extrabold transition-colors duration-300 ${
+      className={`flex items-center rounded-full border overflow-hidden font-extrabold transition-colors duration-300  ${
         compact
           ? "border-white/30 text-[10px]"
           : "border-grolow-light/20 text-[11px]"
@@ -106,7 +125,7 @@ function LangToggle({
           href={switchLocale(pathname, l)}
           hrefLang={l}
           aria-current={lang === l ? "true" : undefined}
-          className={`grid min-h-11 min-w-11 place-items-center px-2.5 uppercase tracking-wide transition-colors ${
+          className={`grid min-h-7 min-w-11 place-items-center px-2.5 uppercase tracking-wide transition-colors ${
             lang === l
               ? compact
                 ? "bg-white text-grolow-ink"
@@ -221,7 +240,8 @@ export default function Header() {
   const onDark = overTrigger && !menuOpen;
 
   return (
-    <motion.header
+    <LazyMotion features={cargarAnimacion} strict>
+      <m.header
       initial={{ y: -90, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -268,18 +288,18 @@ export default function Header() {
                     : "text-grolow-light/80 hover:text-grolow-light"
               }`}>
               {c.services}
-              <motion.span
+              <m.span
                 animate={{ rotate: servicesOpen ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
                 className="text-[10px] leading-none">
                 ▾
-              </motion.span>
+              </m.span>
             </button>
 
             {/* ---------- Mini modal de servicios ---------- */}
             <AnimatePresence>
               {servicesOpen && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 12, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.97 }}
@@ -287,7 +307,7 @@ export default function Header() {
                   className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-[560px] rounded-2xl bg-grolow-card border border-grolow-light/10 shadow-[0_30px_60px_rgba(14,21,18,0.18)] p-2 origin-top">
                   <ul>
                     {services.map((service, i) => (
-                      <motion.li
+                      <m.li
                         key={service.id}
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -318,7 +338,7 @@ export default function Header() {
                             →
                           </span>
                         </button>
-                      </motion.li>
+                      </m.li>
                     ))}
                   </ul>
                   <div className="border-t border-grolow-light/10 mt-1 pt-1">
@@ -329,7 +349,7 @@ export default function Header() {
                       {c.allServices}
                     </Link>
                   </div>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>
@@ -376,13 +396,13 @@ export default function Header() {
             aria-label={mobileOpen ? c.closeMenu : c.openMenu}
             aria-expanded={mobileOpen}
             className="md:hidden relative w-11 h-11 flex flex-col items-center justify-center gap-1.5">
-            <motion.span
+            <m.span
               animate={mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
               className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${
                 onDark ? "bg-white" : "bg-grolow-light"
               }`}
             />
-            <motion.span
+            <m.span
               animate={
                 mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
               }
@@ -397,7 +417,7 @@ export default function Header() {
       {/* ---------- Menú móvil ---------- */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -461,9 +481,10 @@ export default function Header() {
                 {c.cta}
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.header>
+      </m.header>
+    </LazyMotion>
   );
 }
