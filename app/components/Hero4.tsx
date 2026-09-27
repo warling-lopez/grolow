@@ -86,8 +86,16 @@ const COPY = {
       </>
     ),
     ctas: [
-      { label: "Book a diagnosis", href: "#contacto", variant: "solid" as const },
-      { label: "Systems in production", href: "#casos", variant: "outline" as const },
+      {
+        label: "Book a diagnosis",
+        href: "#contacto",
+        variant: "solid" as const,
+      },
+      {
+        label: "Systems in production",
+        href: "#casos",
+        variant: "outline" as const,
+      },
     ],
     dialTitle: (
       <>
@@ -118,8 +126,16 @@ const COPY = {
       </>
     ),
     ctas: [
-      { label: "Agendar diagnóstico", href: "#contacto", variant: "solid" as const },
-      { label: "Sistemas en producción", href: "#casos", variant: "outline" as const },
+      {
+        label: "Agendar diagnóstico",
+        href: "#contacto",
+        variant: "solid" as const,
+      },
+      {
+        label: "Sistemas en producción",
+        href: "#casos",
+        variant: "outline" as const,
+      },
     ],
     dialTitle: (
       <>
@@ -208,7 +224,8 @@ function Logo3D({
     const prev = lastScroll.current;
     lastScroll.current = y;
     if (reduce || !el?.getCameraOrbit || prev === null) return;
-    const theta = el.getCameraOrbit().theta + ((y - prev) * SPIN_PER_PX * Math.PI) / 180;
+    const theta =
+      el.getCameraOrbit().theta + ((y - prev) * SPIN_PER_PX * Math.PI) / 180;
     el.cameraOrbit = `${theta}rad ${PHI} auto`;
   });
 
@@ -373,7 +390,12 @@ function DialRing({ rotate }: { rotate: MotionValue<number> }) {
         />
       ))}
       {/* Aguja: señala el servicio activo. */}
-      <circle cx="50" cy={50 - DIAL_R} r="1.4" className="fill-grolow-brand-bright" />
+      <circle
+        cx="50"
+        cy={50 - DIAL_R}
+        r="1.4"
+        className="fill-grolow-brand-bright"
+      />
     </motion.svg>
   );
 }
@@ -470,9 +492,14 @@ export default function Hero4({
 
     measure();
     const ro = new ResizeObserver(measure);
-    [wrapRef, heroRef, dialSectionRef, dialRef, deskSlotRef, mobileSlotRef].forEach(
-      (r) => r.current && ro.observe(r.current),
-    );
+    [
+      wrapRef,
+      heroRef,
+      dialSectionRef,
+      dialRef,
+      deskSlotRef,
+      mobileSlotRef,
+    ].forEach((r) => r.current && ro.observe(r.current));
     window.addEventListener("resize", measure);
     return () => {
       ro.disconnect();
@@ -516,7 +543,9 @@ export default function Hero4({
     });
 
   return (
-    <div ref={wrapRef} className="relative w-full overflow-x-clip bg-black text-white">
+    <div
+      ref={wrapRef}
+      className="relative w-full overflow-x-clip bg-black text-white">
       {/* ---------- Línea central: cruza hero y dial ---------- */}
       <div
         className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-white/10"
@@ -524,7 +553,9 @@ export default function Hero4({
       />
 
       {/* ================= HERO ================= */}
-      <section ref={heroRef} className="relative min-h-screen w-full overflow-hidden">
+      <section
+        ref={heroRef}
+        className="relative min-h-screen w-full overflow-hidden">
         {/* ---------- Hexágonos (esquina inferior derecha) ---------- */}
         <div
           className="pointer-events-none absolute bottom-[4%] right-[3%] hidden w-[22vw] max-w-sm lg:block"
@@ -544,7 +575,7 @@ export default function Hero4({
           <div className="flex flex-col items-end lg:justify-center lg:pr-16">
             <h1
               lang={lang}
-              className={`font-display w-full uppercase leading-[0.9] tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(3rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
+              className={`font-display w-full uppercase leading-[0.9] tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
               {resolvedTitle}
             </h1>
           </div>
@@ -627,7 +658,9 @@ export default function Hero4({
       </section>
 
       {/* ================= LOGO (capa sticky sobre hero + dial) ================= */}
-      <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+      <div
+        className="pointer-events-none absolute inset-0 z-20"
+        aria-hidden="true">
         <div className="sticky top-0 h-screen w-full">
           <motion.div
             className="pointer-events-auto absolute left-0 top-0"

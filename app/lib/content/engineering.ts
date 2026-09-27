@@ -83,6 +83,7 @@ export const COPY = {
     toolsLabel: "Con qué lo verificamos",
     metrics: "Métricas de la misma medición",
     localBuild: "build de producción, pendiente de re-medir en el sitio publicado",
+    dragHint: "Arrastra para explorar",
   },
   en: {
     label: "How we build it",
@@ -104,5 +105,6 @@ export const COPY = {
     toolsLabel: "What we verify it with",
     metrics: "Metrics from the same run",
     localBuild: "production build, pending re-measurement on the live site",
+    dragHint: "Drag to explore",
   },
 } as const;

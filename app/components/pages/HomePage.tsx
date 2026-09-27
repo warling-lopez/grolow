@@ -36,6 +36,11 @@ export default function Home({ lang }: { lang: Lang }) {
       {/* Proceso / método justo debajo del hero */}
       <ProcessSection lang={lang} />
 
+      {/* Estándares de ingeniería: entre el método y los casos, porque es la
+          prueba de que el método se cumple antes de enseñar a quién se le
+          cumplió. */}
+      <EngineeringSection lang={lang} />
+
       <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
 
       {/* Enlaces a las páginas de servicio y de segmento: es lo que reparte
@@ -49,8 +54,6 @@ export default function Home({ lang }: { lang: Lang }) {
           {c.allServices}
         </Link>
       </div>
-
-      <EngineeringSection lang={lang} />
 
       {/* Prueba social antes del FAQ: quien llega aquí ya entendió la oferta
           y lo siguiente que pesa es que otro lo haya hecho antes. Si todavía
