@@ -35,6 +35,11 @@
   --font-sans: var(--font-body), system-ui, sans-serif;
   --font-display: var(--font-heading), system-ui, sans-serif;
   --font-brand: var(--font-brand-face), var(--font-body), system-ui, sans-serif;
+
+  /* Solo para el h1 del hero de portada (Hero4): Bebas Neue, más grueso y
+     condensado que Saira, que es lo que llevaba ese titular antes de pasar
+     todos los titulares del sitio a Saira. */
+  --font-h1: var(--font-hero-h1), system-ui, sans-serif;
 }
 
 /* `overflow-x` SOLO en `html`, nunca en `body`.

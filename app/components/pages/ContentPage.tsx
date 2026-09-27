@@ -48,14 +48,14 @@ export default function ContentPage({
         )}
         {/* Único h1 de la página. */}
         <h1 className="text-[clamp(2rem,5.5vw,4rem)] font-black uppercase text-grolow-light leading-[1.02] tracking-tight">
-          {h1}
+          {withBrand(h1)}
         </h1>
         <div className="mt-6 space-y-4 max-w-3xl">
           {lead.map((paragraph, i) => (
             <p
               key={i}
               className="text-base md:text-lg text-grolow-light/80 leading-relaxed">
-              {paragraph}
+              {withBrand(paragraph)}
             </p>
           ))}
         </div>
@@ -65,7 +65,7 @@ export default function ContentPage({
         {sections.map((section, i) => (
           <section key={i} className="max-w-3xl">
             <h2 className="text-2xl md:text-3xl font-extrabold text-grolow-light tracking-tight mb-5">
-              {section.h2}
+              {withBrand(section.h2)}
             </h2>
 
             {section.body && (
@@ -74,7 +74,7 @@ export default function ContentPage({
                   <p
                     key={j}
                     className="text-base text-grolow-light/75 leading-relaxed">
-                    {paragraph}
+                    {withBrand(paragraph)}
                   </p>
                 ))}
               </div>
@@ -94,15 +94,15 @@ export default function ContentPage({
                         <Link
                           href={href}
                           className="font-bold text-grolow-cream underline underline-offset-4 hover:text-grolow-accent transition-colors">
-                          {bullet.title}
+                          {withBrand(bullet.title)}
                         </Link>
                       ) : (
                         <p className="font-bold text-grolow-light">
-                          {bullet.title}
+                          {withBrand(bullet.title)}
                         </p>
                       )}
                       <p className="text-grolow-light/70 leading-relaxed mt-1">
-                        {bullet.text}
+                        {withBrand(bullet.text)}
                       </p>
                     </li>
                   );
@@ -115,14 +115,14 @@ export default function ContentPage({
                 {section.subsections.map((sub, j) => (
                   <div key={j}>
                     <h3 className="text-lg md:text-xl font-bold text-grolow-light mb-3">
-                      {sub.h3}
+                      {withBrand(sub.h3)}
                     </h3>
                     <div className="space-y-4">
                       {sub.body.map((paragraph, k) => (
                         <p
                           key={k}
                           className="text-base text-grolow-light/75 leading-relaxed">
-                          {paragraph}
+                          {withBrand(paragraph)}
                         </p>
                       ))}
                     </div>
@@ -141,9 +141,9 @@ export default function ContentPage({
             <dl className="space-y-6">
               {faq.map((item, i) => (
                 <div key={i} className="border-t border-grolow-light/10 pt-5">
-                  <dt className="font-bold text-grolow-light">{item.q}</dt>
+                  <dt className="font-bold text-grolow-light">{withBrand(item.q)}</dt>
                   <dd className="text-grolow-light/70 leading-relaxed mt-2">
-                    {item.a}
+                    {withBrand(item.a)}
                   </dd>
                 </div>
               ))}
@@ -173,9 +173,9 @@ export default function ContentPage({
 
         <section className="max-w-3xl border-t border-grolow-light/10 pt-10">
           <h2 className="text-2xl md:text-3xl font-extrabold text-grolow-light tracking-tight">
-            {cta.heading}
+            {withBrand(cta.heading)}
           </h2>
-          <p className="text-grolow-light/75 leading-relaxed mt-4">{cta.text}</p>
+          <p className="text-grolow-light/75 leading-relaxed mt-4">{withBrand(cta.text)}</p>
           <WhatsAppLink
             message={cta.message}
             placement="page-cta"

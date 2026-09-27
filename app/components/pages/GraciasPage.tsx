@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Brand from '@/app/components/Brand';
 import { useLang } from '@/app/components/hooks/useLang';
 import { pathFor } from '@/app/lib/i18n';
 
@@ -72,7 +73,7 @@ export default function GraciasPage() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-grolow-light/10 text-[11px] text-grolow-light/80 uppercase tracking-widest">
-          Grolow Studio · grolow.com ·{' '}
+          <Brand /> Studio · grolow.com ·{' '}
           <a
             href="https://instagram.com/grolow.studio"
             target="_blank"

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans, Saira } from "next/font/google";
+import { Open_Sans, Saira, Bebas_Neue } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import ClientLayout from "@/app/components/ClientLayout";
@@ -51,6 +51,18 @@ const heading = Saira({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-heading",
+  display: "swap",
+});
+
+/**
+ * Bebas Neue: solo para el h1 del hero de portada (`Hero4`). Es el titular
+ * que llevaba antes de pasar los titulares del sitio a Saira; el usuario pidió
+ * un font más grueso ahí en concreto, no revertir el resto de la tipografía.
+ */
+const heroH1 = Bebas_Neue({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  variable: "--font-hero-h1",
   display: "swap",
 });
 
@@ -190,7 +202,7 @@ export default async function LangRootLayout({
   return (
     <html
       lang={HTML_LANG[lang]}
-      className={`${body.variable} ${heading.variable} ${brand.variable} bg-grolow-dark`}>
+      className={`${body.variable} ${heading.variable} ${brand.variable} ${heroH1.variable} bg-grolow-dark`}>
       <body className="antialiased text-grolow-light relative">
         <script
           type="application/ld+json"

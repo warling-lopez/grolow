@@ -575,7 +575,7 @@ export default function Hero4({
           <div className="flex flex-col items-end lg:justify-center lg:pr-16">
             <h1
               lang={lang}
-              className={`font-display w-full uppercase leading-[0.9] tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
+              className={`font-h1 w-full uppercase leading-[0.9] tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
               {resolvedTitle}
             </h1>
           </div>
