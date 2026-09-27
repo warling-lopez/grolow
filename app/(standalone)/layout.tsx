@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Sundanese } from "next/font/google";
+import { Open_Sans, Saira } from "next/font/google";
 import localFont from "next/font/local";
 import ClientLayout from "@/app/components/ClientLayout";
 import Analytics from "@/app/components/Analytics";
@@ -17,15 +17,22 @@ import "../globals.css";
  * renderizado.
  */
 /**
- * Las mismas dos familias que el sitio principal. Se declaran otra vez porque
+ * Las mismas tres familias que el sitio principal. Se declaran otra vez porque
  * este es un root layout independiente: `next/font` inyecta las variables en
- * el `<html>` de cada árbol, así que sin repetirlo aquí `font-brand` y la
- * familia de cuerpo caían al fallback en estas rutas.
+ * el `<html>` de cada árbol, así que sin repetirlo aquí `font-brand` y las
+ * familias de cuerpo y titulares caían al fallback en estas rutas.
  */
-const noto = Noto_Sans_Sundanese({
+const body = Open_Sans({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-noto",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const heading = Saira({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -49,7 +56,7 @@ export default function StandaloneRootLayout({
   return (
     <html
       lang="es-DO"
-      className={`${noto.variable} ${brand.variable} bg-grolow-dark`}>
+      className={`${body.variable} ${heading.variable} ${brand.variable} bg-grolow-dark`}>
       <body className="antialiased text-grolow-light relative">
         <ClientLayout>{children}</ClientLayout>
         <Analytics />

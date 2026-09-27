@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Hero3 from "@/app/components/Hero3";
+import Hero4 from "@/app/components/Hero4";
 import ProcessSection from "@/app/components/ProcessSection";
 import EngineeringSection from "@/app/components/EngineeringSection";
 import FaqSection from "@/app/components/FaqSection";
@@ -28,7 +28,7 @@ export default function Home({ lang }: { lang: Lang }) {
 
   return (
     <main className="w-full">
-      <Hero3 lang={lang} />
+      <Hero4 />
 
       {/* Por qué nosotros, antes que el proceso: es la pregunta que trae el
           visitante después del hero. */}

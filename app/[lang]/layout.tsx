@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Sundanese } from "next/font/google";
+import { Open_Sans, Saira } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import ClientLayout from "@/app/components/ClientLayout";
@@ -27,11 +27,10 @@ import "../globals.css";
 /**
  * Tipografía del sitio.
  *
- * `Noto Sans Sundanese` es la familia de todo: cuerpo y titulares. Pese al
- * nombre, su versión de Google trae los subsets `latin` y `latin-ext`, así que
- * cubre el español completo (ñ y acentos incluidos); sin `latin-ext` esos
- * caracteres saldrían de la fuente de reserva y el texto se vería con dos
- * tipografías mezcladas.
+ * `Open Sans` es el cuerpo de todo el sitio y `Saira` los titulares. Ambas
+ * llevan los subsets `latin` y `latin-ext`, así que cubren el español completo
+ * (ñ y acentos incluidos); sin `latin-ext` esos caracteres saldrían de la
+ * fuente de reserva y el texto se vería con dos tipografías mezcladas.
  *
  * `Sergio Trendy` queda reservada para el rótulo de marca. Va subseteada al
  * latín que puede aparecer en un rótulo: 100 KB de .ttf → 16 KB de .woff2.
@@ -41,10 +40,17 @@ import "../globals.css";
  * ALLOWED». grolow.com es un sitio comercial, así que antes de publicar hay que
  * comprar la licencia en kulokale.com/product/sergio-trendy o cambiar de fuente.
  */
-const noto = Noto_Sans_Sundanese({
+const body = Open_Sans({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-noto",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const heading = Saira({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -184,7 +190,7 @@ export default async function LangRootLayout({
   return (
     <html
       lang={HTML_LANG[lang]}
-      className={`${noto.variable} ${brand.variable} bg-grolow-dark`}>
+      className={`${body.variable} ${heading.variable} ${brand.variable} bg-grolow-dark`}>
       <body className="antialiased text-grolow-light relative">
         <script
           type="application/ld+json"

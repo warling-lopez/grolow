@@ -1,4 +1,5 @@
 import LetterReveal from "./LetterReveal";
+import MethodRail from "./MethodRail";
 import type { Lang } from "@/app/lib/i18n";
 
 /**
@@ -63,8 +64,8 @@ const STEPS: Step[] = [
 ];
 
 const COPY = {
-  en: { heading: "OUR", headingAccent: "METHOD.", label: "How we work" },
-  es: { heading: "NUESTRO", headingAccent: "MÉTODO.", label: "Cómo trabajamos" },
+  en: { heading: "OUR", headingAccent: "METHOD.", label: "How we work", prev: "Previous step", next: "Next step" },
+  es: { heading: "NUESTRO", headingAccent: "MÉTODO.", label: "Cómo trabajamos", prev: "Paso anterior", next: "Paso siguiente" },
 } as const;
 
 export default function ProcessSection({ lang }: { lang: Lang }) {
@@ -100,10 +101,7 @@ export default function ProcessSection({ lang }: { lang: Lang }) {
             sigue siendo del visitante; esto solo lo aprovecha. La versión
             anterior de esta sección secuestraba ~4.000px de scroll para
             enseñar tres tarjetas, y eso es justo lo que se quitó. */}
-        <div
-          className="method-rail -mx-4 px-4 md:-mx-8 md:px-8"
-          role="group"
-          aria-label={c.label}>
+        <MethodRail label={c.label} prevLabel={c.prev} nextLabel={c.next}>
           <ol className="method-track flex gap-4">
             {STEPS.map((step) => (
               <li
@@ -126,7 +124,7 @@ export default function ProcessSection({ lang }: { lang: Lang }) {
               </li>
             ))}
           </ol>
-        </div>
+        </MethodRail>
 
       </div>
     </section>

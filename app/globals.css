@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F6F1E2; /* Crema cálido (modo claro) */
-  --foreground: #0E1512; /* Casi negro (ink) */
+  --background: #f6f1e2; /* Crema cálido (modo claro) */
+  --foreground: #0e1512; /* Casi negro (ink) */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-grolow-dark: #F6F1E2; /* Token de fondo: ahora crema cálido */
-  --color-grolow-card: #FFFCF4; /* Tarjeta clara */
-  --color-grolow-accent: #002B29; /* Verde más oscuro (final de gradiente) */
+  --color-grolow-dark: #f6f1e2; /* Token de fondo: ahora crema cálido */
+  --color-grolow-card: #fffcf4; /* Tarjeta clara */
+  --color-grolow-accent: #002b29; /* Verde más oscuro (final de gradiente) */
   --color-grolow-cream: #004643;
   --color-grolow-cyan: #004643; /* Mismo acento. Vivía solo en tailwind.config.ts,
                                    que Tailwind v4 no carga sin @config: sus usos
@@ -18,21 +18,23 @@
   /* Marca en superficie oscura. #008F8B da 4.95:1 sobre --color-grolow-ink,
      así que sirve como enlace y acento ahí; sobre fondo claro se queda en
      3.96:1 y NO debe usarse (para eso está --color-grolow-cream, #004643). */
-  --color-grolow-brand: #008F8B;
-  --color-grolow-brand-bright: #06E0DA; /* Teal claro para TEXTO PEQUEÑO sobre
+  --color-grolow-brand: #008f8b;
+  --color-grolow-brand-bright: #06e0da; /* Teal claro para TEXTO PEQUEÑO sobre
      oscuro. #008F8B da 4.95:1 sobre el fondo liso, pero en cuanto la superficie
      lleva un velo de marca (los chips usan un 8% del propio teal) baja a 4.27 y
      deja de pasar AA. Este llega a 11.8:1 y aguanta cualquiera de las dos. */
-  --color-grolow-ink: #07100F;   /* Fondo del pie: negro con subtono teal */
+  --color-grolow-ink: #000000; /* Fondo del pie: negro con subtono teal */
   --color-grolow-cream-seccion: #f0f0f0; /* Acento verde profundo (botones, eyebrow, gradiente) */
-  --color-grolow-lime: #BEF264; /* Verde lima — mitad inferior del SplitText (editable) */
-  --color-grolow-light: #0E1512; /* Token de texto/bordes: ahora ink */
+  --color-grolow-lime: #bef264; /* Verde lima — mitad inferior del SplitText (editable) */
+  --color-grolow-light: #0e1512; /* Token de texto/bordes: ahora ink */
 
-  /* Ambas las inyecta next/font desde app/[lang]/layout.tsx.
-     `sans` es la familia de todo el sitio; `brand` solo el rótulo «grolow». */
-  --font-sans: var(--font-noto), system-ui, sans-serif;
-  --font-display: var(--font-noto), system-ui, sans-serif;
-  --font-brand: var(--font-brand-face), var(--font-noto), system-ui, sans-serif;
+  /* Las tres las inyecta next/font desde app/[lang]/layout.tsx (y su réplica
+     en app/(standalone)/layout.tsx): `sans` es el cuerpo de todo el sitio
+     (Open Sans), `display` los titulares (Saira) y `brand` solo el rótulo
+     «grolow» (Sergio Trendy). */
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-heading), system-ui, sans-serif;
+  --font-brand: var(--font-brand-face), var(--font-body), system-ui, sans-serif;
 }
 
 /* `overflow-x` SOLO en `html`, nunca en `body`.
@@ -49,7 +51,8 @@ html {
   overflow-x: hidden;
 }
 
-html, body {
+html,
+body {
   max-width: 100%;
   background: var(--background);
   color: var(--foreground);
@@ -57,8 +60,12 @@ html, body {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .animate-\\[marquee_20s_linear_infinite\\] {
@@ -86,7 +93,7 @@ html, body {
 }
 
 .letter-reveal.is-shown .letter-reveal__char {
-  animation: letter-rise 520ms cubic-bezier(.16, 1, .3, 1) forwards;
+  animation: letter-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: calc(var(--delay, 0ms) + var(--i) * var(--step, 28ms));
 }
 
@@ -99,12 +106,18 @@ html, body {
 
 /* ── Entrada de bloque ─────────────────────────────────────────────────── */
 .rise-in {
-  animation: rise-in 640ms cubic-bezier(.16, 1, .3, 1) both;
+  animation: rise-in 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes rise-in {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Movimiento reducido ──────────────────────────────────────────────────
@@ -113,10 +126,12 @@ html, body {
    desaparecer: `opacity` se fuerza a 1 porque el estado inicial de las letras
    es invisible y sin animación se quedarían en blanco. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 
@@ -147,7 +162,9 @@ html, body {
 }
 
 @media (min-width: 1024px) {
-  .step-card::after { font-size: 7rem; }
+  .step-card::after {
+    font-size: 7rem;
+  }
 }
 
 /* ── Mosaico del hero: desplazamiento en bucle ────────────────────────────
@@ -173,13 +190,21 @@ html, body {
    `--mosaic-gap` mantiene el número atado al `gap` real de la columna: si se
    cambia uno hay que cambiar el otro. */
 @keyframes mosaic-up {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(0, var(--mosaic-shift), 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, var(--mosaic-shift), 0);
+  }
 }
 
 @keyframes mosaic-down {
-  from { transform: translate3d(0, var(--mosaic-shift), 0); }
-  to   { transform: translate3d(0, 0, 0); }
+  from {
+    transform: translate3d(0, var(--mosaic-shift), 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @media (min-width: 64rem) {
@@ -198,8 +223,13 @@ html, body {
 
   /* Velocidades distintas: con la misma cadencia las dos columnas se leen
      como un bloque rígido moviéndose, no como dos planos independientes. */
-  .mosaic-col--down { animation-name: mosaic-down; animation-duration: 52s; }
-  .mosaic-col--up   { animation-name: mosaic-up; }
+  .mosaic-col--down {
+    animation-name: mosaic-down;
+    animation-duration: 52s;
+  }
+  .mosaic-col--up {
+    animation-name: mosaic-up;
+  }
 
   /* Al apuntar sobre el mosaico se detiene, para poder mirar una captura o
      seguir un enlace sin perseguirlo. */
@@ -233,7 +263,9 @@ html, body {
   container-type: inline-size;
 }
 
-.method-rail::-webkit-scrollbar { display: none; }
+.method-rail::-webkit-scrollbar {
+  display: none;
+}
 
 /* La tira mide lo que suman sus tarjetas, no lo que mide el raíl.
 
@@ -252,8 +284,16 @@ html, body {
   flex: 0 0 82cqw;
 }
 
-@media (min-width: 40rem) { .method-card { flex: 0 0 46cqw; } }
-@media (min-width: 64rem) { .method-card { flex: 0 0 34cqw; } }
+@media (min-width: 40rem) {
+  .method-card {
+    flex: 0 0 46cqw;
+  }
+}
+@media (min-width: 64rem) {
+  .method-card {
+    flex: 0 0 34cqw;
+  }
+}
 
 /* Capa de mejora — solo si el navegador sabe animar con el scroll, hay sitio
    y el visitante no ha pedido menos movimiento. Si falta cualquiera de las
@@ -307,6 +347,10 @@ html, body {
    elemento. Así la última tarjeta queda alineada al borde derecho, sin hueco
    ni recorte, con cualquier número de tarjetas. */
 @keyframes method-pan {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(calc(-100% + 100cqw), 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-100% + 100cqw), 0, 0);
+  }
 }
