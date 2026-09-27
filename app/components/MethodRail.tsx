@@ -30,8 +30,9 @@ export default function MethodRail({
     const rail = railRef.current;
     if (!rail) return;
     const update = () => {
-      setAtStart(rail.scrollLeft <= 4);
-      setAtEnd(rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4);
+      const max = rail.scrollWidth - rail.clientWidth;
+      setAtStart(rail.scrollLeft <= 8);
+      setAtEnd(rail.scrollLeft >= max - 8);
     };
     update();
     rail.addEventListener("scroll", update, { passive: true });
@@ -47,7 +48,12 @@ export default function MethodRail({
     const card = rail?.querySelector<HTMLElement>(".method-card");
     if (!rail || !card) return;
     const gap = parseFloat(getComputedStyle(card.parentElement!).columnGap) || 0;
-    rail.scrollBy({ left: dir * (card.offsetWidth + gap), behavior: "smooth" });
+    const max = rail.scrollWidth - rail.clientWidth;
+    const target = Math.min(
+      max,
+      Math.max(0, rail.scrollLeft + dir * (card.offsetWidth + gap)),
+    );
+    rail.scrollTo({ left: target, behavior: "smooth" });
   };
 
   const btn =
