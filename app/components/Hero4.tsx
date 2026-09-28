@@ -109,10 +109,13 @@ const COPY = {
     title: (
       <>
         <span className="block">Construimos</span>
+        <br />
         <Accent>
           <span className="block">sistemas de</span>
+          <br/>
           <span className="block">operación</span>
         </Accent>
+        <br/>
         <span className="block">a medida.</span>
       </>
     ),
@@ -566,16 +569,16 @@ export default function Hero4({
         {/* ---------- Hueco del logo en desktop (lo ocupa la capa sticky) ---------- */}
         <div
           ref={deskSlotRef}
-          className="absolute hidden lg:block left-1/2 bottom-[5%] h-[min(38vh,24vw)] w-[min(38vh,24vw)] -translate-x-1/2"
+          className="absolute hidden lg:block left-1/2 h-[min(100vh,55vw)] w-[min(38vh,24vw)] -translate-x-1/2"
           aria-hidden="true"
         />
 
         <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-8 px-6 pb-16 pt-28 lg:grid-cols-2 lg:gap-0 lg:px-0 lg:pb-24 lg:pt-36">
           {/* ---------- Columna izquierda: rótulo ---------- */}
           <div className="flex flex-col items-end lg:justify-center lg:pr-16">
-            <h1
+            <h1 
               lang={lang}
-              className={`font-h1 w-full uppercase leading-[0.9] tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
+              className={`font-h1 w-full uppercase leading-[0.9]  tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
               {resolvedTitle}
             </h1>
           </div>
