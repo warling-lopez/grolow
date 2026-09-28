@@ -90,6 +90,24 @@ function inlineSvgPaint(roots: HTMLElement[]) {
     );
 }
 
+type ModelViewerLike = HTMLElement & {
+  loaded?: boolean;
+  toBlob?: (options?: { idealAspect?: boolean }) => Promise<Blob>;
+};
+
+/** Elementos con WebGL propio que se capturan con su propio `toBlob()`. */
+const isLive = (el: HTMLElement) => el.tagName === "MODEL-VIEWER";
+
+async function grabLive(el: HTMLElement): Promise<ImageBitmap | null> {
+  const mv = el as ModelViewerLike;
+  if (!mv.loaded || !mv.toBlob) return null;
+  try {
+    return await createImageBitmap(await mv.toBlob({ idealAspect: false }));
+  } catch {
+    return null;
+  }
+}
+
 export default function SectionTransition({
   from,
   layers = TRANSITION_CONFIG.section.layers,
@@ -113,7 +131,7 @@ export default function SectionTransition({
     let cancelled = false;
     let teardown: (() => void) | undefined;
 
-    type Shot = { el: HTMLElement; image: HTMLCanvasElement };
+    type Shot = { el: HTMLElement; image: CanvasImageSource; live: boolean };
     let shots: Shot[] | null = null;
     let capturing: Promise<void> | null = null;
     let background = "#000";
@@ -132,9 +150,14 @@ export default function SectionTransition({
         const els = sources();
         const pixelRatio = transitionDpr();
         const next: Shot[] = [];
-        const restoreSvg = inlineSvgPaint(els);
+        const restoreSvg = inlineSvgPaint(els.filter((el) => !isLive(el)));
         try {
           for (const el of els) {
+            if (isLive(el)) {
+              const image = await grabLive(el);
+              if (image) next.push({ el, image, live: true });
+              continue;
+            }
             if (!fontCSS.has(el)) fontCSS.set(el, await getFontEmbedCSS(el));
             next.push({
               el,
@@ -143,6 +166,7 @@ export default function SectionTransition({
                 fontEmbedCSS: fontCSS.get(el),
                 skipAutoScale: true,
               }),
+              live: false,
             });
           }
         } finally {
@@ -158,6 +182,27 @@ export default function SectionTransition({
       return capturing;
     };
 
+    /**
+     * El logo 3D (<model-viewer>) no se puede capturar con html-to-image: su
+     * WebGL va aparte. Se pide su propio fotograma con `toBlob()` y, como gira
+     * sin parar, se refresca mientras la transición está cerca (`refreshLive`)
+     * para que el fotograma congelado sea el de ese instante.
+     */
+    let refreshing = false;
+    const refreshLive = async () => {
+      if (refreshing || !shots) return;
+      refreshing = true;
+      try {
+        for (const shot of shots) {
+          if (!shot.live) continue;
+          const image = await grabLive(shot.el);
+          if (image) shot.image = image;
+        }
+      } finally {
+        refreshing = false;
+      }
+    };
+
     /** Compone la textura: el origen tal y como estaba al empezar. */
     const compose = (shift: number) => {
       const renderer = getRenderer();
@@ -170,16 +215,18 @@ export default function SectionTransition({
       const sy = h / window.innerHeight;
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, w, h);
-      for (const { el, image } of shots) {
+      for (const { el, image, live } of shots) {
         const r = el.getBoundingClientRect();
         // Desde el inicio de la transición el origen se desplaza 1:1 con el
-        // scroll: `shift` lo devuelve a donde estaba en ese instante.
+        // scroll: `shift` lo devuelve a donde estaba en ese instante. El logo
+        // lleva transform (escala), así que se usa su caja visible; el resto,
+        // su tamaño de layout, que es el de la captura.
         ctx.drawImage(
           image,
           r.left * sx,
           (r.top + shift) * sy,
-          el.offsetWidth * sx,
-          el.offsetHeight * sy,
+          (live ? r.width : el.offsetWidth) * sx,
+          (live ? r.height : el.offsetHeight) * sy,
         );
       }
       renderer.setTexture(texCanvas);
@@ -256,12 +303,19 @@ export default function SectionTransition({
       ref.st = main;
 
       // Captura previa: al acercarse al inicio y mientras dure la transición.
+      let liveTimer = 0;
       const prepare = ScrollTrigger.create({
         trigger: outer,
         start: `top ${cfg.captureAhead * 100}%`,
         end: () => `+=${distance() + window.innerHeight * cfg.captureAhead}`,
         onToggle: (self) => {
-          if (self.isActive && !shots) capture();
+          clearInterval(liveTimer);
+          if (!self.isActive) return;
+          if (!shots) capture();
+          liveTimer = window.setInterval(() => {
+            // Una vez empezada la rotura el fotograma ya está en la textura.
+            if (!getRenderer()?.isOwner(owner)) refreshLive();
+          }, 120);
         },
       });
 
@@ -340,6 +394,7 @@ export default function SectionTransition({
       ro.observe(document.body);
 
       teardown = () => {
+        clearInterval(liveTimer);
         clearTimeout(watchTimer);
         window.removeEventListener("scroll", watchdog);
         ro.disconnect();

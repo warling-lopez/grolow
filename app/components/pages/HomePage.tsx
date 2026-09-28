@@ -40,8 +40,9 @@ export default function Home({ lang }: { lang: Lang }) {
 
       {/* Proceso / método justo debajo del hero */}
       {/* «Lo que hacemos bien» (el dial de Hero4) se rompe y revela el método.
-          Primero la línea central y luego el dial: orden de pintado. */}
-      <SectionTransition from={["#hero-center-line", "#lo-que-hacemos-bien"]}>
+          Orden de pintado: línea central, dial y encima el logo 3D. */}
+      <SectionTransition
+        from={["#hero-center-line", "#lo-que-hacemos-bien", "model-viewer"]}>
         <ProcessSection lang={lang} />
       </SectionTransition>
 

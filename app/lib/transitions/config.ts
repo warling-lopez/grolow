@@ -53,8 +53,12 @@ export const TRANSITION_CONFIG = {
   },
 
   loader: {
-    /** Solo en la primera visita de la sesión. `false` = en cada carga. */
-    oncePerSession: true,
+    /**
+     * Solo en la primera visita de la sesión. `false` = en cada carga.
+     * En desarrollo sale siempre, para poder verlo al recargar. En cualquier
+     * entorno, `?intro` en la URL lo fuerza.
+     */
+    oncePerSession: process.env.NODE_ENV === "production",
     storageKey: "grolow:intro-seen",
     /** Alto máximo del palo. En móvil manda `maxHeightVh`. */
     height: 300,

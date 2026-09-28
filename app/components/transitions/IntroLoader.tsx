@@ -30,7 +30,7 @@ import { announceIntroDone } from "@/app/lib/transitions/intro-events";
 const ID = "intro-loader";
 const cfg = TRANSITION_CONFIG.loader;
 
-const DECIDE_SCRIPT = `(function(){try{var el=document.getElementById("${ID}");if(!el)return;if(${cfg.oncePerSession}&&sessionStorage.getItem("${cfg.storageKey}"))return;el.setAttribute("data-state","play");window.__grolowIntroPlay=true;if("scrollRestoration" in history)history.scrollRestoration="manual";window.scrollTo(0,0)}catch(e){}})()`;
+const DECIDE_SCRIPT = `(function(){try{var el=document.getElementById("${ID}");if(!el)return;if(!/[?&]intro\\b/.test(location.search)&&${cfg.oncePerSession}&&sessionStorage.getItem("${cfg.storageKey}"))return;el.setAttribute("data-state","play");window.__grolowIntroPlay=true;if("scrollRestoration" in history)history.scrollRestoration="manual";window.scrollTo(0,0)}catch(e){}})()`;
 
 /** Script inline sin el aviso de React por `<script>` en cliente (ver docs de Next). */
 function InlineScript({ html }: { html: string }) {
