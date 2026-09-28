@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { useLang } from "./hooks/useLang";
 import { pathFor, type RouteId } from "@/app/lib/i18n";
+import { onIntroDone } from "@/app/lib/transitions/intro-events";
 
 /**
  * Hero de portada (/es y /en) + sección «lo que hacemos bien».
@@ -194,13 +195,23 @@ function Logo3D({
   const [loaded, setLoaded] = useState(false);
   const lastScroll = useRef<number | null>(null);
 
+  // Se pide cuando termina la intro de portada, no antes: cargar three.js y
+  // parsear el GLB bloquea el hilo principal ~1 s y congelaba el palo de
+  // carga y la rotura. Sin intro (ya vista, otra navegación) es inmediato.
   useEffect(() => {
     let cancelled = false;
-    import("@google/model-viewer").then(() => {
-      if (!cancelled) setReady(true);
-    });
+    const load = () => {
+      import("@google/model-viewer").then(() => {
+        if (!cancelled) setReady(true);
+      });
+    };
+    // Sin IntroLoader en la página nadie avisaría: se carga ya.
+    const off = document.getElementById("intro-loader")
+      ? onIntroDone(load)
+      : (load(), () => {});
     return () => {
       cancelled = true;
+      off();
     };
   }, []);
 

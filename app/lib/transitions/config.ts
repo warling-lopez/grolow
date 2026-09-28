@@ -66,12 +66,16 @@ export const TRANSITION_CONFIG = {
     thickness: 4,
     color: "#ffffff",
     background: SITE_BLACK,
-    /** Duración mínima de la carga, para que no parpadee si todo está en caché. */
-    minDuration: 1200,
+    /**
+     * Duración del palo si la página ya cargó (y mínima si no, para que no
+     * parpadee). Cuenta desde el inicio de la navegación. Si la página sigue
+     * cargando, el palo espera hasta `maxWait`.
+     */
+    minDuration: 1000,
     /** Si algún recurso no llega en este tiempo, el palo completa igual. */
     maxWait: 4500,
     /** Pausa con el palo lleno antes de romper. */
-    holdAtFull: 120,
+    holdAtFull: 60,
   },
 
   intro: {
