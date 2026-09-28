@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useLang, type Lang } from "./hooks/useLang";
+import WaveHover from "./effects/WaveHover";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -379,8 +380,7 @@ export default function ProjectsSection({
                 "group relative overflow-hidden",
                 "bg-white/60 border border-grolow-light/10",
                 "backdrop-blur-xl rounded-2xl",
-                "p-6 md:p-10",
-                "flex flex-col gap-4",
+                "flex",
                 "hover:border-grolow-light/20 hover:bg-white/70",
                 "transition-colors duration-300 no-underline",
                 "min-h-[220px] md:min-h-[260px]",
@@ -389,6 +389,11 @@ export default function ProjectsSection({
                 .filter(Boolean)
                 .join(" ")}
             >
+              {/* Ondulación que sigue al ratón (solo escritorio). El relleno
+                  vive aquí y no en el <a>: `filter` crea bloque contenedor,
+                  y así la imagen flotante y el brillo, que son absolutos,
+                  no saltan de sitio cuando se activa. */}
+              <WaveHover className="relative flex flex-1 min-w-0 flex-col gap-4 p-6 md:p-10">
               {/* ── Imagen flotante decorativa ──────────────────────────
                   - position: absolute, esquina superior derecha
                   - rotate variable por proyecto para dar variedad
@@ -500,6 +505,7 @@ export default function ProjectsSection({
                   {displayUrl(project.url) ?? project.title}
                 </span>
               </div>
+              </WaveHover>
             </a>
           ))}
         </div>
