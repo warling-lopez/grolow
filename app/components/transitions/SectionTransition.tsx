@@ -45,6 +45,15 @@ type Props = {
   layers?: readonly ColorLayer[];
   /** Recorrido en altos de ventana. */
   length?: number;
+  /**
+   * Para un destino al final de la página (el footer): durante la transición
+   * ocupa al menos `length` ventanas, con su propio fondo. Sin esto, si el
+   * destino mide menos que la ventana, no quedaría scroll para completar la
+   * rotura y debajo se vería un hueco del fondo de la página.
+   */
+  fillViewport?: boolean;
+  /** Al cambiar, se reconfigura (p. ej. la ruta, si vive en un layout). */
+  resetKey?: string;
   className?: string;
   children: ReactNode;
 };
@@ -117,6 +126,8 @@ export default function SectionTransition({
   from,
   layers = TRANSITION_CONFIG.section.layers,
   length = TRANSITION_CONFIG.section.length,
+  fillViewport = false,
+  resetKey,
   className,
   children,
 }: Props) {
@@ -253,10 +264,19 @@ export default function SectionTransition({
       // posiciones no cambian; todo va en `vh` estables).
       ScrollTrigger.config({ ignoreMobileResize: true });
 
+      // Sin sección de origen en esta página no hay nada que romper: el
+      // destino se queda tal cual (p. ej. el footer fuera de la portada).
+      if (sources().length === 0) return;
+
       outer.style.marginTop = `-${length * 100}vh`;
       spacer.style.height = `${length * 100}vh`;
       pinEl.style.position = "sticky";
       pinEl.style.top = "0px";
+      if (fillViewport) {
+        pinEl.style.minHeight = `${length * 100}vh`;
+        const first = pinEl.firstElementChild;
+        if (first) pinEl.style.backgroundColor = getComputedStyle(first).backgroundColor;
+      }
 
       /** Deja la sección como estaba, en su sitio y visible. */
       const restore = () => {
@@ -264,6 +284,8 @@ export default function SectionTransition({
         spacer.style.height = "";
         pinEl.style.position = "";
         pinEl.style.top = "";
+        pinEl.style.minHeight = "";
+        pinEl.style.backgroundColor = "";
         pinEl.style.visibility = "";
         pinEl.style.opacity = "";
         getRenderer()?.release(owner);
@@ -445,7 +467,8 @@ export default function SectionTransition({
       cancelled = true;
       teardown?.();
     };
-  }, [fromKey, layers, length]);
+    // `resetKey` no se lee dentro: solo fuerza a rehacer el montaje.
+  },[fromKey, layers, length, fillViewport, resetKey]);
 
   return (
     <div

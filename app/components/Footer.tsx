@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Brand from "@/app/components/Brand";
+import LiquidHover from "@/app/components/effects/LiquidHover";
 import { useLang } from "@/app/components/hooks/useLang";
 import { pathFor, type Lang, type RouteId } from "@/app/lib/i18n";
 
@@ -31,6 +32,38 @@ const MENU: RouteId[] = [
 ];
 
 const LEGAL: RouteId[] = ["privacidad", "cookies", "terminos"];
+
+/**
+ * El rótulo del pie: distorsión que se nota más que en el resto del sitio,
+ * pero sin deshacer las letras, y una estela #008F8B que las tiñe por donde
+ * pasa el ratón y brilla en el fondo. Todo ajustable aquí.
+ *
+ * `bleed`: el canvas sobresale del rótulo para que lo deformado pueda
+ * salirse de su caja (pasa por encima de lo de abajo) en vez de cortarse
+ * contra una línea invisible.
+ */
+const WORDMARK_LIQUID = {
+  drag: 3.2,
+  maxDrag: 55,
+  radius: 160,
+  waveAmp: 8,
+  waveLength: 160,
+  waveSpeed: 2.2,
+  trail: 24,
+  trailLife: 45,
+  follow: 0.18,
+  trailColor: "#008f8b",
+  tint: 0.8,
+  glow: 0.22,
+  precapture: true,
+  bleed: 90,
+  // Zona que se tiñe de verde alrededor del ratón, px.
+  tintRadius: 55,
+  // Salida: al irse el ratón o soltar el dedo, todo se relaja poco a poco
+  // (~1 s) antes de volver al rótulo quieto. Más bajo = más lento.
+  exitEase: 0.045,
+  touch: true,
+} as const;
 
 const WHATSAPP = "18299946354";
 const EMAIL = "grolow.web@gmail.com";
@@ -122,10 +155,16 @@ export default function Footer() {
           era la «w». El 3.7 en vez de 3.64 deja el margen para la barra de
           scroll, que `100vw` sí cuenta. */}
       <div className="overflow-hidden px-4 md:px-8 pt-14 md:pt-20" aria-hidden="true">
-        <Brand
-          as="div"
-          className="block select-none tracking-[-0.045em] leading-[0.72] text-white text-[calc((100vw-2rem)/3.7)] md:text-[calc((100vw-4rem)/3.7)]"
-        />
+        {/* Distorsión líquida fuerte con estela verde de marca al pasar el
+            ratón (solo escritorio). Precaptura: el rótulo no cambia con el
+            hover, así que la captura se hace al acercarse y el efecto arranca
+            al primer movimiento. */}
+        <LiquidHover options={WORDMARK_LIQUID}>
+          <Brand
+            as="div"
+            className="block select-none tracking-[-0.045em] leading-[0.72] text-white text-[calc((100vw-2rem)/3.7)] md:text-[calc((100vw-4rem)/3.7)]"
+          />
+        </LiquidHover>
       </div>
 
       <div className="max-w-7xl mx-auto w-full px-4 md:px-8 pt-14 md:pt-20 pb-10">

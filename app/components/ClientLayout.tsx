@@ -6,6 +6,7 @@ import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
+import SectionTransition from '@/app/components/transitions/SectionTransition';
 
 /**
  * Lenis y GSAP se cargan dinámicamente, no con un import de módulo.
@@ -110,7 +111,20 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div data-site-content className="relative z-10 h-auto">
         {children}
       </div>
-      {!standalone && <Footer />}
+      {/* En la portada, «Hablemos de tu proyecto» (#contacto, con el FAQ que
+          asoma encima) se rompe y revela el footer, igual que entre «Lo que
+          hacemos bien» y «Nuestro método». En el resto de páginas no hay
+          #contacto y SectionTransition deja el footer tal cual. `resetKey`
+          la reconfigura al navegar (busca el origen en la página nueva) sin
+          remontar el footer, que el header tiene observado. */}
+      {!standalone && (
+        <SectionTransition
+          resetKey={pathname ?? ""}
+          from={["#faq", "#contacto"]}
+          fillViewport>
+          <Footer />
+        </SectionTransition>
+      )}
       {!standalone && <WhatsAppButton />}
       {!standalone && <ScrollToTopButton />}
     </>
