@@ -235,8 +235,10 @@ export default function Header() {
   // los ítems del panel.
   const menuOpen = servicesOpen || mobileOpen;
 
-  // overTrigger sigue mandando en los tamaños, pero los colores claros solo
-  // valen sobre la sección oscura: con el menú abierto el fondo es crema.
+  // Sobre una sección oscura (las que llevan `data-header-trigger`: el hero
+  // con el reloj y el footer) el texto pasa a los tonos del footer. Con un
+  // menú abierto no: el panel lleva fondo crema opaco y se lee en tinta.
+  // overTrigger manda además en los tamaños.
   const onDark = overTrigger && !menuOpen;
 
   return (
@@ -253,8 +255,12 @@ export default function Header() {
             // invertía el texto y dejaba el logo y el menú casi ilegibles al
             // hacer scroll. Un crema translúcido con desenfoque mantiene la
             // tinta a pleno contraste.
-            ? "bg-transparent backdrop-blur-md border-b border-grolow-dark/10 shadow-[0_8px_30px_rgba(14,21,18,0.06)]"
-            : "bg-transparent border-b border-grolow-light/10 shadow-[0_8px_30px_rgba(14,21,18,0.06) "
+            ? `bg-transparent backdrop-blur-md border-b shadow-[0_8px_30px_rgba(14,21,18,0.06)] ${
+                onDark ? "border-white/10" : "border-grolow-dark/10"
+              }`
+            : `bg-transparent border-b ${
+                onDark ? "border-white/10" : "border-grolow-light/10"
+              }`
       }`}>
       <nav
         className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-6 transition-all duration-300 h-12">
@@ -263,7 +269,7 @@ export default function Header() {
           onClick={scrollTop}
           aria-label={`grolow — ${c.home}`}
           className={`font-brand capitalize inline-flex min-h-11 items-center hover:opacity-70 transition-all duration-300 ${
-            overTrigger ? "text-lg text-color-background" : "text-2xl"
+            overTrigger ? "text-lg" : "text-2xl"
           } ${onDark ? "text-white" : "text-grolow-light"}`}>
           grolow
         </button>
@@ -280,11 +286,9 @@ export default function Header() {
                 overTrigger ? "text-xs" : "text-sm"
               } ${
                 servicesOpen
-                  ? onDark
-                    ? "text-white"
-                    : "text-grolow-cream"
+                  ? "text-grolow-cream"
                   : onDark
-                    ? "text-white/80 hover:text-white"
+                    ? "text-white/65 hover:text-grolow-brand-bright"
                     : "text-grolow-light/80 hover:text-grolow-light"
               }`}>
               {c.services}
@@ -358,8 +362,9 @@ export default function Header() {
             const className = `px-4 py-2 font-semibold tracking-wide transition-all duration-300 ${
               overTrigger ? "text-xs" : "text-sm"
             } ${
+              // Mismos tonos que los enlaces del footer.
               onDark
-                ? "text-white/80 hover:text-white"
+                ? "text-white/65 hover:text-grolow-brand-bright"
                 : "text-grolow-light/80 hover:text-grolow-light"
             }`;
             return link.route ? (
@@ -384,7 +389,13 @@ export default function Header() {
           {/* ---------- CTA desktop ---------- */}
           <Link
             href={pathFor("contacto", lang)!}
-            className={`hidden md:inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold hover:bg-grolow-cream hover:text-white transition-all duration-300 ${
+            // Sobre oscuro la píldora en tinta desaparecería contra el negro:
+            // pasa a blanca, con el verde brillante del footer en hover.
+            className={`hidden md:inline-flex items-center gap-2 rounded-full font-bold transition-all duration-300 ${
+              onDark
+                ? "bg-white text-grolow-ink hover:bg-grolow-brand-bright"
+                : "bg-grolow-light text-grolow-dark hover:bg-grolow-cream hover:text-white"
+            } ${
               overTrigger ? "px-4 py-2 text-xs" : "px-4 py-2 text-sm"
             }`}>
             {c.cta}

@@ -32,6 +32,41 @@ export function transitionDpr() {
   return Math.min(window.devicePixelRatio || 1, coarse ? maxDprCoarse : maxDpr);
 }
 
+/**
+ * Alto ESTABLE de la ventana, en px CSS: el de `100lvh` (con la barra del
+ * navegador móvil oculta).
+ *
+ * `innerHeight` cambia cada vez que la barra de Safari/Chrome móvil aparece o
+ * se esconde al hacer scroll; medir con él hacía que el canvas se estirara o
+ * se redimensionara a mitad de transición. `100lvh` no cambia con la barra:
+ * el canvas mide siempre lo mismo y, cuando la barra está visible, su parte
+ * de abajo simplemente queda tapada por ella. Se mide con una sonda fija.
+ */
+const STABLE_VH = (() => {
+  if (typeof CSS === "undefined") return "100vh";
+  return CSS.supports("height", "100lvh") ? "100lvh" : "100vh";
+})();
+
+let probe: HTMLDivElement | null = null;
+
+export function viewportHeight() {
+  if (!probe) {
+    probe = document.createElement("div");
+    probe.setAttribute("aria-hidden", "true");
+    Object.assign(probe.style, {
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "0",
+      height: STABLE_VH,
+      visibility: "hidden",
+      pointerEvents: "none",
+    });
+    document.body.appendChild(probe);
+  }
+  return probe.offsetHeight || window.innerHeight;
+}
+
 export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -51,7 +86,9 @@ export class TransitionRenderer {
       position: "fixed",
       inset: "0",
       width: "100%",
-      height: "100%",
+      // Alto estable (ver viewportHeight): no se mueve con la barra móvil.
+      height: STABLE_VH,
+      bottom: "auto",
       pointerEvents: "none",
       display: "none",
     });
@@ -139,16 +176,30 @@ export class TransitionRenderer {
     return this.owner === owner;
   }
 
-  /** Tamaño en píxeles del canvas (viewport × DPR limitado). */
+  /**
+   * Tamaño en píxeles del canvas: ancho de la ventana × alto estable
+   * (`viewportHeight`), por el DPR limitado. `cssH` es el alto en px CSS con
+   * el que hay que escalar lo que se dibuje en la textura.
+   */
   resize() {
     const dpr = transitionDpr();
+    const cssH = viewportHeight();
     const w = Math.max(1, Math.round(window.innerWidth * dpr));
-    const h = Math.max(1, Math.round(window.innerHeight * dpr));
+    const h = Math.max(1, Math.round(cssH * dpr));
     if (this.canvas.width !== w || this.canvas.height !== h) {
       this.canvas.width = w;
       this.canvas.height = h;
     }
-    return { w, h, dpr };
+    return { w, h, dpr, cssH };
+  }
+
+  /** true si el ancho real cambió (girar el móvil); la barra no cuenta. */
+  needsResize() {
+    const dpr = transitionDpr();
+    return (
+      this.canvas.width !== Math.max(1, Math.round(window.innerWidth * dpr)) ||
+      this.canvas.height !== Math.max(1, Math.round(viewportHeight() * dpr))
+    );
   }
 
   setTexture(source: TexImageSource) {

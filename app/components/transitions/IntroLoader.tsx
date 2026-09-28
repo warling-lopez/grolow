@@ -158,13 +158,15 @@ export default function IntroLoader() {
 
       // La pantalla del loader, redibujada en 2D con el palo en su sitio
       // exacto: se rompe todo junto, fondo y palo.
-      const { canvas } = renderer;
+      // Escala contra el alto estable del canvas (ver viewportHeight), no
+      // contra innerHeight, que cambia con la barra del navegador móvil.
+      const { w, h, cssH } = renderer.resize();
       const tex = document.createElement("canvas");
-      tex.width = canvas.width;
-      tex.height = canvas.height;
+      tex.width = w;
+      tex.height = h;
       const ctx = tex.getContext("2d")!;
-      const sx = tex.width / window.innerWidth;
-      const sy = tex.height / window.innerHeight;
+      const sx = w / window.innerWidth;
+      const sy = h / cssH;
       ctx.fillStyle = cfg.background;
       ctx.fillRect(0, 0, tex.width, tex.height);
       const r = bar.getBoundingClientRect();

@@ -568,6 +568,9 @@ export default function Hero4({
   return (
     <div
       ref={wrapRef}
+      // Superficie oscura (hero + reloj): al pasar por detrás del header,
+      // este cambia a sus tonos claros (ver useHeaderTrigger).
+      data-header-trigger="true"
       className="relative w-full overflow-x-clip bg-black text-white">
       {/* ---------- Línea central: cruza hero y dial ---------- */}
       <div

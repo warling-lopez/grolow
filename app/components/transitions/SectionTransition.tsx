@@ -9,6 +9,7 @@ import {
   getRenderer,
   prefersReducedMotion,
   transitionDpr,
+  viewportHeight,
 } from "@/app/lib/transitions/renderer";
 
 /**
@@ -213,12 +214,14 @@ export default function SectionTransition({
     const compose = (shift: number) => {
       const renderer = getRenderer();
       if (!renderer || !shots) return;
-      const { w, h } = renderer.resize();
+      // Escala contra el alto ESTABLE del canvas, no contra innerHeight, que
+      // cambia con la barra del navegador móvil.
+      const { w, h, cssH } = renderer.resize();
       texCanvas.width = w;
       texCanvas.height = h;
       const ctx = texCanvas.getContext("2d")!;
       const sx = w / window.innerWidth;
-      const sy = h / window.innerHeight;
+      const sy = h / cssH;
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, w, h);
       for (const { el, image, live } of shots) {
@@ -245,6 +248,10 @@ export default function SectionTransition({
       ]);
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
+      // En móvil la barra del navegador aparece/desaparece al hacer scroll y
+      // dispara `resize`: que ScrollTrigger no re-mida todo por eso (las
+      // posiciones no cambian; todo va en `vh` estables).
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       outer.style.marginTop = `-${length * 100}vh`;
       spacer.style.height = `${length * 100}vh`;
@@ -302,9 +309,10 @@ export default function SectionTransition({
           }
           if (!renderer.acquire(owner, cfg.zIndex)) return fade();
           composeNow();
-        } else if (renderer.canvas.height !== Math.round(window.innerHeight * transitionDpr())) {
-          // La barra del navegador móvil cambió el alto de la ventana a mitad
-          // de transición: sin esto el canvas se estiraría.
+        } else if (renderer.needsResize()) {
+          // Cambio real de tamaño (girar el móvil, redimensionar la
+          // ventana) a mitad de transición. La barra del navegador móvil no
+          // entra aquí: el canvas mide con el alto estable.
           composeNow();
         }
         pinEl.style.opacity = "";
@@ -330,7 +338,7 @@ export default function SectionTransition({
       const prepare = ScrollTrigger.create({
         trigger: outer,
         start: `top ${cfg.captureAhead * 100}%`,
-        end: () => `+=${distance() + window.innerHeight * cfg.captureAhead}`,
+        end: () => `+=${distance() + viewportHeight() * cfg.captureAhead}`,
         onToggle: (self) => {
           clearInterval(liveTimer);
           if (!self.isActive) return;
@@ -342,9 +350,15 @@ export default function SectionTransition({
         },
       });
 
-      // Tras un resize la captura ya no vale: se descarta y se rehace.
+      // Tras un resize la captura ya no vale: se descarta y se rehace. Solo
+      // cuenta si cambia el ANCHO: en móvil la barra del navegador dispara
+      // `resize` al hacer scroll (solo cambia el alto), y rehacer la captura
+      // ahí hacía que la transición diera saltos.
       let resizeTimer = 0;
+      let lastWidth = window.innerWidth;
       const onResize = () => {
+        if (window.innerWidth === lastWidth) return;
+        lastWidth = window.innerWidth;
         clearTimeout(resizeTimer);
         resizeTimer = window.setTimeout(() => {
           shots = null;
