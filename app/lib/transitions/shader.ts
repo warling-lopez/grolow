@@ -30,6 +30,7 @@ uniform float uDotSize;
 uniform float uEdgeAmp;
 uniform float uWarp;
 uniform float uEdgeB;
+uniform float uBaseDelay; // fracción del progreso antes de que empiece a revelar
 uniform float uDither;   // 1 = trama Bayer (pixelado), 0 = borde sólido
 uniform float uPixelY;   // alto de 1 píxel en unidades de vUv (antialias)
 
@@ -80,7 +81,11 @@ void main(){
   if (uUse2 > 0.5) {
     c = mix(c, vec4(uColor2, 1.0), reveal(vUv, clamp(uProgress * uLead2, 0.0, 1.0), uSeed2, uEdge2));
   }
-  float rB = reveal(vUv, uProgress, 0.0, uEdgeB);
+  // Con uBaseDelay > 0 lo de debajo no empieza a verse hasta que las capas
+  // han avanzado: la intro lo usa para que el verde cubra la pantalla entera
+  // antes de romperse otra vez (dos pasadas).
+  float pB = clamp((uProgress - uBaseDelay) / max(1.0 - uBaseDelay, 0.0001), 0.0, 1.0);
+  float rB = reveal(vUv, pB, 0.0, uEdgeB);
   gl_FragColor = mix(c, vec4(0.0), rB);
 }
 `;

@@ -37,6 +37,23 @@ export type ColorLayer = {
 export const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 
+/**
+ * easeInOutCubic aplicado a cada pasada por separado: la intro son dos
+ * pasadas (verde que cubre, verde que se rompe) y cada una arranca y frena
+ * por su cuenta, en vez de ser un único acelerón.
+ *
+ * `split` es la fracción del TIEMPO que ocupa la primera pasada; la salida
+ * siempre pone el cambio de pasada en 0.5 de progreso (ver `revealDelay`).
+ */
+export const easeTwoPasses = (split: number) => (t: number) =>
+  t < split
+    ? 0.5 * easeInOutCubic(t / split)
+    : 0.5 + 0.5 * easeInOutCubic((t - split) / (1 - split));
+
+/** Duraciones de las dos pasadas de la intro, en ms. */
+const INTRO_COVER_MS = 1000; // el verde sube hasta cubrir la pantalla
+const INTRO_REVEAL_MS = 500; // el verde se rompe y revela el hero
+
 export const TRANSITION_CONFIG = {
   shader: {
     /** Intensidad del borde irregular (original 0.6). Más bajo = más recto. */
@@ -83,16 +100,23 @@ export const TRANSITION_CONFIG = {
     holdAtFull: 60,
   },
 
+  /**
+   * Dos pasadas, con una pantalla entera de distancia entre ellas:
+   *   1. El verde se come la pantalla negra del loader hasta cubrirla entera.
+   *   2. Ese verde se rompe y revela el hero (negro).
+   * `revealDelay: 0.5` → el hero no empieza a verse hasta la mitad, y las
+   * capas terminan justo ahí (`lead` 2.4 y 2.0; el brillante va un 20% por
+   * delante del de marca).
+   */
   intro: {
-    duration: 1400,
-    ease: easeInOutCubic,
-    // Dos verdes: el brillante abre el borde y el de marca lo sigue, así la
-    // rotura se lee verde de principio a fin, sin negro entre medias.
-    // 20% de diferencia entre cada capa y la siguiente (y la última y lo que
-    // revela): 1.4 → 1.2 → 1.0.
+    // Las duraciones de cada pasada se tocan arriba: INTRO_COVER_MS e
+    // INTRO_REVEAL_MS.
+    duration: INTRO_COVER_MS + INTRO_REVEAL_MS,
+    ease: easeTwoPasses(INTRO_COVER_MS / (INTRO_COVER_MS + INTRO_REVEAL_MS)),
+    revealDelay: 0.5,
     layers: [
-      { color: BRAND_GREEN_BRIGHT, lead: 1.4, seed: 3.1, edge: 0.1 },
-      { color: BRAND_GREEN, lead: 1.2, seed: 7.4, edge: 0.09 },
+      { color: BRAND_GREEN_BRIGHT, lead: 2.4, seed: 3.1, edge: 0.1 },
+      { color: BRAND_GREEN, lead: 2.0, seed: 7.4, edge: 0.09 },
     ] as ColorLayer[],
     /** Sin WebGL o con prefers-reduced-motion: fundido simple. */
     fadeDuration: 500,
@@ -106,10 +130,10 @@ export const TRANSITION_CONFIG = {
     resizeDebounce: 250,
     /** z-index del canvas: por debajo del header (z-50). */
     zIndex: 40,
-    // Mismo 20% de diferencia entre capas que en la intro.
+    // 20% de diferencia entre capas: brillante 1.4 → marca 1.2 → revela 1.0.
     layers: [
       { color: BRAND_GREEN_BRIGHT, lead: 1.4, seed: 3.1, edge: 0.1 },
-      { color: SITE_BLACK, lead: 1.2, seed: 7.4, edge: 0.09 },
+      { color: BRAND_GREEN, lead: 1.2, seed: 7.4, edge: 0.09 },
     ] as ColorLayer[],
   },
 } as const;

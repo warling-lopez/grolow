@@ -172,7 +172,7 @@ export default function IntroLoader() {
       ctx.fillRect(r.left * sx, r.top * sy, r.width * sx, r.height * sy);
 
       renderer.setTexture(tex);
-      renderer.render(0, intro.layers);
+      renderer.render(0, intro.layers, intro.revealDelay);
       // Mismo frame: el canvas (idéntico) sustituye al overlay HTML.
       el.dataset.state = "reveal";
 
@@ -181,7 +181,7 @@ export default function IntroLoader() {
         if (cancelled) return;
         holdLenis();
         const p = Math.min(1, (now - t0) / intro.duration);
-        renderer.render(intro.ease(p), intro.layers);
+        renderer.render(intro.ease(p), intro.layers, intro.revealDelay);
         if (p < 1) raf = requestAnimationFrame(step);
         else finish();
       };

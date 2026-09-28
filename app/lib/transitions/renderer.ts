@@ -13,7 +13,7 @@ import { TRANSITION_CONFIG, type ColorLayer } from "./config";
 
 const UNIFORMS = [
   "uSectionA", "uProgress", "uAspect", "uDotSize", "uEdgeAmp", "uWarp", "uEdgeB",
-  "uDither", "uPixelY",
+  "uDither", "uPixelY", "uBaseDelay",
   "uColor1", "uLead1", "uUse1", "uSeed1", "uEdge1",
   "uColor2", "uLead2", "uUse2", "uSeed2", "uEdge2",
 ] as const;
@@ -156,7 +156,8 @@ export class TransitionRenderer {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
   }
 
-  render(progress: number, layers: readonly ColorLayer[]) {
+  /** `baseDelay`: fracción del progreso antes de empezar a revelar (0 = a la vez). */
+  render(progress: number, layers: readonly ColorLayer[], baseDelay = 0) {
     if (this.lost) return;
     const gl = this.gl;
     const u = this.u;
@@ -173,6 +174,7 @@ export class TransitionRenderer {
     gl.uniform1f(u.uEdgeB, baseEdge);
     gl.uniform1f(u.uDither, dither ? 1 : 0);
     gl.uniform1f(u.uPixelY, 1 / h);
+    gl.uniform1f(u.uBaseDelay, baseDelay);
 
     ([1, 2] as const).forEach((i) => {
       const layer = layers[i - 1];
