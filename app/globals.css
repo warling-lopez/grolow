@@ -56,6 +56,33 @@ html {
   overflow-x: hidden;
 }
 
+/* ── Intro de portada (IntroLoader) ───────────────────────────────────────
+   El overlay sale en el HTML oculto; el script inline lo pasa a `play` antes
+   del primer pintado. Sin JS nunca aparece.
+
+   El contenido de la página vive en un contexto de apilamiento propio
+   (z-10, ClientLayout), así que el overlay no puede tapar al header (z-50)
+   por sí solo: mientras está el palo, se sube ese contexto entero. En
+   `reveal` ya no hace falta, el canvas de la rotura va en <body> encima de
+   todo, y así el header se revela junto con el hero. */
+.intro-loader {
+  display: none;
+  touch-action: none;
+}
+
+.intro-loader[data-state="play"] {
+  display: flex;
+}
+
+html:has(.intro-loader[data-state="play"]),
+html:has(.intro-loader[data-state="reveal"]) {
+  overflow: hidden;
+}
+
+html:has(.intro-loader[data-state="play"]) [data-site-content] {
+  z-index: 100;
+}
+
 html,
 body {
   max-width: 100%;

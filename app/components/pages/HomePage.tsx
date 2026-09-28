@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Hero4 from "@/app/components/Hero4";
+import IntroLoader from "@/app/components/transitions/IntroLoader";
+import SectionTransition from "@/app/components/transitions/SectionTransition";
 import ProcessSection from "@/app/components/ProcessSection";
 import EngineeringSection from "@/app/components/EngineeringSection";
 import FaqSection from "@/app/components/FaqSection";
@@ -28,13 +30,20 @@ export default function Home({ lang }: { lang: Lang }) {
 
   return (
     <main className="w-full">
+      {/* Loader + rotura de entrada. Solo en la portada, y va antes del hero
+          para que su script decida antes de que el hero se pinte. */}
+      <IntroLoader />
       <Hero4 />
 
       {/* Por qué nosotros, antes que el proceso: es la pregunta que trae el
           visitante después del hero. */}
 
       {/* Proceso / método justo debajo del hero */}
-      <ProcessSection lang={lang} />
+      {/* «Lo que hacemos bien» (el dial de Hero4) se rompe y revela el método.
+          Primero la línea central y luego el dial: orden de pintado. */}
+      <SectionTransition from={["#hero-center-line", "#lo-que-hacemos-bien"]}>
+        <ProcessSection lang={lang} />
+      </SectionTransition>
 
       {/* Estándares de ingeniería: entre el método y los casos, porque es la
           prueba de que el método se cumple antes de enseñar a quién se le

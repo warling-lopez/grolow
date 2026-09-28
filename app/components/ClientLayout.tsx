@@ -107,7 +107,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       {!standalone && <Header />}
-      <div className="relative z-10 h-auto">
+      <div data-site-content className="relative z-10 h-auto">
         {children}
       </div>
       {!standalone && <Footer />}

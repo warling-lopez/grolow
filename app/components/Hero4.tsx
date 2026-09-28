@@ -430,6 +430,14 @@ type Geometry = {
 };
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+
+/**
+ * Fracción del recorrido fijado en la que el anillo completa su vuelta. El
+ * resto es una pausa quieta antes de la transición a «Nuestro método»: la
+ * captura de la rotura se toma ahí, así que el dial tiene que estar ya en su
+ * estado final (anillo a 360°, aguja en el primer servicio).
+ */
+const DIAL_SPIN_END = 0.85;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 
@@ -529,10 +537,11 @@ export default function Hero4({
   const logoScale = useTransform(travel, (p) =>
     geo ? lerp(1, geo.end.size / geo.start.size, p) : 1,
   );
-  const ringRotate = useTransform(pin, (p) => (reduce ? 0 : p * 360));
+  const spin = useTransform(pin, (p) => clamp01(p / DIAL_SPIN_END));
+  const ringRotate = useTransform(spin, (p) => (reduce ? 0 : p * 360));
 
   // La aguja arranca arriba (N) y da una vuelta: cada cuarto enciende un servicio.
-  useMotionValueEvent(pin, "change", (p) => {
+  useMotionValueEvent(spin, "change", (p) => {
     setActive(Math.round(p * 4) % 4);
   });
 
@@ -551,6 +560,7 @@ export default function Hero4({
       className="relative w-full overflow-x-clip bg-black text-white">
       {/* ---------- Línea central: cruza hero y dial ---------- */}
       <div
+        id="hero-center-line"
         className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-white/10"
         aria-hidden="true"
       />
@@ -621,7 +631,9 @@ export default function Hero4({
       {/* El alto extra es el recorrido de scroll durante el que el dial se
           queda fijado y el anillo da su vuelta. */}
       <section ref={dialSectionRef} className="relative h-[260vh] w-full">
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div
+          id="lo-que-hacemos-bien"
+          className="sticky top-0 h-screen w-full overflow-hidden">
           {/* Línea horizontal del punto de mira */}
           <div
             className="absolute inset-x-0 top-[56%] h-px bg-white/10"
