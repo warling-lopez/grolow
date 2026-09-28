@@ -20,12 +20,16 @@ import {
  * Mecánica:
  * - El destino sube `length` altos de ventana (margen negativo) y queda
  *   encima del final del origen, oculto (`visibility: hidden`).
- * - Cuando su borde superior toca el de la ventana, ScrollTrigger lo fija
- *   (pin + scrub) durante `length` ventanas. En ese momento el canvas WebGL
- *   compartido pasa a mostrar la captura del origen —en la misma posición—
- *   y el shader la va rompiendo: donde revela es transparente y se ve el
- *   destino, que es HTML real.
- * - El margen negativo y el espaciador del pin se compensan: la página
+ * - Cuando su borde superior toca el de la ventana se queda fijo durante
+ *   `length` ventanas. En ese momento el canvas WebGL compartido pasa a
+ *   mostrar la captura del origen —en la misma posición— y el shader la va
+ *   rompiendo: donde revela es transparente y se ve el destino, HTML real.
+ * - Se fija con `position: sticky` (seguido de un espaciador de `length`
+ *   ventanas; con `padding` no vale, sticky no entra en el relleno), NO con el pin de ScrollTrigger. En iOS el scroll va en el hilo
+ *   del compositor y el pin por JS llega unos frames tarde: el destino se
+ *   veía entrando por abajo mientras la rotura ya estaba en marcha. Sticky lo
+ *   resuelve el navegador sin retraso. ScrollTrigger solo mide el progreso.
+ * - El margen negativo y el espaciador se compensan: la página
  *   mide lo mismo que antes.
  * - Al volver con scroll hacia arriba todo se deshace en orden inverso.
  *
@@ -116,13 +120,15 @@ export default function SectionTransition({
   children,
 }: Props) {
   const outerRef = useRef<HTMLDivElement>(null);
+  const spacerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const fromKey = [from].flat().join("|");
 
   useEffect(() => {
     const outer = outerRef.current;
+    const spacer = spacerRef.current;
     const pinEl = pinRef.current;
-    if (!outer || !pinEl) return;
+    if (!outer || !spacer || !pinEl) return;
 
     const cfg = TRANSITION_CONFIG.section;
     const selectors = fromKey.split("|");
@@ -240,21 +246,37 @@ export default function SectionTransition({
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
 
-      // Un pin anterior sobre el mismo nodo (efecto re-ejecutado sin
-      // desmontar) se revierte antes de crear el nuevo.
-      ScrollTrigger.getAll()
-        .filter((t) => t.pin === pinEl)
-        .forEach((t) => t.kill(true));
       outer.style.marginTop = `-${length * 100}vh`;
+      spacer.style.height = `${length * 100}vh`;
+      pinEl.style.position = "sticky";
+      pinEl.style.top = "0px";
+
+      /** Deja la sección como estaba, en su sitio y visible. */
+      const restore = () => {
+        outer.style.marginTop = "";
+        spacer.style.height = "";
+        pinEl.style.position = "";
+        pinEl.style.top = "";
+        pinEl.style.visibility = "";
+        pinEl.style.opacity = "";
+        getRenderer()?.release(owner);
+      };
 
       // Progreso actual (0 → 1). Sale directo del trigger —en `onUpdate` y en
       // `onRefresh`—, sin tween intermedio: un tween con scrub se reinicia a 0
       // en cada refresh y no se recupera hasta el siguiente evento de scroll.
       // El suavizado ya lo pone Lenis.
       let progress = 0;
-      const distance = () => window.innerHeight * length;
+      // Lo que dura el sticky, medido en píxeles reales: en iOS `100vh` es el
+      // alto con la barra oculta y no coincide con `innerHeight`.
+      const distance = () => spacer.offsetHeight;
       // Se rellena tras crear el tween; `apply` puede llamarse antes.
       const ref: { st?: ScrollTrigger } = {};
+
+      const composeNow = () => {
+        const shift = ref.st ? ref.st.scroll() - ref.st.start : 0;
+        compose(shift);
+      };
 
       const apply = () => {
         const p = progress;
@@ -279,8 +301,11 @@ export default function SectionTransition({
             return fade();
           }
           if (!renderer.acquire(owner, cfg.zIndex)) return fade();
-          const shift = ref.st ? ref.st.scroll() - ref.st.start : 0;
-          compose(shift);
+          composeNow();
+        } else if (renderer.canvas.height !== Math.round(window.innerHeight * transitionDpr())) {
+          // La barra del navegador móvil cambió el alto de la ventana a mitad
+          // de transición: sin esto el canvas se estiraría.
+          composeNow();
         }
         pinEl.style.opacity = "";
         renderer.render(p, layers);
@@ -294,8 +319,6 @@ export default function SectionTransition({
         trigger: outer,
         start: "top top",
         end: () => `+=${distance()}`,
-        pin: pinEl,
-        pinSpacing: true,
         invalidateOnRefresh: true,
         onUpdate: sync,
         onRefresh: sync,
@@ -363,10 +386,7 @@ export default function SectionTransition({
         const st = ref.st;
         if (!st || !ScrollTrigger.getAll().includes(st)) {
           window.removeEventListener("scroll", watchdog);
-          outer.style.marginTop = "";
-          pinEl.style.visibility = "";
-          pinEl.style.opacity = "";
-          getRenderer()?.release(owner);
+          restore();
           return;
         }
         if (st.progress === 0 && outer.getBoundingClientRect().top < -2) {
@@ -402,11 +422,8 @@ export default function SectionTransition({
         clearTimeout(resizeTimer);
         window.removeEventListener("resize", onResize);
         prepare.kill();
-        main.kill(true);
-        getRenderer()?.release(owner);
-        outer.style.marginTop = "";
-        pinEl.style.visibility = "";
-        pinEl.style.opacity = "";
+        main.kill();
+        restore();
       };
     })();
 
@@ -424,6 +441,7 @@ export default function SectionTransition({
       // hacerse visible, lo revelado muestre el destino y no lo de detrás.
       style={{ position: "relative", zIndex: 30 }}>
       <div ref={pinRef}>{children}</div>
+      <div ref={spacerRef} aria-hidden="true" />
     </div>
   );
 }

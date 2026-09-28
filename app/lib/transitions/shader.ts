@@ -5,6 +5,8 @@
  * (color + adelanto + seed + borde) y la intensidad del borde y el warp como
  * uniforms (`uEdgeAmp`, `uWarp`) para ajustarlos desde `config.ts`.
  *
+ * `uDither` elige el borde: trama Bayer (pixelado) o sólido.
+ *
  * vUv.y = 0 es abajo: la rotura avanza hacia arriba. Donde revela, la salida es
  * vec4(0) — transparente en premultiplied alpha — y se ve el HTML de debajo.
  */
@@ -28,6 +30,8 @@ uniform float uDotSize;
 uniform float uEdgeAmp;
 uniform float uWarp;
 uniform float uEdgeB;
+uniform float uDither;   // 1 = trama Bayer (pixelado), 0 = borde sólido
+uniform float uPixelY;   // alto de 1 píxel en unidades de vUv (antialias)
 
 uniform vec3  uColor1; uniform float uLead1; uniform float uUse1;
 uniform float uSeed1;  uniform float uEdge1;
@@ -61,7 +65,11 @@ float reveal(vec2 uv, float p, float seed, float edge){
   // original: el recorrido se adapta a la amplitud del borde.
   float t = -0.5 * uEdgeAmp - edge + p * (1.0 + uEdgeAmp + edge);
   float d = clamp((front - t) / edge, 0.0, 1.0);
-  return step(d, bayer4(gl_FragCoord.xy / uDotSize));
+  if (uDither > 0.5) return step(d, bayer4(gl_FragCoord.xy / uDotSize));
+  // Sólido: corte en la mitad de la franja, suavizado ~1px para que no
+  // se vea escalonado.
+  float aa = uPixelY / edge;
+  return 1.0 - smoothstep(0.5 - aa, 0.5 + aa, d);
 }
 
 void main(){

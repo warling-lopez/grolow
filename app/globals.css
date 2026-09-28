@@ -367,8 +367,17 @@ body {
          a partir de `cover 74%`. Cerrando antes, el recorrido se consume con
          las tarjetas todavía delante en vez de completarse cuando ya se han
          ido. Comprimir el tramo también lo hace más rápido —408px de
-         desplazamiento en 319px de scroll— que es como se pidió. */
-      animation-range: cover 50% cover 70%;
+         desplazamiento en 319px de scroll— que es como se pidió.
+
+         Ahora la sección llega por la transición de marca (SectionTransition):
+         aparece siempre con su borde superior pegado arriba y se queda ahí
+         fija mientras se rompe «Lo que hacemos bien». Con `cover 50%` ese
+         punto ya caía pasado el inicio y se veía la tarjeta 02 primero. Por
+         eso arranca en `exit-crossing 0%` —borde superior de la sección en el
+         borde superior de la ventana, sea cual sea su alto—, más un margen
+         (12%) para que dé tiempo a leer la tarjeta 01 antes de moverse, y
+         acaba en el 42%, antes de que el raíl empiece a salirse por arriba. */
+      animation-range: exit-crossing 12% exit-crossing 42%;
     }
   }
 }

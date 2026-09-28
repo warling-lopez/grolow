@@ -45,7 +45,12 @@ export const TRANSITION_CONFIG = {
     warp: 1.4,
     /** Anchura de la franja tramada del borde que revela la sección. */
     baseEdge: 0.08,
-    /** Tamaño de cada punto de la trama, en px CSS (se multiplica por el DPR). */
+    /**
+     * Estilo del borde: `false` = sólido (corte limpio de papel roto),
+     * `true` = trama Bayer pixelada.
+     */
+    dither: false,
+    /** Tamaño de cada punto de la trama (solo con `dither`), en px CSS × DPR. */
     dotSize: 2,
     /** DPR máximo del canvas. En pantallas táctiles se baja por rendimiento. */
     maxDpr: 2,
@@ -81,8 +86,13 @@ export const TRANSITION_CONFIG = {
   intro: {
     duration: 1400,
     ease: easeInOutCubic,
+    // Dos verdes: el brillante abre el borde y el de marca lo sigue, así la
+    // rotura se lee verde de principio a fin, sin negro entre medias.
+    // 20% de diferencia entre cada capa y la siguiente (y la última y lo que
+    // revela): 1.4 → 1.2 → 1.0.
     layers: [
-      { color: BRAND_GREEN_BRIGHT, lead: 1.12, seed: 3.1, edge: 0.1 },
+      { color: BRAND_GREEN_BRIGHT, lead: 1.4, seed: 3.1, edge: 0.1 },
+      { color: BRAND_GREEN, lead: 1.2, seed: 7.4, edge: 0.09 },
     ] as ColorLayer[],
     /** Sin WebGL o con prefers-reduced-motion: fundido simple. */
     fadeDuration: 500,
@@ -96,9 +106,10 @@ export const TRANSITION_CONFIG = {
     resizeDebounce: 250,
     /** z-index del canvas: por debajo del header (z-50). */
     zIndex: 40,
+    // Mismo 20% de diferencia entre capas que en la intro.
     layers: [
-      { color: BRAND_GREEN_BRIGHT, lead: 1.14, seed: 3.1, edge: 0.1 },
-      { color: SITE_BLACK, lead: 1.07, seed: 7.4, edge: 0.09 },
+      { color: BRAND_GREEN_BRIGHT, lead: 1.4, seed: 3.1, edge: 0.1 },
+      { color: SITE_BLACK, lead: 1.2, seed: 7.4, edge: 0.09 },
     ] as ColorLayer[],
   },
 } as const;

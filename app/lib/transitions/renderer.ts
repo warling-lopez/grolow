@@ -13,6 +13,7 @@ import { TRANSITION_CONFIG, type ColorLayer } from "./config";
 
 const UNIFORMS = [
   "uSectionA", "uProgress", "uAspect", "uDotSize", "uEdgeAmp", "uWarp", "uEdgeB",
+  "uDither", "uPixelY",
   "uColor1", "uLead1", "uUse1", "uSeed1", "uEdge1",
   "uColor2", "uLead2", "uUse2", "uSeed2", "uEdge2",
 ] as const;
@@ -159,7 +160,7 @@ export class TransitionRenderer {
     if (this.lost) return;
     const gl = this.gl;
     const u = this.u;
-    const { edgeAmp, warp, baseEdge, dotSize } = TRANSITION_CONFIG.shader;
+    const { edgeAmp, warp, baseEdge, dotSize, dither } = TRANSITION_CONFIG.shader;
     const { width: w, height: h } = this.canvas;
     const dpr = w / Math.max(1, window.innerWidth);
 
@@ -170,6 +171,8 @@ export class TransitionRenderer {
     gl.uniform1f(u.uEdgeAmp, edgeAmp);
     gl.uniform1f(u.uWarp, warp);
     gl.uniform1f(u.uEdgeB, baseEdge);
+    gl.uniform1f(u.uDither, dither ? 1 : 0);
+    gl.uniform1f(u.uPixelY, 1 / h);
 
     ([1, 2] as const).forEach((i) => {
       const layer = layers[i - 1];
