@@ -52,30 +52,14 @@ const SERVICE_OPTIONS = [
   },
 ];
 
-// Rangos ajustados al cliente real (perfumería, ropa, comida): los tramos
-// anteriores empezaban en $5,000/mes y descartaban a quien sí compra.
-const BILLING_OPTIONS = [
-  { en: "Less than US$1,000 / mo", es: "Menos de US$1,000 / mes" },
-  { en: "US$1,000 – US$5,000 / mo", es: "US$1,000 – US$5,000 / mes" },
-  { en: "US$5,000 – US$20,000 / mo", es: "US$5,000 – US$20,000 / mes" },
-  { en: "More than US$20,000 / mo", es: "Más de US$20,000 / mes" },
-];
-
-// Alineado con los rangos de app/lib/pricing.ts: los tramos coinciden con lo
-// que el visitante acaba de leer en la página de precios.
+// Arranca en US$450 (lo mínimo que se cotiza) y sube hasta US$20,000; lo que
+// quede fuera de esos tramos entra en "Otro".
 const BUDGET_OPTIONS = [
-  { en: "US$250 – US$450 (landing page)", es: "US$250 – US$450 (landing page)" },
-  {
-    en: "US$450 – US$800 (corporate site)",
-    es: "US$450 – US$800 (sitio corporativo)",
-  },
-  { en: "US$800 – US$1,500 (online store)", es: "US$800 – US$1,500 (tienda en línea)" },
-  { en: "More than US$1,500", es: "Más de US$1,500" },
-  {
-    en: "Hourly work (automations, AI)",
-    es: "Trabajo por horas (automatizaciones, IA)",
-  },
-  { en: "Not sure yet", es: "Todavía no lo sé" },
+  { en: "US$450 – US$800", es: "US$450 – US$800" },
+  { en: "US$800 – US$1,500", es: "US$800 – US$1,500" },
+  { en: "US$1,500 – US$5,000", es: "US$1,500 – US$5,000" },
+  { en: "US$5,000 – US$20,000", es: "US$5,000 – US$20,000" },
+  { en: "Other", es: "Otro" },
 ];
 
 /** Mensaje precargado del enlace de WhatsApp. */
@@ -102,12 +86,10 @@ const COPY = {
     emailPlaceholder: "email@company.com",
     needsLabel: "What do you need?",
     needsPlaceholder: "Select an option",
-    billingLabel: "Current business revenue",
-    billingPlaceholder: "Select a range",
     processLabel: "What process do you want to automate?",
     processPlaceholder:
       "E.g.: we take orders by hand over WhatsApp and lose sales; we want a catalog with real-time inventory.",
-    budgetLabel: "Budget or plan you're interested in",
+    budgetLabel: "Budget",
     budgetPlaceholder: "Select a range",
     errorGeneric: "There was a problem sending your request. Try WhatsApp instead.",
     submitting: "Sending...",
@@ -132,12 +114,10 @@ const COPY = {
     emailPlaceholder: "correo@empresa.com",
     needsLabel: "¿Qué necesitas?",
     needsPlaceholder: "Selecciona una opción",
-    billingLabel: "Facturación actual del negocio",
-    billingPlaceholder: "Selecciona un rango",
     processLabel: "¿Qué proceso quieres automatizar?",
     processPlaceholder:
       "Ej: tomamos pedidos a mano por WhatsApp y perdemos ventas; queremos un catálogo con inventario en tiempo real.",
-    budgetLabel: "Presupuesto o plan que te interesa",
+    budgetLabel: "Presupuesto",
     budgetPlaceholder: "Selecciona un rango",
     errorGeneric: "Hubo un problema al enviar tu solicitud. Intenta por WhatsApp.",
     submitting: "Enviando...",
@@ -163,7 +143,6 @@ function ContactForm() {
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const needsRef = useRef<HTMLSelectElement>(null);
-  const billingRef = useRef<HTMLSelectElement>(null);
   const processRef = useRef<HTMLTextAreaElement>(null);
   const budgetRef = useRef<HTMLSelectElement>(null);
 
@@ -185,7 +164,6 @@ function ContactForm() {
       phone: phoneRef.current?.value ?? "",
       email: emailRef.current?.value ?? "",
       needs: needsRef.current?.value ?? "",
-      billing: billingRef.current?.value ?? "",
       process: processRef.current?.value ?? "",
       budget: budgetRef.current?.value ?? "",
     };
@@ -342,29 +320,6 @@ function ContactForm() {
               {SERVICE_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value} className="bg-white">
                   {opt.label[lang]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <label
-              htmlFor="billing"
-              className="text-[10px] font-bold text-grolow-light/75 tracking-[.2em] uppercase">
-              {c.billingLabel}
-            </label>
-            <select
-              ref={billingRef}
-              id="billing"
-              required
-              defaultValue=""
-              className="w-full min-h-11 bg-transparent border-b border-grolow-light/20 pb-3 text-grolow-light text-sm focus:outline-none focus:border-grolow-cyan transition-colors appearance-none cursor-pointer">
-              <option value="" className="bg-white">
-                {c.billingPlaceholder}
-              </option>
-              {BILLING_OPTIONS.map((opt, i) => (
-                <option key={i} value={opt[lang]} className="bg-white">
-                  {opt[lang]}
                 </option>
               ))}
             </select>

@@ -269,6 +269,11 @@ export default function SectionTransition({
       if (sources().length === 0) return;
 
       outer.style.marginTop = `-${length * 100}vh`;
+      // El contenedor tapa el último tramo del origen: sin esto, aunque el
+      // destino siga oculto, se come los clics (p. ej. el formulario de
+      // contacto). Solo el destino, cuando ya es visible, recibe eventos.
+      outer.style.pointerEvents = "none";
+      pinEl.style.pointerEvents = "auto";
       spacer.style.height = `${length * 100}vh`;
       pinEl.style.position = "sticky";
       pinEl.style.top = "0px";
@@ -281,6 +286,8 @@ export default function SectionTransition({
       /** Deja la sección como estaba, en su sitio y visible. */
       const restore = () => {
         outer.style.marginTop = "";
+        outer.style.pointerEvents = "";
+        pinEl.style.pointerEvents = "";
         spacer.style.height = "";
         pinEl.style.position = "";
         pinEl.style.top = "";
