@@ -8,6 +8,7 @@ import FaqSection from "@/app/components/FaqSection";
 import ContactSection from "@/app/components/ContactSection";
 import ProyectsSection from "@/app/components/ProjectsSection";
 import TestimonialsSection from "@/app/components/TestimonialsSection";
+import FounderSection from "@/app/components/FounderSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
 import { pathFor, type Lang } from "@/app/lib/i18n";
 
@@ -72,6 +73,7 @@ export default function Home({ lang }: { lang: Lang }) {
 
       <FaqSection />
       <ContactSection />
+      <FounderSection lang={lang} />
     </main>
   );
 }
