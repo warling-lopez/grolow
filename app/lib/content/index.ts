@@ -15,6 +15,16 @@ import { blogContent } from "./blog";
 import { privacidadContent, cookiesContent, terminosContent } from "./legal";
 import { blogPreciosContent } from "./blog-precios";
 import { blogWordpressContent } from "./blog-wordpress";
+import { blogPhp2shellContent } from "./blog-php2shell";
+import { blogPhpRevisarContent } from "./blog-php-revisar";
+import { blogNginxContent } from "./blog-nginx";
+import { blogEmudhraContent } from "./blog-emudhra";
+import { blogCertificadosContent } from "./blog-certificados";
+import { blogPhpObsoletoContent } from "./blog-php-obsoleto";
+import { blogSemanaNegraContent } from "./blog-semana-negra";
+import { blogPhpRdContent } from "./blog-php-rd";
+import { blogCertificadosRdContent } from "./blog-certificados-rd";
+import { blogLeyRdContent } from "./blog-ley-rd";
 import {
   casoLaperfumContent,
   casoHellensContent,
@@ -43,6 +53,16 @@ const CONTENT: Partial<Record<RouteId, ContentTable>> = {
   blog: blogContent,
   blogPrecios: blogPreciosContent,
   blogWordpress: blogWordpressContent,
+  blogPhp2shell: blogPhp2shellContent,
+  blogPhpRevisar: blogPhpRevisarContent,
+  blogNginx: blogNginxContent,
+  blogEmudhra: blogEmudhraContent,
+  blogCertificados: blogCertificadosContent,
+  blogPhpObsoleto: blogPhpObsoletoContent,
+  blogSemanaNegra: blogSemanaNegraContent,
+  blogPhpRd: blogPhpRdContent,
+  blogCertificadosRd: blogCertificadosRdContent,
+  blogLeyRd: blogLeyRdContent,
   privacidad: privacidadContent,
   cookies: cookiesContent,
   terminos: terminosContent,

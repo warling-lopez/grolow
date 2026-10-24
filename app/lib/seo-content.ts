@@ -248,6 +248,86 @@ export const SEO: Record<RouteId, SeoTable> = {
     },
   },
 
+  blogPhp2shell: {
+    es: {
+      title: "PHP2Shell: qué pasó con PHP en octubre de 2026 | Grolow",
+      description:
+        "Los fallos CVE-2026-109618 y CVE-2026-109619 explicados sin jerga: cómo se descubrieron, por qué se apagaron sitios en Europa y qué sigue sin estar claro.",
+    },
+  },
+
+  blogPhpRevisar: {
+    es: {
+      title: "Cómo saber si tu sitio PHP es vulnerable a PHP2Shell",
+      description:
+        "Guía práctica para revisar tu versión de PHP en cPanel o en tu servidor, aplicar la corrección, mitigar si no puedes actualizar y detectar si alguien entró.",
+    },
+  },
+
+  blogNginx: {
+    es: {
+      title: "Los 5 fallos de Nginx de octubre de 2026 explicados | Grolow",
+      description:
+        "Qué configuraciones activan cada una de los cinco fallos corregidos en Nginx 1.30.6 y 1.31.7, cómo auditar la tuya y qué hacer si no puedes actualizar.",
+    },
+  },
+
+  blogEmudhra: {
+    es: {
+      title: "eMudhra: la certificadora con claves adivinables | Grolow",
+      description:
+        "Ocho certificados intermedios de eMudhra tenían claves privadas menores que 256. Qué pasó, cómo respondieron los navegadores y por qué te importa a ti también.",
+    },
+  },
+
+  blogCertificados: {
+    es: {
+      title: "Certificados SSL: qué revisar tras el caso eMudhra | Grolow",
+      description:
+        "Los navegadores ya se protegieron, tus servidores quizás no. Qué almacenes de certificados actualizar en Linux, Node, Python, PHP y Docker, y cómo comprobarlo.",
+    },
+  },
+
+  blogPhpObsoleto: {
+    es: {
+      title: "Tu sitio sigue en PHP 7.4, 8.0 u 8.1: qué hacer | Grolow",
+      description:
+        "Sin corrección oficial de PHP2Shell para versiones sin soporte. Tus opciones, de migrar a PHP 8.3 a pagar soporte extendido, y cómo hacerlo sin romper el sitio.",
+    },
+  },
+
+  blogSemanaNegra: {
+    es: {
+      title: "La semana negra de los servidores web en 2026 | Grolow",
+      description:
+        "Nginx, PHP2Shell y eMudhra en diez días de octubre de 2026: lo que tienen en común, el papel de la IA y cinco decisiones para que la próxima te pille preparado.",
+    },
+  },
+
+  blogPhpRd: {
+    es: {
+      title: "Cómo afectó PHP2Shell a República Dominicana | Grolow",
+      description:
+        "Lo que se sabe del impacto de la vulnerabilidad de PHP en el país, el contexto del CNCS, por qué el mercado local está expuesto y qué hacer esta misma semana.",
+    },
+  },
+
+  blogCertificadosRd: {
+    es: {
+      title: "Certificados digitales en RD: lecciones de eMudhra | Grolow",
+      description:
+        "Certificado SSL y firma digital no son lo mismo. Quién los emite en RD, qué enseña el caso eMudhra y cómo cuidar tu certificado de facturación.",
+    },
+  },
+
+  blogLeyRd: {
+    es: {
+      title: "Qué dice la ley dominicana si hackean tu sitio web | Grolow",
+      description:
+        "Ley 53-07, Ley 172-13 y los decretos de ciberseguridad: qué obliga a cada empresa en República Dominicana, a quién reportar y qué hacer ante un incidente.",
+    },
+  },
+
   // ── Sin indexar: no las revisa el verificador de longitudes ────────────
   privacidad: {
     es: {
