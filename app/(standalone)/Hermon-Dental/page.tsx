@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Bricolage_Grotesque, Manrope } from "next/font/google";
 
 const bricolage = Bricolage_Grotesque({
@@ -325,6 +326,47 @@ const MARKUP = `
 </footer>
 `;
 
+/**
+ * Aviso flotante de demo. Esta página vive en grolow.com, así que tanto los
+ * visitantes como Google podían tomarla por el sitio oficial de la clínica.
+ * El aviso aparece al cargar y se puede cerrar.
+ */
+function DemoNotice() {
+  const [open, setOpen] = useState(true);
+  if (!open) return null;
+
+  return (
+    <aside
+      role="note"
+      aria-label="Aviso: sitio de demostración"
+      className="fixed inset-x-4 bottom-4 z-[60] sm:inset-x-auto sm:left-6 sm:bottom-6 sm:max-w-sm rounded-2xl bg-[#0e1512] text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] p-5 pr-12 animate-[demoIn_.5s_ease-out_both]">
+      <style>{`@keyframes demoIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}`}</style>
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label="Cerrar aviso"
+        className="absolute right-2 top-2 grid h-10 w-10 place-items-center rounded-full text-white/70 hover:text-white hover:bg-white/10">
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#06e0da]">
+        Demo de <span className="font-brand normal-case tracking-normal text-sm">Grolow</span>
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-white/85">
+        Este sitio es una demostración diseñada por Grolow Studio para mostrar
+        cómo puede verse la web de una clínica dental. No es el sitio oficial
+        de Hermon Dental Clinic.
+      </p>
+      <Link
+        href="/es/casos"
+        className="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-[#06e0da] underline underline-offset-4 hover:text-white">
+        Ver proyectos de Grolow →
+      </Link>
+    </aside>
+  );
+}
+
 export default function HermonDentalPage() {
   useEffect(() => {
     const els = document.querySelectorAll(".hermon .reveal");
@@ -344,9 +386,12 @@ export default function HermonDentalPage() {
   }, []);
 
   return (
-    <div
-      className={`hermon ${bricolage.variable} ${manrope.variable}`}
-      dangerouslySetInnerHTML={{ __html: `<style>${STYLES}</style>${MARKUP}` }}
-    />
+    <>
+      <div
+        className={`hermon ${bricolage.variable} ${manrope.variable}`}
+        dangerouslySetInnerHTML={{ __html: `<style>${STYLES}</style>${MARKUP}` }}
+      />
+      <DemoNotice />
+    </>
   );
 }
