@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Hero4 from "@/app/components/Hero4";
+import Arrow from "@/app/components/Arrow";
 import IntroLoader from "@/app/components/transitions/IntroLoader";
 import SectionTransition from "@/app/components/transitions/SectionTransition";
 import ProcessSection from "@/app/components/ProcessSection";
@@ -22,8 +23,8 @@ import { pathFor, type Lang } from "@/app/lib/i18n";
  */
 
 const COPY = {
-  en: { allServices: "See all services →" },
-  es: { allServices: "Ver todos los servicios →" },
+  en: { allServices: "See all services" },
+  es: { allServices: "Ver todos los servicios" },
 } as const;
 
 export default function Home({ lang }: { lang: Lang }) {
@@ -68,6 +69,7 @@ export default function Home({ lang }: { lang: Lang }) {
           href={pathFor("servicios", lang)!}
           className="inline-flex min-h-11 items-center text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">
           {c.allServices}
+          <Arrow className="ml-1.5" />
         </Link>
       </div>
 

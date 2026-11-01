@@ -2,12 +2,13 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLang } from "./hooks/useLang";
+import Arrow from "@/app/components/Arrow";
 
 /** Mismo orden que la portada: la tienda WhatsApp primero. */
 const SERVICE_OPTIONS = [
   {
     value: "tienda-whatsapp",
-    label: { en: "Online Store → WhatsApp", es: "Tienda Online → WhatsApp" },
+    label: { en: "Online Store + WhatsApp", es: "Tienda Online + WhatsApp" },
   },
   {
     value: "landing",
@@ -373,7 +374,7 @@ function ContactForm() {
             disabled={isSubmitting}
             className="w-full py-6 mt-4 bg-grolow-cream text-grolow-dark font-extrabold uppercase tracking-widest text-xs hover:bg-grolow-accent transition-colors disabled:opacity-50 flex justify-center items-center gap-3">
             {isSubmitting ? c.submitting : c.submit}
-            {!isSubmitting && <span>→</span>}
+            {!isSubmitting && <Arrow />}
           </button>
           <p className="text-center text-[10px] text-grolow-light/80 uppercase tracking-widest -mt-2.5">
             {c.disclaimer}

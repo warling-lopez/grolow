@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { pathFor, type Lang, type RouteId } from "@/app/lib/i18n";
+import Arrow from "@/app/components/Arrow";
 
 /**
  * Enlaces de la portada hacia las páginas de servicio y de segmento.
@@ -145,7 +146,7 @@ function LinkCards({ entries, lang }: { entries: Entry[]; lang: Lang }) {
             <span
               aria-hidden="true"
               className="text-lg font-bold text-grolow-cream transition-transform duration-300 group-hover:translate-x-1">
-              →
+              <Arrow />
             </span>
           </Link>
         </li>

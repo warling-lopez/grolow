@@ -12,6 +12,7 @@ import {
 import { useLang } from "./hooks/useLang";
 import { pathFor, type RouteId } from "@/app/lib/i18n";
 import { onIntroDone } from "@/app/lib/transitions/intro-events";
+import Arrow from "@/app/components/Arrow";
 
 /**
  * Hero de portada (/es y /en) + sección «lo que hacemos bien».
@@ -183,9 +184,29 @@ type ModelViewerElement = HTMLElement & {
  * cuantizada: 916 KB → 548 KB). Para regenerarlo tras un re-export:
  *   gltf-transform quantize entrada.glb public/3d/logo_3d.glb
  * y quitar antes el cubo y COLOR_1. El póster (`logo_3d-poster.webp`) hay que
- * rehacerlo también si cambia el modelo.
+ * rehacerlo también si cambia el modelo, junto con sus versiones reducidas
+ * (ver `posterSrcSet`).
  */
 const STRAY_MATERIAL = "Material";
+
+/**
+ * El póster se sirve en varios anchos para que cada pantalla baje solo lo que
+ * pinta: en móvil el logo mide ~200 px CSS y bajar el de 640 px malgastaba
+ * ~30 KB (PageSpeed: «Mejorar la entrega de imágenes»).
+ * Las versiones viven junto al original: logo_3d-poster-256.webp, -384, -512.
+ * Para rehacerlas tras cambiar el póster (Python + Pillow):
+ *   Image.open(p).resize((w, w), Image.LANCZOS).save(out, "WEBP", quality=82, method=6)
+ */
+const POSTER_WIDTHS = [256, 384, 512] as const;
+const posterSrcSet = (src: string) =>
+  [
+    ...POSTER_WIDTHS.map(
+      (w) => `${src.replace(/\.webp$/, `-${w}.webp`)} ${w}w`,
+    ),
+    `${src} 640w`,
+  ].join(", ");
+/** Ancho que ocupa el logo en el hero: el de los huecos de móvil y desktop. */
+const POSTER_SIZES = "(min-width: 1024px) min(30vh, 15vw), min(52vw, 300px)";
 
 /** Inclinación fija de la cámara. min = max → solo se puede girar en horizontal. */
 const PHI = "80deg";
@@ -332,6 +353,8 @@ function Logo3D({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={poster}
+        srcSet={posterSrcSet(poster)}
+        sizes={POSTER_SIZES}
         alt=""
         aria-hidden="true"
         width={640}
@@ -361,6 +384,8 @@ function SlotPoster({ src, hidden }: { src: string; hidden: boolean }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
+      srcSet={posterSrcSet(src)}
+      sizes={POSTER_SIZES}
       alt=""
       width={640}
       height={640}
@@ -747,7 +772,7 @@ export default function Hero4({
                   }>
                   {cta.label}
                   <span className="transition-transform group-hover:translate-x-1">
-                    →
+                    <Arrow />
                   </span>
                 </a>
               ))}

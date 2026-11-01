@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Arrow from "@/app/components/Arrow";
 
 /**
  * Raíl del método con flechas para móvil.
@@ -77,7 +78,7 @@ export default function MethodRail({
           onClick={() => go(-1)}
           disabled={atStart}
           aria-label={prevLabel}>
-          <span aria-hidden="true">←</span>
+          <Arrow dir="left" />
         </button>
         <button
           type="button"
@@ -85,7 +86,7 @@ export default function MethodRail({
           onClick={() => go(1)}
           disabled={atEnd}
           aria-label={nextLabel}>
-          <span aria-hidden="true">→</span>
+          <Arrow />
         </button>
       </div>
     </>

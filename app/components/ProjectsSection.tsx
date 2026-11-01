@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useLang, type Lang } from "./hooks/useLang";
 import WaveHover from "./effects/WaveHover";
+import Arrow from "@/app/components/Arrow";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -446,7 +447,7 @@ export default function ProjectsSection({
                   </span>
 
                   <span className="text-grolow-light/75 group-hover:text-grolow-cream group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-base shrink-0">
-                    ↗
+                    <Arrow dir="up-right" />
                   </span>
                 </div>
 
