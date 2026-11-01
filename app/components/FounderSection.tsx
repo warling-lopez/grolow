@@ -36,7 +36,7 @@ export default function FounderSection({ lang }: { lang: Lang }) {
     <section
       id="founder"
       className="flex min-h-[120vh] w-full items-center bg-grolow-card border-t border-grolow-light/10">
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-3 pb-72 pt-24 md:grid-cols-2 md:gap-16 md:px-8 md:pb-48 md:pt-36">
+      <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-72 pt-24 md:grid-cols-2 md:gap-16 md:px-8 md:pb-48 md:pt-36">
         {/* Foto: círculo con aro exterior y sombra */}
         <div className="flex justify-center md:justify-start">
           <div className="grid aspect-square w-full max-w-[22rem] place-items-center rounded-full border border-grolow-light/10 md:max-w-md">

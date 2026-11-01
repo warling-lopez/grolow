@@ -329,7 +329,7 @@ export default function ServicesSection() {
     <section
       id="servicios"
       ref={containerRef}
-      className="w-full min-h-screen  my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-4 md:px-8"
+      className="w-full min-h-screen  my-20 md:my-20 py-10 md:py-20 flex flex-col items-center px-6 md:px-8"
     >
       <h2 className="text-3xl md:text-5xl font-black uppercase text-grolow-light pr-16 md:pr-0 pb-8 md:pb-12 border-b border-grolow-light/10 w-full max-w-5xl mx-auto">
         {c.heading}

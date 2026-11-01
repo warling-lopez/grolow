@@ -142,7 +142,7 @@ export default function EngineeringSection({ lang }: { lang: Lang }) {
 
   return (
     <section className="w-full overflow-hidden bg-grolow-dark text-grolow-light">
-      <div className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-7xl px-6 py-20 md:px-8 md:py-28">
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-grolow-light/60">
           {c.label}
         </p>

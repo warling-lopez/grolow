@@ -60,7 +60,7 @@ function CtaBand({
   external?: boolean;
 }) {
   return (
-    <section className="w-full px-4 md:px-8 py-16 md:py-24">
+    <section className="w-full px-6 md:px-8 py-16 md:py-24">
       <div className="max-w-5xl mx-auto w-full bg-white/60 border border-grolow-light/10 backdrop-blur-xl rounded-2xl p-8 md:p-14 flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
         <p className="text-[clamp(1.05rem,2.2vw,1.5rem)] text-grolow-light font-medium leading-relaxed flex-1">
           {text}
@@ -108,7 +108,7 @@ export default function NicheLanding({
       />
 
       {/* ── El problema, en el lenguaje del nicho ── */}
-      <section className="w-full px-4 md:px-8 py-20 md:py-28 backdrop-blur-xs">
+      <section className="w-full px-6 md:px-8 py-20 md:py-28 backdrop-blur-xs">
         <div className="max-w-5xl mx-auto w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {pains.map((pain) => (
@@ -133,7 +133,7 @@ export default function NicheLanding({
           con el texto (mismo recurso que usa TechSection en la home). */}
       <section
         id="como-funciona"
-        className="w-full px-4 md:px-8 py-16 md:py-24 backdrop-blur-lg"
+        className="w-full px-6 md:px-8 py-16 md:py-24 backdrop-blur-lg"
       >
         <div className="max-w-5xl mx-auto w-full">
           <h2 className="text-[clamp(2rem,5.5vw,4rem)] font-black uppercase text-grolow-light leading-none pb-10 md:pb-14 border-b border-grolow-light/10">
@@ -174,7 +174,7 @@ export default function NicheLanding({
       {/* ── Precio ── */}
       <section
         id="precio"
-        className="w-full px-4 md:px-8 py-16 md:py-24 backdrop-blur-xs"
+        className="w-full px-6 md:px-8 py-16 md:py-24 backdrop-blur-xs"
       >
         <div className="max-w-5xl mx-auto w-full">
           <h2 className="text-[clamp(2rem,5.5vw,4rem)] font-black uppercase text-grolow-light leading-none pb-10 md:pb-14 border-b border-grolow-light/10">

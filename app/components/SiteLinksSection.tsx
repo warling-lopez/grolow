@@ -158,7 +158,7 @@ export default function SiteLinksSection({ lang }: { lang: Lang }) {
   const c = COPY[lang];
 
   return (
-    <section className="max-w-6xl mx-auto w-full px-4 md:px-8 py-16 md:py-24">
+    <section className="max-w-6xl mx-auto w-full px-6 md:px-8 py-16 md:py-24">
       <h2 className="font-display text-2xl md:text-4xl font-black uppercase text-grolow-light tracking-tight mb-8">
         {c.servicesTitle}
       </h2>

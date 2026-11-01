@@ -353,7 +353,7 @@ export default function ProjectsSection({
     <section
       id="casos"
       ref={containerRef}
-      className="w-full backdrop-blur-xs my-20 py-10 md:py-20 px-4 md:px-8"
+      className="w-full backdrop-blur-xs my-20 py-10 md:py-20 px-6 md:px-8"
     >
       <div className="max-w-5xl mx-auto w-full">
 

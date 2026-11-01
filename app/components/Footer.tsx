@@ -164,7 +164,7 @@ export default function Footer() {
           fijo y el cuerpo no—, y como el contenedor recorta, lo que se perdía
           era la «w». El 3.7 en vez de 3.64 deja el margen para la barra de
           scroll, que `100vw` sí cuenta. */}
-      <div className="overflow-hidden px-4 md:px-8 pt-14 md:pt-20" aria-hidden="true">
+      <div className="overflow-hidden px-6 md:px-8 pt-14 md:pt-20" aria-hidden="true">
         {/* Distorsión líquida fuerte con estela verde de marca al pasar el
             ratón (solo escritorio). Precaptura: el rótulo no cambia con el
             hover, así que la captura se hace al acercarse y el efecto arranca
@@ -177,7 +177,7 @@ export default function Footer() {
         </LiquidHover>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-4 md:px-8 pt-14 md:pt-20 pb-10">
+      <div className="max-w-7xl mx-auto w-full px-6 md:px-8 pt-14 md:pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* ── Marca ── */}
           <div className="lg:pr-8">
@@ -282,7 +282,7 @@ export default function Footer() {
 
       {/* ── Barra inferior ── */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="max-w-7xl mx-auto w-full px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-xs uppercase tracking-wider text-white/50">
             © {year} <Brand />. {c.rights}
           </p>

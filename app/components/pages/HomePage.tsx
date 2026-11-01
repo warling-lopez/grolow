@@ -63,7 +63,7 @@ export default function Home({ lang }: { lang: Lang }) {
           autoridad desde la portada hacia el resto del sitio. */}
       <SiteLinksSection lang={lang} />
 
-      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 -mt-10 md:-mt-14 mb-4 flex justify-center">
+      <div className="max-w-5xl mx-auto w-full px-6 md:px-8 -mt-10 md:-mt-14 mb-4 flex justify-center">
         <Link
           href={pathFor("servicios", lang)!}
           className="inline-flex min-h-11 items-center text-xs font-extrabold uppercase tracking-widest text-grolow-light/70 hover:text-grolow-cream transition-colors">

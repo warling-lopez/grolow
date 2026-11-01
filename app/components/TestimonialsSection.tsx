@@ -35,7 +35,7 @@ export default function TestimonialsSection({ lang }: { lang: Lang }) {
     <section
       data-header-trigger="true"
       className="w-full bg-grolow-ink text-white">
-      <div className="mx-auto w-full max-w-5xl px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-5xl px-6 py-20 md:px-8 md:py-28">
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-white/55">
           {c.label}
         </p>

@@ -37,7 +37,7 @@ export default function ContentPage({
     <main className="w-full  pb-24">
       <Breadcrumbs routeId={routeId} lang={lang} />
 
-      <div className="max-w-5xl mx-auto w-full px-4 md:px-8">
+      <div className="max-w-5xl mx-auto w-full px-6 md:px-8">
         <div className="bg-white/90 border border-grolow-light/10 rounded-2xl px-6 py-10 md:px-14 md:py-14">
 
       <header className="pt-0">

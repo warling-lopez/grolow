@@ -46,7 +46,7 @@ export default function ContactoPage() {
     <main className="w-full bg-grolow-dark pb-16">
       <Breadcrumbs routeId="contacto" lang={lang} />
 
-      <header className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-8 md:pt-10">
+      <header className="max-w-5xl mx-auto w-full px-6 md:px-8 pt-8 md:pt-10">
         <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
           {c.eyebrow}
         </p>

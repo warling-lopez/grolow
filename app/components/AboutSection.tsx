@@ -80,7 +80,7 @@ export default function AboutSection() {
     <section
       id="quien-soy"
       ref={sectionRef}
-      className="w-full py-24 md:py-32 px-4 md:px-8 flex justify-center"
+      className="w-full py-24 md:py-32 px-6 md:px-8 flex justify-center"
     >
       <div className="about-block max-w-5xl w-full p-8 md:p-12 bg-white/60 border border-grolow-light/10 backdrop-blur-md rounded-2xl flex flex-col md:flex-row gap-8 md:gap-12 items-start">
         {/* Foto */}

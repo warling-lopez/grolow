@@ -26,7 +26,7 @@ export default function ServiciosPage() {
     <main className="w-full bg-grolow-dark">
       <Breadcrumbs routeId="servicios" lang={lang} />
 
-      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-8 md:pt-10">
+      <div className="max-w-5xl mx-auto w-full px-6 md:px-8 pt-8 md:pt-10">
         <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
           {c.eyebrow}
         </p>

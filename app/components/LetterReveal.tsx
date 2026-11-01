@@ -75,17 +75,37 @@ export default function LetterReveal({
       ref={ref as React.Ref<HTMLHeadingElement>}
       className={`letter-reveal ${shown ? "is-shown" : ""} ${className}`}>
       <span className="sr-only">{text}</span>
-      {Array.from(text).map((char, i) => (
-        <span
-          key={i}
-          aria-hidden="true"
-          className="letter-reveal__char"
-          data-c={char === " " ? " " : char}
-          style={
-            { "--i": i, "--step": `${step}ms`, "--delay": `${delay}ms` } as React.CSSProperties
-          }
-        />
-      ))}
+      {/* Las letras van agrupadas por palabra en un bloque que no se parte:
+          si no, en móvil el titular se cortaba a mitad de palabra
+          («TRABAJ / O»). El espacio queda fuera del grupo para que el
+          navegador pueda saltar de línea ahí. `--i` sigue siendo el índice
+          global de la letra, así que el escalonado no cambia. */}
+      {(() => {
+        let i = 0;
+        return text.split(" ").map((word, w) => {
+          const chars = Array.from(word).map((char) => {
+            const idx = i++;
+            return (
+              <span
+                key={idx}
+                aria-hidden="true"
+                className="letter-reveal__char"
+                data-c={char}
+                style={
+                  { "--i": idx, "--step": `${step}ms`, "--delay": `${delay}ms` } as React.CSSProperties
+                }
+              />
+            );
+          });
+          i++; // el espacio también cuenta en el escalonado
+          return (
+            <span key={w} aria-hidden="true">
+              {w > 0 && " "}
+              <span className="inline-block whitespace-nowrap">{chars}</span>
+            </span>
+          );
+        });
+      })()}
     </Tag>
   );
 }

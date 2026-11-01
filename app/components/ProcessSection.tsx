@@ -75,7 +75,7 @@ export default function ProcessSection({ lang }: { lang: Lang }) {
     <section
       id="proceso"
       className="method-section w-full bg-grolow-dark border-y border-grolow-light/10">
-      <div className="max-w-6xl mx-auto w-full px-4 md:px-8 py-20 md:py-28">
+      <div className="max-w-6xl mx-auto w-full px-6 md:px-8 py-20 md:py-28">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-grolow-light/75 mb-4">
           {c.label}
         </p>

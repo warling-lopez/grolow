@@ -128,7 +128,7 @@ export default function Hero3({ lang }: { lang: Lang }) {
         }}
       />
 
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-28 md:px-8 lg:min-h-[40rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-8 lg:pb-24 lg:pt-32">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-28 md:px-8 lg:min-h-[40rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-8 lg:pb-24 lg:pt-32">
         {/* ─────────────── Columna de texto ─────────────── */}
         <div className="relative z-10 lg:self-center">
           {/* Rótulo. Decorativo: el nombre accesible lo da el h1 y el header.

@@ -16,9 +16,9 @@ import { onIntroDone } from "@/app/lib/transitions/intro-events";
 /**
  * Hero de portada (/es y /en) + sección «lo que hacemos bien».
  *
- * Hero: dos columnas sobre negro —rótulo enorme y condensado a la izquierda,
- * texto y CTAs a la derecha— con una rejilla de hexágonos con las letras de
- * la marca en la esquina inferior derecha.
+ * Hero: dos columnas sobre negro —rótulo gigante y condensado que llena toda
+ * la mitad izquierda; logo, texto y CTAs a la derecha— con una rejilla de
+ * hexágonos con las letras de la marca en la esquina inferior derecha.
  *
  * El logo 3D no vive dentro de ninguna de las dos secciones: va en una capa
  * `sticky` que las cubre a ambas. Al hacer scroll baja desde su hueco en el
@@ -110,13 +110,10 @@ const COPY = {
     title: (
       <>
         <span className="block">Construimos</span>
-        <br />
         <Accent>
           <span className="block">sistemas de</span>
-          <br/>
           <span className="block">operación</span>
         </Accent>
-        <br/>
         <span className="block">a medida.</span>
       </>
     ),
@@ -149,6 +146,15 @@ const COPY = {
     services: ["Paneles", "Inventario", "Reservas", "Portales"],
   },
 } as const;
+
+/**
+ * Ancho de la línea más larga del título en em (Bebas Neue + tracking-tight),
+ * con ~3% de margen. Medido con las métricas de la fuente:
+ * ES «CONSTRUIMOS» 3,98em · EN «YOUR BUSINESS» 4,34em.
+ * El h1 toma `100cqi / TITLE_FIT`: la línea más larga ocupa todo el ancho de
+ * su columna. Si cambia el copy del título, hay que volver a medir.
+ */
+const TITLE_FIT = { es: 4.1, en: 4.47 } as const;
 
 /* ------------------------------------------------------------------ */
 /* Logo 3D                                                             */
@@ -683,20 +689,24 @@ export default function Hero4({
           <HexGrid reduce={reduce} />
         </div>
 
-        {/* ---------- Hueco del logo en desktop (lo ocupa la capa sticky) ---------- */}
-        <div
-          ref={deskSlotRef}
-          className="absolute hidden lg:block left-1/2 h-[min(100vh,55vw)] w-[min(38vh,24vw)] -translate-x-1/2"
-          aria-hidden="true">
-          <SlotPoster src={poster} hidden={!!geo} />
-        </div>
-
-        <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-8 px-6 pb-16 pt-28 lg:grid-cols-2 lg:gap-0 lg:px-0 lg:pb-24 lg:pt-36">
+        <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-8 px-6 pb-16 pt-28 lg:max-w-none lg:grid-cols-2 lg:gap-0 lg:px-0 lg:pb-24 lg:pt-36">
           {/* ---------- Columna izquierda: rótulo ---------- */}
-          <div className="flex flex-col items-end lg:justify-center lg:pr-16">
-            <h1 
+          {/* `@container`: el h1 mide su tamaño contra el ancho de esta
+              columna (100cqi), no contra el de la pantalla. */}
+          <div className="@container flex flex-col items-start lg:items-end lg:justify-center lg:pl-[4vw] lg:pr-[3vw]">
+            {/* Tamaño = lo que permita el ancho (la línea más larga llena la
+                columna) o el alto, lo que sea menor: en móvil el rótulo no
+                pasa del 60% de la pantalla; en escritorio, de lo que queda
+                bajo el header. 3.44 = 4 líneas × leading 0.86. */}
+            <h1
               lang={lang}
-              className={`font-h1 w-full uppercase leading-[0.9]  tracking-tight text-white text-right text-[clamp(2.5rem,11vw,4.5rem)] lg:text-[clamp(5rem,5vw,6rem)] text-balance wrap-break-word hyphens-auto`}>
+              className={`font-h1 w-full whitespace-nowrap uppercase leading-[0.86] tracking-tight text-white text-left lg:text-right [--cap:calc(60svh_/_3.44)] lg:[--cap:calc((100svh_-_13rem)_/_3.44)]`}
+              style={
+                {
+                  "--fit": TITLE_FIT[lang],
+                  fontSize: "min(calc(100cqi / var(--fit)), var(--cap))",
+                } as React.CSSProperties
+              }>
               {resolvedTitle}
             </h1>
           </div>
@@ -709,8 +719,18 @@ export default function Hero4({
             <SlotPoster src={poster} hidden={!!geo} />
           </div>
 
-          {/* ---------- Columna derecha: texto + CTAs ---------- */}
-          <div className="flex flex-col lg:pl-16 lg:pt-4">
+          {/* ---------- Columna derecha: logo + texto + CTAs ---------- */}
+          <div className="flex flex-col lg:justify-center lg:pl-[4vw] lg:pr-[5vw]">
+            {/* Hueco del logo en desktop (lo ocupa la capa sticky). Vive aquí
+                y no sobre la línea central para dejarle al rótulo toda la
+                mitad izquierda. */}
+            <div
+              ref={deskSlotRef}
+              className="relative mb-10 hidden aspect-square w-[min(30vh,15vw)] lg:block"
+              aria-hidden="true">
+              <SlotPoster src={poster} hidden={!!geo} />
+            </div>
+
             <p className="max-w-md text-[clamp(1rem,4.2vw,1.25rem)] font-light leading-relaxed text-white/70">
               {resolvedSubtitle}
             </p>

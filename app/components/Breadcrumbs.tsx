@@ -24,7 +24,7 @@ export default function Breadcrumbs({
   return (
     <nav
       aria-label={lang === "es" ? "Migas de pan" : "Breadcrumb"}
-      className="max-w-5xl mx-auto w-full px-4 md:px-8 pt-28 md:pt-32">
+      className="max-w-5xl mx-auto w-full px-6 md:px-8 pt-28 md:pt-32">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-grolow-light/70">
         <li>
           <Link
