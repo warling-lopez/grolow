@@ -25,6 +25,8 @@ import ServiciosPage from "@/app/components/pages/ServiciosPage";
 import ClinicasPage from "@/app/components/pages/ClinicasPage";
 import GraciasPage from "@/app/components/pages/GraciasPage";
 import ContactoPage from "@/app/components/pages/ContactoPage";
+import BlogArticlePage from "@/app/components/blog/BlogArticlePage";
+import BlogIndexPage from "@/app/components/blog/BlogIndexPage";
 
 /**
  * Una sola ruta dinámica sirve todo el sitio. El slug de cada página cambia
@@ -142,6 +144,10 @@ export default async function Page({
       )}
       {Custom ? (
         <Custom lang={lang} />
+      ) : id === "blog" ? (
+        <BlogIndexPage content={content!} lang={lang} />
+      ) : ROUTES[id].parent === "blog" ? (
+        <BlogArticlePage content={content!} routeId={id} lang={lang} />
       ) : (
         <ContentPage content={content!} routeId={id} lang={lang} />
       )}

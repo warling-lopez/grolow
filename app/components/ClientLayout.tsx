@@ -6,7 +6,7 @@ import WhatsAppButton from '@/app/components/WhatsAppButton';
 import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
-import ScrollWipe from '@/app/components/transitions/ScrollWipe';
+import BlogHeader from '@/app/components/blog/BlogHeader';
 
 /**
  * Lenis y GSAP se cargan dinámicamente, no con un import de módulo.
@@ -31,7 +31,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     pathname?.startsWith('/para-yessica') ||
     pathname?.startsWith('/ceo-warling') ||
     false;
- 
+  // El blog lleva su propio nav (ver BlogHeader).
+  const blog = /^\/(es|en)\/blog(\/|$)/.test(pathname ?? '');
+
   useEffect(() => {
     // `cancelled` cubre el desmontaje mientras los módulos están en vuelo: sin
     // él se crearía un Lenis huérfano que nadie destruye.
@@ -107,18 +109,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      {!standalone && <Header />}
+      {!standalone && (blog ? <BlogHeader /> : <Header />)}
       <div data-site-content className="relative z-10 h-auto">
         {children}
       </div>
-      {/* El footer va en su sitio, en el flujo. La transición es solo una
-          máscara superpuesta (ScrollWipe): no mueve ni oculta ninguna
-          sección. */}
-      {!standalone && (
-        <ScrollWipe>
-          <Footer />
-        </ScrollWipe>
-      )}
+      {/* Footer en su sitio, sin transición animada. */}
+      {!standalone && <Footer />}
       {!standalone && <WhatsAppButton />}
       {!standalone && <ScrollToTopButton />}
     </>
