@@ -1,10 +1,12 @@
+import Image from "next/image";
 import Link from "next/link";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import AdSlot from "@/app/components/blog/AdSlot";
-import { pathFor, slugFor, type RouteId } from "@/app/lib/i18n";
+import { pathFor } from "@/app/lib/i18n";
 import {
   CATEGORY_LABEL,
   formatDate,
+  type BlogImage,
   type BlogPost,
 } from "@/app/lib/content/blog-posts";
 
@@ -13,34 +15,34 @@ import {
  * miniatura, tarjeta, barra lateral y bloque de recomendaciones.
  */
 
-/** Imagen de cada artículo: la misma que genera la ruta Open Graph. */
-export function coverFor(id: RouteId): string {
-  return `/og/es/${slugFor(id, "es")}`;
-}
-
+/**
+ * Foto de un artículo. `next/image` genera varios tamaños y el navegador
+ * baja el que corresponde al ancho de pantalla (`sizes`), así que en el
+ * celular no se descarga la foto de escritorio.
+ */
 export function PostCover({
-  id,
-  alt,
+  image,
+  sizes,
   priority = false,
+  decorative = false,
   className = "",
 }: {
-  id: RouteId;
-  alt: string;
+  image: BlogImage;
+  sizes: string;
   priority?: boolean;
+  /** En tarjetas el título ya describe el enlace: la foto va con alt vacío. */
+  decorative?: boolean;
   className?: string;
 }) {
   return (
-    // La imagen la genera nuestra propia ruta `/og`, ya a 1200×630: no hace
-    // falta pasarla por el optimizador.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={coverFor(id)}
-      alt={alt}
-      width={1200}
-      height={630}
-      loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "auto"}
-      className={`w-full aspect-[1200/630] object-cover bg-neutral-100 ${className}`}
+    <Image
+      src={image.src}
+      alt={decorative ? "" : image.alt}
+      width={1600}
+      height={900}
+      sizes={sizes}
+      priority={priority}
+      className={`w-full aspect-[16/9] object-cover bg-neutral-100 ${className}`}
     />
   );
 }
@@ -49,8 +51,13 @@ export function PostCard({ post }: { post: BlogPost }) {
   const href = pathFor(post.id, "es")!;
   return (
     <article className="group flex flex-col rounded-2xl border border-neutral-200 bg-white overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all">
-      <Link href={href} tabIndex={-1} aria-hidden="true">
-        <PostCover id={post.id} alt="" />
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="block overflow-hidden">
+        <PostCover
+          image={post.image}
+          decorative
+          sizes="(min-width: 1280px) 300px, (min-width: 640px) 50vw, 100vw"
+          className="group-hover:scale-[1.03] transition-transform duration-500"
+        />
       </Link>
       <div className="flex flex-col flex-1 p-5">
         <p className="text-[11px] font-bold uppercase tracking-widest text-grolow-cream">

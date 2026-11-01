@@ -2,6 +2,7 @@ import Link from "next/link";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import { withBrand } from "@/app/components/Brand";
 import ArticleActions from "@/app/components/blog/ArticleActions";
+import TableOfContents, { type TocItem } from "@/app/components/blog/TableOfContents";
 import AdSlot from "@/app/components/blog/AdSlot";
 import {
   BlogRecommendations,
@@ -14,8 +15,10 @@ import {
   CATEGORY_LABEL,
   blogPost,
   formatDate,
+  neighbours,
   recommendedPosts,
   relatedPosts,
+  slugify,
 } from "@/app/lib/content/blog-posts";
 
 /**
@@ -61,6 +64,23 @@ export default function BlogArticlePage({
 
   const sidebar = relatedPosts(routeId, SIDEBAR_COUNT);
   const recommended = recommendedPosts(routeId, SIDEBAR_COUNT, 4);
+
+  const { prev, next } = neighbours(routeId);
+
+  // Anclas de cada h2, para el índice. `ids` evita duplicados.
+  const ids = new Set<string>();
+  const anchor = (text: string) => {
+    let id = slugify(text) || "seccion";
+    while (ids.has(id)) id += "-2";
+    ids.add(id);
+    return id;
+  };
+  const sectionIds = sections.map((sec) => anchor(sec.h2));
+  const faqId = faq && faq.length > 0 ? anchor("Preguntas frecuentes") : null;
+  const toc: TocItem[] = [
+    ...sections.map((sec, i) => ({ id: sectionIds[i], label: sec.h2 })),
+    ...(faqId ? [{ id: faqId, label: "Preguntas frecuentes" }] : []),
+  ];
 
   const relatedLinks = (related ?? []).flatMap((link) => {
     const href = pathFor(link.to, lang);
@@ -124,11 +144,36 @@ export default function BlogArticlePage({
               </div>
             </header>
 
-            <figure className="mt-8">
-              <PostCover id={routeId} alt={h1} priority className="rounded-xl" />
-            </figure>
+            {post && (
+              <figure className="mt-8">
+                <PostCover
+                  image={post.image}
+                  priority
+                  sizes="(min-width: 1280px) 830px, (min-width: 1024px) 65vw, 100vw"
+                  className="rounded-xl"
+                />
+                <figcaption className="mt-2 text-xs text-neutral-500">
+                  {post.image.alt}. Foto:{" "}
+                  <a href={post.image.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-neutral-800">
+                    {post.image.credit} / Unsplash
+                  </a>
+                </figcaption>
+              </figure>
+            )}
 
-            <div data-article-body className="mt-10 max-w-3xl">
+            <div className="mt-10 xl:grid xl:grid-cols-[190px_minmax(0,1fr)] xl:gap-10">
+            {/* Índice fijo a la izquierda en pantallas grandes. */}
+            <aside className="hidden xl:block">
+              <TableOfContents items={toc} variant="rail" />
+            </aside>
+
+            <div className="min-w-0">
+            {/* En móvil y tablet, índice desplegable al inicio. */}
+            <div className="mb-8 xl:hidden">
+              <TableOfContents items={toc} variant="inline" />
+            </div>
+
+            <div data-article-body className="max-w-3xl">
               <div className="space-y-5">
                 {lead.map((paragraph, i) => (
                   <p key={i} className={i === 0 ? "text-xl text-neutral-900 leading-[1.7]" : P}>
@@ -139,7 +184,7 @@ export default function BlogArticlePage({
 
               {sections.map((section, i) => (
                 <section key={i} className="mt-12">
-                  <h2 className="text-2xl md:text-[1.75rem] font-extrabold tracking-tight text-neutral-900 mb-4">
+                  <h2 id={sectionIds[i]} className="scroll-mt-32 text-2xl md:text-[1.75rem] font-extrabold tracking-tight text-neutral-900 mb-4">
                     {withBrand(section.h2)}
                   </h2>
 
@@ -205,7 +250,7 @@ export default function BlogArticlePage({
 
               {faq && faq.length > 0 && (
                 <section className="mt-12">
-                  <h2 className="text-2xl md:text-[1.75rem] font-extrabold tracking-tight text-neutral-900 mb-4">
+                  <h2 id={faqId ?? undefined} className="scroll-mt-32 text-2xl md:text-[1.75rem] font-extrabold tracking-tight text-neutral-900 mb-4">
                     Preguntas frecuentes
                   </h2>
                   <dl className="divide-y divide-neutral-200 border-y border-neutral-200">
@@ -247,6 +292,25 @@ export default function BlogArticlePage({
                 {withBrand(cta.label)}
               </WhatsAppLink>
             </section>
+
+            {(prev || next) && (
+              <nav aria-label="Más artículos" className="mt-12 max-w-3xl grid gap-4 sm:grid-cols-2">
+                {prev ? (
+                  <Link href={pathFor(prev.id, lang)!} className="group rounded-xl border border-neutral-200 p-5 hover:border-grolow-cream transition-colors">
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">← Anterior</span>
+                    <span className="mt-2 block font-bold leading-snug text-neutral-900 group-hover:text-grolow-cream">{prev.title}</span>
+                  </Link>
+                ) : <span />}
+                {next && (
+                  <Link href={pathFor(next.id, lang)!} className="group rounded-xl border border-neutral-200 p-5 text-right hover:border-grolow-cream transition-colors">
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">Siguiente →</span>
+                    <span className="mt-2 block font-bold leading-snug text-neutral-900 group-hover:text-grolow-cream">{next.title}</span>
+                  </Link>
+                )}
+              </nav>
+            )}
+            </div>
+            </div>
           </article>
 
           {/* ── Barra lateral ── */}

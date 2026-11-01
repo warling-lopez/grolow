@@ -49,8 +49,8 @@ export default function BlogIndexPage({
           <div className="min-w-0 space-y-16">
             {featured && (
               <article className="group grid gap-6 md:grid-cols-2 md:items-center">
-                <Link href={pathFor(featured.id, lang)!} tabIndex={-1} aria-hidden="true">
-                  <PostCover id={featured.id} alt="" priority className="rounded-xl" />
+                <Link href={pathFor(featured.id, lang)!} tabIndex={-1} aria-hidden="true" className="block overflow-hidden rounded-xl">
+                  <PostCover image={featured.image} decorative priority sizes="(min-width: 1024px) 420px, 100vw" />
                 </Link>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-widest text-grolow-cream">

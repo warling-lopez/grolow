@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Brand from "@/app/components/Brand";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
+import ReadingProgress from "@/app/components/blog/ReadingProgress";
 import { pathFor, type RouteId } from "@/app/lib/i18n";
 
 /**
@@ -125,6 +126,7 @@ export default function BlogHeader() {
           </ul>
         </nav>
       )}
+      <ReadingProgress />
     </header>
   );
 }
