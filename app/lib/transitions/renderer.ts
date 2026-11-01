@@ -67,6 +67,22 @@ export function viewportHeight() {
   return probe.offsetHeight || window.innerHeight;
 }
 
+/**
+ * true si el contexto WebGL lo pinta la CPU en vez de una GPU. Se mira el
+ * nombre del renderer real (la extensión de depuración); donde el navegador
+ * no lo expone se asume GPU, que es el comportamiento de siempre.
+ *
+ * `failIfMajorPerformanceCaveat` no sirve para esto: Chrome actual no
+ * considera SwiftShader un "caveat" y crea el contexto igual.
+ */
+function isSoftwareRenderer(gl: WebGLRenderingContext) {
+  const info = gl.getExtension("WEBGL_debug_renderer_info");
+  const name = String(
+    gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER) ?? "",
+  );
+  return /swiftshader|llvmpipe|softpipe|software|basic render driver/i.test(name);
+}
+
 export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -104,6 +120,16 @@ export class TransitionRenderer {
       preserveDrawingBuffer: false,
     });
     if (!gl) throw new Error("WebGL no disponible");
+    // Sin GPU real, el WebGL es por software (SwiftShader, llvmpipe…): el
+    // shader con ruido a pantalla completa se calcula en la CPU y bloquea el
+    // hilo principal segundos durante la intro (≈5 s de TBT en PageSpeed
+    // móvil, que mide así). En ese caso no se usa: `getRenderer()` devuelve
+    // null y la intro y las secciones caen en su fundido de reserva. Con GPU
+    // todo sigue igual.
+    if (isSoftwareRenderer(gl)) {
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      throw new Error("WebGL por software");
+    }
     this.gl = gl;
     this.canvas = canvas;
 

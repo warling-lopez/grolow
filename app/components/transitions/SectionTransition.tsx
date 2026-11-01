@@ -109,10 +109,26 @@ type ModelViewerLike = HTMLElement & {
   toBlob?: (options?: { idealAspect?: boolean }) => Promise<Blob>;
 };
 
-/** Elementos con WebGL propio que se capturan con su propio `toBlob()`. */
-const isLive = (el: HTMLElement) => el.tagName === "MODEL-VIEWER";
+/**
+ * Elementos que se dibujan tal cual en la textura, con su caja visible (no
+ * pasan por html-to-image): el logo 3D, que tiene WebGL propio y se captura
+ * con su `toBlob()`, y su póster estático, que es ya una imagen. Los dos van
+ * dentro de una capa con transform (escala), por eso necesitan la caja real.
+ */
+const isLive = (el: HTMLElement) =>
+  el.tagName === "MODEL-VIEWER" || el.tagName === "IMG";
 
-async function grabLive(el: HTMLElement): Promise<ImageBitmap | null> {
+async function grabLive(
+  el: HTMLElement,
+): Promise<ImageBitmap | HTMLImageElement | null> {
+  if (el instanceof HTMLImageElement) {
+    try {
+      await el.decode();
+      return el;
+    } catch {
+      return null;
+    }
+  }
   const mv = el as ModelViewerLike;
   if (!mv.loaded || !mv.toBlob) return null;
   try {

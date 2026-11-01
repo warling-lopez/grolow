@@ -43,7 +43,12 @@ export default function Home({ lang }: { lang: Lang }) {
       {/* «Lo que hacemos bien» (el dial de Hero4) se rompe y revela el método.
           Orden de pintado: línea central, dial y encima el logo 3D. */}
       <SectionTransition
-        from={["#hero-center-line", "#lo-que-hacemos-bien", "model-viewer"]}>
+        from={[
+          "#hero-center-line",
+          "#lo-que-hacemos-bien",
+          // El 3D si ya se cargó; si no, su póster (ver Logo3D en Hero4).
+          "model-viewer, img[data-logo-poster]",
+        ]}>
         <ProcessSection lang={lang} />
       </SectionTransition>
 

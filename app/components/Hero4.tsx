@@ -172,6 +172,12 @@ type ModelViewerElement = HTMLElement & {
  * El GLB salió de Blender con el cubo por defecto aún en la escena (material
  * «Material», gris). Aquí se vuelve transparente en vez de tocar el fichero,
  * así un re-export desde Blender no lo trae de vuelta sin que nadie lo vea.
+ *
+ * El GLB publicado ya va optimizado (sin el cubo, sin COLOR_1 y con la malla
+ * cuantizada: 916 KB → 548 KB). Para regenerarlo tras un re-export:
+ *   gltf-transform quantize entrada.glb public/3d/logo_3d.glb
+ * y quitar antes el cubo y COLOR_1. El póster (`logo_3d-poster.webp`) hay que
+ * rehacerlo también si cambia el modelo.
  */
 const STRAY_MATERIAL = "Material";
 
@@ -194,24 +200,62 @@ function Logo3D({
   const [ready, setReady] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const lastScroll = useRef<number | null>(null);
+  const lang = useLang();
+  // Junto al GLB: /3d/logo_3d.glb → /3d/logo_3d-poster.webp
+  const poster = src.replace(/\.glb$/, "-poster.webp");
 
-  // Se pide cuando termina la intro de portada, no antes: cargar three.js y
-  // parsear el GLB bloquea el hilo principal ~1 s y congelaba el palo de
-  // carga y la rotura. Sin intro (ya vista, otra navegación) es inmediato.
+  // Fachada: hasta que el visitante interactúa (mueve el ratón, toca,
+  // hace scroll o pulsa una tecla) solo se ve el póster estático del logo.
+  // model-viewer + three.js cuestan ~340 KB de JS y, en el primer fotograma,
+  // compilan shaders y generan el entorno de luz en una sola tarea que
+  // bloquea el hilo principal (segundos en un móvil medio). Así ese coste
+  // sale de la carga inicial y lo paga solo quien ya está usando la página.
+  //
+  // Además se espera a que termine la intro de portada: cargarlo durante el
+  // palo y la rotura los congelaba. Sin intro (ya vista, otra navegación) no
+  // hay que esperar nada más que la interacción.
   useEffect(() => {
     let cancelled = false;
-    const load = () => {
+    let introDone = !document.getElementById("intro-loader");
+    let interacted = false;
+    let started = false;
+
+    const maybeLoad = () => {
+      if (started || cancelled || !introDone || !interacted) return;
+      started = true;
       import("@google/model-viewer").then(() => {
         if (!cancelled) setReady(true);
       });
     };
-    // Sin IntroLoader en la página nadie avisaría: se carga ya.
-    const off = document.getElementById("intro-loader")
-      ? onIntroDone(load)
-      : (load(), () => {});
+
+    const EVENTS = [
+      "pointerdown",
+      "pointermove",
+      "touchstart",
+      "wheel",
+      "keydown",
+      "scroll",
+    ] as const;
+    const onInteract = () => {
+      interacted = true;
+      EVENTS.forEach((e) => window.removeEventListener(e, onInteract, true));
+      maybeLoad();
+    };
+    EVENTS.forEach((e) =>
+      window.addEventListener(e, onInteract, { capture: true, passive: true }),
+    );
+
+    const off = introDone
+      ? () => {}
+      : onIntroDone(() => {
+          introDone = true;
+          maybeLoad();
+        });
+
     return () => {
       cancelled = true;
       off();
+      EVENTS.forEach((e) => window.removeEventListener(e, onInteract, true));
     };
   }, []);
 
@@ -243,14 +287,17 @@ function Logo3D({
     el.cameraOrbit = `${theta}rad ${PHI} auto`;
   });
 
-  if (!ready) return null;
-
   return (
+    <div className="relative h-full w-full">
+      {ready && (
     <model-viewer
       ref={ref}
       src={src}
-      alt=""
-      aria-hidden="true"
+      // No va con aria-hidden: con camera-controls, model-viewer pone
+      // tabindex="0" dentro de su shadow DOM (no se puede quitar) y un
+      // elemento enfocable dentro de aria-hidden es un error de
+      // accesibilidad. Se expone como imagen con nombre.
+      alt={lang === "en" ? "Grolow 3D logo" : "Logo de Grolow en 3D"}
       camera-orbit={`-20deg ${PHI} auto`}
       min-camera-orbit={`-Infinity ${PHI} auto`}
       max-camera-orbit={`Infinity ${PHI} auto`}
@@ -267,10 +314,55 @@ function Logo3D({
       exposure="1.1"
       shadow-intensity="0"
       environment-image="neutral"
-      className={`block h-full w-full bg-transparent transition-opacity duration-700 ${
+      className={`absolute inset-0 block h-full w-full bg-transparent transition-opacity duration-700 ${
         loaded ? "opacity-100" : "opacity-0"
       }`}
       style={{ "--poster-color": "transparent" } as React.CSSProperties}
+    />
+      )}
+      {/* Póster: el mismo logo, renderizado en el ángulo inicial de la
+          cámara (-20°, 80°). Se ve desde el primer pintado y se funde cuando
+          el 3D ya ha pintado su primer fotograma. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={poster}
+        alt=""
+        aria-hidden="true"
+        width={640}
+        height={640}
+        decoding="async"
+        fetchPriority="low"
+        draggable={false}
+        data-logo-poster=""
+        className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain transition-opacity duration-700 ${
+          loaded ? "opacity-0" : "opacity-100"
+        }`}
+      />
+    </div>
+  );
+}
+
+/**
+ * Póster del logo pintado en su hueco del hero, que ya existe en el HTML del
+ * servidor con su tamaño final. La capa que viaja con el scroll no tiene
+ * medidas hasta que React hidrata y mide (`geo`), así que sin esto el logo no
+ * aparecía hasta después del JS y pasaba a ser el LCP de la página (4,5 s en
+ * móvil). En cuanto la capa móvil está colocada —encima, en el mismo sitio y
+ * con la misma imagen— este se oculta.
+ */
+function SlotPoster({ src, hidden }: { src: string; hidden: boolean }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      width={640}
+      height={640}
+      fetchPriority="high"
+      draggable={false}
+      className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain ${
+        hidden ? "invisible" : ""
+      }`}
     />
   );
 }
@@ -469,6 +561,7 @@ export default function Hero4({
   const mobileSlotRef = useRef<HTMLDivElement>(null);
   const dialRef = useRef<HTMLDivElement>(null);
   const [geo, setGeo] = useState<Geometry | null>(null);
+  const poster = model.replace(/\.glb$/, "-poster.webp");
   const [active, setActive] = useState(0);
 
   const { scrollY } = useScroll();
@@ -594,8 +687,9 @@ export default function Hero4({
         <div
           ref={deskSlotRef}
           className="absolute hidden lg:block left-1/2 h-[min(100vh,55vw)] w-[min(38vh,24vw)] -translate-x-1/2"
-          aria-hidden="true"
-        />
+          aria-hidden="true">
+          <SlotPoster src={poster} hidden={!!geo} />
+        </div>
 
         <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 gap-8 px-6 pb-16 pt-28 lg:grid-cols-2 lg:gap-0 lg:px-0 lg:pb-24 lg:pt-36">
           {/* ---------- Columna izquierda: rótulo ---------- */}
@@ -610,9 +704,10 @@ export default function Hero4({
           {/* ---------- Hueco del logo en móvil ---------- */}
           <div
             ref={mobileSlotRef}
-            className="-my-6 mx-auto aspect-square w-[min(52vw,300px)] lg:hidden"
-            aria-hidden="true"
-          />
+            className="relative -my-6 mx-auto aspect-square w-[min(52vw,300px)] lg:hidden"
+            aria-hidden="true">
+            <SlotPoster src={poster} hidden={!!geo} />
+          </div>
 
           {/* ---------- Columna derecha: texto + CTAs ---------- */}
           <div className="flex flex-col lg:pl-16 lg:pt-4">
@@ -687,9 +782,9 @@ export default function Hero4({
       </section>
 
       {/* ================= LOGO (capa sticky sobre hero + dial) ================= */}
-      <div
-        className="pointer-events-none absolute inset-0 z-20"
-        aria-hidden="true">
+      {/* Sin aria-hidden: dentro está el <model-viewer>, que es enfocable
+          (ver Logo3D). El póster ya va oculto por su cuenta. */}
+      <div className="pointer-events-none absolute inset-0 z-20">
         <div className="sticky top-0 h-screen w-full">
           <motion.div
             className="pointer-events-auto absolute left-0 top-0"
