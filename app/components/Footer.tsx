@@ -31,7 +31,14 @@ const MENU: RouteId[] = [
   "blog",
 ];
 
-const LEGAL: RouteId[] = ["privacidad", "cookies", "terminos"];
+const LEGAL: RouteId[] = [
+  "terminos",
+  "privacidad",
+  "cookies",
+  "propiedad",
+  "soporte",
+  "reembolsos",
+];
 
 /**
  * El rótulo del pie: distorsión que se nota más que en el resto del sitio,
@@ -106,6 +113,9 @@ const LABEL: Record<string, Record<Lang, string>> = {
   privacidad: { es: "Política de privacidad", en: "Privacy policy" },
   cookies: { es: "Política de cookies", en: "Cookie policy" },
   terminos: { es: "Términos y condiciones", en: "Terms and conditions" },
+  propiedad: { es: "Propiedad intelectual", en: "Intellectual property" },
+  soporte: { es: "Soporte y mantenimiento", en: "Support and maintenance" },
+  reembolsos: { es: "Reembolsos y cancelación", en: "Refunds and cancellation" },
 };
 
 /** SVG inline: 2 iconos pesan ~1kb y evitan arrastrar una librería entera. */

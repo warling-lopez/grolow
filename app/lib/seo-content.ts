@@ -328,45 +328,90 @@ export const SEO: Record<RouteId, SeoTable> = {
     },
   },
 
-  // ── Sin indexar: no las revisa el verificador de longitudes ────────────
+  // ── Legales ────────────────────────────────────────────────────────────
   privacidad: {
     es: {
-      title: "Política de privacidad | Grolow",
+      title: "Política de privacidad de Grolow: qué datos usamos",
       description:
-        "Qué datos recogemos en grolow.com, para qué los usamos, con qué proveedores se comparten y cómo ejercer tus derechos sobre ellos.",
+        "Qué datos recogemos en grolow.com y en nuestros servicios, para qué los usamos, con qué proveedores se comparten y cómo pedir que los borremos.",
     },
     en: {
-      title: "Privacy policy | Grolow",
+      title: "Grolow privacy policy: what data we collect and why",
       description:
-        "What data we collect on grolow.com, what we use it for, which providers process it and how to exercise your rights over it.",
+        "What data we collect on grolow.com and through our services, what we use it for, which providers process it and how to ask us to delete it all.",
     },
   },
+
 
   cookies: {
     es: {
-      title: "Política de cookies | Grolow",
+      title: "Política de cookies de Grolow: cuáles usamos y por qué",
       description:
-        "Qué cookies usa grolow.com, para qué sirven y cómo desactivarlas. Sin cookies publicitarias ni de remarketing.",
+        "Qué cookies usa grolow.com, para qué sirven y cómo desactivarlas desde tu navegador. Solo analítica: sin cookies publicitarias ni de remarketing.",
     },
     en: {
-      title: "Cookie policy | Grolow",
+      title: "Grolow cookie policy: which cookies we use and why",
       description:
-        "Which cookies grolow.com uses, what they do and how to turn them off. No advertising or remarketing cookies.",
+        "Which cookies grolow.com uses, what they do and how to turn them off in your browser. Analytics only: no advertising or remarketing cookies at all.",
     },
   },
 
+
   terminos: {
     es: {
-      title: "Términos y condiciones | Grolow",
+      title: "Términos y condiciones para contratar a Grolow (RD)",
       description:
-        "Condiciones de uso del sitio y de contratación: cotizaciones, pagos, plazos, propiedad del trabajo entregado y ley aplicable.",
+        "Cómo se contrata a Grolow: cotizaciones, pagos 50/50, plazos, revisiones, garantía de 90 días, propiedad del trabajo, terminación y ley aplicable.",
     },
     en: {
-      title: "Terms and conditions | Grolow",
+      title: "Grolow terms and conditions for hiring our services",
       description:
-        "Terms for using the site and contracting our services: quotes, payment, timelines, ownership of delivered work and governing law.",
+        "How hiring Grolow works: quotes, 50/50 payments, timelines, revisions, 90-day warranty, ownership of the work, termination and governing law.",
     },
   },
+
+
+  propiedad: {
+    es: {
+      title: "Propiedad de tu código, tu dominio y tus datos | Grolow",
+      description:
+        "Tu dominio va a tu nombre y tu código y tu base de datos son tuyos. Grolow los opera, y si decides irte te llevas todo en 10 días hábiles, sin costo.",
+    },
+    en: {
+      title: "Who owns your code, your domain and your data | Grolow",
+      description:
+        "Your domain is in your name, and your code and database are yours. Grolow runs them, and if you decide to leave you take everything within 10 days, free.",
+    },
+  },
+
+
+  soporte: {
+    es: {
+      title: "Soporte, mantenimiento y tiempos de respuesta | Grolow",
+      description:
+        "Qué cubre la mensualidad de Grolow, tiempos de respuesta por gravedad, disponibilidad del 99.5%, respaldos diarios y cómo cancelar sin penalidad.",
+    },
+    en: {
+      title: "Grolow support, maintenance and response time policy",
+      description:
+        "What Grolow's monthly plan covers, response times by severity, a 99.5% availability target, daily backups and how to cancel with no penalty at all.",
+    },
+  },
+
+
+  reembolsos: {
+    es: {
+      title: "Política de reembolsos y cancelación de Grolow (RD)",
+      description:
+        "Qué pasa con tu pago si cancelas un proyecto o una mensualidad con Grolow: reembolsos, entrega del trabajo hecho y cancelación sin permanencia.",
+    },
+    en: {
+      title: "Grolow refund and cancellation policy for our clients",
+      description:
+        "What happens to your payment if you cancel a project or monthly plan with Grolow: refunds, handover of the work done and cancelling with no lock-in.",
+    },
+  },
+
 
   clinicas: {
     es: {

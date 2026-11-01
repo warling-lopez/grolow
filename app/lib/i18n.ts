@@ -313,24 +313,49 @@ const ROUTE_TABLE = {
   },
 
   // ── Legales ────────────────────────────────────────────────────────────
-  // `index: false` mientras queden marcadores `[COMPLETAR: ...]` dentro:
-  // publicar un aviso legal a medio rellenar en los resultados de búsqueda es
-  // peor que no tenerlo indexado. Al rellenarlos, poner `index: true` y entran
-  // solas al sitemap.
+  // Basadas en el paquete legal (v2, sep. 2026). Completas, así que se indexan:
+  // son páginas que un cliente revisa antes de contratar.
   privacidad: {
     slug: { es: "politica-de-privacidad", en: "privacy-policy" },
-    index: false,
+    index: true,
     parent: "home",
+    priority: 0.3,
+    changeFrequency: "yearly",
   },
   cookies: {
     slug: { es: "politica-de-cookies", en: "cookie-policy" },
-    index: false,
+    index: true,
     parent: "home",
+    priority: 0.2,
+    changeFrequency: "yearly",
   },
   terminos: {
     slug: { es: "terminos-y-condiciones", en: "terms-and-conditions" },
-    index: false,
+    index: true,
     parent: "home",
+    priority: 0.3,
+    changeFrequency: "yearly",
+  },
+  propiedad: {
+    slug: { es: "propiedad-intelectual", en: "intellectual-property" },
+    index: true,
+    parent: "home",
+    priority: 0.4,
+    changeFrequency: "yearly",
+  },
+  soporte: {
+    slug: { es: "soporte-y-mantenimiento", en: "support-and-maintenance" },
+    index: true,
+    parent: "home",
+    priority: 0.4,
+    changeFrequency: "yearly",
+  },
+  reembolsos: {
+    slug: { es: "reembolsos-y-cancelacion", en: "refunds-and-cancellation" },
+    index: true,
+    parent: "home",
+    priority: 0.3,
+    changeFrequency: "yearly",
   },
 
   // ── Sin publicar / sin indexar ─────────────────────────────────────────

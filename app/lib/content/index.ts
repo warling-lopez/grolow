@@ -13,6 +13,7 @@ import { preciosContent } from "./precios";
 import { casosContent } from "./casos";
 import { blogContent } from "./blog";
 import { privacidadContent, cookiesContent, terminosContent } from "./legal";
+import { propiedadContent, soporteContent, reembolsosContent } from "./legal-servicio";
 import { blogPreciosContent } from "./blog-precios";
 import { blogWordpressContent } from "./blog-wordpress";
 import { blogPhp2shellContent } from "./blog-php2shell";
@@ -66,6 +67,9 @@ const CONTENT: Partial<Record<RouteId, ContentTable>> = {
   privacidad: privacidadContent,
   cookies: cookiesContent,
   terminos: terminosContent,
+  propiedad: propiedadContent,
+  soporte: soporteContent,
+  reembolsos: reembolsosContent,
 };
 
 export function contentFor(id: RouteId, lang: Lang): PageContent | null {

@@ -61,6 +61,9 @@ export const NAV_LABEL: Record<RouteId, Record<Lang, string>> = {
   privacidad: { es: "Política de privacidad", en: "Privacy policy" },
   cookies: { es: "Política de cookies", en: "Cookie policy" },
   terminos: { es: "Términos y condiciones", en: "Terms and conditions" },
+  propiedad: { es: "Propiedad intelectual", en: "Intellectual property" },
+  soporte: { es: "Soporte y mantenimiento", en: "Support and maintenance" },
+  reembolsos: { es: "Reembolsos y cancelación", en: "Refunds and cancellation" },
   clinicas: { es: "Webs para clínicas", en: "Websites for clinics" },
   gracias: { es: "Gracias", en: "Thank you" },
 };
