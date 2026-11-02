@@ -42,9 +42,9 @@ export default function GraciasPage() {
         <span className="inline-block text-5xl mb-8">✅</span>
 
         <h1
-          className="font-display font-extrabold text-4xl md:text-5xl uppercase leading-none tracking-tighter text-grolow-light mb-6">
+          className="font-serif font-black text-4xl md:text-5xl leading-[1.08] tracking-tight text-neutral-900 mb-6">
           {c.headingLine1} <br />
-          <span className="text-grolow-cyan italic">{c.headingLine2}</span>
+          <span className="text-grolow-cream">{c.headingLine2}</span>
         </h1>
 
         <p className="text-grolow-light/75 text-lg leading-relaxed mb-4">

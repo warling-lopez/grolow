@@ -7,6 +7,7 @@ import ScrollToTopButton from '@/app/components/ScrollToTopButton';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import BlogHeader from '@/app/components/blog/BlogHeader';
+import '@/app/styles/corporate.css';
 
 /**
  * Lenis y GSAP se cargan dinámicamente, no con un import de módulo.
@@ -33,6 +34,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     false;
   // El blog lleva su propio nav (ver BlogHeader).
   const blog = /^\/(es|en)\/blog(\/|$)/.test(pathname ?? '');
+  // Todo lo que no es la portada lleva el nav y el tema de empresa del blog.
+  const home = /^\/(es|en)?\/?$/.test(pathname ?? '/');
 
   useEffect(() => {
     // `cancelled` cubre el desmontaje mientras los módulos están en vuelo: sin
@@ -109,8 +112,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      {!standalone && (blog ? <BlogHeader /> : <Header />)}
-      <div data-site-content className="relative z-10 h-auto">
+      {!standalone && (home ? <Header /> : <BlogHeader section={blog ? 'blog' : 'site'} />)}
+      <div
+        data-site-content
+        className={`relative z-10 h-auto ${!standalone && !home ? 'site-corporate' : ''}`}>
         {children}
       </div>
       {/* Footer en su sitio, sin transición animada. */}

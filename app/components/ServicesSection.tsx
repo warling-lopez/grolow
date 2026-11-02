@@ -290,6 +290,10 @@ export default function ServicesSection() {
   useGSAP(
     () => {
       const cards = gsap.utils.toArray(".service-card");
+      // En las páginas internas (tema de empresa) las tarjetas no se apilan
+      // ni se inclinan: se quedan rectas, en su sitio.
+      const corporate = !!containerRef.current?.closest(".site-corporate");
+      if (corporate) return;
 
       let mm = gsap.matchMedia();
 

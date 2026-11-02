@@ -1,0 +1,33 @@
+/* ── Páginas internas: tema de empresa ─────────────────────────────────────
+   ClientLayout pone .site-corporate en el contenedor de todas las páginas
+   que no son la portada (servicios, segmentos, casos, legales, contacto,
+   blog…). Cambia los tokens de marca solo ahí: fondo blanco, tinta neutra y
+   el verde profundo de Grolow como acento, igual que el blog.
+
+   Va en su propio archivo (importado por ClientLayout) y no en globals.css,
+   para que cualquier cambio genere un CSS nuevo y no dependa de la caché de
+   compilación. */
+.site-corporate {
+  --color-grolow-dark: #ffffff;
+  --color-grolow-card: #f6f7f7;
+  --color-grolow-light: #171717;
+  --color-grolow-cream: #004643;
+  --color-grolow-cyan: #004643;
+  --color-grolow-accent: #008f8b;
+  background-color: #ffffff;
+  color: #171717;
+}
+
+/* Secciones compartidas con la portada (servicios, casos, contacto…): dentro
+   de las páginas internas sus titulares usan el mismo serif del blog, sin
+   mayúsculas forzadas, y las miniaturas de los casos van rectas. */
+.site-corporate .font-display,
+.site-corporate :is(h1, h2, h3).uppercase {
+  font-family: var(--font-serif);
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.site-corporate .project-float-img {
+  transform: translate(10px, -10px) !important;
+}

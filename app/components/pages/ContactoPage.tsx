@@ -46,24 +46,24 @@ export default function ContactoPage() {
     <main className="w-full bg-grolow-dark pb-16">
       <Breadcrumbs routeId="contacto" lang={lang} />
 
-      <header className="max-w-5xl mx-auto w-full px-6 md:px-8 pt-8 md:pt-10">
-        <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
+      <header className="max-w-7xl mx-auto w-full px-4 md:px-8 pt-4 md:pt-6">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-grolow-cream mb-3">
           {c.eyebrow}
         </p>
-        <h1 className="text-[clamp(2rem,5.5vw,4rem)] font-black uppercase text-grolow-light leading-[1.02] tracking-tight">
+        <h1 className="max-w-3xl font-serif font-black text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.08] tracking-tight text-neutral-900">
           {c.h1}
         </h1>
         <div className="mt-6 space-y-4 max-w-3xl">
           {c.lead.map((paragraph, i) => (
             <p
               key={i}
-              className="text-base md:text-lg text-grolow-light/80 leading-relaxed">
+              className="text-lg text-neutral-700 leading-relaxed">
               {paragraph}
             </p>
           ))}
         </div>
 
-        <div className="mt-8 max-w-3xl border-t border-grolow-light/10 pt-6">
+        <div className="mt-8 max-w-3xl rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
           <h2 className="text-xl font-extrabold text-grolow-light">
             {c.whatsappTitle}
           </h2>
@@ -72,7 +72,7 @@ export default function ContactoPage() {
             <WhatsAppLink
               message={c.whatsappMessage}
               placement="contact-page"
-              className="inline-flex items-center gap-2 rounded-full bg-grolow-light text-grolow-dark font-bold px-6 py-3 text-sm hover:bg-grolow-cream hover:text-white transition-colors">
+              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 text-white font-bold px-6 py-3 text-sm hover:bg-grolow-cream transition-colors">
               {c.whatsappLabel}
             </WhatsAppLink>
             <Link

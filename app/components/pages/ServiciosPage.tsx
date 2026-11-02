@@ -26,14 +26,14 @@ export default function ServiciosPage() {
     <main className="w-full bg-grolow-dark">
       <Breadcrumbs routeId="servicios" lang={lang} />
 
-      <div className="max-w-5xl mx-auto w-full px-6 md:px-8 pt-8 md:pt-10">
-        <p className="text-xs font-mono uppercase tracking-widest text-grolow-cream mb-3">
+      <div className="max-w-7xl mx-auto w-full px-4 md:px-8 pt-4 md:pt-6">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-grolow-cream mb-3">
           {c.eyebrow}
         </p>
-        <h1 className="text-[clamp(2rem,5.5vw,4.5rem)] font-black uppercase text-grolow-light leading-none">
+        <h1 className="font-serif font-black text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.08] tracking-tight text-neutral-900">
           {c.heading1}
           <br />
-          <span className="text-grolow-light/55">{c.heading2}</span>
+          <span className="text-grolow-cream">{c.heading2}</span>
         </h1>
       </div>
 

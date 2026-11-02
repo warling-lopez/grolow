@@ -297,6 +297,10 @@ export default function ProjectsSection({
           }
         );
 
+        // En las páginas internas (tema de empresa) nada se inclina: solo
+        // queda la entrada con fundido de arriba.
+        if (containerRef.current?.closest(".site-corporate")) return;
+
         // Parallax independiente en cada imagen flotante
         floatImgs.forEach((img) => {
           gsap.to(img, {
