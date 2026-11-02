@@ -34,18 +34,18 @@ export default function FounderSection({ lang }: { lang: Lang }) {
   return (
     <section
       id="founder"
-      className="flex min-h-[120vh] w-full items-center bg-grolow-card border-t border-grolow-light/10">
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-72 pt-24 md:grid-cols-2 md:gap-16 md:px-8 md:pb-48 md:pt-36">
+      className="w-full bg-grolow-card border-t border-grolow-light/10">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-16 md:grid-cols-[auto_1fr] md:gap-16 md:px-8 md:py-20">
         {/* Foto: círculo con aro exterior y sombra */}
         <div className="flex justify-center md:justify-start">
-          <div className="grid aspect-square w-full max-w-[22rem] place-items-center rounded-full border border-grolow-light/10 md:max-w-md">
+          <div className="grid aspect-square w-full max-w-[16rem] place-items-center rounded-full border border-grolow-light/10 md:w-[18rem] md:max-w-none">
             <div className="relative aspect-square w-[78%] overflow-hidden rounded-full bg-grolow-dark shadow-[0_24px_60px_-12px_rgba(14,21,18,0.45)]">
               {PHOTO_SRC ? (
                 <Image
                   src={PHOTO_SRC}
                   alt={c.alt}
                   fill
-                  sizes="(min-width: 768px) 30vw, 70vw"
+                  sizes="(min-width: 768px) 224px, 200px"
                   className="object-cover"
                 />
               ) : (
