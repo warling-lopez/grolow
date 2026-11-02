@@ -11,6 +11,7 @@ import ProyectsSection from "@/app/components/ProjectsSection";
 import TestimonialsSection from "@/app/components/TestimonialsSection";
 import FounderSection from "@/app/components/FounderSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
+import ScrollDarken from "@/app/components/effects/ScrollDarken";
 import { pathFor, type Lang } from "@/app/lib/i18n";
 
 /**
@@ -56,12 +57,16 @@ export default function Home({ lang }: { lang: Lang }) {
       {/* Estándares de ingeniería: entre el método y los casos, porque es la
           prueba de que el método se cumple antes de enseñar a quién se le
           cumplió. */}
-      <EngineeringSection lang={lang} />
+      {/* Desde la mitad de esta sección la página se va oscureciendo con el
+          scroll, hasta llegar a negro justo cuando entran los casos. */}
+      <ScrollDarken untilId="zona-oscura">
+        <EngineeringSection lang={lang} />
+      </ScrollDarken>
 
       {/* Desde «Casos de éxito» hasta Contacto, en oscuro (ver .home-dark en
           globals.css). El fundador queda fuera, en claro.
           data-header-trigger: el header pasa a texto blanco encima. */}
-      <div className="home-dark" data-header-trigger="true">
+      <div id="zona-oscura" className="home-dark" data-header-trigger="true">
       <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
 
       {/* Enlaces a las páginas de servicio y de segmento: es lo que reparte
