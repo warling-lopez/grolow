@@ -178,7 +178,7 @@ export default function EngineeringSection({ lang }: { lang: Lang }) {
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="rounded-2xl bg-grolow-brand p-6 text-center">
+                className="rounded-2xl bg-grolow-brand-bright p-6 text-center">
                 {hub}
               </motion.div>
             ),
@@ -361,11 +361,12 @@ function OrbitBoard({
         </div>
       ))}
 
-      {/* Núcleo: la idea que conecta a las cuatro. Mismo tamaño que ellas,
-          fijo — es la referencia contra la que se mueven las demás. */}
+      {/* Núcleo: la idea que conecta a las cuatro. Fijo — es la referencia
+          contra la que se mueven las demás. Un poco más pequeño (80%) y en el
+          teal claro para que no tape a las otras. */}
       <div
         ref={hubRef}
-        className={`absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-grolow-brand p-7 shadow-[0_20px_60px_rgba(0,0,0,0.35)] ${CARD_BOX}`}>
+        className={`absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 scale-[0.8] rounded-2xl bg-grolow-brand-bright p-7 shadow-[0_20px_60px_rgba(0,0,0,0.35)] ${CARD_BOX}`}>
         {hub}
       </div>
 

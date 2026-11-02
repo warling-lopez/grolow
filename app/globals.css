@@ -8,6 +8,28 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Los colores --color-grolow-* viven en el bloque @theme de abajo (sin
+     `inline`) para que las utilidades lean la variable y una zona como
+     .home-dark pueda cambiarlos. */
+
+  /* Las tres las inyecta next/font desde app/[lang]/layout.tsx (y su réplica
+     en app/(standalone)/layout.tsx): `sans` es el cuerpo de todo el sitio
+     (Open Sans), `display` los titulares (Saira) y `brand` solo el rótulo
+     «grolow» (Sergio Trendy). */
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-heading), system-ui, sans-serif;
+  --font-brand: var(--font-brand-face), var(--font-body), system-ui, sans-serif;
+
+  /* Solo para el h1 del hero de portada (Hero4): Bebas Neue, más grueso y
+     condensado que Saira, que es lo que llevaba ese titular antes de pasar
+     todos los titulares del sitio a Saira. */
+  --font-h1: var(--font-hero-h1), system-ui, sans-serif;
+}
+
+/* Colores de marca. Sin `inline`: las utilidades usan var(--color-grolow-*),
+   así .home-dark (más abajo) puede oscurecer solo una parte de la portada. */
+@theme {
   --color-grolow-dark: #f6f1e2; /* Token de fondo: ahora crema cálido */
   --color-grolow-card: #fffcf4; /* Tarjeta clara */
   --color-grolow-accent: #002b29; /* Verde más oscuro (final de gradiente) */
@@ -27,19 +49,6 @@
   --color-grolow-cream-seccion: #f0f0f0; /* Acento verde profundo (botones, eyebrow, gradiente) */
   --color-grolow-lime: #bef264; /* Verde lima — mitad inferior del SplitText (editable) */
   --color-grolow-light: #0e1512; /* Token de texto/bordes: ahora ink */
-
-  /* Las tres las inyecta next/font desde app/[lang]/layout.tsx (y su réplica
-     en app/(standalone)/layout.tsx): `sans` es el cuerpo de todo el sitio
-     (Open Sans), `display` los titulares (Saira) y `brand` solo el rótulo
-     «grolow» (Sergio Trendy). */
-  --font-sans: var(--font-body), system-ui, sans-serif;
-  --font-display: var(--font-heading), system-ui, sans-serif;
-  --font-brand: var(--font-brand-face), var(--font-body), system-ui, sans-serif;
-
-  /* Solo para el h1 del hero de portada (Hero4): Bebas Neue, más grueso y
-     condensado que Saira, que es lo que llevaba ese titular antes de pasar
-     todos los titulares del sitio a Saira. */
-  --font-h1: var(--font-hero-h1), system-ui, sans-serif;
 }
 
 /* `overflow-x` SOLO en `html`, nunca en `body`.
@@ -394,4 +403,35 @@ body {
   to {
     transform: translate3d(calc(-100% + 100cqw), 0, 0);
   }
+}
+
+/* ── Portada en oscuro: de «Casos de éxito» hasta Contacto ───────────────
+   Envuelve esas secciones en HomePage. Cambia los tokens de marca solo ahí:
+   fondo negro, texto claro y el teal brillante del hero como acento. El
+   fundador queda fuera, en claro. */
+.home-dark {
+  --color-grolow-dark: #000000;
+  --color-grolow-card: #0b1111;
+  --color-grolow-light: #eef3f2;
+  --color-grolow-cream: #06e0da;
+  --color-grolow-cyan: #06e0da;
+  --color-grolow-accent: #7cf1ed;
+  background-color: #000000;
+  color: var(--color-grolow-light);
+  color-scheme: dark;
+}
+
+/* Superficies que en claro eran blancas: en oscuro, tarjeta apenas elevada. */
+.home-dark .bg-white {
+  background-color: var(--color-grolow-card);
+}
+.home-dark .bg-white\/40 {
+  background-color: rgb(0 0 0 / 0.45);
+}
+.home-dark .bg-white\/60 {
+  background-color: rgb(255 255 255 / 0.03);
+}
+.home-dark .bg-white\/70,
+.home-dark .hover\:bg-white\/70:hover {
+  background-color: rgb(255 255 255 / 0.06);
 }

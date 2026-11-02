@@ -58,6 +58,10 @@ export default function Home({ lang }: { lang: Lang }) {
           cumplió. */}
       <EngineeringSection lang={lang} />
 
+      {/* Desde «Casos de éxito» hasta Contacto, en oscuro (ver .home-dark en
+          globals.css). El fundador queda fuera, en claro.
+          data-header-trigger: el header pasa a texto blanco encima. */}
+      <div className="home-dark" data-header-trigger="true">
       <ProyectsSection only={["laperfum", "hellenscute", "warling"]} />
 
       {/* Enlaces a las páginas de servicio y de segmento: es lo que reparte
@@ -80,6 +84,8 @@ export default function Home({ lang }: { lang: Lang }) {
 
       <FaqSection />
       <ContactSection />
+      </div>
+
       <FounderSection lang={lang} />
     </main>
   );
