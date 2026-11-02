@@ -13,6 +13,7 @@ import FounderSection from "@/app/components/FounderSection";
 import SiteLinksSection from "@/app/components/SiteLinksSection";
 import ScrollDarken from "@/app/components/effects/ScrollDarken";
 import { pathFor, type Lang } from "@/app/lib/i18n";
+import "./home-theme.css";
 
 /**
  * Portada.

@@ -23,7 +23,7 @@ const mix = (a: number[], b: number[], t: number) =>
 
 /**
  * Oscurece su contenido poco a poco según el scroll (ver .home-fade en
- * globals.css).
+ * app/components/pages/home-theme.css).
  *
  * - Empieza (0) cuando la mitad de la sección asoma por abajo de la pantalla.
  * - Termina (1) cuando la sección `untilId` asoma por abajo, así esa sección

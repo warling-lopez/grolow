@@ -405,22 +405,11 @@ body {
   }
 }
 
-/* ── Portada: transición gradual de claro a oscuro ─────────────────────
-   ScrollDarken (app/components/effects) reescribe aquí los --color-grolow-*
-   según el scroll. Sin JS se queda en el tema claro. */
-.home-fade {
-  position: relative;
-  background-color: var(--color-grolow-dark);
-}
-
 /* ── Portada en oscuro: de «Casos de éxito» hasta Contacto ───────────────
    Envuelve esas secciones en HomePage. Cambia los tokens de marca solo ahí:
    fondo negro, texto claro y el teal brillante del hero como acento. El
    fundador queda fuera, en claro. */
 .home-dark {
-  /* flow-root: el margen superior de la primera sección se queda dentro (en
-     negro) en vez de salirse y dejar una franja crema. */
-  display: flow-root;
   --color-grolow-dark: #000000;
   --color-grolow-card: #0b1111;
   --color-grolow-light: #eef3f2;

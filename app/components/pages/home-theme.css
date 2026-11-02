@@ -1,0 +1,20 @@
+/* Estilos solo de la portada (los importa HomePage).
+
+   Van en su propio archivo y no en globals.css: así cualquier cambio aquí
+   genera un CSS nuevo y no depende de la caché de compilación. */
+
+/* ── Transición gradual de claro a oscuro ────────────────────────────────
+   ScrollDarken (app/components/effects) reescribe los --color-grolow-* de
+   este contenedor según el scroll. Sin JS se queda en el tema claro. */
+.home-fade {
+  position: relative;
+  background-color: var(--color-grolow-dark);
+}
+
+/* ── Zona oscura (de «Casos de éxito» hasta Contacto) ─────────────────────
+   Los colores están en .home-dark (globals.css). flow-root: el margen
+   superior de la primera sección se queda dentro, en negro, en vez de
+   salirse y dejar una franja crema entre las dos zonas. */
+.home-dark {
+  display: flow-root;
+}
