@@ -26,6 +26,7 @@ import { blogSemanaNegraContent } from "./blog-semana-negra";
 import { blogPhpRdContent } from "./blog-php-rd";
 import { blogCertificadosRdContent } from "./blog-certificados-rd";
 import { blogLeyRdContent } from "./blog-ley-rd";
+import { BLOG_EN } from "./blog-en";
 import {
   casoLaperfumContent,
   casoHellensContent,
@@ -71,6 +72,11 @@ const CONTENT: Partial<Record<RouteId, ContentTable>> = {
   soporte: soporteContent,
   reembolsos: reembolsosContent,
 };
+
+// El blog en inglés vive aparte (content/blog-en) y se suma aquí como `en`.
+for (const [id, en] of Object.entries(BLOG_EN) as [RouteId, PageContent][]) {
+  CONTENT[id] = { ...CONTENT[id], en };
+}
 
 export function contentFor(id: RouteId, lang: Lang): PageContent | null {
   return CONTENT[id]?.[lang] ?? null;

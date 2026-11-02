@@ -103,7 +103,7 @@ const COPY = {
     segmentsTitle: "Who we build it for",
     prices: "What a website costs in the Dominican Republic",
     cases: "Case studies you can open and inspect yourself",
-    blog: "Artículos sobre precios y tecnología (en español)",
+    blog: "Articles on pricing and technology in the Dominican market",
   },
 } as const;
 
@@ -181,10 +181,9 @@ export default function SiteLinksSection({ lang }: { lang: Lang }) {
           className="inline-block py-2.5 text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.cases}
         </Link>
-        {/* El blog solo existe en español: se enlaza a /es/blog desde ambos
-            idiomas en vez de generar una variante inglesa vacía. */}
+        {/* El blog existe en los dos idiomas: cada versión enlaza al suyo. */}
         <Link
-          href={pathFor("blog", "es")!}
+          href={pathFor("blog", lang) ?? pathFor("blog", "es")!}
           className="inline-block py-2.5 text-grolow-cream font-semibold underline underline-offset-4 hover:text-grolow-accent transition-colors">
           {c.blog}
         </Link>

@@ -12,9 +12,10 @@ import {
 import { pathFor, urlFor, type Lang, type RouteId } from "@/app/lib/i18n";
 import type { PageContent } from "@/app/lib/content/types";
 import {
-  CATEGORY_LABEL,
   blogPost,
+  categoryLabel,
   formatDate,
+  localizePost,
   neighbours,
   recommendedPosts,
   relatedPosts,
@@ -48,6 +49,37 @@ function readingMinutes(content: PageContent): number {
 
 const P = "text-[17px] md:text-lg text-neutral-800 leading-[1.75]";
 
+const T = {
+  es: {
+    faq: "Preguntas frecuentes",
+    crumbs: "Migas de pan",
+    home: "Inicio",
+    minutes: "min de lectura",
+    by: "Por",
+    team: "Equipo Grolow",
+    photo: "Foto",
+    keepReading: "Seguir leyendo",
+    more: "Más artículos",
+    prev: "← Anterior",
+    next: "Siguiente →",
+    sidebar: "Barra lateral",
+  },
+  en: {
+    faq: "Frequently asked questions",
+    crumbs: "Breadcrumb",
+    home: "Home",
+    minutes: "min read",
+    by: "By",
+    team: "the Grolow team",
+    photo: "Photo",
+    keepReading: "Keep reading",
+    more: "More articles",
+    prev: "← Previous",
+    next: "Next →",
+    sidebar: "Sidebar",
+  },
+} as const;
+
 export default function BlogArticlePage({
   content,
   routeId,
@@ -58,14 +90,18 @@ export default function BlogArticlePage({
   lang: Lang;
 }) {
   const { h1, lead, sections, faq, related, cta } = content;
-  const post = blogPost(routeId);
+  const t = T[lang];
+  const rawPost = blogPost(routeId);
+  const post = rawPost ? localizePost(rawPost, lang) : undefined;
   const url = urlFor(routeId, lang)!;
   const minutes = readingMinutes(content);
 
   const sidebar = relatedPosts(routeId, SIDEBAR_COUNT);
   const recommended = recommendedPosts(routeId, SIDEBAR_COUNT, 4);
 
-  const { prev, next } = neighbours(routeId);
+  const near = neighbours(routeId);
+  const prev = near.prev ? localizePost(near.prev, lang) : undefined;
+  const next = near.next ? localizePost(near.next, lang) : undefined;
 
   // Anclas de cada h2, para el índice. `ids` evita duplicados.
   const ids = new Set<string>();
@@ -76,10 +112,10 @@ export default function BlogArticlePage({
     return id;
   };
   const sectionIds = sections.map((sec) => anchor(sec.h2));
-  const faqId = faq && faq.length > 0 ? anchor("Preguntas frecuentes") : null;
+  const faqId = faq && faq.length > 0 ? anchor(t.faq) : null;
   const toc: TocItem[] = [
     ...sections.map((sec, i) => ({ id: sectionIds[i], label: sec.h2 })),
-    ...(faqId ? [{ id: faqId, label: "Preguntas frecuentes" }] : []),
+    ...(faqId ? [{ id: faqId, label: t.faq }] : []),
   ];
 
   const relatedLinks = (related ?? []).flatMap((link) => {
@@ -91,11 +127,11 @@ export default function BlogArticlePage({
     <main className="w-full bg-white text-neutral-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-6 pb-16 md:pb-24">
         {/* ── Migas ── */}
-        <nav aria-label="Migas de pan" className="mb-6">
+        <nav aria-label={t.crumbs} className="mb-6">
           <ol className="flex items-center gap-2 text-sm text-neutral-500 min-w-0">
             <li className="shrink-0">
               <Link href={pathFor("home", lang)!} className="inline-flex min-h-11 items-center text-grolow-cream underline underline-offset-4 hover:text-grolow-brand">
-                Inicio
+                {t.home}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
@@ -120,15 +156,15 @@ export default function BlogArticlePage({
                   <time
                     dateTime={post.date}
                     className="rounded-md bg-grolow-cream text-white font-bold px-3 py-1">
-                    {formatDate(post.date)}
+                    {formatDate(post.date, lang)}
                   </time>
                 )}
                 {post && (
                   <span className="rounded-md bg-neutral-100 text-neutral-700 font-semibold px-3 py-1">
-                    {CATEGORY_LABEL[post.category]}
+                    {categoryLabel(post.category, lang)}
                   </span>
                 )}
-                <span className="text-neutral-500">{minutes} min de lectura</span>
+                <span className="text-neutral-500">{minutes} {t.minutes}</span>
               </div>
 
               {/* Único h1 de la página. */}
@@ -138,9 +174,9 @@ export default function BlogArticlePage({
 
               <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-y border-neutral-200 py-4">
                 <p className="text-sm text-neutral-600">
-                  Por <span className="font-semibold text-neutral-900">Equipo Grolow</span>
+                  {t.by} <span className="font-semibold text-neutral-900">{t.team}</span>
                 </p>
-                <ArticleActions url={url} title={h1} />
+                <ArticleActions url={url} title={h1} lang={lang} />
               </div>
             </header>
 
@@ -153,7 +189,7 @@ export default function BlogArticlePage({
                   className="rounded-xl"
                 />
                 <figcaption className="mt-2 text-xs text-neutral-500">
-                  {post.image.alt}. Foto:{" "}
+                  {post.image.alt}. {t.photo}:{" "}
                   <a href={post.image.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-neutral-800">
                     {post.image.credit} / Unsplash
                   </a>
@@ -164,13 +200,13 @@ export default function BlogArticlePage({
             <div className="mt-10 xl:grid xl:grid-cols-[190px_minmax(0,1fr)] xl:gap-10">
             {/* Índice fijo a la izquierda en pantallas grandes. */}
             <aside className="hidden xl:block">
-              <TableOfContents items={toc} variant="rail" />
+              <TableOfContents items={toc} variant="rail" lang={lang} />
             </aside>
 
             <div className="min-w-0">
             {/* En móvil y tablet, índice desplegable al inicio. */}
             <div className="mb-8 xl:hidden">
-              <TableOfContents items={toc} variant="inline" />
+              <TableOfContents items={toc} variant="inline" lang={lang} />
             </div>
 
             <div data-article-body className="max-w-3xl">
@@ -242,7 +278,7 @@ export default function BlogArticlePage({
                       barra lateral queda al final y nadie llega a verla. */}
                   {i === 1 && (
                     <div className="mt-10 lg:hidden max-w-sm mx-auto">
-                      <AdSlot id="inline-mobile" size="rect" />
+                      <AdSlot id="inline-mobile" size="rect" lang={lang} />
                     </div>
                   )}
                 </section>
@@ -251,7 +287,7 @@ export default function BlogArticlePage({
               {faq && faq.length > 0 && (
                 <section className="mt-12">
                   <h2 id={faqId ?? undefined} className="scroll-mt-32 text-2xl md:text-[1.75rem] font-extrabold tracking-tight text-neutral-900 mb-4">
-                    Preguntas frecuentes
+                    {t.faq}
                   </h2>
                   <dl className="divide-y divide-neutral-200 border-y border-neutral-200">
                     {faq.map((item, i) => (
@@ -267,7 +303,7 @@ export default function BlogArticlePage({
 
             {relatedLinks.length > 0 && (
               <section className="mt-12 max-w-3xl rounded-xl bg-neutral-50 border border-neutral-200 p-6">
-                <h2 className="text-lg font-extrabold text-neutral-900 mb-3">Seguir leyendo</h2>
+                <h2 className="text-lg font-extrabold text-neutral-900 mb-3">{t.keepReading}</h2>
                 <ul className="space-y-1">
                   {relatedLinks.map(({ link, href }) => (
                     <li key={link.to}>
@@ -294,16 +330,16 @@ export default function BlogArticlePage({
             </section>
 
             {(prev || next) && (
-              <nav aria-label="Más artículos" className="mt-12 max-w-3xl grid gap-4 sm:grid-cols-2">
+              <nav aria-label={t.more} className="mt-12 max-w-3xl grid gap-4 sm:grid-cols-2">
                 {prev ? (
                   <Link href={pathFor(prev.id, lang)!} className="group rounded-xl border border-neutral-200 p-5 hover:border-grolow-cream transition-colors">
-                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">← Anterior</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">{t.prev}</span>
                     <span className="mt-2 block font-bold leading-snug text-neutral-900 group-hover:text-grolow-cream">{prev.title}</span>
                   </Link>
                 ) : <span />}
                 {next && (
                   <Link href={pathFor(next.id, lang)!} className="group rounded-xl border border-neutral-200 p-5 text-right hover:border-grolow-cream transition-colors">
-                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">Siguiente →</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">{t.next}</span>
                     <span className="mt-2 block font-bold leading-snug text-neutral-900 group-hover:text-grolow-cream">{next.title}</span>
                   </Link>
                 )}
@@ -314,13 +350,13 @@ export default function BlogArticlePage({
           </article>
 
           {/* ── Barra lateral ── */}
-          <aside aria-label="Barra lateral" className="min-w-0">
-            <BlogSidebar related={sidebar} />
+          <aside aria-label={t.sidebar} className="min-w-0">
+            <BlogSidebar related={sidebar} lang={lang} />
           </aside>
         </div>
       </div>
 
-      <BlogRecommendations posts={recommended} />
+      <BlogRecommendations posts={recommended} lang={lang} />
     </main>
   );
 }

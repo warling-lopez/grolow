@@ -229,6 +229,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Blog sobre desarrollo web en Rep. Dominicana | Grolow",
       description:
         "Artículos sobre las decisiones previas a contratar: cuánto cuesta un sitio de verdad, qué tecnología conviene y cómo leer una cotización sin dudas.",
+    },    en: {
+      title: "Web Development Blog from the Dominican Republic | Grolow",
+      description:
+        "Articles on the decisions before you hire anyone: what a website really costs, which technology fits and how to read a quote, plus keeping your site secure.",
     },
   },
 
@@ -237,6 +241,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "¿Cuánto cuesta una página web en RD en 2026? | Grolow",
       description:
         "Los rangos reales del mercado dominicano, qué compra cada uno, los costos que no salen en la cotización y las señales de alerta al comparar propuestas.",
+    },    en: {
+      title: "How Much Does a Website Cost in the DR in 2026? | Grolow",
+      description:
+        "The real price ranges in the Dominican market, what each one buys, the costs missing from quotes and the warning signs when you compare web proposals.",
     },
   },
 
@@ -245,6 +253,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "WordPress o código a medida: cuál te conviene | Grolow",
       description:
         "Comparación honesta, con declaración de interés incluida: cuándo WordPress es la decisión correcta y cuándo el desarrollo a medida se justifica de verdad.",
+    },    en: {
+      title: "WordPress or Custom Code: Which One Suits You | Grolow",
+      description:
+        "An honest comparison, conflict of interest disclosed: when WordPress is the right decision and when custom development is actually worth the extra cost.",
     },
   },
 
@@ -253,6 +265,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "PHP2Shell: qué pasó con PHP en octubre de 2026 | Grolow",
       description:
         "Los fallos CVE-2026-109618 y CVE-2026-109619 explicados sin jerga: cómo se descubrieron, por qué se apagaron sitios en Europa y qué sigue sin estar claro.",
+    },    en: {
+      title: "PHP2Shell: What Happened to PHP in October 2026 | Grolow",
+      description:
+        "CVE-2026-109618 and CVE-2026-109619 explained without jargon: how they were found, why sites in Europe went offline and what is still not clear today.",
     },
   },
 
@@ -261,6 +277,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Cómo saber si tu sitio PHP es vulnerable a PHP2Shell",
       description:
         "Guía práctica para revisar tu versión de PHP en cPanel o en tu servidor, aplicar la corrección, mitigar si no puedes actualizar y detectar si alguien entró.",
+    },    en: {
+      title: "How to Tell If Your PHP Site Is Vulnerable to PHP2Shell",
+      description:
+        "A practical guide to check your PHP version in cPanel or on your server, apply the fix, mitigate if you can't update yet and find out if someone got in.",
     },
   },
 
@@ -269,6 +289,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Los 5 fallos de Nginx de octubre de 2026 explicados | Grolow",
       description:
         "Qué configuraciones activan cada una de los cinco fallos corregidos en Nginx 1.30.6 y 1.31.7, cómo auditar la tuya y qué hacer si no puedes actualizar.",
+    },    en: {
+      title: "The 5 Nginx Flaws of October 2026, Explained | Grolow",
+      description:
+        "Which configurations trigger each of the five flaws fixed in Nginx 1.30.6 and 1.31.7, how to audit your own setup and what to do if you can't update yet.",
     },
   },
 
@@ -277,6 +301,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "eMudhra: la certificadora con claves adivinables | Grolow",
       description:
         "Ocho certificados intermedios de eMudhra tenían claves privadas menores que 256. Qué pasó, cómo respondieron los navegadores y por qué te importa a ti también.",
+    },    en: {
+      title: "eMudhra: The Certificate Authority With Weak Keys | Grolow",
+      description:
+        "Eight eMudhra intermediate certificates had private keys smaller than 256. What happened, how the browsers responded and why it matters to you as well.",
     },
   },
 
@@ -285,6 +313,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Certificados SSL: qué revisar tras el caso eMudhra | Grolow",
       description:
         "Los navegadores ya se protegieron, tus servidores quizás no. Qué almacenes de certificados actualizar en Linux, Node, Python, PHP y Docker, y cómo comprobarlo.",
+    },    en: {
+      title: "SSL Certificates: What to Check After eMudhra | Grolow",
+      description:
+        "Browsers already protected themselves, your servers may not have. Which certificate stores to update in Linux, Node, Python, PHP and Docker, and how.",
     },
   },
 
@@ -293,6 +325,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Tu sitio sigue en PHP 7.4, 8.0 u 8.1: qué hacer | Grolow",
       description:
         "Sin corrección oficial de PHP2Shell para versiones sin soporte. Tus opciones, de migrar a PHP 8.3 a pagar soporte extendido, y cómo hacerlo sin romper el sitio.",
+    },    en: {
+      title: "Still on PHP 7.4, 8.0 or 8.1? What to Do Now | Grolow",
+      description:
+        "No official PHP2Shell fix for unsupported versions. Your options, from moving to PHP 8.3 to paying for extended support, and how to do it without breaking.",
     },
   },
 
@@ -301,6 +337,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "La semana negra de los servidores web en 2026 | Grolow",
       description:
         "Nginx, PHP2Shell y eMudhra en diez días de octubre de 2026: lo que tienen en común, el papel de la IA y cinco decisiones para que la próxima te pille preparado.",
+    },    en: {
+      title: "The Black Week of Web Servers in October 2026 | Grolow",
+      description:
+        "Nginx, PHP2Shell and eMudhra in ten days of October 2026: what they have in common, the role of AI and five decisions so the next one finds you prepared.",
     },
   },
 
@@ -309,6 +349,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Cómo afectó PHP2Shell a República Dominicana | Grolow",
       description:
         "Lo que se sabe del impacto de la vulnerabilidad de PHP en el país, el contexto del CNCS, por qué el mercado local está expuesto y qué hacer esta misma semana.",
+    },    en: {
+      title: "How PHP2Shell Affected the Dominican Republic | Grolow",
+      description:
+        "What is known about the PHP flaw's impact in the country, the CNCS context, why the local market is exposed and what to do about it during this very week.",
     },
   },
 
@@ -317,6 +361,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Certificados digitales en RD: lecciones de eMudhra | Grolow",
       description:
         "Certificado SSL y firma digital no son lo mismo. Quién los emite en RD, qué enseña el caso eMudhra y cómo cuidar tu certificado de facturación.",
+    },    en: {
+      title: "Digital Certificates in the DR: eMudhra Lessons | Grolow",
+      description:
+        "An SSL certificate and a digital signature are not the same. Who issues them in the DR, what the eMudhra case teaches and how to protect your e-invoicing.",
     },
   },
 
@@ -325,6 +373,10 @@ export const SEO: Record<RouteId, SeoTable> = {
       title: "Qué dice la ley dominicana si hackean tu sitio web | Grolow",
       description:
         "Ley 53-07, Ley 172-13 y los decretos de ciberseguridad: qué obliga a cada empresa en República Dominicana, a quién reportar y qué hacer ante un incidente.",
+    },    en: {
+      title: "What Dominican Law Says If Your Website Is Hacked | Grolow",
+      description:
+        "Law 53-07, Law 172-13 and the cybersecurity decrees: what each company in the Dominican Republic must do, whom to report to and how to handle an incident.",
     },
   },
 

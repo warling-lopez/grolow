@@ -200,12 +200,10 @@ const ROUTE_TABLE = {
   },
 
   // ── Blog ───────────────────────────────────────────────────────────────
-  // Solo en español: los dos artículos atacan búsquedas del mercado
-  // dominicano ("cuánto cuesta una página web en República Dominicana") que en
-  // inglés no tienen volumen aquí. Al no declararse el slug `en`, no se genera
-  // esa variante ni se anuncia un hreflang hacia una URL que no existiría.
+  // En español e inglés. Cada artículo declara su slug en los dos idiomas, así
+  // que se generan ambas variantes y sus hreflang recíprocos.
   blog: {
-    slug: { es: "blog" },
+    slug: { es: "blog", en: "blog" },
     index: true,
     parent: "home",
     schema: "collection",
@@ -213,7 +211,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogPrecios: {
-    slug: { es: "blog/cuanto-cuesta-una-pagina-web-en-republica-dominicana" },
+    slug: { es: "blog/cuanto-cuesta-una-pagina-web-en-republica-dominicana", en: "blog/how-much-does-a-website-cost-in-the-dominican-republic" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -221,7 +219,7 @@ const ROUTE_TABLE = {
     changeFrequency: "yearly",
   },
   blogWordpress: {
-    slug: { es: "blog/wordpress-o-codigo-a-medida" },
+    slug: { es: "blog/wordpress-o-codigo-a-medida", en: "blog/wordpress-or-custom-code" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -232,7 +230,7 @@ const ROUTE_TABLE = {
   // Nginx y la certificadora eMudhra). Los tres últimos, sobre su impacto en
   // República Dominicana.
   blogPhp2shell: {
-    slug: { es: "blog/php2shell-vulnerabilidad-php-octubre-2026" },
+    slug: { es: "blog/php2shell-vulnerabilidad-php-octubre-2026", en: "blog/php2shell-php-vulnerability-october-2026" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -240,7 +238,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogPhpRevisar: {
-    slug: { es: "blog/como-saber-si-tu-sitio-php-es-vulnerable" },
+    slug: { es: "blog/como-saber-si-tu-sitio-php-es-vulnerable", en: "blog/how-to-check-if-your-php-site-is-vulnerable" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -248,7 +246,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogNginx: {
-    slug: { es: "blog/vulnerabilidades-nginx-octubre-2026" },
+    slug: { es: "blog/vulnerabilidades-nginx-octubre-2026", en: "blog/nginx-vulnerabilities-october-2026" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -256,7 +254,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogEmudhra: {
-    slug: { es: "blog/emudhra-certificadora-claves-debiles" },
+    slug: { es: "blog/emudhra-certificadora-claves-debiles", en: "blog/emudhra-certificate-authority-weak-keys" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -264,7 +262,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogCertificados: {
-    slug: { es: "blog/certificados-ssl-que-revisar-despues-de-emudhra" },
+    slug: { es: "blog/certificados-ssl-que-revisar-despues-de-emudhra", en: "blog/ssl-certificates-to-check-after-emudhra" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -272,7 +270,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogPhpObsoleto: {
-    slug: { es: "blog/php-7-4-8-0-8-1-sin-soporte-que-hacer" },
+    slug: { es: "blog/php-7-4-8-0-8-1-sin-soporte-que-hacer", en: "blog/php-7-4-8-0-8-1-end-of-life-what-to-do" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -280,7 +278,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogSemanaNegra: {
-    slug: { es: "blog/semana-negra-servidores-web-octubre-2026" },
+    slug: { es: "blog/semana-negra-servidores-web-octubre-2026", en: "blog/web-server-black-week-october-2026" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -288,7 +286,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogPhpRd: {
-    slug: { es: "blog/php2shell-en-republica-dominicana" },
+    slug: { es: "blog/php2shell-en-republica-dominicana", en: "blog/php2shell-in-the-dominican-republic" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -296,7 +294,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogCertificadosRd: {
-    slug: { es: "blog/certificados-digitales-republica-dominicana" },
+    slug: { es: "blog/certificados-digitales-republica-dominicana", en: "blog/digital-certificates-dominican-republic" },
     index: true,
     parent: "blog",
     schema: "article",
@@ -304,7 +302,7 @@ const ROUTE_TABLE = {
     changeFrequency: "monthly",
   },
   blogLeyRd: {
-    slug: { es: "blog/ley-dominicana-si-hackean-tu-sitio-web" },
+    slug: { es: "blog/ley-dominicana-si-hackean-tu-sitio-web", en: "blog/dominican-law-if-your-website-is-hacked" },
     index: true,
     parent: "blog",
     schema: "article",

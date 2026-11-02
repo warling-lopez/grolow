@@ -137,7 +137,7 @@ export default function Footer() {
   const c = COPY[lang];
   const year = new Date().getFullYear();
 
-  /** El blog solo existe en español; se enlaza a su versión real. */
+  /** Si una ruta no existe en este idioma, se enlaza a la versión en español. */
   const hrefFor = (id: RouteId) => pathFor(id, lang) ?? pathFor(id, "es");
 
   // `block py-3` lleva el objetivo táctil de 20px a 44px sin añadir un hueco

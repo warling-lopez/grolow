@@ -1,4 +1,10 @@
 import WhatsAppLink from "@/app/components/WhatsAppLink";
+import type { Lang } from "@/app/lib/i18n";
+
+const T = {
+  es: { label: "Publicidad", text: "Este espacio está disponible para tu marca.", cta: "Anúnciate aquí", message: (id: string) => `Hola, quiero anunciarme en el blog de Grolow (espacio ${id}).` },
+  en: { label: "Advertising", text: "This space is available for your brand.", cta: "Advertise here", message: (id: string) => `Hi, I'd like to advertise on the Grolow blog (slot ${id}).` },
+} as const;
 
 /**
  * Hueco publicitario de la barra lateral.
@@ -16,27 +22,30 @@ const SIZES = {
 export default function AdSlot({
   size = "rect",
   id,
+  lang = "es",
 }: {
+  lang?: Lang;
   size?: keyof typeof SIZES;
   /** Identificador del espacio, útil para la analítica y para AdSense. */
   id: string;
 }) {
+  const t = T[lang];
   return (
     <aside
-      aria-label="Publicidad"
+      aria-label={t.label}
       data-ad-slot={id}
       className={`${SIZES[size]} w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50 flex flex-col items-center justify-center gap-3 p-6 text-center`}>
       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-        Publicidad
+        {t.label}
       </span>
       <p className="text-sm font-semibold text-neutral-700 max-w-[16rem]">
-        Este espacio está disponible para tu marca.
+        {t.text}
       </p>
       <WhatsAppLink
-        message={`Hola, quiero anunciarme en el blog de Grolow (espacio ${id}).`}
+        message={t.message(id)}
         placement={`blog-ad-${id}`}
         className="text-sm font-bold text-grolow-cream underline underline-offset-4 hover:text-grolow-brand">
-        Anúnciate aquí
+        {t.cta}
       </WhatsAppLink>
     </aside>
   );

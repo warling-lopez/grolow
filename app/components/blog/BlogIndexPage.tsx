@@ -7,9 +7,10 @@ import { pathFor, type Lang } from "@/app/lib/i18n";
 import type { PageContent } from "@/app/lib/content/types";
 import {
   BLOG_POSTS,
-  CATEGORY_LABEL,
   blogPost,
+  categoryLabel,
   formatDate,
+  localizePost,
   type BlogPost,
 } from "@/app/lib/content/blog-posts";
 
@@ -26,13 +27,13 @@ export default function BlogIndexPage({
   lang: Lang;
 }) {
   const { h1, lead, sections, cta } = content;
-  const featured = BLOG_POSTS[0];
+  const featured = BLOG_POSTS[0] ? localizePost(BLOG_POSTS[0], lang) : undefined;
 
   return (
     <main className="w-full bg-white text-neutral-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-10 pb-16 md:pb-24">
         <header className="max-w-3xl">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-grolow-cream">Blog</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-grolow-cream">{content.eyebrow ?? "Blog"}</p>
           <h1 className="mt-3 font-serif font-black text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.08] tracking-tight">
             {withBrand(h1)}
           </h1>
@@ -54,7 +55,7 @@ export default function BlogIndexPage({
                 </Link>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-widest text-grolow-cream">
-                    Destacado · {CATEGORY_LABEL[featured.category]}
+                    {lang === "en" ? "Featured" : "Destacado"} · {categoryLabel(featured.category, lang)}
                   </p>
                   <h2 className="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">
                     <Link href={pathFor(featured.id, lang)!} className="group-hover:text-grolow-cream transition-colors">
@@ -63,7 +64,7 @@ export default function BlogIndexPage({
                   </h2>
                   <p className="mt-3 text-neutral-600 leading-relaxed">{featured.excerpt}</p>
                   <time dateTime={featured.date} className="mt-4 block text-sm text-neutral-500">
-                    {formatDate(featured.date)}
+                    {formatDate(featured.date, lang)}
                   </time>
                 </div>
               </article>
@@ -86,7 +87,7 @@ export default function BlogIndexPage({
                   {posts.length > 0 && (
                     <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                       {posts.map((p) => (
-                        <PostCard key={p.id} post={p} />
+                        <PostCard key={p.id} post={p} lang={lang} />
                       ))}
                     </div>
                   )}
@@ -106,10 +107,10 @@ export default function BlogIndexPage({
             </section>
           </div>
 
-          <aside aria-label="Barra lateral" className="min-w-0 space-y-6">
-            <AdSlot id="blog-home-1" size="rect" />
+          <aside aria-label={lang === "en" ? "Sidebar" : "Barra lateral"} className="min-w-0 space-y-6">
+            <AdSlot id="blog-home-1" size="rect" lang={lang} />
             <div className="lg:sticky lg:top-32">
-              <AdSlot id="blog-home-2" size="tall" />
+              <AdSlot id="blog-home-2" size="tall" lang={lang} />
             </div>
           </aside>
         </div>

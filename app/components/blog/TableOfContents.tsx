@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Lang } from "@/app/lib/i18n";
 
 export type TocItem = { id: string; label: string };
 
@@ -14,10 +15,14 @@ export type TocItem = { id: string; label: string };
 export default function TableOfContents({
   items,
   variant,
+  lang = "es",
 }: {
   items: TocItem[];
   variant: "rail" | "inline";
+  lang?: Lang;
 }) {
+  const inThis = lang === "en" ? "In this article" : "En este artículo";
+  const sectionsLabel = lang === "en" ? "sections" : "secciones";
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
@@ -65,9 +70,9 @@ export default function TableOfContents({
 
   if (variant === "rail") {
     return (
-      <nav aria-label="En este artículo" className="sticky top-32">
+      <nav aria-label={inThis} className="sticky top-32">
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-neutral-900">
-          En este artículo
+          {inThis}
         </p>
         {list}
       </nav>
@@ -77,12 +82,12 @@ export default function TableOfContents({
   return (
     <details className="group rounded-xl border border-neutral-200 bg-neutral-50 [&_summary::-webkit-details-marker]:hidden">
       <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between px-5 text-sm font-bold text-neutral-900">
-        En este artículo · {items.length} secciones
+        {inThis} · {items.length} {sectionsLabel}
         <svg viewBox="0 0 24 24" className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <path d="m6 9 6 6 6-6" />
         </svg>
       </summary>
-      <nav aria-label="En este artículo" className="px-5 pb-4">
+      <nav aria-label={inThis} className="px-5 pb-4">
         {list}
       </nav>
     </details>

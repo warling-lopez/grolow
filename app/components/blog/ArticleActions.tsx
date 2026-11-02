@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import type { Lang } from "@/app/lib/i18n";
 
 const noopSubscribe = () => () => {};
 
@@ -11,7 +12,15 @@ const noopSubscribe = () => () => {};
  * «Escuchar» lee el texto de `[data-article-body]`. Si el navegador no tiene
  * síntesis de voz, el botón no se pinta.
  */
-export default function ArticleActions({ url, title }: { url: string; title: string }) {
+export default function ArticleActions({
+  url,
+  title,
+  lang = "es",
+}: {
+  url: string;
+  title: string;
+  lang?: Lang;
+}) {
   const canSpeak = useSyncExternalStore(
     noopSubscribe,
     () => "speechSynthesis" in window,
@@ -36,7 +45,7 @@ export default function ArticleActions({ url, title }: { url: string; title: str
     const body = document.querySelector<HTMLElement>("[data-article-body]");
     const text = `${title}. ${body?.innerText ?? ""}`;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "es-ES";
+    utterance.lang = lang === "en" ? "en-US" : "es-ES";
     utterance.onend = () => setSpeaking(false);
     utterance.onerror = () => setSpeaking(false);
     synth.cancel();
@@ -81,7 +90,7 @@ export default function ArticleActions({ url, title }: { url: string; title: str
               <path d="M11 5 6 9H2v6h4l5 4V5Zm4.5 3.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" />
             )}
           </svg>
-          {speaking ? "Detener" : "Escuchar"}
+          {lang === "en" ? (speaking ? "Stop" : "Listen") : speaking ? "Detener" : "Escuchar"}
         </button>
       )}
       {shares.map((s) => (
@@ -90,7 +99,7 @@ export default function ArticleActions({ url, title }: { url: string; title: str
           href={s.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Compartir en ${s.name}`}
+          aria-label={lang === "en" ? `Share on ${s.name}` : `Compartir en ${s.name}`}
           className={`${btn} w-11`}>
           <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true">
             <path d={s.icon} />

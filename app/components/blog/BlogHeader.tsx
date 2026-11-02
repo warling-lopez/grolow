@@ -22,9 +22,9 @@ import {
  * orientar, le cuenta en una línea qué hace Grolow (webs, automatizaciones,
  * software) y le deja la cotización a un clic.
  *
- * - En el blog lleva el rótulo «Blog» junto al logo y la barra de lectura.
- *   El blog solo existe en español, así que ahí no hay selector de idioma.
- * - En el resto de páginas internas lleva el selector ES / EN.
+ * - En el blog lleva además el rótulo «Blog» junto al logo y la barra de
+ *   lectura.
+ * - En todas lleva el selector ES / EN (el blog existe en los dos idiomas).
  */
 
 const SERVICES: { route: RouteId; label: Record<Lang, string> }[] = [
@@ -88,7 +88,7 @@ function LangSwitch({ lang, pathname, label }: { lang: Lang; pathname: string; l
 
 export default function BlogHeader({ section = "site" }: { section?: "blog" | "site" }) {
   const pathname = usePathname() ?? "/";
-  const lang: Lang = section === "blog" ? "es" : langFromPathname(pathname);
+  const lang: Lang = langFromPathname(pathname);
   const c = COPY[lang];
   const isBlog = section === "blog";
 
@@ -118,7 +118,9 @@ export default function BlogHeader({ section = "site" }: { section?: "blog" | "s
           <WhatsAppLink
             message={
               isBlog
-                ? "Hola, vengo del blog y quiero cotizar un proyecto."
+                ? lang === "es"
+                  ? "Hola, vengo del blog y quiero cotizar un proyecto."
+                  : "Hi, I'm coming from the blog and I'd like a quote for a project."
                 : lang === "es"
                   ? "Hola, vengo de la web de Grolow y quiero cotizar un proyecto."
                   : "Hi, I'm coming from the Grolow website and I'd like a quote for a project."
@@ -142,7 +144,7 @@ export default function BlogHeader({ section = "site" }: { section?: "blog" | "s
             <>
               <span className="h-6 w-px bg-neutral-300" aria-hidden="true" />
               <Link
-                href={pathFor("blog", "es")!}
+                href={pathFor("blog", lang) ?? pathFor("blog", "es")!}
                 className="text-sm font-bold uppercase tracking-widest text-grolow-cream hover:text-grolow-brand transition-colors">
                 Blog
               </Link>
@@ -168,11 +170,9 @@ export default function BlogHeader({ section = "site" }: { section?: "blog" | "s
         </nav>
 
         <div className="flex items-center gap-2 md:gap-3">
-          {!isBlog && (
-            <div className="hidden sm:block">
-              <LangSwitch lang={lang} pathname={pathname} label={c.language} />
-            </div>
-          )}
+          <div className="hidden sm:block">
+            <LangSwitch lang={lang} pathname={pathname} label={c.language} />
+          </div>
           <Link
             href={contacto}
             className="hidden sm:inline-flex items-center rounded-full bg-neutral-900 text-white text-sm font-bold px-5 py-2.5 hover:bg-grolow-cream transition-colors">
@@ -204,11 +204,9 @@ export default function BlogHeader({ section = "site" }: { section?: "blog" | "s
                 </Link>
               </li>
             ))}
-            {!isBlog && (
-              <li className="py-3">
-                <LangSwitch lang={lang} pathname={pathname} label={c.language} />
-              </li>
-            )}
+            <li className="py-3">
+              <LangSwitch lang={lang} pathname={pathname} label={c.language} />
+            </li>
             <li className="pt-2 pb-1">
               <Link
                 href={contacto}

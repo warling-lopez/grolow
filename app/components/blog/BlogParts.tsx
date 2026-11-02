@@ -2,13 +2,35 @@ import Image from "next/image";
 import Link from "next/link";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import AdSlot from "@/app/components/blog/AdSlot";
-import { pathFor } from "@/app/lib/i18n";
+import { pathFor, type Lang } from "@/app/lib/i18n";
 import {
-  CATEGORY_LABEL,
+  categoryLabel,
   formatDate,
+  localizePost,
   type BlogImage,
   type BlogPost,
 } from "@/app/lib/content/blog-posts";
+
+const T = {
+  es: {
+    related: "Artículos relacionados",
+    needWeb: "¿Tu negocio necesita una web?",
+    pitch: "Hacemos páginas web, tiendas online y automatizaciones en código propio, sin plantillas. Te decimos cuánto costaría sin compromiso.",
+    message: "Hola, vengo del blog y quiero cotizar una web o una automatización.",
+    quote: "Cotizar por WhatsApp",
+    forYou: "Recomendaciones para ti",
+    all: "Ver todo el blog",
+  },
+  en: {
+    related: "Related articles",
+    needWeb: "Does your business need a website?",
+    pitch: "We build websites, online stores and automations in custom code, no templates. We'll tell you what it would cost, no strings attached.",
+    message: "Hi, I'm coming from the blog and I'd like a quote for a website or an automation.",
+    quote: "Get a quote on WhatsApp",
+    forYou: "Recommended for you",
+    all: "See the whole blog",
+  },
+} as const;
 
 /**
  * Piezas compartidas por la plantilla de artículo y la portada del blog:
@@ -47,8 +69,9 @@ export function PostCover({
   );
 }
 
-export function PostCard({ post }: { post: BlogPost }) {
-  const href = pathFor(post.id, "es")!;
+export function PostCard({ post: raw, lang = "es" }: { post: BlogPost; lang?: Lang }) {
+  const post = localizePost(raw, lang);
+  const href = pathFor(post.id, lang) ?? pathFor(post.id, "es")!;
   return (
     <article className="group flex flex-col rounded-2xl border border-neutral-200 bg-white overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all">
       <Link href={href} tabIndex={-1} aria-hidden="true" className="block overflow-hidden">
@@ -61,7 +84,7 @@ export function PostCard({ post }: { post: BlogPost }) {
       </Link>
       <div className="flex flex-col flex-1 p-5">
         <p className="text-[11px] font-bold uppercase tracking-widest text-grolow-cream">
-          {CATEGORY_LABEL[post.category]}
+          {categoryLabel(post.category, lang)}
         </p>
         <h3 className="mt-2 text-lg font-bold leading-snug text-neutral-900">
           <Link href={href} className="group-hover:text-grolow-cream transition-colors">
@@ -72,7 +95,7 @@ export function PostCard({ post }: { post: BlogPost }) {
           {post.excerpt}
         </p>
         <time dateTime={post.date} className="mt-auto pt-4 text-xs text-neutral-500">
-          {formatDate(post.date)}
+          {formatDate(post.date, lang)}
         </time>
       </div>
     </article>
@@ -80,19 +103,20 @@ export function PostCard({ post }: { post: BlogPost }) {
 }
 
 /** Barra lateral: relacionados, anuncios y la llamada a Grolow. */
-export function BlogSidebar({ related }: { related: BlogPost[] }) {
+export function BlogSidebar({ related, lang = "es" }: { related: BlogPost[]; lang?: Lang }) {
+  const t = T[lang];
   return (
     <div className="space-y-6">
       {related.length > 0 && (
         <section className="rounded-xl border border-neutral-200 overflow-hidden bg-white">
           <h2 className="bg-grolow-cream text-white px-5 py-3 text-base font-bold">
-            Artículos relacionados
+            {t.related}
           </h2>
           <ul className="divide-y divide-neutral-200">
-            {related.map((p) => (
+            {related.map((raw) => localizePost(raw, lang)).map((p) => (
               <li key={p.id}>
                 <Link
-                  href={pathFor(p.id, "es")!}
+                  href={pathFor(p.id, lang) ?? pathFor(p.id, "es")!}
                   className="block px-5 py-4 text-[15px] font-semibold leading-snug text-neutral-800 hover:text-grolow-cream hover:bg-neutral-50 transition-colors">
                   {p.title}
                 </Link>
@@ -102,54 +126,52 @@ export function BlogSidebar({ related }: { related: BlogPost[] }) {
         </section>
       )}
 
-      <AdSlot id="sidebar-1" size="rect" />
+      <AdSlot id="sidebar-1" size="rect" lang={lang} />
 
       {/* Lo que hacemos: el equivalente al «únete al canal» de la referencia. */}
       <section className="rounded-xl border border-grolow-cream/30 overflow-hidden bg-white">
         <h2 className="bg-grolow-cream text-white px-5 py-3 text-base font-bold">
-          ¿Tu negocio necesita una web?
+          {t.needWeb}
         </h2>
         <div className="p-5">
-          <p className="text-[15px] text-neutral-600 leading-relaxed">
-            Hacemos páginas web, tiendas online y automatizaciones en código
-            propio, sin plantillas. Te decimos cuánto costaría sin compromiso.
-          </p>
+          <p className="text-[15px] text-neutral-600 leading-relaxed">{t.pitch}</p>
           <WhatsAppLink
-            message="Hola, vengo del blog y quiero cotizar una web o una automatización."
+            message={t.message}
             placement="blog-sidebar"
             className="mt-4 flex w-full items-center justify-center rounded-lg bg-grolow-cream text-white font-bold py-3 hover:bg-grolow-accent transition-colors">
-            Cotizar por WhatsApp
+            {t.quote}
           </WhatsAppLink>
         </div>
       </section>
 
       {/* El anuncio alto se queda pegado mientras se lee. */}
       <div className="lg:sticky lg:top-32">
-        <AdSlot id="sidebar-2" size="tall" />
+        <AdSlot id="sidebar-2" size="tall" lang={lang} />
       </div>
     </div>
   );
 }
 
 /** «Recomendaciones»: va al final de la página, justo antes del footer. */
-export function BlogRecommendations({ posts }: { posts: BlogPost[] }) {
+export function BlogRecommendations({ posts, lang = "es" }: { posts: BlogPost[]; lang?: Lang }) {
   if (posts.length === 0) return null;
+  const t = T[lang];
   return (
     <section aria-labelledby="recomendaciones" className="bg-neutral-50 border-t border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-14 md:py-20">
         <div className="flex items-end justify-between gap-4 mb-8">
           <h2 id="recomendaciones" className="text-2xl md:text-3xl font-extrabold text-neutral-900 tracking-tight">
-            Recomendaciones para ti
+            {t.forYou}
           </h2>
           <Link
-            href={pathFor("blog", "es")!}
+            href={pathFor("blog", lang) ?? pathFor("blog", "es")!}
             className="shrink-0 text-sm font-bold text-grolow-cream underline underline-offset-4 hover:text-grolow-brand">
-            Ver todo el blog
+            {t.all}
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {posts.map((p) => (
-            <PostCard key={p.id} post={p} />
+            <PostCard key={p.id} post={p} lang={lang} />
           ))}
         </div>
       </div>

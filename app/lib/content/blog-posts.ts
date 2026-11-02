@@ -1,4 +1,4 @@
-import type { RouteId } from "@/app/lib/i18n";
+import type { Lang, RouteId } from "@/app/lib/i18n";
 
 /**
  * Ficha de cada artículo del blog: lo que hace falta para pintarlo en
@@ -25,18 +25,39 @@ export type BlogImage = {
 export type BlogPost = {
   id: RouteId;
   image: BlogImage;
+  /** Título, resumen y alt en español. */
   title: string;
   excerpt: string;
   category: BlogCategory;
   /** ISO, YYYY-MM-DD. */
   date: string;
+  /** Los mismos textos en inglés. */
+  en: { title: string; excerpt: string; alt: string };
 };
 
-export const CATEGORY_LABEL: Record<BlogCategory, string> = {
-  seguridad: "Seguridad web",
-  rd: "República Dominicana",
-  guias: "Guías",
+/** La ficha con los textos del idioma pedido (título, resumen y alt). */
+export function localizePost(post: BlogPost, lang: Lang): BlogPost {
+  if (lang === "es") return post;
+  return {
+    ...post,
+    title: post.en.title,
+    excerpt: post.en.excerpt,
+    image: { ...post.image, alt: post.en.alt },
+  };
+}
+
+export const CATEGORY_LABELS: Record<Lang, Record<BlogCategory, string>> = {
+  es: { seguridad: "Seguridad web", rd: "República Dominicana", guias: "Guías" },
+  en: { seguridad: "Web security", rd: "Dominican Republic", guias: "Guides" },
 };
+
+/** Nombre de la categoría en el idioma pedido. */
+export function categoryLabel(category: BlogCategory, lang: Lang): string {
+  return CATEGORY_LABELS[lang][category];
+}
+
+/** Compatibilidad: etiquetas en español. */
+export const CATEGORY_LABEL = CATEGORY_LABELS.es;
 
 /** Más reciente primero dentro de cada fecha, en el orden de lectura sugerido. */
 export const BLOG_POSTS: BlogPost[] = [
@@ -53,6 +74,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Los fallos explicados sin jerga, la cronología del descubrimiento y lo que todavía no está claro.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "PHP2Shell: what happened to PHP in October 2026",
+      excerpt: "The flaws explained without jargon, the timeline of the discovery and what is still unclear.",
+      alt: "PHP code on a dark screen",
+    },
   },
   {
     id: "blogPhpRevisar",
@@ -67,6 +93,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "La guía práctica: revisar la versión, actualizar, mitigar si no puedes y comprobar si alguien entró.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "How to tell if your PHP site is vulnerable and what to do today",
+      excerpt: "The practical guide: check the version, update, mitigate if you can't, and check whether anyone got in.",
+      alt: "Configuration file of a PHP site open in an editor",
+    },
   },
   {
     id: "blogPhpObsoleto",
@@ -81,6 +112,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Las opciones para versiones sin soporte, de mejor a peor, y cómo migrar sin romper el sitio.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "Your site is still on PHP 7.4, 8.0 or 8.1: what to do now",
+      excerpt: "The options for unsupported versions, from best to worst, and how to migrate without breaking the site.",
+      alt: "Close-up of code on a monitor",
+    },
   },
   {
     id: "blogNginx",
@@ -95,6 +131,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Qué configuración activa cada uno, cómo auditar la tuya y por qué las cifras de gravedad no coinciden.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "The five Nginx flaws of October 2026",
+      excerpt: "Which configuration triggers each one, how to audit yours and why the severity scores don't match.",
+      alt: "Server rack with network cables in a data center",
+    },
   },
   {
     id: "blogEmudhra",
@@ -109,6 +150,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Cómo funcionan las autoridades de certificación, qué falló y cómo respondieron los navegadores.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "eMudhra: the certificate authority whose keys fit in a number",
+      excerpt: "How certificate authorities work, what went wrong and how browsers responded.",
+      alt: "Combination padlock on a keyboard",
+    },
   },
   {
     id: "blogCertificados",
@@ -123,6 +169,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Los almacenes de certificados que hay que actualizar fuera del navegador y cómo comprobarlo.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "What to check on your servers after the eMudhra case",
+      excerpt: "The certificate stores you need to update outside the browser and how to verify them.",
+      alt: "Padlock wrapped in chains",
+    },
   },
   {
     id: "blogSemanaNegra",
@@ -137,6 +188,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Lo que tienen en común los tres casos, el papel de la inteligencia artificial y cinco decisiones para la próxima vez.",
     category: "seguridad",
     date: "2026-10-24",
+    en: {
+      title: "Web servers' black week: what to learn from it",
+      excerpt: "What the three cases have in common, the role of artificial intelligence and five decisions for next time.",
+      alt: "Hooded person using a laptop in the dark",
+    },
   },
   {
     id: "blogPhpRd",
@@ -151,6 +207,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Lo que se sabe y lo que no del impacto en el país, el contexto del CNCS y por qué el mercado local está expuesto.",
     category: "rd",
     date: "2026-10-24",
+    en: {
+      title: "How PHP2Shell affected the Dominican Republic",
+      excerpt: "What is and isn't known about the impact in the country, the CNCS context and why the local market is exposed.",
+      alt: "Aerial view of Santo Domingo's Colonial Zone and the Alcázar de Colón",
+    },
   },
   {
     id: "blogCertificadosRd",
@@ -165,6 +226,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "La diferencia entre el certificado de tu sitio y tu firma digital, quién los emite aquí y cómo cuidar el de facturación.",
     category: "rd",
     date: "2026-10-24",
+    en: {
+      title: "Digital certificates in the Dominican Republic after eMudhra",
+      excerpt: "The difference between your site's certificate and your digital signature, who issues them here and how to protect your e-invoicing one.",
+      alt: "Person signing on a tablet next to a laptop",
+    },
   },
   {
     id: "blogLeyRd",
@@ -179,6 +245,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Las normas vigentes, qué obliga a cada tipo de empresa, a quién reportar y qué hacer en las primeras horas.",
     category: "rd",
     date: "2026-10-24",
+    en: {
+      title: "What Dominican law says if your website gets hacked",
+      excerpt: "The rules in force, what each type of company must do, whom to report to and what to do in the first hours.",
+      alt: "Judge's gavel next to a book",
+    },
   },
   {
     id: "blogPrecios",
@@ -193,6 +264,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Los rangos reales del mercado local, qué compra cada uno y las señales de alerta al comparar propuestas.",
     category: "guias",
     date: "2026-09-03",
+    en: {
+      title: "How much does a website cost in the Dominican Republic in 2026?",
+      excerpt: "The real ranges in the local market, what each one buys and the warning signs when comparing proposals.",
+      alt: "Calculator on a desk with charts and a laptop",
+    },
   },
   {
     id: "blogWordpress",
@@ -207,6 +283,11 @@ export const BLOG_POSTS: BlogPost[] = [
       "Una comparación honesta que reconoce los casos en los que WordPress es la decisión correcta.",
     category: "guias",
     date: "2026-09-03",
+    en: {
+      title: "WordPress or custom code: which one suits your business",
+      excerpt: "An honest comparison that acknowledges the cases where WordPress is the right decision.",
+      alt: "Laptop showing the WordPress logo",
+    },
   },
 ];
 
@@ -231,15 +312,24 @@ export function recommendedPosts(id: RouteId, skip: number, count: number): Blog
   return [...tail, ...related.slice(0, skip)].slice(0, count);
 }
 
-const MONTHS = [
-  "enero", "febrero", "marzo", "abril", "mayo", "junio",
-  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
-];
+const MONTHS: Record<Lang, string[]> = {
+  es: [
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+  ],
+  en: [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ],
+};
 
-/** «24 de octubre de 2026». Sin `Intl` para que servidor y cliente coincidan. */
-export function formatDate(iso: string): string {
+/** «24 de octubre de 2026» / «October 24, 2026». Sin `Intl` para que
+ *  servidor y cliente coincidan. */
+export function formatDate(iso: string, lang: Lang = "es"): string {
   const [y, m, d] = iso.split("-").map(Number);
-  return `${d} de ${MONTHS[m - 1]} de ${y}`;
+  return lang === "en"
+    ? `${MONTHS.en[m - 1]} ${d}, ${y}`
+    : `${d} de ${MONTHS.es[m - 1]} de ${y}`;
 }
 
 /** Ancla de un encabezado: «¿Media o crítica?» → «media-o-critica». */
