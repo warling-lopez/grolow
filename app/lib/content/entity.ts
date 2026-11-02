@@ -35,7 +35,7 @@ export const ORG_SAME_AS = [
 
 /** Perfiles del fundador. Estaban solo como texto visible en `/ceo-warling`. */
 export const PERSON_SAME_AS = [
-  "https://www.linkedin.com/in/warling-lopez",
+  "https://www.linkedin.com/in/warlinglopez-dev/",
   "https://github.com/warling-lopez",
 ];
 

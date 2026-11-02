@@ -349,7 +349,7 @@ const t = {
 const LINKS = {
   email: "warlinglopez01@gmail.com",
   github: "https://github.com/warling-lopez",
-  linkedin: "https://www.linkedin.com/in/warling-lopez", // [EDITAR]
+  linkedin: "https://www.linkedin.com/in/warlinglopez-dev/",
   freelance: "https://warling.top",
 };
 

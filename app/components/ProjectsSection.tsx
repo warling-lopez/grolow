@@ -174,9 +174,9 @@ export default function ProjectsSection({
       problemEn:
         "No professional presence to communicate technical services and work process to potential clients.",
       solution:
-        "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un CTA claro para agendar consultas.",
+        "Desarrollamos un sitio profesional con servicios, proceso de trabajo y un botón directo a WhatsApp.",
       solutionEn:
-        "We built a professional site with services, work process and a clear CTA to book consultations.",
+        "We built a professional site with services, work process and a direct WhatsApp button.",
       result:
         "Un sitio que carga en menos de 2 segundos y explica servicios y proceso sin que él tenga que repetirlo en cada conversación.",
       resultEn:
