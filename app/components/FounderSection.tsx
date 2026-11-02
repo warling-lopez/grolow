@@ -5,12 +5,11 @@ import type { Lang } from "@/app/lib/i18n";
  * Fundador: foto en círculo con aro, rótulo `[ FOUNDER ]`, nombre, cargo y
  * una bio corta. Va entre el contacto y el pie.
  *
- * PENDIENTE: sube una foto real a /public/founder.webp y pon aquí la ruta.
- * `null` mientras no exista: con una ruta fija el navegador pediría el
- * archivo en cada carga y se llevaría un 404. Mientras tanto el círculo
- * muestra las iniciales.
+ * Foto en /public/founder.webp (1000×1000, fondo verde Grolow). Si algún día
+ * se quita el archivo, pon `null` aquí y el círculo vuelve a mostrar las
+ * iniciales.
  */
-const PHOTO_SRC: string | null = null;
+const PHOTO_SRC: string | null = "/founder.webp";
 
 const COPY = {
   en: {
