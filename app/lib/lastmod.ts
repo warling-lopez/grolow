@@ -48,6 +48,7 @@ const SOURCE: Record<RouteId, string> = {
   soporte: "app/lib/content/legal-servicio.ts",
   reembolsos: "app/lib/content/legal-servicio.ts",
   clinicas: "app/components/pages/ClinicasPage.tsx",
+  blackFriday: "app/components/pages/BlackFridayPage.tsx",
   gracias: "app/components/pages/GraciasPage.tsx",
 };
 

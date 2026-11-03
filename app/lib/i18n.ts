@@ -363,6 +363,12 @@ const ROUTE_TABLE = {
     index: false,
     parent: "servicios",
   },
+  // Landing de anuncios de Black Friday (nov 2026). Solo tráfico pagado.
+  blackFriday: {
+    slug: { es: "black-friday", en: "black-friday" },
+    index: false,
+    parent: "home",
+  },
   gracias: {
     slug: { es: "gracias", en: "thank-you" },
     index: false,

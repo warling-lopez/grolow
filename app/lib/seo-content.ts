@@ -473,6 +473,19 @@ export const SEO: Record<RouteId, SeoTable> = {
     },
   },
 
+  blackFriday: {
+    es: {
+      title: "Black Friday Grolow: 15% en tu catálogo o tienda online",
+      description:
+        "Todo noviembre: 15% de descuento en catálogos digitales y tiendas online hechos desde cero, con el dominio de regalo. Deja tus datos y te mostramos cómo quedaría el tuyo.",
+    },
+    en: {
+      title: "Grolow Black Friday: 15% off your online catalog or store",
+      description:
+        "All November: 15% off custom-built online catalogs and online stores, with your domain as a gift. Leave your details and see how yours would look.",
+    },
+  },
+
   gracias: {
     es: {
       title: "Solicitud recibida | Grolow",
