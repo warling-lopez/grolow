@@ -65,5 +65,6 @@ export const NAV_LABEL: Record<RouteId, Record<Lang, string>> = {
   soporte: { es: "Soporte y mantenimiento", en: "Support and maintenance" },
   reembolsos: { es: "Reembolsos y cancelación", en: "Refunds and cancellation" },
   clinicas: { es: "Webs para clínicas", en: "Websites for clinics" },
+  blackFriday: { es: "Black Friday", en: "Black Friday" },
   gracias: { es: "Gracias", en: "Thank you" },
 };

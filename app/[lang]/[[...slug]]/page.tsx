@@ -24,6 +24,7 @@ import HomePage from "@/app/components/pages/HomePage";
 import ServiciosPage from "@/app/components/pages/ServiciosPage";
 import ClinicasPage from "@/app/components/pages/ClinicasPage";
 import GraciasPage from "@/app/components/pages/GraciasPage";
+import BlackFridayPage from "@/app/components/pages/BlackFridayPage";
 import ContactoPage from "@/app/components/pages/ContactoPage";
 import BlogArticlePage from "@/app/components/blog/BlogArticlePage";
 import BlogIndexPage from "@/app/components/blog/BlogIndexPage";
@@ -43,6 +44,7 @@ const CUSTOM_PAGES: Partial<
   servicios: ServiciosPage,
   clinicas: ClinicasPage,
   gracias: GraciasPage,
+  blackFriday: BlackFridayPage,
   contacto: ContactoPage,
 };
 
