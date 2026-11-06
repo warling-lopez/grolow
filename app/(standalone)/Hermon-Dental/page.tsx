@@ -320,7 +320,7 @@ const MARKUP = `
     </a>
     <div class="foot-meta">
       © 2026 Hermon Dental Clinic · Av. Los Beisbolistas esq. Duarte Vieja, Plaza Anabella, Local 204 · Santo Domingo, R.D.<br>
-      Demo diseñada por <b><span class="font-brand">grolow</span> Studio</b> · grolow.com
+      Demo diseñada por <b><span class="font-brand"> <a href="https://grolow.com" target="_blank" rel="noopener noreferrer">grolow Studio</a></span> </b> ·
     </div>
   </div>
 </footer>
