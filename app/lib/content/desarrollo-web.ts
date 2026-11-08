@@ -98,7 +98,7 @@ export const desarrolloWebContent: ContentTable = {
       },
       {
         q: "¿Trabajan con clientes fuera de Santo Domingo?",
-        a: "Sí. Todo el proceso funciona por WhatsApp y videollamada, y tenemos clientes fuera de la capital y fuera del país.",
+        a: "Sí. Todo el proceso es por mensaje, por WhatsApp o Instagram, con videos y demostraciones por enlace, así que da igual en qué parte del país estés.",
       },
     ],
     related: [
@@ -222,7 +222,7 @@ export const desarrolloWebContent: ContentTable = {
       },
       {
         q: "Do you work with clients outside Santo Domingo?",
-        a: "Yes. The whole process runs over WhatsApp and video calls, and we have clients outside the capital and outside the country.",
+        a: "Yes. The whole process happens by message, over WhatsApp or Instagram, with videos and demos by link, so it makes no difference where in the country you are.",
       },
     ],
     related: [

@@ -18,89 +18,78 @@ export type Tier = {
   name: Record<Lang, string>;
   /** Qué es, en una frase. */
   what: Record<Lang, string>;
-  /** De qué depende que caiga en la parte baja o alta del rango. */
+  /** De qué depende el precio final. */
   depends: Record<Lang, string>;
-  /** Rango en dólares. Ausente en lo que se cotiza por proyecto. */
+  /** Precio de entrada del proyecto, en dólares. Ausente si se cotiza. */
   min?: number;
+  /** Tope del rango, solo si hay uno publicado. */
   max?: number;
-  /** Tarifa por hora, para el trabajo que se mide en tiempo. */
-  hourly?: number;
-  /** `true` cuando no hay número publicable y se cotiza por fases. */
+  /** Mensualidad de entrada en dólares: cubre la operación. */
+  monthly?: number;
+  /** `true` cuando el proyecto se cotiza por alcance y no hay número publicado. */
   perProject?: boolean;
 };
 
+/**
+ * Precios vigentes según el baúl de Grolow (`01_estrategia/identidad-y-reglas`):
+ * Catálogo Digital US$450 + US$45/mes y Ecommerce Completo US$850 + desde
+ * US$80/mes. La página web empresarial y los sistemas a medida se cotizan; sus
+ * mensualidades salen de la misma fuente. Los precios viejos (landing US$250,
+ * tienda US$800–1,500, US$25/hora) están descartados allí y no deben volver.
+ */
 export const TIERS: Tier[] = [
   {
-    id: "landing",
-    name: { es: "Landing page", en: "Landing page" },
+    id: "catalogo",
+    name: { es: "Catálogo Digital", en: "Digital Catalogue" },
     what: {
-      es: "Una sola página construida para que el visitante haga una acción concreta.",
-      en: "A single page built so the visitor takes one concrete action.",
+      es: "Productos administrables desde un panel, con buscador y pedidos que llegan a WhatsApp ya armados. Sin pasarela de pago.",
+      en: "Products managed from a dashboard, with search and orders that reach WhatsApp ready to fulfil. No payment gateway.",
     },
     depends: {
-      es: "Sube según lo que lleve integrado: WhatsApp, chatbot, formularios y automatismos de contacto.",
-      en: "It rises with what's integrated: WhatsApp, chatbot, forms and contact automations.",
-    },
-    min: 250,
-    max: 450,
-  },
-  {
-    id: "corporativo",
-    name: { es: "Sitio web corporativo", en: "Corporate website" },
-    what: {
-      es: "Varias páginas con tus servicios, tu equipo y tus vías de contacto.",
-      en: "Several pages covering your services, your team and your contact routes.",
-    },
-    depends: {
-      es: "Sube según la cantidad de páginas y las integraciones que necesite con lo que ya usas.",
-      en: "It rises with the number of pages and the integrations it needs with what you already use.",
+      es: "El precio es de entrada: sube si el catálogo necesita funciones fuera de lo habitual. La mensualidad cubre servidores, base de datos, dominio, respaldos, seguridad y un cambio de contenido al mes.",
+      en: "This is the entry price: it rises if the catalogue needs features beyond the usual. The monthly fee covers servers, database, domain, backups, security and one content change a month.",
     },
     min: 450,
-    max: 800,
+    monthly: 45,
   },
   {
-    id: "tienda",
-    name: { es: "Tienda en línea", en: "Online store" },
+    id: "ecommerce",
+    name: { es: "Ecommerce Completo", en: "Full Ecommerce" },
     what: {
-      es: "Catálogo navegable con pedidos, sea por WhatsApp o con cobro en línea.",
-      en: "A browsable catalog with ordering, whether over WhatsApp or with online payment.",
+      es: "Todo lo del catálogo, más pasarela de pago para cobrar con tarjeta, aprobación de pedidos y analítica de ventas.",
+      en: "Everything in the catalogue, plus a payment gateway to take card payments, order approval and sales analytics.",
     },
     depends: {
-      es: "Sube según la cantidad de páginas y el tamaño del inventario: no es lo mismo de 20 a 50 productos que de 50 a 150, o más de 500.",
-      en: "It rises with the number of pages and inventory size: 20–50 products is not the same as 50–150, or more than 500.",
+      es: "La mensualidad va de US$80 a US$100 según el volumen y las integraciones, e incluye tres cambios de contenido al mes y un reporte mensual.",
+      en: "The monthly fee runs from US$80 to US$100 depending on volume and integrations, and includes three content changes a month and a monthly report.",
     },
-    min: 800,
-    max: 1500,
+    min: 850,
+    monthly: 80,
   },
   {
-    id: "automatizacion",
-    name: {
-      es: "Automatizaciones, IA y canales de comunicación",
-      en: "Automations, AI and communication channels",
-    },
+    id: "web",
+    name: { es: "Página web empresarial", en: "Business website" },
     what: {
-      es: "Procesos que hoy haces a mano, asistentes con IA, email marketing y conexión entre las herramientas que ya usas.",
-      en: "Processes you run by hand today, AI assistants, email marketing and connecting the tools you already use.",
+      es: "Inicio, servicios, quiénes somos, contacto con formulario, WhatsApp y mapa, preguntas frecuentes y políticas legales, con dominio, HTTPS, diseño adaptable al móvil, SEO básico y analítica.",
+      en: "Home, services, about, contact with a form, WhatsApp and a map, FAQ and legal policies, with a domain, HTTPS, mobile-friendly design, basic SEO and analytics.",
     },
     depends: {
-      es: "Se cobra por hora porque el alcance real solo se conoce al abrir el proceso: se estima antes de empezar y se factura lo trabajado.",
-      en: "Billed hourly because the real scope only shows once the process is opened: estimated up front, invoiced for time worked.",
+      es: "El proyecto se cotiza por alcance. La mensualidad es de US$45, o RD$2,500 en moneda local, e incluye hosting, dominio y mantenimiento.",
+      en: "The project is quoted by scope. The monthly fee is US$45, or RD$2,500 in local currency, and includes hosting, domain and maintenance.",
     },
-    hourly: 25,
+    perProject: true,
+    monthly: 45,
   },
   {
-    id: "producto",
-    name: {
-      es: "Aplicación móvil, web app, SaaS y sistemas a medida",
-      en: "Mobile apps, web apps, SaaS and custom systems",
-    },
+    id: "medida",
+    name: { es: "Sistemas a medida", en: "Custom systems" },
     what: {
-      es: "Producto propio: varios roles, base de datos, sesiones y una operación completa por detrás.",
-      en: "A product of your own: several roles, a database, sessions and a full operation behind it.",
+      es: "Inventario, citas, facturación, paneles internos, aplicaciones y automatizaciones: el software que tu negocio necesita cuando ya no le alcanza la hoja de cálculo.",
+      en: "Inventory, appointments, invoicing, internal dashboards, apps and automations: the software your business needs once the spreadsheet is no longer enough.",
     },
     depends: {
-      es: "Son proyectos largos, así que se dividen en fases y cada fase se cotiza y se cobra por separado, con su alcance cerrado.",
-      en: "These are long projects, so they're split into phases; each phase is quoted and invoiced separately with its own closed scope.",
+      es: "Se estima por alcance y se entrega un precio cerrado por escrito. La mensualidad depende de la infraestructura que use el sistema y va en la propuesta.",
+      en: "It's estimated by scope and you get a fixed price in writing. The monthly fee depends on the infrastructure the system uses and is stated in the proposal.",
     },
     perProject: true,
   },
@@ -120,18 +109,17 @@ export const TIERS: Tier[] = [
  * tramo por aproximación.
  */
 const SERVICE_TIERS: Partial<Record<RouteId, readonly string[]>> = {
-  // El sitio a medida, en sus dos tamaños habituales.
-  desarrolloWeb: ["landing", "corporativo"],
-  disenoWeb: ["landing", "corporativo"],
-  // Segmentos: mismo entregable, distinto público.
-  empresas: ["corporativo"],
-  consultores: ["landing", "corporativo"],
-  creadores: ["landing", "corporativo"],
-  // Catálogo con pedidos: es literalmente el tramo «tienda».
-  tiendaWhatsapp: ["tienda"],
-  // Producto propio: se cotiza por fases, así que el `Offer` va sin importe.
-  apps: ["producto"],
-  software: ["producto", "automatizacion"],
+  // El sitio de la empresa, para cualquier público.
+  desarrolloWeb: ["web"],
+  disenoWeb: ["web"],
+  empresas: ["web"],
+  consultores: ["web"],
+  creadores: ["web"],
+  // Catálogo con pedidos por WhatsApp, o tienda que además cobra.
+  tiendaWhatsapp: ["catalogo", "ecommerce"],
+  // Se cotizan por alcance, así que el `Offer` va sin importe.
+  apps: ["medida"],
+  software: ["medida"],
 };
 
 /** Tramos aplicables a una ruta, en el orden de la tabla de precios. */
@@ -141,21 +129,26 @@ export function tiersFor(id: RouteId): Tier[] {
   return TIERS.filter((tier) => ids.includes(tier.id));
 }
 
-/** Precio formateado para mostrar, p. ej. `US$250 – US$450` o `US$25/hora`. */
+/** Precio formateado para mostrar, p. ej. `Desde US$450 + US$45/mes`. */
 export function priceLabel(tier: Tier, lang: Lang): string {
-  if (tier.hourly) {
-    return lang === "es" ? `US$${tier.hourly}/hora` : `US$${tier.hourly}/hour`;
+  const es = lang === "es";
+  const monthly =
+    tier.monthly === undefined
+      ? ""
+      : es
+        ? ` + US$${tier.monthly}/mes`
+        : ` + US$${tier.monthly}/month`;
+  if (tier.perProject || tier.min === undefined) {
+    return (es ? "Cotización por escrito" : "Written quote") + monthly;
   }
-  if (tier.perProject) {
-    return lang === "es" ? "Por proyecto, en fases" : "Per project, in phases";
-  }
-  return `US$${tier.min} – US$${tier.max}`;
+  if (tier.max !== undefined) return `US$${tier.min} – US$${tier.max}${monthly}`;
+  return (es ? `Desde US$${tier.min}` : `From US$${tier.min}`) + monthly;
 }
 
-/** Rango del negocio completo, para `priceRange` del schema local. */
+/** Rango de precios de entrada, para `priceRange` del schema local. */
 export function businessPriceRange(): string {
-  const withRange = TIERS.filter((t) => t.min !== undefined);
-  const low = Math.min(...withRange.map((t) => t.min!));
-  const high = Math.max(...withRange.map((t) => t.max!));
+  const priced = TIERS.filter((t) => t.min !== undefined);
+  const low = Math.min(...priced.map((t) => t.min!));
+  const high = Math.max(...priced.map((t) => t.max ?? t.min!));
   return `US$${low}–US$${high}`;
 }

@@ -40,8 +40,8 @@ export const disenoWebContent: ContentTable = {
             text: "Contraste suficiente para leer al sol, áreas de toque cómodas y navegación con teclado. Además de ser lo correcto, tanto Google como Bing lo toman en cuenta.",
           },
           {
-            title: "Textos escritos, no rellenados",
-            text: "No entregamos un sitio con texto de relleno esperando que tú lo completes. Redactamos la primera versión de los textos y la ajustamos contigo.",
+            title: "Tus textos, ordenados",
+            text: "Los textos, las fotos y el logo los pones tú, que eres quien mejor conoce tu negocio. Grolow los ordena y los adapta para que cada página diga lo que tiene que decir, sin texto de relleno.",
           },
         ],
       },
@@ -58,13 +58,13 @@ export const disenoWebContent: ContentTable = {
           {
             h3: "Una conversación, no un formulario de veinte campos",
             body: [
-              "La primera llamada es para entender qué vendes, a quién y qué te está costando conseguir hoy. De ahí sale el alcance.",
+              "La primera conversación, por WhatsApp, es para entender qué vendes, a quién y qué te está costando conseguir hoy. De ahí sale el alcance.",
             ],
           },
           {
             h3: "Una propuesta con número cerrado",
             body: [
-              "En menos de 24 horas recibes qué incluye, cuánto cuesta y cuándo está listo. Si el proyecto necesita más discovery del que cabe en una llamada, se dice ahí y no después.",
+              "En menos de 24 horas recibes qué incluye, cuánto cuesta y cuándo está listo. Si el proyecto necesita más preguntas de las que caben en esa primera conversación, se dice ahí y no después.",
             ],
           },
           {
@@ -79,7 +79,7 @@ export const disenoWebContent: ContentTable = {
     faq: [
       {
         q: "¿Tienen oficina para reunirnos en Santo Domingo?",
-        a: "Trabajamos en remoto y coordinamos videollamada o reunión presencial según el proyecto. La mayoría de nuestros clientes prefiere resolverlo por WhatsApp y videollamada, que es más rápido para ambos.",
+        a: "No. Grolow trabaja en remoto y todo se coordina por mensaje, por WhatsApp o Instagram, con videos y demostraciones por enlace. No hay llamadas ni reuniones: lo que se acuerda queda por escrito.",
       },
       {
         q: "¿Puedo usar mi logo actual?",
@@ -150,8 +150,8 @@ export const disenoWebContent: ContentTable = {
             text: "Contrast you can read in sunlight, comfortable tap targets and keyboard navigation. Besides being right, both Google and Bing take it into account.",
           },
           {
-            title: "Copy written, not filled in",
-            text: "We don't hand over a site full of placeholder text for you to complete. We write the first version of the copy and refine it with you.",
+            title: "Your copy, organised",
+            text: "You provide the text, the photos and the logo, since you know your business best. Grolow organises and adapts them so each page says what it needs to, with no placeholder text.",
           },
         ],
       },
@@ -168,13 +168,13 @@ export const disenoWebContent: ContentTable = {
           {
             h3: "A conversation, not a twenty-field form",
             body: [
-              "The first call is to understand what you sell, to whom, and what it's costing you to win business today. Scope comes out of that.",
+              "The first conversation, over WhatsApp, is to understand what you sell, to whom, and what it's costing you to win business today. Scope comes out of that.",
             ],
           },
           {
             h3: "A proposal with a closed number",
             body: [
-              "Within 24 hours you get what's included, what it costs and when it's ready. If the project needs more discovery than fits in one call, we say so then, not later.",
+              "Within 24 hours you get what's included, what it costs and when it's ready. If the project needs more questions than fit in that first conversation, it's said then, not later.",
             ],
           },
           {
@@ -189,7 +189,7 @@ export const disenoWebContent: ContentTable = {
     faq: [
       {
         q: "Do you have an office to meet in Santo Domingo?",
-        a: "We work remotely and arrange a video or in-person meeting depending on the project. Most of our clients prefer WhatsApp and video calls, which is faster for everyone.",
+        a: "No. Grolow works remotely and everything is coordinated by message, over WhatsApp or Instagram, with videos and demos by link. There are no calls or meetings: whatever is agreed stays in writing.",
       },
       {
         q: "Can I keep my current logo?",
