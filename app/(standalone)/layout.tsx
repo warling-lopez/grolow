@@ -7,8 +7,8 @@ import { SITE_URL } from "@/app/lib/i18n";
 import "../globals.css"; 
 
 /**
- * Root layout de las landings que no llevan prefijo de idioma: sitios de
- * cliente (Hermon Dental) y páginas personales. Se mantienen fuera
+ * Root layout de las páginas que no llevan prefijo de idioma: páginas
+ * personales y landings sueltas. Se mantienen fuera
  * de `/es` y `/en` porque no compiten por las palabras clave de Grolow y sus
  * URLs ya están compartidas tal cual.
  *

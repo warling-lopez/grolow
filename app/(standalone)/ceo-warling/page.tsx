@@ -114,7 +114,7 @@ const t = {
           period: "2025 — Presente",
           points: [
             "Fundé y dirijo una agencia enfocada en sistemas de ventas y plataformas a medida.",
-            "Diseño y desarrollo landings y sistemas para clientes reales (Hermon Dental).",
+            "Diseño y desarrollo tiendas, landings y sistemas para clientes reales (La Perfurm RD, Hellen's Cute Kids).",
             "Stack: Next.js, React, TypeScript, Three.js, GSAP, Tailwind CSS.",
           ],
         },
@@ -146,10 +146,10 @@ const t = {
           tags: ["Next.js", "Three.js", "GSAP"],
         },
         {
-          name: "Hermon Dental",
-          desc: "Landing page para clínica dental — captación de citas y presencia digital profesional.",
-          href: "/Hermon-Dental",
-          tags: ["Next.js", "Framer Motion"],
+          name: "La Perfurm RD",
+          desc: "Tienda en línea para una perfumería de nicho: catálogo en un solo enlace y pedidos que llegan a WhatsApp ya armados.",
+          href: "/es/casos/laperfum1",
+          tags: ["Next.js", "WhatsApp"],
         },
         {
           name: "warling.top",
@@ -254,7 +254,7 @@ const t = {
           period: "2025 — Present",
           points: [
             "Founded and lead an agency focused on sales systems and custom platforms.",
-            "Design and build landing pages and systems for real clients (Hermon Dental).",
+            "Design and build stores, landing pages and systems for real clients (La Perfurm RD, Hellen's Cute Kids).",
             "Stack: Next.js, React, TypeScript, Three.js, GSAP, Tailwind CSS.",
           ],
         },
@@ -286,10 +286,10 @@ const t = {
           tags: ["Next.js", "Three.js", "GSAP"],
         },
         {
-          name: "Hermon Dental",
-          desc: "Landing page for a dental clinic — appointment capture and a professional digital presence.",
-          href: "/Hermon-Dental",
-          tags: ["Next.js", "Framer Motion"],
+          name: "La Perfurm RD",
+          desc: "Online store for a niche perfumery: the catalogue in a single link and orders that reach WhatsApp ready to fulfil.",
+          href: "/en/case-studies/laperfum1",
+          tags: ["Next.js", "WhatsApp"],
         },
         {
           name: "warling.top",

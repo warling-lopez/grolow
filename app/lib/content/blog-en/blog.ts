@@ -9,6 +9,69 @@ export const blogEn: PageContent = {
   ],
   sections: [
     {
+      h2: "About Grolow",
+      body: [
+        "Who Grolow is, how it works and the terms it puts in writing before you pay anything.",
+      ],
+      bullets: [
+        {
+          title: "What Grolow is: the software company that builds and maintains",
+          to: "blogQueEsGrolow",
+          text: "What it does, what it doesn't, how it works, who is behind it and how to reach it.",
+        },
+        {
+          title: "Who is behind Grolow and how the work is split",
+          to: "blogQuienEsGrolow",
+          text: "The founder, who writes the code and who answers when something breaks.",
+        },
+        {
+          title: "What Grolow's monthly fee covers, point by point",
+          to: "blogMensualidad",
+          text: "What's included, what isn't, what it costs and how to cancel.",
+        },
+        {
+          title: "Who owns your domain, your code and your data",
+          to: "blogPropiedad",
+          text: "Asset by asset, and what you take with you at no cost if you leave.",
+        },
+        {
+          title: "What Grolow doesn't do, and who to look for",
+          to: "blogLoQueNoHace",
+          text: "Branding, marketing and WooCommerce or Shopify stores: who to look for in each case.",
+        },
+      ],
+    },
+    {
+      h2: "Guides to help you decide",
+      bullets: [
+        {
+          title: "Digital catalogue or online store: what your business in the DR needs",
+          to: "blogCatalogoTienda",
+          text: "Including the case where a free tool is enough.",
+        },
+        {
+          title: "How to accept card payments on your website in the Dominican Republic",
+          to: "blogPagosRd",
+          text: "Azul, CardNet, payment links and PayPal, and how to choose.",
+        },
+        {
+          title: "Spreadsheet, off-the-shelf software or a custom system: how to decide",
+          to: "blogSistemaMedida",
+          text: "The signs the spreadsheet is no longer enough, and what custom costs.",
+        },
+        {
+          title: "What to ask before hiring someone for a website or a system",
+          to: "blogAntesDeContratar",
+          text: "The questions that separate a good provider from a problematic one.",
+        },
+        {
+          title: "Why your business doesn't show up on Google and how to check",
+          to: "blogNoApareceGoogle",
+          text: "The map and the results, the common causes and how to check them in an afternoon.",
+        },
+      ],
+    },
+    {
       h2: "Special: the October 2026 security crisis",
       body: [
         "In ten days, five Nginx flaws, the PHP2Shell vulnerability and the eMudhra certificate authority case all landed at once. We dug into them in seven articles, from the general picture to the practical steps.",
