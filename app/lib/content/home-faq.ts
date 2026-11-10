@@ -41,11 +41,11 @@ export const HOME_FAQ_ES: Faq[] = [
   },
   {
     q: "¿Qué pasa después de la entrega? ¿Hay soporte?",
-    a: "Los primeros 15 días cualquier ajuste va incluido. A partir de ahí puedes contratar horas de soporte cuando las necesites o un acuerdo mensual si prefieres tenerlo cubierto; las dos opciones se cotizan aparte y sin permanencia. Lo que no hacemos es dejarte atado: como el código es tuyo, el soporte lo puede dar cualquier equipo.",
+    a: "Sí. Durante los primeros 90 días después de publicar, Grolow corrige y ajusta el sistema sin costo: es cuando aparecen casi todos los detalles. Desde la entrega, una mensualidad cubre servidores, base de datos, dominio, respaldos, seguridad y los cambios incluidos, sin permanencia: se cancela con 30 días de aviso. Y como el código y los datos son tuyos, si te vas te lo llevas todo sin costo.",
   },
   {
     q: "¿Trabajan con clientes fuera de República Dominicana?",
-    a: "Sí. Trabajamos en remoto y atendemos en español e inglés, aunque la mayoría de nuestros clientes están en República Dominicana. El proceso es el mismo esté donde esté el cliente: diagnóstico por videollamada, propuesta por escrito y entregas revisables.",
+    a: "Sí. Trabajamos en remoto y atendemos en español e inglés, aunque la mayoría de nuestros clientes están en República Dominicana. El proceso es el mismo esté donde esté el cliente: todo por mensaje, por WhatsApp o Instagram, con propuesta por escrito y avances en un enlace de vista previa. Sin llamadas ni videollamadas.",
   },
   {
     q: "¿Pueden trabajar sobre un sistema o una web que ya tengo?",
@@ -53,7 +53,7 @@ export const HOME_FAQ_ES: Faq[] = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: "Los proyectos van de US$250 a US$1,500 según el alcance, y las automatizaciones e integraciones se cobran a US$25 la hora. Una landing va de US$250 a US$450, un sitio corporativo de US$450 a US$800 y una tienda con pedidos por WhatsApp de US$800 a US$1,500. Un sistema de operación a medida se cotiza por fases, porque un inventario de farmacia y uno de repuestos no se parecen en nada. El precio se cierra por escrito antes de empezar.",
+    a: "El Catálogo Digital cuesta US$450 más US$45 al mes, y el Ecommerce Completo US$850 más desde US$80 al mes. Las páginas web empresariales y los sistemas a medida se cotizan por alcance, porque un inventario de farmacia y uno de repuestos no se parecen en nada; la mensualidad de una página web es de US$45 o RD$2,500. La mensualidad cubre todo lo técnico, y el precio se cierra por escrito antes de empezar.",
   },
   {
     q: "¿Cuánto tarda?",
@@ -88,11 +88,11 @@ export const HOME_FAQ_EN: Faq[] = [
   },
   {
     q: "What happens after delivery? Is there support?",
-    a: "The first 15 days include any adjustment at no cost. After that you can buy support hours as you need them, or a monthly agreement if you'd rather have it covered; both are quoted separately and neither locks you in. What we don't do is tie you down: since the code is yours, any team can support it.",
+    a: "Yes. For the first 90 days after launch, Grolow fixes and adjusts the system at no cost: that's when almost all the details show up. From delivery, a monthly fee covers servers, database, domain, backups, security and the included changes, with no lock-in: cancel with 30 days' notice. And since the code and the data are yours, if you leave you take everything with you at no cost.",
   },
   {
     q: "Do you work with clients outside the Dominican Republic?",
-    a: "Yes. We work remotely and in both Spanish and English, though most of our clients are in the Dominican Republic. The process is the same wherever the client is: a diagnosis over video call, a written proposal, and reviewable deliveries.",
+    a: "Yes. We work remotely and in both Spanish and English, though most of our clients are in the Dominican Republic. The process is the same wherever the client is: everything by message, over WhatsApp or Instagram, with a written proposal and progress on a preview link. No phone or video calls.",
   },
   {
     q: "Can you work on a system or site I already have?",
@@ -100,7 +100,7 @@ export const HOME_FAQ_EN: Faq[] = [
   },
   {
     q: "How much does it cost?",
-    a: "Projects run from US$250 to US$1,500 depending on scope, and automations and integrations are billed at US$25 an hour. A landing page runs US$250 to US$450, a corporate site US$450 to US$800, and a store with WhatsApp ordering US$800 to US$1,500. A full custom operations system is quoted in phases, because a pharmacy's inventory and an auto-parts inventory have nothing in common. The price is fixed in writing before we start.",
+    a: "The Digital Catalogue costs US$450 plus US$45 a month, and Full Ecommerce US$850 plus from US$80 a month. Business websites and custom systems are quoted by scope, because a pharmacy's inventory and an auto-parts inventory have nothing in common; a business website's monthly fee is US$45 or RD$2,500. The monthly fee covers everything technical, and the price is fixed in writing before work starts.",
   },
   {
     q: "How long does it take?",

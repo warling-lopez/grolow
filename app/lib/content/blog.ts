@@ -10,6 +10,69 @@ export const blogContent: ContentTable = {
     ],
     sections: [
       {
+        h2: "Sobre Grolow",
+        body: [
+          "Quién es Grolow, cómo trabaja y qué condiciones pone por escrito antes de que pagues nada.",
+        ],
+        bullets: [
+          {
+            title: "Qué es Grolow: la empresa de software que construye y mantiene",
+            to: "blogQueEsGrolow",
+            text: "Qué hace, qué no hace, cómo trabaja, quién está detrás y cómo contactarla.",
+          },
+          {
+            title: "Quién está detrás de Grolow y cómo se reparte el trabajo",
+            to: "blogQuienEsGrolow",
+            text: "El fundador, quién programa y quién contesta cuando algo falla.",
+          },
+          {
+            title: "Qué cubre la mensualidad de Grolow, punto por punto",
+            to: "blogMensualidad",
+            text: "Qué incluye, qué no, cuánto cuesta y cómo se cancela.",
+          },
+          {
+            title: "De quién es tu dominio, tu código y tus datos",
+            to: "blogPropiedad",
+            text: "Activo por activo, y qué te llevas sin costo si decides irte.",
+          },
+          {
+            title: "Lo que Grolow no hace, y a quién conviene buscar",
+            to: "blogLoQueNoHace",
+            text: "Branding, marketing y tiendas en WooCommerce o Shopify: a quién buscar en cada caso.",
+          },
+        ],
+      },
+      {
+        h2: "Guías para decidir",
+        bullets: [
+          {
+            title: "Catálogo digital o tienda online: qué necesita tu negocio en RD",
+            to: "blogCatalogoTienda",
+            text: "Incluido el caso en que te basta una herramienta gratis.",
+          },
+          {
+            title: "Cómo cobrar con tarjeta en tu web en República Dominicana",
+            to: "blogPagosRd",
+            text: "Azul, CardNet, enlaces de pago y PayPal, y cómo elegir.",
+          },
+          {
+            title: "Excel, software listo o sistema a medida: cómo decidir",
+            to: "blogSistemaMedida",
+            text: "Las señales de que la hoja de cálculo ya no alcanza, y cuánto cuesta lo a medida.",
+          },
+          {
+            title: "Qué preguntar antes de contratar una página web o un sistema",
+            to: "blogAntesDeContratar",
+            text: "Las preguntas que separan a un buen proveedor de uno problemático.",
+          },
+          {
+            title: "Por qué tu negocio no aparece en Google y cómo comprobarlo",
+            to: "blogNoApareceGoogle",
+            text: "El mapa y los resultados, las causas comunes y cómo revisarlas en una tarde.",
+          },
+        ],
+      },
+      {
         h2: "Especial: la crisis de seguridad de octubre de 2026",
         body: [
           "En diez días coincidieron cinco fallos en Nginx, la vulnerabilidad PHP2Shell y el caso de la certificadora eMudhra. Lo investigamos a fondo en siete artículos, de lo general a lo práctico.",

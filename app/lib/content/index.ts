@@ -26,6 +26,16 @@ import { blogSemanaNegraContent } from "./blog-semana-negra";
 import { blogPhpRdContent } from "./blog-php-rd";
 import { blogCertificadosRdContent } from "./blog-certificados-rd";
 import { blogLeyRdContent } from "./blog-ley-rd";
+import { blogQueEsGrolowContent } from "./blog-que-es-grolow";
+import { blogQuienEsGrolowContent } from "./blog-quien-es-grolow";
+import { blogMensualidadContent } from "./blog-mensualidad";
+import { blogPropiedadContent } from "./blog-propiedad";
+import { blogLoQueNoHaceContent } from "./blog-lo-que-no-hace";
+import { blogCatalogoTiendaContent } from "./blog-catalogo-tienda";
+import { blogPagosRdContent } from "./blog-pagos-rd";
+import { blogSistemaMedidaContent } from "./blog-sistema-medida";
+import { blogAntesDeContratarContent } from "./blog-antes-de-contratar";
+import { blogNoApareceGoogleContent } from "./blog-no-aparece-google";
 import { BLOG_EN } from "./blog-en";
 import {
   casoLaperfumContent,
@@ -65,6 +75,16 @@ const CONTENT: Partial<Record<RouteId, ContentTable>> = {
   blogPhpRd: blogPhpRdContent,
   blogCertificadosRd: blogCertificadosRdContent,
   blogLeyRd: blogLeyRdContent,
+  blogQueEsGrolow: blogQueEsGrolowContent,
+  blogQuienEsGrolow: blogQuienEsGrolowContent,
+  blogMensualidad: blogMensualidadContent,
+  blogPropiedad: blogPropiedadContent,
+  blogLoQueNoHace: blogLoQueNoHaceContent,
+  blogCatalogoTienda: blogCatalogoTiendaContent,
+  blogPagosRd: blogPagosRdContent,
+  blogSistemaMedida: blogSistemaMedidaContent,
+  blogAntesDeContratar: blogAntesDeContratarContent,
+  blogNoApareceGoogle: blogNoApareceGoogleContent,
   privacidad: privacidadContent,
   cookies: cookiesContent,
   terminos: terminosContent,

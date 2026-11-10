@@ -5,8 +5,8 @@ export const preciosContent: ContentTable = {
     eyebrow: "Precios",
     h1: "Cuánto cuesta una página web en República Dominicana",
     lead: [
-      "Es la pregunta que todo el mundo hace primero y casi nadie responde en su sitio. Aquí van los números, los nuestros y los del mercado, para que puedas comparar antes de escribir a nadie.",
-      "Una página web en República Dominicana puede costar desde nada hasta varios miles de dólares. La diferencia no es el capricho de quien cotiza: es qué se construye y quién lo construye. Nuestro trabajo empieza en US$250.",
+      "Es la pregunta que todo el mundo hace primero y casi nadie responde en su sitio. Aquí van los números, los de Grolow y los del mercado, para que puedas comparar antes de escribir a nadie.",
+      "Una página web en República Dominicana puede costar desde nada hasta varios miles de dólares. La diferencia no es el capricho de quien cotiza: es qué se construye y quién lo construye. Los proyectos de Grolow empiezan en US$450, más una mensualidad que cubre todo lo técnico.",
     ],
     sections: [
       {
@@ -31,30 +31,31 @@ export const preciosContent: ContentTable = {
         ],
       },
       {
-        h2: "Lo que cobramos nosotros",
+        h2: "Lo que cobra Grolow",
         body: [
-          "Cotizamos por tipo de proyecto, no por plan de suscripción. Lo que mueve el número es el alcance, y el rango de cada tipo depende de lo que le pongas dentro.",
+          "Grolow construye el software y lo mantiene, así que cada proyecto tiene dos partes: el precio del proyecto, que se paga una vez, y una mensualidad que cubre toda la operación técnica. Estos son los precios vigentes.",
         ],
         bullets: [
           {
-            title: "Landing page — US$250 a US$450",
-            text: "Una sola página construida para que el visitante haga una acción concreta. Sube según lo que lleve integrado: WhatsApp, chatbot, formularios y automatismos de contacto.",
+            title: "Catálogo Digital — US$450 + US$45 al mes",
+            text: "Productos administrables desde un panel, con buscador y pedidos que llegan a WhatsApp ya armados. Sin pasarela de pago. La mensualidad cubre servidores, base de datos, dominio, respaldos, seguridad y un cambio de contenido al mes.",
           },
           {
-            title: "Sitio web corporativo — US$450 a US$800",
-            text: "Varias páginas con tus servicios, tu equipo y tus vías de contacto. Sube según la cantidad de páginas y las integraciones que necesite con lo que ya usas.",
+            title: "Ecommerce Completo — US$850 + desde US$80 al mes",
+            text: "Todo lo del catálogo, más pasarela de pago para cobrar con tarjeta, aprobación de pedidos y analítica de ventas. La mensualidad va de US$80 a US$100 según el volumen, con tres cambios de contenido al mes y un reporte mensual.",
           },
           {
-            title: "Tienda en línea — US$800 a US$1.500",
-            text: "Catálogo navegable con pedidos, por WhatsApp o con cobro en línea. Sube según la cantidad de páginas y el tamaño del inventario: no es lo mismo de 20 a 50 productos que de 50 a 150, o más de 500.",
+            title: "Página web empresarial — cotización + US$45 al mes",
+            text: "Inicio, servicios, quiénes somos, contacto con formulario, WhatsApp y mapa, preguntas frecuentes y políticas legales, con dominio, HTTPS, diseño adaptable al móvil, SEO básico y analítica. La mensualidad también se puede pagar en pesos: RD$2,500.",
           },
           {
-            title: "Automatizaciones, IA y canales de comunicación — US$25 por hora",
-            text: "Procesos que hoy haces a mano, asistentes con IA, email marketing y conexión entre herramientas. Se cobra por hora porque el alcance real solo se conoce al abrir el proceso: se estima antes de empezar y se factura lo trabajado.",
+            title: "Sistemas a medida — cotización por escrito",
+            text: "Inventario, citas, facturación, paneles internos, aplicaciones y automatizaciones. Se estima por alcance y se entrega un precio cerrado, con la mensualidad según la infraestructura que use el sistema.",
           },
           {
-            title: "Aplicación móvil, web app, SaaS y sistemas a medida — por proyecto",
-            text: "Producto propio con varios roles, base de datos y una operación completa por detrás. Son proyectos largos, así que se dividen en fases y cada fase se cotiza y se cobra por separado, con su alcance cerrado.",
+            title: "Qué cubre la mensualidad",
+            to: "blogMensualidad",
+            text: "Servidores, base de datos, renovación del dominio, respaldos diarios, seguridad y los cambios incluidos. Lo que entra, lo que no y cómo se cancela, punto por punto.",
           },
         ],
       },
@@ -62,7 +63,7 @@ export const preciosContent: ContentTable = {
         h2: "De qué depende realmente el precio",
         body: [
           "El número de páginas es lo que menos pesa, aunque sea lo primero que se pregunta. Añadir una página más a un sitio ya construido cuesta poco.",
-          "Lo que mueve el precio es si hay que producir el contenido o tú lo entregas, si hay funciones que guardan datos (formularios complejos, reservas, cuentas de usuario), si hay que conectar con sistemas que ya usas, y en cuánto tiempo lo necesitas. Un proyecto urgente cuesta más porque desplaza a otro.",
+          "Lo que mueve el precio es si hay funciones que guardan datos (formularios complejos, reservas, cuentas de usuario), si hay que conectar con sistemas que ya usas, y en cuánto tiempo lo necesitas. Un proyecto urgente cuesta más porque desplaza a otro.",
         ],
       },
       {
@@ -97,19 +98,19 @@ export const preciosContent: ContentTable = {
     faq: [
       {
         q: "¿Por qué no publican un precio para todo?",
-        a: "Porque para los proyectos con sistema sería un número inventado. Publicamos los precios de lo que sí es estandarizable — el sitio a medida en sus dos modalidades — y cotizamos aparte lo que depende del alcance.",
+        a: "Porque para los sistemas a medida sería un número inventado. Grolow publica el precio de lo que sí es estandarizable — el Catálogo Digital y el Ecommerce Completo — y cotiza por escrito lo que depende del alcance.",
       },
       {
         q: "¿El precio incluye el contenido y las fotos?",
-        a: "Redactamos la primera versión de los textos. Las fotos de producto o de tu equipo las pones tú; si necesitas producción fotográfica, te decimos con quién y cuánto suele costar, pero no lo facturamos nosotros.",
+        a: "No. Los textos, las fotos y el logo los entregas tú, que eres quien mejor conoce tu negocio; Grolow los ordena y los adapta a la página. Si necesitas fotografía de producto, conviene contratar a un fotógrafo aparte.",
       },
       {
         q: "¿Hay costos que aparezcan después?",
-        a: "El dominio y el alojamiento se renuevan cada año y esa renovación es tuya. Se dice en la propuesta, con su monto aproximado, antes de que firmes.",
+        a: "La mensualidad, que se dice antes de firmar y cubre servidores, base de datos, renovación del dominio, respaldos, seguridad y los cambios incluidos. Lo que no está en esa lista — funciones nuevas o rediseños — se cotiza aparte y antes de hacerlo.",
       },
       {
         q: "¿Cómo se paga?",
-        a: "Los proyectos con rango cerrado se dividen en dos: una parte al empezar y el resto contra entrega. Las automatizaciones por hora se facturan por lo trabajado. Los proyectos por fases se cobran fase a fase.",
+        a: "El proyecto se paga en dos partes: 50% al firmar y 50% antes de publicar. La mensualidad se cobra el día 1 de cada mes desde la entrega, sin permanencia: se cancela con 30 días de aviso y te llevas todo lo tuyo sin costo.",
       },
     ],
     related: [
@@ -123,7 +124,7 @@ export const preciosContent: ContentTable = {
     ],
     cta: {
       heading: "¿Cuánto costaría el tuyo?",
-      text: "Cuéntanos qué necesitas y te devolvemos una propuesta con el número cerrado en menos de 24 horas. Sin reunión previa obligatoria y sin «desde».",
+      text: "Cuéntale a Grolow por WhatsApp qué necesitas y recibes por escrito una propuesta con el número cerrado. Sin llamadas: todo queda por escrito.",
       label: "Pedir mi propuesta",
       message:
         "Hola, quiero una propuesta para mi proyecto. Lo que necesito es:",
@@ -134,8 +135,8 @@ export const preciosContent: ContentTable = {
     eyebrow: "Pricing",
     h1: "What a website costs in the Dominican Republic",
     lead: [
-      "It's the question everyone asks first and almost nobody answers on their site. Here are the numbers — ours and the market's — so you can compare before writing to anyone.",
-      "A website in the Dominican Republic can cost anywhere from nothing to several thousand dollars. The difference isn't the whim of whoever quotes it: it's what gets built, and who builds it. Our work starts at US$250.",
+      "It's the question everyone asks first and almost nobody answers on their site. Here are the numbers — Grolow's and the market's — so you can compare before writing to anyone.",
+      "A website in the Dominican Republic can cost anywhere from nothing to several thousand dollars. The difference isn't the whim of whoever quotes it: it's what gets built, and who builds it. Grolow's projects start at US$450, plus a monthly fee that covers everything technical.",
     ],
     sections: [
       {
@@ -160,30 +161,31 @@ export const preciosContent: ContentTable = {
         ],
       },
       {
-        h2: "What we charge",
+        h2: "What Grolow charges",
         body: [
-          "We quote by project type, not by subscription plan. Scope is what moves the number, and each type's range depends on what you put inside it.",
+          "Grolow builds the software and maintains it, so every project has two parts: the project price, paid once, and a monthly fee that covers all the technical operation. These are the current prices.",
         ],
         bullets: [
           {
-            title: "Landing page — US$250 to US$450",
-            text: "A single page built so the visitor takes one concrete action. It rises with what's integrated: WhatsApp, chatbot, forms and contact automations.",
+            title: "Digital Catalogue — US$450 + US$45 a month",
+            text: "Products managed from a dashboard, with search and orders that reach WhatsApp ready to fulfil. No payment gateway. The monthly fee covers servers, database, domain, backups, security and one content change a month.",
           },
           {
-            title: "Corporate website — US$450 to US$800",
-            text: "Several pages covering your services, your team and your contact routes. It rises with the number of pages and the integrations it needs with what you already use.",
+            title: "Full Ecommerce — US$850 + from US$80 a month",
+            text: "Everything in the catalogue, plus a payment gateway to take card payments, order approval and sales analytics. The monthly fee runs from US$80 to US$100 depending on volume, with three content changes a month and a monthly report.",
           },
           {
-            title: "Online store — US$800 to US$1,500",
-            text: "A browsable catalog with ordering, over WhatsApp or with online payment. It rises with page count and inventory size: 20–50 products is not the same as 50–150, or more than 500.",
+            title: "Business website — quote + US$45 a month",
+            text: "Home, services, about, contact with a form, WhatsApp and a map, FAQ and legal policies, with a domain, HTTPS, mobile-friendly design, basic SEO and analytics. The monthly fee can also be paid in pesos: RD$2,500.",
           },
           {
-            title: "Automations, AI and communication channels — US$25 per hour",
-            text: "Processes you run by hand today, AI assistants, email marketing and connecting tools. Billed hourly because the real scope only shows once the process is opened: estimated up front, invoiced for time worked.",
+            title: "Custom systems — written quote",
+            text: "Inventory, appointments, invoicing, internal dashboards, apps and automations. Estimated by scope with a fixed price in writing, and a monthly fee based on the infrastructure the system uses.",
           },
           {
-            title: "Mobile apps, web apps, SaaS and custom systems — per project",
-            text: "A product of your own with several roles, a database and a full operation behind it. These are long projects, so they're split into phases; each phase is quoted and invoiced separately with its own closed scope.",
+            title: "What the monthly fee covers",
+            to: "blogMensualidad",
+            text: "Servers, database, domain renewal, daily backups, security and the included changes. What's in, what's out and how to cancel, point by point.",
           },
         ],
       },
@@ -191,7 +193,7 @@ export const preciosContent: ContentTable = {
         h2: "What actually drives the price",
         body: [
           "Page count matters least, even though it's the first thing people ask. Adding one more page to a built site costs little.",
-          "What moves the price is whether content has to be produced or you supply it, whether there are features that store data (complex forms, bookings, user accounts), whether we connect to systems you already use, and how soon you need it. A rush project costs more because it displaces another.",
+          "What moves the price is whether there are features that store data (complex forms, bookings, user accounts), whether we connect to systems you already use, and how soon you need it. A rush project costs more because it displaces another.",
         ],
       },
       {
@@ -226,19 +228,19 @@ export const preciosContent: ContentTable = {
     faq: [
       {
         q: "Why don't you publish a price for everything?",
-        a: "Because for projects with a system it would be an invented number. We publish prices for what can genuinely be standardized — the custom site in its two forms — and quote scope-dependent work separately.",
+        a: "Because for custom systems it would be an invented number. Grolow publishes the price of what can genuinely be standardized — the Digital Catalogue and Full Ecommerce — and quotes scope-dependent work in writing.",
       },
       {
         q: "Does the price include content and photos?",
-        a: "We write the first version of the copy. Product or team photos come from you; if you need a photo shoot we'll tell you who and roughly what it costs, but we don't bill it.",
+        a: "No. You provide the text, the photos and the logo, since you know your business best; Grolow organises them and adapts them to the page. If you need product photography, it's best to hire a photographer separately.",
       },
       {
         q: "Are there costs that appear later?",
-        a: "Domain and hosting renew yearly and that renewal is yours. It's stated in the proposal, with approximate amounts, before you sign.",
+        a: "The monthly fee, which is stated before you sign and covers servers, database, domain renewal, backups, security and the included changes. Anything not on that list — new features or redesigns — is quoted separately and before it's done.",
       },
       {
         q: "How is payment structured?",
-        a: "Projects with a closed range are split in two: part at the start and the rest on delivery. Hourly automation work is invoiced for time worked. Phased projects are billed phase by phase.",
+        a: "The project is paid in two parts: 50% on signing and 50% before going live. The monthly fee is charged on the 1st of each month from delivery, with no lock-in: cancel with 30 days' notice and take everything that's yours at no cost.",
       },
     ],
     related: [
@@ -248,7 +250,7 @@ export const preciosContent: ContentTable = {
     ],
     cta: {
       heading: "What would yours cost?",
-      text: "Tell us what you need and we'll send back a proposal with a closed number in under 24 hours. No mandatory call first, and no «starting at».",
+      text: "Tell Grolow on WhatsApp what you need and you'll get a written proposal with a fixed number. No calls: everything stays in writing.",
       label: "Request my proposal",
       message: "Hi, I'd like a proposal for my project. What I need is:",
     },

@@ -8,7 +8,7 @@ import type { Lang, RouteId } from "@/app/lib/i18n";
  * Para publicar un artículo nuevo: añadir su ruta en `i18n.ts`, su contenido
  * en `content/index.ts` y una entrada aquí.
  */
-export type BlogCategory = "seguridad" | "rd" | "guias";
+export type BlogCategory = "grolow" | "seguridad" | "rd" | "guias";
 
 /**
  * Foto de portada. Todas son de Unsplash (licencia libre, uso comercial
@@ -47,8 +47,8 @@ export function localizePost(post: BlogPost, lang: Lang): BlogPost {
 }
 
 export const CATEGORY_LABELS: Record<Lang, Record<BlogCategory, string>> = {
-  es: { seguridad: "Seguridad web", rd: "República Dominicana", guias: "Guías" },
-  en: { seguridad: "Web security", rd: "Dominican Republic", guias: "Guides" },
+  es: { grolow: "Sobre Grolow", seguridad: "Seguridad web", rd: "República Dominicana", guias: "Guías" },
+  en: { grolow: "About Grolow", seguridad: "Web security", rd: "Dominican Republic", guias: "Guides" },
 };
 
 /** Nombre de la categoría en el idioma pedido. */
@@ -61,6 +61,196 @@ export const CATEGORY_LABEL = CATEGORY_LABELS.es;
 
 /** Más reciente primero dentro de cada fecha, en el orden de lectura sugerido. */
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: "blogQueEsGrolow",
+    image: {
+      src: "/blog/que-es-grolow.jpg",
+      alt: "Vista aérea de los edificios de Santo Domingo durante el día",
+      credit: "Venero Encarnación Martínez",
+      source: "https://unsplash.com/photos/WTF0QbzEXpA",
+    },
+    title: "Qué es Grolow: la empresa de software que construye y mantiene",
+    excerpt:
+      "Qué hace, qué no hace, cómo trabaja, quién está detrás y cómo contactarla, sin rodeos.",
+    category: "grolow",
+    date: "2026-11-08",
+    en: {
+      title: "What Grolow is: the software company that builds and maintains",
+      excerpt: "What it does, what it doesn't, how it works, who is behind it and how to reach it, plainly.",
+      alt: "Aerial view of Santo Domingo's buildings during the day",
+    },
+  },
+  {
+    id: "blogQuienEsGrolow",
+    image: {
+      src: "/blog/quien-es-grolow.jpg",
+      alt: "Persona escribiendo código en un portátil junto a una planta y una taza",
+      credit: "Nubelson Fernandes",
+      source: "https://unsplash.com/photos/UcYBL5V0xWQ",
+    },
+    title: "Quién está detrás de Grolow y cómo se reparte el trabajo",
+    excerpt:
+      "El fundador, quién programa, quién contesta cuando algo falla y qué pasa con tu proyecto si una persona cambia.",
+    category: "grolow",
+    date: "2026-11-08",
+    en: {
+      title: "Who is behind Grolow and how the work is split",
+      excerpt: "The founder, who writes the code, who answers when something breaks and what happens to your project if a person changes.",
+      alt: "Person writing code on a laptop next to a plant and a mug",
+    },
+  },
+  {
+    id: "blogMensualidad",
+    image: {
+      src: "/blog/mensualidad.jpg",
+      alt: "Gráficos de rendimiento en la pantalla de un portátil",
+      credit: "Luke Chesser",
+      source: "https://unsplash.com/photos/JKUTrJ4vK00",
+    },
+    title: "Qué cubre la mensualidad de Grolow, punto por punto",
+    excerpt:
+      "Qué incluye, qué no, cuánto cuesta, cómo se cancela y por qué se paga aunque no pase nada.",
+    category: "grolow",
+    date: "2026-11-08",
+    en: {
+      title: "What Grolow's monthly fee covers, point by point",
+      excerpt: "What's included, what isn't, what it costs, how to cancel and why it's worth paying even when nothing happens.",
+      alt: "Performance charts on a laptop screen",
+    },
+  },
+  {
+    id: "blogPropiedad",
+    image: {
+      src: "/blog/propiedad.jpg",
+      alt: "Mano sosteniendo unas llaves sobre casas en miniatura",
+      credit: "Jakub Żerdzicki",
+      source: "https://unsplash.com/photos/t0CRdNl_mTg",
+    },
+    title: "De quién es tu dominio, tu código y tus datos con Grolow",
+    excerpt:
+      "Activo por activo, qué es tuyo, qué opera Grolow y qué te llevas sin costo el día que decidas irte.",
+    category: "grolow",
+    date: "2026-11-08",
+    en: {
+      title: "Who owns your domain, your code and your data with Grolow",
+      excerpt: "Asset by asset, what's yours, what Grolow operates and what you take with you at no cost the day you leave.",
+      alt: "Hand holding keys over miniature houses",
+    },
+  },
+  {
+    id: "blogLoQueNoHace",
+    image: {
+      src: "/blog/lo-que-no-hace.jpg",
+      alt: "Un lápiz sobre una pila de papel",
+      credit: "Onkar Mehta",
+      source: "https://unsplash.com/photos/eVpZxkNY3bw",
+    },
+    title: "Lo que Grolow no hace, y a quién conviene buscar en cada caso",
+    excerpt:
+      "Branding, marketing, redes y tiendas en WooCommerce o Shopify: por qué Grolow no los hace y qué proveedor sí te conviene.",
+    category: "grolow",
+    date: "2026-11-08",
+    en: {
+      title: "What Grolow doesn't do, and who to look for in each case",
+      excerpt: "Branding, marketing, social media and WooCommerce or Shopify stores: why Grolow doesn't do them and who does.",
+      alt: "A pencil on top of a stack of paper",
+    },
+  },
+  {
+    id: "blogCatalogoTienda",
+    image: {
+      src: "/blog/catalogo-tienda.jpg",
+      alt: "Mesa de cristal con frascos de perfume",
+      credit: "W eibo",
+      source: "https://unsplash.com/photos/xVH2CB-0gtQ",
+    },
+    title: "Catálogo digital o tienda online: qué necesita tu negocio en RD",
+    excerpt:
+      "Cuándo te basta una herramienta gratis, cuándo un catálogo propio y cuándo una tienda con pago en línea.",
+    category: "guias",
+    date: "2026-11-08",
+    en: {
+      title: "Digital catalogue or online store: what your business in the DR needs",
+      excerpt: "When a free tool is enough, when your own catalogue makes sense and when you need a store with online payment.",
+      alt: "Glass table covered with perfume bottles",
+    },
+  },
+  {
+    id: "blogPagosRd",
+    image: {
+      src: "/blog/pagos-rd.jpg",
+      alt: "Persona con una tarjeta de crédito usando un portátil",
+      credit: "rupixen",
+      source: "https://unsplash.com/photos/Q59HmzK38eQ",
+    },
+    title: "Cómo cobrar con tarjeta en tu web en República Dominicana",
+    excerpt:
+      "Azul, CardNet, enlaces de pago y PayPal: qué te piden, qué no te dicen y cómo elegir.",
+    category: "rd",
+    date: "2026-11-08",
+    en: {
+      title: "How to accept card payments on your website in the Dominican Republic",
+      excerpt: "Azul, CardNet, payment links and PayPal: what they ask for, what they don't tell you and how to choose.",
+      alt: "Person holding a credit card while using a laptop",
+    },
+  },
+  {
+    id: "blogSistemaMedida",
+    image: {
+      src: "/blog/sistema-medida.jpg",
+      alt: "Manos tecleando en un portátil con una hoja de cálculo",
+      credit: "Gorilla ROI Data Connector",
+      source: "https://unsplash.com/photos/9fZuqBYlV1w",
+    },
+    title: "Excel, software listo o sistema a medida: cómo decidir",
+    excerpt:
+      "Cuándo la hoja de cálculo todavía sirve, cuándo conviene algo listo y cuándo un sistema a medida, y cuánto cuesta.",
+    category: "guias",
+    date: "2026-11-08",
+    en: {
+      title: "Spreadsheet, off-the-shelf software or a custom system: how to decide",
+      excerpt: "When the spreadsheet still works, when ready-made software fits and when a custom system pays off, and what it costs.",
+      alt: "Hands typing on a laptop showing a spreadsheet",
+    },
+  },
+  {
+    id: "blogAntesDeContratar",
+    image: {
+      src: "/blog/antes-de-contratar.jpg",
+      alt: "Dos personas revisando documentos en una mesa",
+      credit: "Olena Kholina",
+      source: "https://unsplash.com/photos/MhqUBTxQ3Hw",
+    },
+    title: "Qué preguntar antes de contratar una página web o un sistema en RD",
+    excerpt:
+      "Las preguntas que separan a un buen proveedor de uno problemático, con las respuestas de Grolow a cada una.",
+    category: "guias",
+    date: "2026-11-08",
+    en: {
+      title: "What to ask before hiring someone for a website or a system in the DR",
+      excerpt: "The questions that separate a good provider from a problematic one, with Grolow's answer to each.",
+      alt: "Two people reviewing documents at a table",
+    },
+  },
+  {
+    id: "blogNoApareceGoogle",
+    image: {
+      src: "/blog/no-aparece-google.jpg",
+      alt: "Mano sosteniendo un teléfono con el buscador de Google abierto",
+      credit: "Solen Feyissa",
+      source: "https://unsplash.com/photos/UWVJaDvXW_c",
+    },
+    title: "Por qué tu negocio no aparece en Google y cómo comprobarlo",
+    excerpt:
+      "El mapa y los resultados son dos sistemas distintos: las causas más comunes y cómo revisarlas en una tarde.",
+    category: "guias",
+    date: "2026-11-08",
+    en: {
+      title: "Why your business doesn't show up on Google and how to check",
+      excerpt: "The map and the results are two different systems: the most common causes and how to check them in an afternoon.",
+      alt: "Hand holding a phone with Google search open",
+    },
+  },
   {
     id: "blogPhp2shell",
     image: {

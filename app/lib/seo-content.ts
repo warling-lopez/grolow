@@ -380,6 +380,136 @@ export const SEO: Record<RouteId, SeoTable> = {
     },
   },
 
+  blogQueEsGrolow: {
+    es: {
+      title: "Qué es Grolow: empresa de software en Santo Domingo",
+      description:
+        "Grolow es una empresa de software de República Dominicana que construye el sistema de tu negocio y lo mantiene. Qué hace, qué no hace y cómo contactarla.",
+    },
+    en: {
+      title: "What Is Grolow: a Software Company in Santo Domingo",
+      description:
+        "Grolow is a Dominican software company that builds your business's system and keeps it running. What it does, what it doesn't and how to get in touch.",
+    },
+  },
+
+  blogQuienEsGrolow: {
+    es: {
+      title: "Quién está detrás de Grolow y cómo trabaja | Grolow",
+      description:
+        "Warling López fundó Grolow en 2025. Quién programa, quién atiende el soporte y qué pasa con tu proyecto si una persona cambia, sin cifras infladas.",
+    },
+    en: {
+      title: "Who Is Behind Grolow and How the Work Is Split | Grolow",
+      description:
+        "Warling López founded Grolow in 2025. Who writes the code, who handles support and what happens to your project if a person changes, with no inflated numbers.",
+    },
+  },
+
+  blogMensualidad: {
+    es: {
+      title: "Qué cubre la mensualidad de Grolow, punto por punto",
+      description:
+        "Servidores, dominio, respaldos diarios, seguridad y cambios: qué incluye la mensualidad de Grolow, qué no, cuánto cuesta y cómo se cancela sin penalidad.",
+    },
+    en: {
+      title: "What the Grolow Monthly Fee Covers, Point by Point",
+      description:
+        "Servers, domain, daily backups, security and changes: what the Grolow monthly fee includes, what it does not, what it costs and how to cancel without penalty.",
+    },
+  },
+
+  blogPropiedad: {
+    es: {
+      title: "De quién es tu dominio, tu código y tus datos | Grolow",
+      description:
+        "Con Grolow el dominio, el código y los datos son tuyos. Activo por activo, qué significa y qué te entregan en 10 días hábiles si decides irte, sin costo.",
+    },
+    en: {
+      title: "Who Owns Your Domain, Your Code and Your Data | Grolow",
+      description:
+        "With Grolow the domain, the code and the data are yours. Asset by asset, what that means and what you get within 10 business days if you leave, at no cost.",
+    },
+  },
+
+  blogLoQueNoHace: {
+    es: {
+      title: "Lo que Grolow no hace, y a quién buscar en cada caso",
+      description:
+        "Grolow no hace branding, marketing, redes sociales ni tiendas en WooCommerce o Shopify. Para cada caso, qué tipo de proveedor sí te conviene contratar.",
+    },
+    en: {
+      title: "What Grolow Doesn't Do, and Who to Look For Instead",
+      description:
+        "Grolow doesn't do branding, marketing, social media or WooCommerce and Shopify stores. For each case, the kind of provider that is a better fit for you.",
+    },
+  },
+
+  blogCatalogoTienda: {
+    es: {
+      title: "Catálogo digital o tienda online: qué necesitas en RD",
+      description:
+        "Cuándo te basta una herramienta gratis, cuándo conviene un catálogo con pedidos por WhatsApp y cuándo una tienda con pago en línea en República Dominicana.",
+    },
+    en: {
+      title: "Digital Catalogue or Online Store: What You Need in the DR",
+      description:
+        "When a free tool is enough, when your own catalogue with WhatsApp orders makes sense and when you need a store with online payment in the Dominican Republic.",
+    },
+  },
+
+  blogPagosRd: {
+    es: {
+      title: "Cómo cobrar con tarjeta en tu página web en RD | Grolow",
+      description:
+        "Azul, CardNet, enlaces de pago y PayPal: qué piden para cobrar con tarjeta en tu página web en República Dominicana, qué no te dicen y cómo elegir la opción.",
+    },
+    en: {
+      title: "How to Accept Card Payments Online in the DR | Grolow",
+      description:
+        "Azul, CardNet, payment links and PayPal: what you need to take card payments on your website in the Dominican Republic, what they do not say and how to choose.",
+    },
+  },
+
+  blogSistemaMedida: {
+    es: {
+      title: "Excel, software listo o sistema a medida: cómo decidir",
+      description:
+        "Cuándo basta la hoja de cálculo, cuándo conviene un software listo como Alegra y cuándo un sistema a medida, y cómo se calcula cuánto cuesta en RD.",
+    },
+    en: {
+      title: "Spreadsheet, Off-the-Shelf or Custom Software: How to Choose",
+      description:
+        "When a spreadsheet is enough, when off-the-shelf software like Alegra fits and when a custom system pays off, plus how its cost is calculated in the DR.",
+    },
+  },
+
+  blogAntesDeContratar: {
+    es: {
+      title: "Qué preguntar antes de contratar una página web en RD",
+      description:
+        "Las preguntas que separan a un buen proveedor web de uno problemático: dominio, mantenimiento, reseñas, contrato y salida, con las respuestas de Grolow.",
+    },
+    en: {
+      title: "Questions to Ask Before Hiring a Web Developer in the DR",
+      description:
+        "The questions that separate a good web provider from a problematic one: domain, maintenance, reviews, contract and exit, with Grolow's answer to each.",
+    },
+  },
+
+  blogNoApareceGoogle: {
+    es: {
+      title: "Por qué tu negocio no aparece en Google y qué hacer | Grolow",
+      description:
+        "El mapa y los resultados son dos sistemas. Las causas más comunes, cómo comprobarlas en una tarde con Search Console y por qué Google no reconoce tu marca.",
+    },
+    en: {
+      title: "Why Your Business Doesn't Show Up on Google | Grolow",
+      description:
+        "The map and the results are two systems. The most common causes, how to check them in an afternoon with Search Console and why Google misses your brand.",
+    },
+  },
+
   // ── Legales ────────────────────────────────────────────────────────────
   privacidad: {
     es: {

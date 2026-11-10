@@ -99,29 +99,18 @@ function offerNodes(lang: Lang, tiers: Tier[] = TIERS) {
       ...(pricingUrl && { url: pricingUrl }),
     };
 
-    if (tier.hourly !== undefined) {
-      return {
-        ...base,
-        priceSpecification: {
-          "@type": "UnitPriceSpecification",
-          price: tier.hourly,
-          priceCurrency: "USD",
-          // Código UN/CEFACT de "hora": lo que espera schema.org.
-          unitCode: "HUR",
-        },
-      };
-    }
-
-    // Los proyectos por fases no llevan precio: declarar uno inventado sería
-    // peor que no declararlo.
+    // Lo que se cotiza por alcance no lleva precio: declarar uno inventado
+    // sería peor que no declararlo.
     if (tier.min === undefined) return base;
 
+    // Precio de entrada del proyecto. La mensualidad se publica en el texto
+    // de la página, no aquí: un `Offer` con dos precios confunde más que ayuda.
     return {
       ...base,
       priceSpecification: {
         "@type": "PriceSpecification",
         minPrice: tier.min,
-        maxPrice: tier.max,
+        ...(tier.max !== undefined && { maxPrice: tier.max }),
         priceCurrency: "USD",
       },
     };

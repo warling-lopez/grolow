@@ -17,7 +17,7 @@ export const DEFAULT_LOCALE: Lang = "es";
 /** Dominio canónico, con www. Sin barra final. */
 export const SITE_URL = "https://www.grolow.com";
 
-/** WhatsApp de Grolow. El de Hermon Dental es otro y no se usa aquí. */
+/** WhatsApp de Grolow. */
 export const WHATSAPP_NUMBER = "18299946354";
 
 /**
@@ -303,6 +303,89 @@ const ROUTE_TABLE = {
   },
   blogLeyRd: {
     slug: { es: "blog/ley-dominicana-si-hackean-tu-sitio-web", en: "blog/dominican-law-if-your-website-is-hacked" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+
+  // Autoridad: quién es Grolow y guías para la intención de búsqueda del
+  // cliente (investigación del 8 nov 2026 en 03_marketing/intencion-de-busqueda).
+  blogQueEsGrolow: {
+    slug: { es: "blog/que-es-grolow", en: "blog/what-is-grolow" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogQuienEsGrolow: {
+    slug: { es: "blog/quien-esta-detras-de-grolow", en: "blog/who-is-behind-grolow" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogMensualidad: {
+    slug: { es: "blog/que-cubre-la-mensualidad-de-grolow", en: "blog/what-grolow-monthly-fee-covers" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogPropiedad: {
+    slug: { es: "blog/de-quien-es-tu-dominio-codigo-y-datos", en: "blog/who-owns-your-domain-code-and-data" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogLoQueNoHace: {
+    slug: { es: "blog/lo-que-grolow-no-hace", en: "blog/what-grolow-does-not-do" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogCatalogoTienda: {
+    slug: { es: "blog/catalogo-digital-o-tienda-online", en: "blog/digital-catalogue-or-online-store" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogPagosRd: {
+    slug: { es: "blog/como-cobrar-con-tarjeta-en-tu-web-republica-dominicana", en: "blog/accept-card-payments-website-dominican-republic" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogSistemaMedida: {
+    slug: { es: "blog/excel-software-listo-o-sistema-a-medida", en: "blog/spreadsheet-off-the-shelf-or-custom-software" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogAntesDeContratar: {
+    slug: { es: "blog/que-preguntar-antes-de-contratar-una-pagina-web", en: "blog/questions-before-hiring-a-web-developer" },
+    index: true,
+    parent: "blog",
+    schema: "article",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  blogNoApareceGoogle: {
+    slug: { es: "blog/por-que-tu-negocio-no-aparece-en-google", en: "blog/why-your-business-is-not-on-google" },
     index: true,
     parent: "blog",
     schema: "article",

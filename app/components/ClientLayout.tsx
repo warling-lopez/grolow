@@ -27,7 +27,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   // Rutas de landings de cliente que se muestran sin el branding de Grolow
   // (canvas 3D, botón de WhatsApp de Grolow, etc.)
   const standalone =
-    pathname?.startsWith('/Hermon-Dental') ||
     pathname?.toLowerCase().startsWith('/piropos') ||
     pathname?.startsWith('/para-yessica') ||
     pathname?.startsWith('/ceo-warling') ||
