@@ -147,7 +147,7 @@ function businessSchema(lang: Lang) {
     url: SITE_URL,
     description,
     parentOrganization: { "@id": `${SITE_URL}/#organization` },
-    email: "grolow.web@gmail.com",
+    email: "warling@grolow.com",
     telephone: "+1-829-994-6354",
     address: {
       "@type": "PostalAddress",

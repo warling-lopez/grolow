@@ -21,7 +21,7 @@ import type { ContentTable } from "./types";
 export const UPDATED_ES = "Última actualización: 1 de noviembre de 2026.";
 export const UPDATED_EN = "Last updated: 1 November 2026.";
 
-export const CONTACT_EMAIL = "grolow.web@gmail.com";
+export const CONTACT_EMAIL = "warling@grolow.com";
 
 export const privacidadContent: ContentTable = {
   es: {

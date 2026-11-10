@@ -347,7 +347,7 @@ const t = {
 /* ------------------------------------------------------------------ */
 
 const LINKS = {
-  email: "warlinglopez01@gmail.com",
+  email: "warling@grolow.com",
   github: "https://github.com/warling-lopez",
   linkedin: "https://www.linkedin.com/in/warlinglopez-dev/",
   freelance: "https://warling.top",

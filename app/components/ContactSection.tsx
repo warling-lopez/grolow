@@ -215,9 +215,9 @@ function ContactForm() {
                 {c.directEmail}
               </p>
               <a
-                href="mailto:grolow.web@gmail.com"
+                href="mailto:warling@grolow.com"
                 className="inline-flex min-h-11 items-center text-xl font-medium text-grolow-light hover:text-grolow-cyan transition-colors">
-                grolow.web@gmail.com
+                warling@grolow.com
               </a>
             </div>
             <div>

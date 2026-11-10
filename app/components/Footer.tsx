@@ -73,7 +73,7 @@ const WORDMARK_LIQUID = {
 } as const;
 
 const WHATSAPP = "18299946354";
-const EMAIL = "grolow.web@gmail.com";
+const EMAIL = "warling@grolow.com";
 
 const COPY = {
   es: {

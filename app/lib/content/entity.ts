@@ -18,7 +18,7 @@ export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const PERSON_ID = `${SITE_URL}/#warling`;
 export const LOCALBUSINESS_ID = `${SITE_URL}/#localbusiness`;
 
-export const EMAIL = "grolow.web@gmail.com";
+export const EMAIL = "warling@grolow.com";
 export const PHONE = "+1-829-994-6354";
 export const WHATSAPP = "18299946354";
 
